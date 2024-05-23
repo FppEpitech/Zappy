@@ -8,7 +8,8 @@
 
 #pragma once
 
-#include "IError.hpp"
+#include "Error/IError.hpp"
+
 #include <string>
 
 namespace Gui {
