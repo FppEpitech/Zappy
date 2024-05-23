@@ -75,14 +75,23 @@ class Gui::Network {
          */
         void connectToServer();
 
-        void selectServer();
+        /**
+         * @brief Listen the server and return it message.
+         *
+         * @return std::string - message of the server.
+         */
+        const std::string listenServer();
 
     private:
+        void selectServer();
+        const std::string readInfoServer();
+
+        void sendMessageServer(const std::string& message);
 
         int             _port;
         std::string     _hostName;
         int             _serverFd;
         fd_set          _writeFd;
         fd_set          _readFd;
-        bool            _startNetwork;
+        bool            _isConnected;
 };

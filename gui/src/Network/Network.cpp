@@ -14,7 +14,7 @@ Gui::Network::Network(int port, const std::string& hostName)
 {
     setPort(port);
     setHostName(hostName);
-    _startNetwork = true;
+    _isConnected = false;
 }
 
 void Gui::Network::setPort(int port)
@@ -62,4 +62,38 @@ void Gui::Network::selectServer()
 
     if (!select(_serverFd + 1, &_readFd, &_writeFd, NULL, NULL))
         throw Errors::Network("Select failed.");
+}
+
+const std::string Gui::Network::listenServer()
+{
+    selectServer();
+    std::string data = readInfoServer();
+    if (!_isConnected && data == "WELCOME\n") {
+        sendMessageServer("GRAPHIC\n");
+        _isConnected = true;
+        return "";
+    }
+    return data;
+}
+
+const std::string Gui::Network::readInfoServer()
+{
+    std::string data;
+    char buffer;
+    int len;
+
+    if (!FD_ISSET(_serverFd, &_readFd))
+        return "";
+    while ((len = read(_serverFd, &buffer, 1)) > 0) {
+        data.append(&buffer, 1);
+        if (buffer == '\n')
+            break;
+    }
+    return data;
+}
+
+void Gui::Network::sendMessageServer(const std::string& message)
+{
+    if (FD_ISSET(_serverFd, &_writeFd))
+        write(_serverFd, message.c_str(), message.length());
 }
