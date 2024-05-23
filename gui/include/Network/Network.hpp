@@ -10,6 +10,9 @@
 #include "Error/Error.hpp"
 
 #include <string>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
 
 namespace Gui {
 
@@ -66,8 +69,20 @@ class Gui::Network {
          */
         std::string getHostName() const;
 
+        /**
+         * @brief Connect the Gui network with the server.
+         *
+         */
+        void connectToServer();
+
+        void selectServer();
+
     private:
 
         int             _port;
         std::string     _hostName;
+        int             _serverFd;
+        fd_set          _writeFd;
+        fd_set          _readFd;
+        bool            _startNetwork;
 };
