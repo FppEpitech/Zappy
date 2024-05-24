@@ -18,7 +18,7 @@ To maintain an organized repository, we have naming conventions for branches. He
 - **feature** : For new features -> `feat/<short description>`
 - **bugfix** : For bug fixes -> `bugfix/<short description>`
 - **hotfix** : For urgent fixes -> `hotfix/<short description>`
-- **release** : For preparing a release -> `release/<version>`
+- **refactor** : For refactoring -> `refactor/<version>`
 - **documentation** : For adding or updating documentation -> `doc/<short description>`
 
 Please adhere to these conventions to facilitate collaboration and project maintenance. Happy coding!
