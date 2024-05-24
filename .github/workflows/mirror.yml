@@ -1,0 +1,104 @@
+name: chocolatine
+
+on:
+  push:
+    branches-ignore:
+    - "ga-ignore-*"
+  pull_request:
+    branches-ignore:
+    - "ga-ignore-*"
+
+env:
+  EXECUTABLES: "zappy_ai, zappy_server, zappy_gui"
+
+jobs:
+  check_program_compilation:
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: check_presence_of_pushed_executables
+        run: |
+          if [ -z "$EXECUTABLES" ]; then
+            echo "No executable to check"
+            exit 0
+          fi
+          for executable in $EXECUTABLES; do
+            if [ ! -f $executable ]; then
+              echo "No executables are pushed! Good!"
+              exit 0
+            else
+              echo "Executables are pushed! BAD!!!"
+              exit 1
+            fi
+          done
+      - name: make_program
+        run: make
+        timeout-minutes: 5
+      - name: make_clean
+        run: make clean
+      - name: check_presence_of_executables
+        run: |
+          if [ -z "$EXECUTABLES" ]; then
+            echo "No executable to check"
+            exit 0
+          fi
+          for executable in $EXECUTABLES; do
+            if [ ! -x $executable ]; then
+              echo "Executable : $executable not found"
+              exit 1
+            fi
+          done
+
+  check_coding_style:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/epitech/coding-style-checker:latest
+    env:
+      FAILLED: 0
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: "Create coding-style-reports.log"
+        run: check.sh $(pwd) $(pwd)
+      - name: "Parsing coding-style-reports.log"
+        id: error_norm
+        run: |
+          while read line; do
+          echo "FAILLED=1" >> $GITHUB_ENV;
+          ENV_TITLE=$(echo "$line" | cut -d : -f 3);
+          ENV_FILE=$(echo "$line" | cut -d : -f 1);
+          ENV_LINE=$(echo "$line" | cut -d : -f 2);
+          ENV_CONTENT=$(echo "$line" | cut -d : -f 4);
+          echo "::error title="$ENV_TITLE coding style error",file=$ENV_FILE,line=$ENV_LINE,col=5,endColumn=7::$ENV_CONTENT";
+          done < coding-style-reports.log
+          cat coding-style-reports.log >> $GITHUB_OUTPUT
+      - name: Check if coding style failed
+        if: ${{ env.FAILLED == '1' }}
+        run: exit 1
+
+  run_tests:
+    needs: [check_program_compilation]
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+    steps:
+      - uses: actions/checkout@v4
+      - name: run_tests
+        run: make tests_run
+        timeout-minutes: 5
+
+  push_to_mirror:
+    if: ${{ github.event_name == 'push' }}
+    needs: [run_tests, check_coding_style]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: ${{ secrets.MIRROR_URL }}
+          ssh_private_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
