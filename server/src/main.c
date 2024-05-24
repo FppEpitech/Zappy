@@ -5,10 +5,10 @@
 ** main
 */
 
-#include <iostream>
+#include <stdio.h>
 
 int main(void)
 {
-    std::cout << "Welcome to GUI" << std::endl;
+    printf("Welcome to Server\n");
     return 0;
 }
