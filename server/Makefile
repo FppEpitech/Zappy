@@ -1,41 +1,41 @@
 ##
 ## EPITECH PROJECT, 2024
-## Gui Zappy
+## Server Zappy
 ## File description:
-## Core Makefile
+## Makefile for server
 ##
 
 #Files
-MAIN 		=	src/main.cpp
+MAIN 		=	src/main.c
 
 SRC			=	\
 
 TEST_FILES	=	\
 
-OBJ			=	$(SRC:.cpp=.o)
-MAIN_OBJ	=	$(MAIN:.cpp=.o)
+OBJ			=	$(SRC:.c=.o)
+MAIN_OBJ	=	$(MAIN:.c=.o)
 
 #Name
-NAME		= 	zappy_gui
+NAME		= 	zappy_server
 
 # Flags
-INCLUDE		= 	-I./include
-CXXFLAGS 	= 	-std=c++20 -Wall -Wextra -Werror
+INCLUDE		= -I./include
+CXXFLAGS 	= -Wall -Wextra -Werror
 
 # Colors
-YELLOW 		= 	/bin/echo -e "\x1b[33m $1\x1b[0m"
-GREEN 		= 	/bin/echo -e "\x1b[32m $1\x1b[0m"
+YELLOW 		= /bin/echo -e "\x1b[33m $1\x1b[0m"
+GREEN 		= /bin/echo -e "\x1b[32m $1\x1b[0m"
 
 # Tests
-TEST_NAME 	= 	unit_tests
-TEST_DIR 	= 	tests/
-TEST 		= 	$(addprefix $(TEST_DIR), $(TEST_FILES))
-TEST_OBJ 	= 	$(TEST:.cpp=.o)
-TEST_GCNO 	= 	$(SRC:.cpp=.gcno)
-TEST_GCDA 	= 	$(SRC:.cpp=.gcda)
-TEST_FLAGS 	= 	-Wall -Wextra -Werror --coverage -lcriterion
+TEST_NAME 	= unit_tests
+TEST_DIR 	= tests/
+TEST 		= $(addprefix $(TEST_DIR), $(TEST_FILES))
+TEST_OBJ 	= $(TEST:.c=.o)
+TEST_GCNO 	= $(SRC:.c=.gcno)
+TEST_GCDA 	= $(SRC:.c=.gcda)
+TEST_FLAGS 	= -Wall -Wextra -Werror --coverage -lcriterion
 
-CC	=	g++
+CC = gcc
 
 all: $(NAME)
 
@@ -58,7 +58,7 @@ tests_clean:
 
 re:	fclean all
 
-%.o: %.cpp
+%.o: %.c
 	@$(CC) -c $< -o $@ $(CXXFLAGS) $(INCLUDE) && \
 	$(call YELLOW,"🆗 $<") || \
 	$(call YELLOW,"❌ $<")
@@ -69,7 +69,7 @@ obj: $(OBJ)
 
 tests_run: fclean
 	$(MAKE) obj CXXFLAGS+=--coverage
-	$(MAKE) test_obj CXXFLAGS="-Wall -Wextra -Werror"
+	$(MAKE) test_obj
 	@$(CC) -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(TEST_FLAGS) $(INCLUDE)
 	./$(TEST_NAME)
 	gcovr --exclude tests/
