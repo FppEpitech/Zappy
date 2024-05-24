@@ -1,0 +1,13 @@
+# Executables
+
+zappy_server
+zappy_ai
+zappy_gui
+
+# Binaries
+
+*.o
+
+# Python
+
+__pycache__/
