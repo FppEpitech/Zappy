@@ -16,7 +16,7 @@ OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
 
 #Name
-NAME		= 	zappy_gui
+NAME		= 	zappy_server
 
 # Flags
 INCLUDE		= -I./include
