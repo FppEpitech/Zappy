@@ -14,6 +14,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
+#define MAX_PORT 65535
+#define MIN_PORT 1
+
 namespace Gui {
 
     /**
