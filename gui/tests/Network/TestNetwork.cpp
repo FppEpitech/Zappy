@@ -13,14 +13,14 @@
 
 // Port tests
 
-Test(Network_good_port, socket, .timeout = 5)
+Test(network, Network_good_port, .timeout = 5)
 {
     Gui::Network net(4242, "127.0.0.1");
 
     cr_assert_eq(net.getPort(), 4242);
 }
 
-Test(Network_wrong_port, socket, .timeout = 5)
+Test(network, Network_wrong_port, .timeout = 5)
 {
     bool test = false;
 
@@ -34,16 +34,31 @@ Test(Network_wrong_port, socket, .timeout = 5)
 
 // Hostname tests
 
-Test(Network_hostname_number, socket, .timeout = 5)
+Test(network, Network_hostname_number, .timeout = 5)
 {
     Gui::Network net(4242, "127.0.0.1");
 
     cr_assert_eq(net.getHostName(), "127.0.0.1");
 }
 
-Test(Network_hostname_text, socket, .timeout = 5)
+Test(network, Network_hostname_text, .timeout = 5)
 {
     Gui::Network net(4242, "hostname");
 
     cr_assert_eq(net.getHostName(), "hostname");
+}
+
+// Connect to server
+
+Test(network, Network_connect_to_wrong_server, .timeout = 5)
+{
+    std::string test;
+
+    try {
+        Gui::Network net(40000, "127.0.0.1");
+        net.connectToServer();
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Failed to connect to the server.");
 }
