@@ -104,10 +104,10 @@ class Gui::Network {
          */
         void sendMessageServer(const std::string& message);
 
-        int             _port;
-        std::string     _hostName;
-        int             _serverFd;
-        fd_set          _writeFd;
-        fd_set          _readFd;
-        bool            _isConnected;
+        int             _port;          // server port
+        std::string     _hostName;      // server hostname
+        int             _serverFd;      // server file descriptor
+        fd_set          _writeFd;       // file descriptor for write access
+        fd_set          _readFd;        // file descriptor for read access
+        bool            _isConnected;   // is true if the gui is connected to the server
 };
