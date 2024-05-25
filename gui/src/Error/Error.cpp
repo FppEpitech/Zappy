@@ -16,3 +16,8 @@ Gui::Errors::Network::Network(std::string message)
 {
     _message = message;
 }
+
+Gui::Errors::ServerParser::ServerParser(std::string message)
+{
+    _message = message;
+}
