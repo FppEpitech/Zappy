@@ -37,7 +37,7 @@ class Gui::Errors::AError : public IError {
          * @brief Returns the error message.
          * @return A pointer to a constant character string representing the error message.
          */
-        const char *what() const noexcept override { return _message.c_str(); }
+        const char *what() const noexcept override;
 
     protected:
 

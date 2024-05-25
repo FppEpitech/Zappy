@@ -8,7 +8,9 @@
 #Files
 MAIN 		=	src/main.cpp
 
-SRC			=	src/Network/Network.cpp \
+SRC			=	src/Error/AError.cpp \
+				\
+				src/Network/Network.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 
