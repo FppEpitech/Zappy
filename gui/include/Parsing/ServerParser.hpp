@@ -26,13 +26,28 @@ class Gui::ServerParser {
 
     public:
 
+        /**
+         * @brief Construct a new Server Parser object.
+         *
+         */
         ServerParser();
+
+        /**
+         * @brief Destroy the Server Parser object.
+         *
+         */
         ~ServerParser() = default;
-        void parse(const std::string& command);
+
+        /**
+         * @brief Parse the command server.
+         *
+         * @param command pf the server
+         */
+        std::vector<std::string> parse(const std::string& command);
 
     private:
 
-        std::unordered_map<std::string, void(*)()> _functionsMap;
+        std::unordered_map<std::string, std::vector<std::string>(*)(const std::string& command)> _functionsMap;
 
-        static void _parseCommandMSZ();
+        static std::vector<std::string> _parseCommandMSZ(const std::string& command);
 };
