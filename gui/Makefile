@@ -8,9 +8,11 @@
 #Files
 MAIN 		=	src/main.cpp
 
-SRC			=	\
+SRC			=	src/Error/Error.cpp \
+				\
+				src/Network/Network.cpp \
 
-TEST_FILES	=	\
+TEST_FILES	=	Network/TestNetwork.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
