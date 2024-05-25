@@ -7,6 +7,8 @@
 
 #include "Parsing/ServerParser.hpp"
 
+#include <sstream>
+
 Gui::ServerParser::ServerParser()
 {
     _functionsMap["msz"] = &_parseCommandMSZ;
@@ -14,9 +16,13 @@ Gui::ServerParser::ServerParser()
 
 void Gui::ServerParser::parse(const std::string& command)
 {
-    if (_functionsMap[command] == nullptr)
+    std::istringstream stream(command);
+    std::string keyCommand;
+    stream>>keyCommand;
+
+    if (_functionsMap[keyCommand] == nullptr)
         throw Errors::ServerParser("Server's command didn't exist.");
-    return (_functionsMap[command])();
+    return (_functionsMap[keyCommand])();
 }
 
 void Gui::ServerParser::_parseCommandMSZ()
