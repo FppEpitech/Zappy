@@ -10,6 +10,9 @@
 #include <unistd.h>
 #include <iostream>
 
+#define MAX_PORT 65535
+#define MIN_PORT 1
+
 Gui::Network::Network(int port, const std::string& hostName)
 {
     setPort(port);
@@ -19,7 +22,7 @@ Gui::Network::Network(int port, const std::string& hostName)
 
 void Gui::Network::setPort(int port)
 {
-    if (port == 0)
+    if (port < MIN_PORT || port > MAX_PORT)
         throw Errors::Network("Port should not be equal to 0.");
     _port = port;
 }
