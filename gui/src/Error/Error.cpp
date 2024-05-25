@@ -5,9 +5,14 @@
 ** AError
 */
 
-#include "Error/AError.hpp"
+#include "Error/Error.hpp"
 
 const char *Gui::Errors::AError::what() const noexcept
 {
     return _message.c_str();
+}
+
+Gui::Errors::Network::Network(std::string message)
+{
+    _message = message;
 }

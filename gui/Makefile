@@ -8,7 +8,7 @@
 #Files
 MAIN 		=	src/main.cpp
 
-SRC			=	src/Error/AError.cpp \
+SRC			=	src/Error/Error.cpp \
 				\
 				src/Network/Network.cpp \
 

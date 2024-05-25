@@ -28,7 +28,7 @@ namespace Gui {
                  * @brief Constructor for Network.
                  * @param message The error message.
                  */
-                Network(std::string message) { _message = message; }
+                Network(std::string message);
         };
     };
 };
