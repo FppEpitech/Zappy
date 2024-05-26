@@ -15,6 +15,7 @@ Gui::ServerParser::ServerParser()
     _functionsMap["bct"] = &_parseCommandBCT;
     _functionsMap["tna"] = &_parseCommandTNA;
     _functionsMap["pnw"] = &_parseCommandPNW;
+    _functionsMap["ppo"] = &_parseCommandPPO;
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
@@ -112,13 +113,14 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPNW(const std::string& 
     std::istringstream stream(command);
     std::string none, team;
     char hashtag;
-    int player, x, y, level;
+    int player, x, y, orientation, level;
 
     stream >> none;
     stream >> hashtag;
     stream >> player;
     stream >> x;
     stream >> y;
+    stream >> orientation;
     stream >> level;
     stream >> team;
 
@@ -130,8 +132,37 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPNW(const std::string& 
     arguments.push_back(std::to_string(player));
     arguments.push_back(std::to_string(x));
     arguments.push_back(std::to_string(y));
+    arguments.push_back(std::to_string(orientation));
     arguments.push_back(std::to_string(level));
     arguments.push_back(team);
+
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::_parseCommandPPO(const std::string& command)
+{
+    std::vector<std::string> arguments;
+    std::istringstream stream(command);
+    std::string none;
+    char hashtag;
+    int player, x, y, orientation;
+
+    stream >> none;
+    stream >> hashtag;
+    stream >> player;
+    stream >> x;
+    stream >> y;
+    stream >> orientation;
+
+    if (hashtag != '#' || stream.fail())
+        throw Errors::ServerParser("Wrong parameters for 'ppo' command.");
+    stream >> none;
+    if (!stream.fail())
+        throw Errors::ServerParser("Too many parameters for 'ppo' command.");
+    arguments.push_back(std::to_string(player));
+    arguments.push_back(std::to_string(x));
+    arguments.push_back(std::to_string(y));
+    arguments.push_back(std::to_string(orientation));
 
     return arguments;
 }

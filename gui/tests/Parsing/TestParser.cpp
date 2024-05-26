@@ -146,13 +146,14 @@ Test(ParseServer, correct_pnw_command, .timeout = 5)
     Gui::ServerParser parser;
     std::vector<std::string> test;
 
-    test = parser.parse("pnw #1 2 3 4 team");
+    test = parser.parse("pnw #1 2 3 4 5 team");
 
     cr_assert_eq(test[0], "1");
     cr_assert_eq(test[1], "2");
     cr_assert_eq(test[2], "3");
     cr_assert_eq(test[3], "4");
-    cr_assert_eq(test[4], "team");
+    cr_assert_eq(test[4], "5");
+    cr_assert_eq(test[5], "team");
 }
 
 Test(ParseServer, pnw_too_long, .timeout = 5)
@@ -161,7 +162,7 @@ Test(ParseServer, pnw_too_long, .timeout = 5)
     std::string test;
 
     try {
-        parser.parse("pnw #1 2 3 4 team team2");
+        parser.parse("pnw #1 2 3 4 5 team team2");
     } catch (const std::exception &error) {
         test = error.what();
     }
@@ -174,7 +175,7 @@ Test(ParseServer, pnw_wrong_hashtag, .timeout = 5)
     std::string test;
 
     try {
-        parser.parse("pnw 1 2 3 4 team");
+        parser.parse("pnw 1 2 3 4 5 team");
     } catch (const std::exception &error) {
         test = error.what();
     }
@@ -187,9 +188,63 @@ Test(ParseServer, pnw_wrong, .timeout = 5)
     std::string test;
 
     try {
-        parser.parse("pnw #1 2 wrong 4 team");
+        parser.parse("pnw #1 2 wrong 4 5 team");
     } catch (const std::exception &error) {
         test = error.what();
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pnw' command.");
+}
+
+// Command ppo
+
+Test(ParseServer, correct_ppo_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("ppo #1 2 3 4");
+
+    cr_assert_eq(test[0], "1");
+    cr_assert_eq(test[1], "2");
+    cr_assert_eq(test[2], "3");
+    cr_assert_eq(test[3], "4");
+}
+
+Test(ParseServer, ppo_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("ppo #1 2 3 4 5");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'ppo' command.");
+}
+
+Test(ParseServer, ppo_wrong_hashtag, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("ppo 1 2 3 4");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'ppo' command.");
+}
+
+Test(ParseServer, ppo_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("ppo #1 2 wrong 4");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'ppo' command.");
 }
