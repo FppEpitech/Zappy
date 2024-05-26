@@ -36,7 +36,7 @@ Test(ParseServer, correct_msz_command, .timeout = 5)
     cr_assert_eq(test[1], "2");
 }
 
-Test(ParseServer, correct_msz_too_long, .timeout = 5)
+Test(ParseServer, msz_too_long, .timeout = 5)
 {
     Gui::ServerParser parser;
     std::string test;
@@ -49,7 +49,7 @@ Test(ParseServer, correct_msz_too_long, .timeout = 5)
     cr_assert_str_eq(test.c_str(), "Too many parameters for 'msz' command.");
 }
 
-Test(ParseServer, correct_msz_wrong, .timeout = 5)
+Test(ParseServer, msz_wrong, .timeout = 5)
 {
     Gui::ServerParser parser;
     std::string test;
@@ -75,7 +75,7 @@ Test(ParseServer, correct_bct_command, .timeout = 5)
         cr_assert_eq(test[i], std::to_string(i + 1).c_str());
 }
 
-Test(ParseServer, correct_bct_too_long, .timeout = 5)
+Test(ParseServer, bct_too_long, .timeout = 5)
 {
     Gui::ServerParser parser;
     std::string test;
@@ -88,7 +88,7 @@ Test(ParseServer, correct_bct_too_long, .timeout = 5)
     cr_assert_str_eq(test.c_str(), "Too many parameters for 'bct' command.");
 }
 
-Test(ParseServer, correct_bct_wrong, .timeout = 5)
+Test(ParseServer, bct_wrong, .timeout = 5)
 {
     Gui::ServerParser parser;
     std::string test;
@@ -113,7 +113,7 @@ Test(ParseServer, correct_tna_command, .timeout = 5)
     cr_assert_eq(test[0], "team");
 }
 
-Test(ParseServer, correct_tna_too_long, .timeout = 5)
+Test(ParseServer, tna_too_long, .timeout = 5)
 {
     Gui::ServerParser parser;
     std::string test;
@@ -126,7 +126,7 @@ Test(ParseServer, correct_tna_too_long, .timeout = 5)
     cr_assert_str_eq(test.c_str(), "Too many parameters for 'tna' command.");
 }
 
-Test(ParseServer, correct_tna_wrong, .timeout = 5)
+Test(ParseServer, tna_wrong, .timeout = 5)
 {
     Gui::ServerParser parser;
     std::string test;
@@ -137,4 +137,59 @@ Test(ParseServer, correct_tna_wrong, .timeout = 5)
         test = error.what();
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'tna' command.");
+}
+
+// Command pnw
+
+Test(ParseServer, correct_pnw_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("pnw #1 2 3 4 team");
+
+    cr_assert_eq(test[0], "1");
+    cr_assert_eq(test[1], "2");
+    cr_assert_eq(test[2], "3");
+    cr_assert_eq(test[3], "4");
+    cr_assert_eq(test[4], "team");
+}
+
+Test(ParseServer, pnw_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pnw #1 2 3 4 team team2");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'pnw' command.");
+}
+
+Test(ParseServer, pnw_wrong_hashtag, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pnw 1 2 3 4 team");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pnw' command.");
+}
+
+Test(ParseServer, pnw_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pnw #1 2 wrong 4 team");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pnw' command.");
 }

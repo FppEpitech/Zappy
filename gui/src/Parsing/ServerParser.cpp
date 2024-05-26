@@ -14,6 +14,7 @@ Gui::ServerParser::ServerParser()
     _functionsMap["msz"] = &_parseCommandMSZ;
     _functionsMap["bct"] = &_parseCommandBCT;
     _functionsMap["tna"] = &_parseCommandTNA;
+    _functionsMap["pnw"] = &_parseCommandPNW;
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
@@ -100,6 +101,36 @@ std::vector<std::string> Gui::ServerParser::_parseCommandTNA(const std::string& 
     stream >> none;
     if (!stream.fail())
         throw Errors::ServerParser("Too many parameters for 'tna' command.");
+    arguments.push_back(team);
+
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::_parseCommandPNW(const std::string& command)
+{
+    std::vector<std::string> arguments;
+    std::istringstream stream(command);
+    std::string none, team;
+    char hashtag;
+    int player, x, y, level;
+
+    stream >> none;
+    stream >> hashtag;
+    stream >> player;
+    stream >> x;
+    stream >> y;
+    stream >> level;
+    stream >> team;
+
+    if (hashtag != '#' || stream.fail())
+        throw Errors::ServerParser("Wrong parameters for 'pnw' command.");
+    stream >> none;
+    if (!stream.fail())
+        throw Errors::ServerParser("Too many parameters for 'pnw' command.");
+    arguments.push_back(std::to_string(player));
+    arguments.push_back(std::to_string(x));
+    arguments.push_back(std::to_string(y));
+    arguments.push_back(std::to_string(level));
     arguments.push_back(team);
 
     return arguments;
