@@ -19,6 +19,8 @@ Gui::ServerParser::ServerParser()
     _functionsMap["plv"] = &_parseCommandPLV;
     _functionsMap["pin"] = &_parseCommandPIN;
     _functionsMap["pex"] = &_parseCommandPEX;
+    // TODO : pbc, pic, pie
+    _functionsMap["pfk"] = &_parseCommandPFK;
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
@@ -251,6 +253,28 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPEX(const std::string& 
     stream >> none;
     if (!stream.fail())
         throw Errors::ServerParser("Too many parameters for 'pex' command.");
+    arguments.push_back(std::to_string(player));
+
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::_parseCommandPFK(const std::string& command)
+{
+    std::vector<std::string> arguments;
+    std::istringstream stream(command);
+    std::string none;
+    char hashtag;
+    int player;
+
+    stream >> none;
+    stream >> hashtag;
+    stream >> player;
+
+    if (hashtag != '#' || stream.fail())
+        throw Errors::ServerParser("Wrong parameters for 'pfk' command.");
+    stream >> none;
+    if (!stream.fail())
+        throw Errors::ServerParser("Too many parameters for 'pfk' command.");
     arguments.push_back(std::to_string(player));
 
     return arguments;
