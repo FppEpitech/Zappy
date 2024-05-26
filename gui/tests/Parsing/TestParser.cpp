@@ -457,3 +457,55 @@ Test(ParseServer, pfk_wrong, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pfk' command.");
 }
+
+// Command pdr
+
+Test(ParseServer, correct_pdr_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("pdr #1 2");
+
+    cr_assert_eq(test[0], "1");
+    cr_assert_eq(test[1], "2");
+}
+
+Test(ParseServer, pdr_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pdr #1 2 3");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'pdr' command.");
+}
+
+Test(ParseServer, pdr_wrong_hashtag, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pdr 1 2");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pdr' command.");
+}
+
+Test(ParseServer, pdr_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pdr #1 a");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pdr' command.");
+}

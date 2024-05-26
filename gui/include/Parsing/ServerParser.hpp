@@ -59,4 +59,5 @@ class Gui::ServerParser {
         static std::vector<std::string> _parseCommandPEX(const std::string& command);
         // TODO : PBC, PIC, PIE
         static std::vector<std::string> _parseCommandPFK(const std::string& command);
+        static std::vector<std::string> _parseCommandPDR(const std::string& command);
 };
