@@ -15,6 +15,7 @@ SRC			=	src/Error/Error.cpp \
 				src/Parsing/ServerParser.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
+				Parsing/TestParser.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
