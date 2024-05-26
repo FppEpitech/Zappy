@@ -4,6 +4,9 @@ on:
   pull_request:
     branches-ignore:
     - "ga-ignore-*"
+  push:
+    branches:
+    - main
 
 env:
   EXECUTABLES: "zappy_ai zappy_server zappy_gui"
