@@ -23,6 +23,7 @@ Gui::ServerParser::ServerParser()
     _functionsMap["pfk"] = &_parseCommandPFK;
     _functionsMap["pdr"] = &_parseCommandPDR;
     _functionsMap["pgt"] = &_parseCommandPGT;
+    _functionsMap["pdi"] = &_parseCommandPDI;
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
@@ -326,6 +327,28 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPGT(const std::string& 
         throw Errors::ServerParser("Too many parameters for 'pgt' command.");
     arguments.push_back(std::to_string(player));
     arguments.push_back(std::to_string(nbRessources));
+
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::_parseCommandPDI(const std::string& command)
+{
+    std::vector<std::string> arguments;
+    std::istringstream stream(command);
+    std::string none;
+    char hashtag;
+    int player;
+
+    stream >> none;
+    stream >> hashtag;
+    stream >> player;
+
+    if (hashtag != '#' || stream.fail())
+        throw Errors::ServerParser("Wrong parameters for 'pdi' command.");
+    stream >> none;
+    if (!stream.fail())
+        throw Errors::ServerParser("Too many parameters for 'pdi' command.");
+    arguments.push_back(std::to_string(player));
 
     return arguments;
 }

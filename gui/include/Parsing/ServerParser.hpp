@@ -61,4 +61,5 @@ class Gui::ServerParser {
         static std::vector<std::string> _parseCommandPFK(const std::string& command);
         static std::vector<std::string> _parseCommandPDR(const std::string& command);
         static std::vector<std::string> _parseCommandPGT(const std::string& command);
+        static std::vector<std::string> _parseCommandPDI(const std::string& command);
 };
