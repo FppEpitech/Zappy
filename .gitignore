@@ -9,5 +9,10 @@ zappy_gui
 *.o
 
 # Python
-
 __pycache__/
+
+# Tests
+*.gcda
+*.gcno
+*.gcov
+*unit_tests
