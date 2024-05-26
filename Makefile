@@ -24,6 +24,11 @@ fclean:
 	@make fclean -C ai
 	@make fclean -C gui
 
+tests_run:
+	@make tests_run -C server
+	@make tests_run -C ai
+	@make tests_run -C gui
+
 zappy_gui:
 	@make -C gui
 
@@ -61,3 +66,12 @@ zappy_ai_re:
 	@make re -C ai
 
 re: fclean all
+
+zappy_gui_tests_run:
+	@make tests_run -C gui
+
+zappy_server_tests_run:
+	@make tests_run -C server
+
+zappy_ai_tests_run:
+	@make tests_run -C ai

@@ -43,6 +43,7 @@ $(NAME): $(OBJ) $(MAIN_OBJ)
 	@$(CC) $(MAIN_OBJ) $(OBJ) -o $(NAME) $(CXXFLAGS) $(INCLUDE) && \
 	$(call YELLOW,"✅ $@") || \
 	$(call YELLOW,"❌ $@")
+	cp $(NAME) ../
 
 clean:
 	rm -f $(MAIN_OBJ) $(OBJ)
@@ -50,6 +51,7 @@ clean:
 
 fclean: clean tests_clean
 	@rm -f $(NAME) $(TEST_NAME)
+	@rm -f ../$(NAME)
 	@$(call GREEN,"✅ [$@] done !")
 
 tests_clean:
