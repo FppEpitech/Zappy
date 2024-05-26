@@ -18,6 +18,7 @@ Gui::ServerParser::ServerParser()
     _functionsMap["ppo"] = &_parseCommandPPO;
     _functionsMap["plv"] = &_parseCommandPLV;
     _functionsMap["pin"] = &_parseCommandPIN;
+    _functionsMap["pex"] = &_parseCommandPEX;
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
@@ -229,6 +230,28 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPIN(const std::string& 
     arguments.push_back(std::to_string(q4));
     arguments.push_back(std::to_string(q5));
     arguments.push_back(std::to_string(q6));
+
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::_parseCommandPEX(const std::string& command)
+{
+    std::vector<std::string> arguments;
+    std::istringstream stream(command);
+    std::string none;
+    char hashtag;
+    int player;
+
+    stream >> none;
+    stream >> hashtag;
+    stream >> player;
+
+    if (hashtag != '#' || stream.fail())
+        throw Errors::ServerParser("Wrong parameters for 'pex' command.");
+    stream >> none;
+    if (!stream.fail())
+        throw Errors::ServerParser("Too many parameters for 'pex' command.");
+    arguments.push_back(std::to_string(player));
 
     return arguments;
 }

@@ -355,3 +355,54 @@ Test(ParseServer, pin_wrong, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pin' command.");
 }
+
+// Command pex
+
+Test(ParseServer, correct_pex_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("pex #1");
+
+    cr_assert_eq(test[0], "1");
+}
+
+Test(ParseServer, pex_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pex #1 2");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'pex' command.");
+}
+
+Test(ParseServer, pex_wrong_hashtag, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pex 1");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pex' command.");
+}
+
+Test(ParseServer, pex_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pex #wrong");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pex' command.");
+}

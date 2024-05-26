@@ -56,4 +56,5 @@ class Gui::ServerParser {
         static std::vector<std::string> _parseCommandPPO(const std::string& command);
         static std::vector<std::string> _parseCommandPLV(const std::string& command);
         static std::vector<std::string> _parseCommandPIN(const std::string& command);
+        static std::vector<std::string> _parseCommandPEX(const std::string& command);
 };
