@@ -61,3 +61,49 @@ Test(ParseServer, correct_msz_wrong, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'msz' command.");
 }
+
+// Command bct
+
+Test(ParseServer, correct_bct_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("bct 1 2 3 4 5 6 7 8 9");
+
+    cr_assert_eq(test[0], "1");
+    cr_assert_eq(test[1], "2");
+    cr_assert_eq(test[2], "3");
+    cr_assert_eq(test[3], "4");
+    cr_assert_eq(test[4], "5");
+    cr_assert_eq(test[5], "6");
+    cr_assert_eq(test[6], "7");
+    cr_assert_eq(test[7], "8");
+    cr_assert_eq(test[8], "9");
+}
+
+Test(ParseServer, correct_bct_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("bct 1 2 3 4 5 6 7 8 9 10");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'bct' command.");
+}
+
+Test(ParseServer, correct_bct_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("bct 1 2 3.7 4 5 6 7 8 9");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'bct' command.");
+}

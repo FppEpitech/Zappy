@@ -50,4 +50,5 @@ class Gui::ServerParser {
         std::unordered_map<std::string, std::vector<std::string>(*)(const std::string& command)> _functionsMap;
 
         static std::vector<std::string> _parseCommandMSZ(const std::string& command);
+        static std::vector<std::string> _parseCommandBCT(const std::string& command);
 };
