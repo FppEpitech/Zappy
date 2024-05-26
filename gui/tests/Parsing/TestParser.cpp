@@ -300,3 +300,58 @@ Test(ParseServer, plv_wrong, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'plv' command.");
 }
+
+// Command pin
+
+Test(ParseServer, correct_pin_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("pin #1 2 3 0 1 2 3 4 5 6");
+
+    cr_assert_eq(test[0], "1");
+    cr_assert_eq(test[1], "2");
+    cr_assert_eq(test[2], "3");
+    for (int i = 0; i < 7; i++)
+        cr_assert_eq(test[i + 3], std::to_string(i).c_str());
+}
+
+Test(ParseServer, pin_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pin #1 2 3 0 1 2 3 4 5 6 7");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'pin' command.");
+}
+
+Test(ParseServer, pin_wrong_hashtag, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pin 1 2 3 0 1 2 3 4 5 6");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pin' command.");
+}
+
+Test(ParseServer, pin_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pin #1 2 3 0 1 2 wrong 4 5 6");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pin' command.");
+}

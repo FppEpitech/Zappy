@@ -17,6 +17,7 @@ Gui::ServerParser::ServerParser()
     _functionsMap["pnw"] = &_parseCommandPNW;
     _functionsMap["ppo"] = &_parseCommandPPO;
     _functionsMap["plv"] = &_parseCommandPLV;
+    _functionsMap["pin"] = &_parseCommandPIN;
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
@@ -188,6 +189,46 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPLV(const std::string& 
         throw Errors::ServerParser("Too many parameters for 'plv' command.");
     arguments.push_back(std::to_string(player));
     arguments.push_back(std::to_string(level));
+
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::_parseCommandPIN(const std::string& command)
+{
+    std::vector<std::string> arguments;
+    std::istringstream stream(command);
+    std::string none;
+    char hashtag;
+    int player, x, y, q0, q1, q2, q3, q4, q5, q6;
+
+    stream >> none;
+    stream >> hashtag;
+    stream >> player;
+    stream >> x;
+    stream >> y;
+    stream >> q0;
+    stream >> q1;
+    stream >> q2;
+    stream >> q3;
+    stream >> q4;
+    stream >> q5;
+    stream >> q6;
+
+    if (hashtag != '#' || stream.fail())
+        throw Errors::ServerParser("Wrong parameters for 'pin' command.");
+    stream >> none;
+    if (!stream.fail())
+        throw Errors::ServerParser("Too many parameters for 'pin' command.");
+    arguments.push_back(std::to_string(player));
+    arguments.push_back(std::to_string(x));
+    arguments.push_back(std::to_string(y));
+    arguments.push_back(std::to_string(q0));
+    arguments.push_back(std::to_string(q1));
+    arguments.push_back(std::to_string(q2));
+    arguments.push_back(std::to_string(q3));
+    arguments.push_back(std::to_string(q4));
+    arguments.push_back(std::to_string(q5));
+    arguments.push_back(std::to_string(q6));
 
     return arguments;
 }
