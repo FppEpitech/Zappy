@@ -9,7 +9,7 @@ on:
     - "ga-ignore-*"
 
 env:
-  EXECUTABLES: "zappy_ai, zappy_server, zappy_gui"
+  EXECUTABLES: "zappy_ai zappy_server zappy_gui"
 
 jobs:
   check_program_compilation:
