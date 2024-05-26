@@ -71,15 +71,8 @@ Test(ParseServer, correct_bct_command, .timeout = 5)
 
     test = parser.parse("bct 1 2 3 4 5 6 7 8 9");
 
-    cr_assert_eq(test[0], "1");
-    cr_assert_eq(test[1], "2");
-    cr_assert_eq(test[2], "3");
-    cr_assert_eq(test[3], "4");
-    cr_assert_eq(test[4], "5");
-    cr_assert_eq(test[5], "6");
-    cr_assert_eq(test[6], "7");
-    cr_assert_eq(test[7], "8");
-    cr_assert_eq(test[8], "9");
+    for (int i = 0; i < 9; i++)
+        cr_assert_eq(test[i], std::to_string(i + 1).c_str());
 }
 
 Test(ParseServer, correct_bct_too_long, .timeout = 5)
@@ -106,4 +99,42 @@ Test(ParseServer, correct_bct_wrong, .timeout = 5)
         test = error.what();
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'bct' command.");
+}
+
+// Command tna
+
+Test(ParseServer, correct_tna_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("tna team");
+
+    cr_assert_eq(test[0], "team");
+}
+
+Test(ParseServer, correct_tna_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("tna team team2");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'tna' command.");
+}
+
+Test(ParseServer, correct_tna_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("tna ");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'tna' command.");
 }

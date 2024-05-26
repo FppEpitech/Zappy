@@ -13,6 +13,7 @@ Gui::ServerParser::ServerParser()
 {
     _functionsMap["msz"] = &_parseCommandMSZ;
     _functionsMap["bct"] = &_parseCommandBCT;
+    _functionsMap["tna"] = &_parseCommandTNA;
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
@@ -80,6 +81,26 @@ std::vector<std::string> Gui::ServerParser::_parseCommandBCT(const std::string& 
     arguments.push_back(std::to_string(q4));
     arguments.push_back(std::to_string(q5));
     arguments.push_back(std::to_string(q6));
+
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::_parseCommandTNA(const std::string& command)
+{
+    std::vector<std::string> arguments;
+    std::istringstream stream(command);
+    std::string none;
+    std::string team;
+
+    stream >> none;
+    stream >> team;
+
+    if (stream.fail())
+        throw Errors::ServerParser("Wrong parameters for 'tna' command.");
+    stream >> none;
+    if (!stream.fail())
+        throw Errors::ServerParser("Too many parameters for 'tna' command.");
+    arguments.push_back(team);
 
     return arguments;
 }

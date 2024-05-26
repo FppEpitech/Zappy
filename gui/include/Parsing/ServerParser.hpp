@@ -51,4 +51,5 @@ class Gui::ServerParser {
 
         static std::vector<std::string> _parseCommandMSZ(const std::string& command);
         static std::vector<std::string> _parseCommandBCT(const std::string& command);
+        static std::vector<std::string> _parseCommandTNA(const std::string& command);
 };
