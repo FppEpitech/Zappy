@@ -248,3 +248,55 @@ Test(ParseServer, ppo_wrong, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'ppo' command.");
 }
+
+// Command plv
+
+Test(ParseServer, correct_plv_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("plv #1 2");
+
+    cr_assert_eq(test[0], "1");
+    cr_assert_eq(test[1], "2");
+}
+
+Test(ParseServer, plv_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("plv #1 2 3");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'plv' command.");
+}
+
+Test(ParseServer, plv_wrong_hashtag, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("plv 1 2");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'plv' command.");
+}
+
+Test(ParseServer, plv_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("plv #1 wrong");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'plv' command.");
+}

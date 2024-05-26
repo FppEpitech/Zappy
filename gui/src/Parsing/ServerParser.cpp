@@ -16,6 +16,7 @@ Gui::ServerParser::ServerParser()
     _functionsMap["tna"] = &_parseCommandTNA;
     _functionsMap["pnw"] = &_parseCommandPNW;
     _functionsMap["ppo"] = &_parseCommandPPO;
+    _functionsMap["plv"] = &_parseCommandPLV;
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
@@ -163,6 +164,30 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPPO(const std::string& 
     arguments.push_back(std::to_string(x));
     arguments.push_back(std::to_string(y));
     arguments.push_back(std::to_string(orientation));
+
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::_parseCommandPLV(const std::string& command)
+{
+    std::vector<std::string> arguments;
+    std::istringstream stream(command);
+    std::string none;
+    char hashtag;
+    int player, level;
+
+    stream >> none;
+    stream >> hashtag;
+    stream >> player;
+    stream >> level;
+
+    if (hashtag != '#' || stream.fail())
+        throw Errors::ServerParser("Wrong parameters for 'plv' command.");
+    stream >> none;
+    if (!stream.fail())
+        throw Errors::ServerParser("Too many parameters for 'plv' command.");
+    arguments.push_back(std::to_string(player));
+    arguments.push_back(std::to_string(level));
 
     return arguments;
 }
