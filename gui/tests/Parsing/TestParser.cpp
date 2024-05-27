@@ -895,3 +895,28 @@ Test(ParseServer, seg_wrong, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'seg' command.");
 }
+
+// Command suc
+
+Test(ParseServer, correct_suc_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("suc");
+
+    cr_assert_eq(test.size(), 0);
+}
+
+Test(ParseServer, suc_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("suc long");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'suc' command.");
+}

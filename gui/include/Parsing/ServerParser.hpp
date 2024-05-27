@@ -68,4 +68,6 @@ class Gui::ServerParser {
         static std::vector<std::string> _parseCommandSGT(const std::string& command);
         static std::vector<std::string> _parseCommandSST(const std::string& command);
         static std::vector<std::string> _parseCommandSEG(const std::string& command);
+        // TODO : SMG
+        static std::vector<std::string> _parseCommandSUC(const std::string& command);
 };
