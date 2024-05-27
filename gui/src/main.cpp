@@ -5,10 +5,21 @@
 ** main
 */
 
+#include "Engine/Engine.hpp"
+#include "Network/Network.hpp"
+
 #include <iostream>
 
-int main(void)
+static void displayHelp()
 {
-    std::cout << "Welcome to GUI" << std::endl;
+    std::cout << "USAGE:\t./zappy_gui -p port -h machine" << std::endl;
+}
+
+int main(int argc, char **argv)
+{
+    if (argc != 3) {
+        displayHelp();
+        return 0;
+    }
     return 0;
 }
