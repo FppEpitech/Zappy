@@ -97,7 +97,30 @@ class Gui::ServerParser {
          */
         std::vector<std::string> parseCommand(const std::string& command, std::vector<ParseType> types);
 
+        /**
+         * @brief Parse an int in the command stream.
+         *
+         * @param stream Stream to parse.
+         * @param arguments List of arguments parsed.
+         * @return std::vector<std::string> - arguments parsed
+         */
         std::vector<std::string> parseInt(std::istringstream& stream, std::vector<std::string> arguments);
+
+        /**
+         * @brief Parse a string in the command stream.
+         *
+         * @param stream Stream to parse.
+         * @param arguments List of arguments parsed.
+         * @return std::vector<std::string> - arguments parsed
+         */
         std::vector<std::string> parseString(std::istringstream& stream, std::vector<std::string> arguments);
+
+        /**
+         * @brief Parse an hashtag in the command stream.
+         *
+         * @param stream Stream to parse.
+         * @param arguments List of arguments parsed.
+         * @return std::vector<std::string> - arguments parsed
+         */
         std::vector<std::string> parseHashtag(std::istringstream& stream, std::vector<std::string> arguments, std::string commandName);
 };
