@@ -18,7 +18,7 @@ std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
     stream >> keyCommand;
 
     if (_typesCommand.find(keyCommand) == _typesCommand.end())
-        throw Errors::ServerParser("Server's command didn't exist.");
+        throw Errors::ServerParserException("Server's command didn't exist.");
     return parseCommand(command, _typesCommand[keyCommand]);
 }
 
@@ -52,7 +52,7 @@ std::vector<std::string> Gui::ServerParser::parseCommand(const std::string& comm
                 char hashtag;
                 stream >> hashtag;
                 if (hashtag != '#')
-                    throw Errors::ServerParser("Wrong parameters for '" + commandName + "' command.");
+                    throw Errors::ServerParserException("Wrong parameters for '" + commandName + "' command.");
                 int nb;
                 stream >> nb;
                 arguments.push_back(std::to_string(nb));
@@ -63,9 +63,9 @@ std::vector<std::string> Gui::ServerParser::parseCommand(const std::string& comm
         }
     }
     if (stream.fail())
-        throw Errors::ServerParser("Wrong parameters for '" + commandName + "' command.");
+        throw Errors::ServerParserException("Wrong parameters for '" + commandName + "' command.");
     if (stream.peek() != std::istringstream::traits_type::eof())
-        throw Errors::ServerParser("Too many parameters for '" + commandName + "' command.");
+        throw Errors::ServerParserException("Too many parameters for '" + commandName + "' command.");
 
     return arguments;
 }

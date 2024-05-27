@@ -12,12 +12,12 @@ const char *Gui::Errors::AError::what() const noexcept
     return _message.c_str();
 }
 
-Gui::Errors::Network::Network(std::string message)
+Gui::Errors::NetworkException::NetworkException(std::string message)
 {
     _message = message;
 }
 
-Gui::Errors::ServerParser::ServerParser(std::string message)
+Gui::Errors::ServerParserException::ServerParserException(std::string message)
 {
     _message = message;
 }
