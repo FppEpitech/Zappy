@@ -25,6 +25,7 @@ Gui::ServerParser::ServerParser()
     _functionsMap["pgt"] = &_parseCommandPGT;
     _functionsMap["pdi"] = &_parseCommandPDI;
     _functionsMap["enw"] = &_parseCommandENW;
+    _functionsMap["ebo"] = &_parseCommandEBO;
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
@@ -379,6 +380,28 @@ std::vector<std::string> Gui::ServerParser::_parseCommandENW(const std::string& 
     arguments.push_back(std::to_string(player));
     arguments.push_back(std::to_string(x));
     arguments.push_back(std::to_string(y));
+
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::_parseCommandEBO(const std::string& command)
+{
+    std::vector<std::string> arguments;
+    std::istringstream stream(command);
+    std::string none;
+    char hashtagEgg;
+    int egg;
+
+    stream >> none;
+    stream >> hashtagEgg;
+    stream >> egg;
+
+    if (hashtagEgg != '#' || stream.fail())
+        throw Errors::ServerParser("Wrong parameters for 'ebo' command.");
+    stream >> none;
+    if (!stream.fail())
+        throw Errors::ServerParser("Too many parameters for 'ebo' command.");
+    arguments.push_back(std::to_string(egg));
 
     return arguments;
 }
