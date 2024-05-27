@@ -19,7 +19,6 @@ Gui::ServerParser::ServerParser()
     _functionsMap["plv"] = &_parseCommandPLV;
     _functionsMap["pin"] = &_parseCommandPIN;
     _functionsMap["pex"] = &_parseCommandPEX;
-    // TODO : pbc, pic, pie
     _functionsMap["pfk"] = &_parseCommandPFK;
     _functionsMap["pdr"] = &_parseCommandPDR;
     _functionsMap["pgt"] = &_parseCommandPGT;
@@ -30,9 +29,10 @@ Gui::ServerParser::ServerParser()
     _functionsMap["sgt"] = &_parseCommandSGT;
     _functionsMap["sst"] = &_parseCommandSST;
     _functionsMap["seg"] = &_parseCommandSEG;
-    // TODO : smg
     _functionsMap["suc"] = &_parseCommandSUC;
     _functionsMap["sbp"] = &_parseCommandSBP;
+    // TODO : pbc, pic, pie, smg
+    // #15 (https://github.com/FppEpitech/Zappy/issues/15))
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)

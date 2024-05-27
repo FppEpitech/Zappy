@@ -113,8 +113,6 @@ class Gui::ServerParser {
          */
         static std::vector<std::string> _parseCommandPEX(const std::string& command);
 
-        // TODO : PBC, PIC, PIE
-
         /**
          * @brief Parse the command pfk.
          *
@@ -195,8 +193,6 @@ class Gui::ServerParser {
          */
         static std::vector<std::string> _parseCommandSEG(const std::string& command);
 
-        // TODO : SMG
-
         /**
          * @brief Parse the command suc.
          *
@@ -212,4 +208,7 @@ class Gui::ServerParser {
          * @return std::vector<std::string> - arguments parsed
          */
         static std::vector<std::string> _parseCommandSBP(const std::string& command);
+
+        // TODO : PBC, PIC, PIE, SMG
+        // #15 (https://github.com/FppEpitech/Zappy/issues/15)
 };
