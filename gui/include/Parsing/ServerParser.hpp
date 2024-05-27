@@ -58,7 +58,11 @@ class Gui::ServerParser {
 
     private:
 
-        std::unordered_map<std::string, std::vector<ParseType>> _typesCommand =     // Map of types to parse related to the command
+        /**
+         * @brief Map of types to parse related to the command
+         *
+         */
+        std::unordered_map<std::string, std::vector<ParseType>> _typesCommand =
         {
             {"msz", std::vector<ParseType>{INT, INT}},
             {"bct", std::vector<ParseType>{INT, INT, INT, INT, INT, INT, INT, INT, INT}},
