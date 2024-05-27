@@ -59,8 +59,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandMSZ(const std::string& 
 
     if (stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'msz' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'msz' command.");
     arguments.push_back(std::to_string(x));
     arguments.push_back(std::to_string(y));
@@ -88,8 +87,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandBCT(const std::string& 
 
     if (stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'bct' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'bct' command.");
     arguments.push_back(std::to_string(x));
     arguments.push_back(std::to_string(y));
@@ -116,8 +114,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandTNA(const std::string& 
 
     if (stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'tna' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'tna' command.");
     arguments.push_back(team);
 
@@ -143,8 +140,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPNW(const std::string& 
 
     if (hashtag != '#' || stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'pnw' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'pnw' command.");
     arguments.push_back(std::to_string(player));
     arguments.push_back(std::to_string(x));
@@ -173,8 +169,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPPO(const std::string& 
 
     if (hashtag != '#' || stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'ppo' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'ppo' command.");
     arguments.push_back(std::to_string(player));
     arguments.push_back(std::to_string(x));
@@ -199,8 +194,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPLV(const std::string& 
 
     if (hashtag != '#' || stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'plv' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'plv' command.");
     arguments.push_back(std::to_string(player));
     arguments.push_back(std::to_string(level));
@@ -231,8 +225,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPIN(const std::string& 
 
     if (hashtag != '#' || stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'pin' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'pin' command.");
     arguments.push_back(std::to_string(player));
     arguments.push_back(std::to_string(x));
@@ -262,8 +255,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPEX(const std::string& 
 
     if (hashtag != '#' || stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'pex' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'pex' command.");
     arguments.push_back(std::to_string(player));
 
@@ -284,8 +276,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPFK(const std::string& 
 
     if (hashtag != '#' || stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'pfk' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'pfk' command.");
     arguments.push_back(std::to_string(player));
 
@@ -307,8 +298,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPDR(const std::string& 
 
     if (hashtag != '#' || stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'pdr' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'pdr' command.");
     arguments.push_back(std::to_string(player));
     arguments.push_back(std::to_string(nbRessources));
@@ -331,8 +321,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPGT(const std::string& 
 
     if (hashtag != '#' || stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'pgt' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'pgt' command.");
     arguments.push_back(std::to_string(player));
     arguments.push_back(std::to_string(nbRessources));
@@ -354,8 +343,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPDI(const std::string& 
 
     if (hashtag != '#' || stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'pdi' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'pdi' command.");
     arguments.push_back(std::to_string(player));
 
@@ -380,8 +368,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandENW(const std::string& 
 
     if (hashtagEgg != '#' || hashtagPlayer != '#' || stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'enw' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'enw' command.");
     arguments.push_back(std::to_string(egg));
     arguments.push_back(std::to_string(player));
@@ -405,8 +392,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandEBO(const std::string& 
 
     if (hashtagEgg != '#' || stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'ebo' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'ebo' command.");
     arguments.push_back(std::to_string(egg));
 
@@ -427,8 +413,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandEDI(const std::string& 
 
     if (hashtagEgg != '#' || stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'edi' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'edi' command.");
     arguments.push_back(std::to_string(egg));
 
@@ -447,8 +432,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandSGT(const std::string& 
 
     if (stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'sgt' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'sgt' command.");
     arguments.push_back(std::to_string(time));
 
@@ -467,8 +451,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandSST(const std::string& 
 
     if (stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'sst' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'sst' command.");
     arguments.push_back(std::to_string(time));
 
@@ -486,8 +469,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandSEG(const std::string& 
 
     if (stream.fail())
         throw Errors::ServerParser("Wrong parameters for 'seg' command.");
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'seg' command.");
     arguments.push_back(team);
 
@@ -501,8 +483,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandSUC(const std::string& 
     std::string none, team;
 
     stream >> none;
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'suc' command.");
 
     return arguments;
@@ -515,8 +496,7 @@ std::vector<std::string> Gui::ServerParser::_parseCommandSBP(const std::string& 
     std::string none, team;
 
     stream >> none;
-    stream >> none;
-    if (!stream.fail())
+    if (stream.peek() != std::istringstream::traits_type::eof())
         throw Errors::ServerParser("Too many parameters for 'sbp' command.");
 
     return arguments;
