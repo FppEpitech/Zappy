@@ -612,3 +612,70 @@ Test(ParseServer, pdi_wrong, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pdi' command.");
 }
+
+// Command enw
+
+Test(ParseServer, correct_enw_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("enw #1 #2 3 4");
+
+    cr_assert_eq(test[0], "1");
+    cr_assert_eq(test[1], "2");
+    cr_assert_eq(test[2], "3");
+    cr_assert_eq(test[3], "4");
+}
+
+Test(ParseServer, enw_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("enw #1 #2 3 4 5");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'enw' command.");
+}
+
+Test(ParseServer, enw_wrong_hashtag_egg, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("enw 1 #2 3 4");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'enw' command.");
+}
+
+Test(ParseServer, enw_wrong_hashtag_player, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("enw #1 2 3 4");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'enw' command.");
+}
+
+Test(ParseServer, enw_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("enw #1 #2 wrong 4");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'enw' command.");
+}

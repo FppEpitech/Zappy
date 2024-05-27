@@ -24,6 +24,7 @@ Gui::ServerParser::ServerParser()
     _functionsMap["pdr"] = &_parseCommandPDR;
     _functionsMap["pgt"] = &_parseCommandPGT;
     _functionsMap["pdi"] = &_parseCommandPDI;
+    _functionsMap["enw"] = &_parseCommandENW;
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
@@ -349,6 +350,35 @@ std::vector<std::string> Gui::ServerParser::_parseCommandPDI(const std::string& 
     if (!stream.fail())
         throw Errors::ServerParser("Too many parameters for 'pdi' command.");
     arguments.push_back(std::to_string(player));
+
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::_parseCommandENW(const std::string& command)
+{
+    std::vector<std::string> arguments;
+    std::istringstream stream(command);
+    std::string none;
+    char hashtagEgg, hashtagPlayer;
+    int egg, player, x, y;
+
+    stream >> none;
+    stream >> hashtagEgg;
+    stream >> egg;
+    stream >> hashtagPlayer;
+    stream >> player;
+    stream >> x;
+    stream >> y;
+
+    if (hashtagEgg != '#' || hashtagPlayer != '#' || stream.fail())
+        throw Errors::ServerParser("Wrong parameters for 'enw' command.");
+    stream >> none;
+    if (!stream.fail())
+        throw Errors::ServerParser("Too many parameters for 'enw' command.");
+    arguments.push_back(std::to_string(egg));
+    arguments.push_back(std::to_string(player));
+    arguments.push_back(std::to_string(x));
+    arguments.push_back(std::to_string(y));
 
     return arguments;
 }
