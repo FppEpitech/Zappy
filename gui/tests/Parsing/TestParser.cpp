@@ -781,3 +781,41 @@ Test(ParseServer, edi_wrong, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'edi' command.");
 }
+
+// Command sgt
+
+Test(ParseServer, correct_sgt_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("sgt 1");
+
+    cr_assert_eq(test[0], "1");
+}
+
+Test(ParseServer, sgt_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("sgt 1 2");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'sgt' command.");
+}
+
+Test(ParseServer, sgt_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("sgt wrong");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'sgt' command.");
+}
