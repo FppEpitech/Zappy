@@ -26,6 +26,7 @@ namespace Gui {
             public:
                 /**
                  * @brief Constructor for Network.
+                 *
                  * @param message The error message.
                  */
                 Network(std::string message);
@@ -39,6 +40,7 @@ namespace Gui {
             public:
                 /**
                  * @brief Constructor for ServerParser.
+                 *
                  * @param message The error message.
                  */
                 ServerParser(std::string message);
