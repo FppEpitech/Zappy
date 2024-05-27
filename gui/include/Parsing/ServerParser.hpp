@@ -41,174 +41,55 @@ class Gui::ServerParser {
         /**
          * @brief Parse the command server.
          *
-         * @param command Command of the server.
+         * @param command Command to parse.
+         * @return std::vector<std::string> - arguments parsed
          */
         std::vector<std::string> parse(const std::string& command);
 
+        /**
+         * @brief Enum of types to parse.
+         *
+         */
+        enum ParseType {
+            INT,
+            STRING,
+            HASHTAG
+        };
+
     private:
 
-        std::unordered_map<std::string, std::vector<std::string>(*)(const std::string& command)> _functionsMap;
+        std::unordered_map<std::string, std::vector<ParseType>> _typesCommand =     // Map of types to parse related to the command
+        {
+            {"msz", std::vector<ParseType>{INT, INT}},
+            {"bct", std::vector<ParseType>{INT, INT, INT, INT, INT, INT, INT, INT, INT}},
+            {"tna", std::vector<ParseType>{STRING}},
+            {"pnw", std::vector<ParseType>{HASHTAG, INT, INT, INT, INT, STRING}},
+            {"ppo", std::vector<ParseType>{HASHTAG, INT, INT, INT}},
+            {"plv", std::vector<ParseType>{HASHTAG, INT}},
+            {"pin", std::vector<ParseType>{HASHTAG, INT, INT, INT, INT, INT, INT, INT, INT, INT}},
+            {"pex", std::vector<ParseType>{HASHTAG}},
+            {"pfk", std::vector<ParseType>{HASHTAG}},
+            {"pdr", std::vector<ParseType>{HASHTAG, INT}},
+            {"pgt", std::vector<ParseType>{HASHTAG, INT}},
+            {"pdi", std::vector<ParseType>{HASHTAG}},
+            {"enw", std::vector<ParseType>{HASHTAG, HASHTAG, INT, INT}},
+            {"ebo", std::vector<ParseType>{HASHTAG}},
+            {"edi", std::vector<ParseType>{HASHTAG}},
+            {"sgt", std::vector<ParseType>{INT}},
+            {"sst", std::vector<ParseType>{INT}},
+            {"seg", std::vector<ParseType>{STRING}},
+            {"suc", std::vector<ParseType>{}},
+            {"sbp", std::vector<ParseType>{}}
+            // TODO : pbc, pic, pie, smg
+            // #15 (https://github.com/FppEpitech/Zappy/issues/15))
+        };
 
         /**
-         * @brief Parse the command msz.
+         * @brief Parse the command with its types.
          *
-         * @param command Command of the server.
+         * @param command Command to parse.
+         * @param types Types within parse the command.
          * @return std::vector<std::string> - arguments parsed
          */
-        static std::vector<std::string> _parseCommandMSZ(const std::string& command);
-
-        /**
-         * @brief Parse the command btc.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandBCT(const std::string& command);
-
-        /**
-         * @brief Parse the command tna.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandTNA(const std::string& command);
-
-        /**
-         * @brief Parse the command pnw.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandPNW(const std::string& command);
-
-        /**
-         * @brief Parse the command ppo.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandPPO(const std::string& command);
-
-        /**
-         * @brief Parse the command plv.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandPLV(const std::string& command);
-
-        /**
-         * @brief Parse the command pin.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandPIN(const std::string& command);
-
-        /**
-         * @brief Parse the command pex.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandPEX(const std::string& command);
-
-        /**
-         * @brief Parse the command pfk.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandPFK(const std::string& command);
-
-        /**
-         * @brief Parse the command pdr.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandPDR(const std::string& command);
-
-        /**
-         * @brief Parse the command pgt.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandPGT(const std::string& command);
-
-        /**
-         * @brief Parse the command pdi.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandPDI(const std::string& command);
-
-        /**
-         * @brief Parse the command enw.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandENW(const std::string& command);
-
-        /**
-         * @brief Parse the command ebo.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandEBO(const std::string& command);
-
-        /**
-         * @brief Parse the command edi.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandEDI(const std::string& command);
-
-        /**
-         * @brief Parse the command sgt.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandSGT(const std::string& command);
-
-        /**
-         * @brief Parse the command sst.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandSST(const std::string& command);
-
-        /**
-         * @brief Parse the command seg.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandSEG(const std::string& command);
-
-        /**
-         * @brief Parse the command suc.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandSUC(const std::string& command);
-
-        /**
-         * @brief Parse the command sbp.
-         *
-         * @param command Command of the server.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        static std::vector<std::string> _parseCommandSBP(const std::string& command);
-
-        // TODO : PBC, PIC, PIE, SMG
-        // #15 (https://github.com/FppEpitech/Zappy/issues/15)
+        std::vector<std::string> parseCommand(const std::string& command, std::vector<ParseType> types);
 };
