@@ -12,12 +12,14 @@ all: $(NAME)
 $(NAME):
 	cp src/main.py $(NAME)
 	chmod 775 $(NAME)
+	cp $(NAME) ../
 
 clean:
 	rm -rf __pycache__
 
 fclean: clean
 	rm -f $(NAME)
+	rm -f ../$(NAME)
 
 re: fclean all
 
