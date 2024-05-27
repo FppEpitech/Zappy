@@ -32,6 +32,7 @@ Gui::ServerParser::ServerParser()
     _functionsMap["seg"] = &_parseCommandSEG;
     // TODO : smg
     _functionsMap["suc"] = &_parseCommandSUC;
+    _functionsMap["sbp"] = &_parseCommandSBP;
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
@@ -503,6 +504,20 @@ std::vector<std::string> Gui::ServerParser::_parseCommandSUC(const std::string& 
     stream >> none;
     if (!stream.fail())
         throw Errors::ServerParser("Too many parameters for 'suc' command.");
+
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::_parseCommandSBP(const std::string& command)
+{
+    std::vector<std::string> arguments;
+    std::istringstream stream(command);
+    std::string none, team;
+
+    stream >> none;
+    stream >> none;
+    if (!stream.fail())
+        throw Errors::ServerParser("Too many parameters for 'sbp' command.");
 
     return arguments;
 }

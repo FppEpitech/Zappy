@@ -920,3 +920,29 @@ Test(ParseServer, suc_too_long, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Too many parameters for 'suc' command.");
 }
+
+
+// Command sbp
+
+Test(ParseServer, correct_sbp_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("sbp");
+
+    cr_assert_eq(test.size(), 0);
+}
+
+Test(ParseServer, sbp_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("sbp long");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'sbp' command.");
+}
