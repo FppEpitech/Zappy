@@ -21,5 +21,14 @@ int main(int argc, char **argv)
         displayHelp();
         return 0;
     }
+    try {
+        Gui::Network net(atoi(argv[1]), argv[2]);
+        net.connectToServer();
+        Gui::Engine engine(net);
+        engine.run();
+    } catch (const std::exception &error) {
+        std::cout << error.what() << std::endl;
+        return 84;
+    }
     return 0;
 }

@@ -11,6 +11,8 @@ MAIN 		=	src/main.cpp
 SRC			=	src/Error/Error.cpp \
 				\
 				src/Network/Network.cpp \
+				\
+				src/Engine/Engine.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 
