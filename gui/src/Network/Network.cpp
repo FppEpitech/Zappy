@@ -20,7 +20,7 @@ Gui::Network::Network(int port, const std::string& hostName)
 void Gui::Network::setPort(int port)
 {
     if (port < MIN_PORT || port > MAX_PORT)
-        throw Errors::Network("Port should be in range 1 to 65535.");
+        throw Errors::NetworkException("Port should be in range 1 to 65535.");
     _port = port;
 }
 
@@ -50,7 +50,7 @@ void Gui::Network::connectToServer()
     serveraddr.sin_addr.s_addr = inet_addr(_hostName.c_str());
     len = sizeof(serveraddr);
     if (connect(_serverFd, (struct sockaddr *)&serveraddr, len) != 0)
-        throw Errors::Network("Failed to connect to the server.");
+        throw Errors::NetworkException("Failed to connect to the server.");
 }
 
 void Gui::Network::selectServer()
@@ -61,7 +61,7 @@ void Gui::Network::selectServer()
     FD_SET(_serverFd, &_writeFd);
 
     if (!select(_serverFd + 1, &_readFd, &_writeFd, NULL, NULL))
-        throw Errors::Network("Select failed.");
+        throw Errors::NetworkException("Select failed.");
 }
 
 const std::string Gui::Network::listenServer()
