@@ -29,6 +29,7 @@ Gui::ServerParser::ServerParser()
     _functionsMap["edi"] = &_parseCommandEDI;
     _functionsMap["sgt"] = &_parseCommandSGT;
     _functionsMap["sst"] = &_parseCommandSST;
+    _functionsMap["seg"] = &_parseCommandSEG;
 }
 
 std::vector<std::string> Gui::ServerParser::parse(const std::string& command)
@@ -467,6 +468,25 @@ std::vector<std::string> Gui::ServerParser::_parseCommandSST(const std::string& 
     if (!stream.fail())
         throw Errors::ServerParser("Too many parameters for 'sst' command.");
     arguments.push_back(std::to_string(time));
+
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::_parseCommandSEG(const std::string& command)
+{
+    std::vector<std::string> arguments;
+    std::istringstream stream(command);
+    std::string none, team;
+
+    stream >> none;
+    stream >> team;
+
+    if (stream.fail())
+        throw Errors::ServerParser("Wrong parameters for 'seg' command.");
+    stream >> none;
+    if (!stream.fail())
+        throw Errors::ServerParser("Too many parameters for 'seg' command.");
+    arguments.push_back(team);
 
     return arguments;
 }
