@@ -819,3 +819,41 @@ Test(ParseServer, sgt_wrong, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'sgt' command.");
 }
+
+// Command sst
+
+Test(ParseServer, correct_sst_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("sst 1");
+
+    cr_assert_eq(test[0], "1");
+}
+
+Test(ParseServer, sst_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("sst 1 2");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'sst' command.");
+}
+
+Test(ParseServer, sst_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("sst wrong");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'sst' command.");
+}
