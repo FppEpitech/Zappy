@@ -30,7 +30,7 @@ class Gui::ServerParser {
          * @brief Construct a new Server Parser object.
          *
          */
-        ServerParser();
+        ServerParser() = default;
 
         /**
          * @brief Destroy the Server Parser object.
@@ -96,4 +96,8 @@ class Gui::ServerParser {
          * @return std::vector<std::string> - arguments parsed
          */
         std::vector<std::string> parseCommand(const std::string& command, std::vector<ParseType> types);
+
+        std::vector<std::string> parseInt(std::istringstream& stream, std::vector<std::string> arguments);
+        std::vector<std::string> parseString(std::istringstream& stream, std::vector<std::string> arguments);
+        std::vector<std::string> parseHashtag(std::istringstream& stream, std::vector<std::string> arguments, std::string commandName);
 };
