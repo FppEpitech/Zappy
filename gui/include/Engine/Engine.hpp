@@ -26,8 +26,14 @@ class Gui::Engine {
         ~Engine() = default;
         void run();
 
+        void setOpen(bool isOpen);
+        bool getOpen();
+
     private:
 
         Network     _network;
+        bool        _isOpen;
+
+        void listenServer();
 
 };
