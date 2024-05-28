@@ -29,7 +29,7 @@ void Gui::Engine::listenServer(void)
         return;
     try {
         std::vector<std::string> arguments = _parser.parse(command);
-        //TODO: update game with arguments...
+        //TODO: #20 (https://github.com/FppEpitech/Zappy/issues/20)
     }
     catch (const std::exception &error) {
         std::cout << error.what() << std::endl;
