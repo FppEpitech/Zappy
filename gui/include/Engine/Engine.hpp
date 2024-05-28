@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Network/Network.hpp"
+#include "Parsing/ServerParser.hpp"
 
 namespace Gui {
 
@@ -22,18 +23,33 @@ class Gui::Engine {
 
     public:
 
+        /**
+         * @brief Construct a new Engine object.
+         *
+         * @param network Network class.
+         */
         Engine(Network network);
-        ~Engine() = default;
-        void run();
 
-        void setOpen(bool isOpen);
-        bool getOpen();
+        /**
+         * @brief Destroy the Engine object.
+         *
+         */
+        ~Engine() = default;
+
+        /**
+         * @brief Run the engine loop.
+         *
+         */
+        void run();
 
     private:
 
-        Network     _network;
-        bool        _isOpen;
+        ServerParser    _parser;    // Parser class for server's command
+        Network         _network;   // Network class to connect to the server.
 
+        /**
+         * @brief Listen the server and update Engine with its commands.
+         *
+         */
         void listenServer();
-
 };

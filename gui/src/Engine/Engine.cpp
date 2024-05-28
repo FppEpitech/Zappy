@@ -7,18 +7,18 @@
 
 #include "Engine/Engine.hpp"
 
-Gui::Engine::Engine(Network network) : _network(network)
-{
-    _isOpen = true;
-}
+#include <iostream>
+
+Gui::Engine::Engine(Network network) : _network(network) {}
 
 void Gui::Engine::run()
 {
-    while (_isOpen) {
+    //while (//TODO : renderer.getIsOpen()) {
         listenServer();
+        // TODO :
         // handleEvents();
         // display();
-    }
+    // }
 }
 
 void Gui::Engine::listenServer()
@@ -27,15 +27,11 @@ void Gui::Engine::listenServer()
 
     if (command == "")
         return;
-    // TODO: call ServerParser parse method
-}
-
-void Gui::Engine::setOpen(bool isOpen)
-{
-    _isOpen = isOpen;
-}
-
-bool Gui::Engine::getOpen()
-{
-    return _isOpen;
+    try {
+        std::vector<std::string> arguments = _parser.parse(command);
+        //TODO: update game with arguments...
+    }
+    catch (const std::exception &error) {
+        std::cout << error.what() << std::endl;
+    }
 }
