@@ -45,5 +45,19 @@ namespace Gui {
                  */
                 ServerParserException(std::string message);
         };
+
+        /**
+         * @class ParseCommandLineException
+         * @brief Error class for parseCommandLine errors.
+         */
+        class ParseCommandLineException : public Error {
+            public:
+                /**
+                 * @brief Constructor for ParseCommandLineException.
+                 *
+                 * @param message The error message.
+                 */
+                ParseCommandLineException(std::string message);
+        };
     };
 };
