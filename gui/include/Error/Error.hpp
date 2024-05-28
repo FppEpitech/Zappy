@@ -19,16 +19,31 @@ namespace Gui {
         class Error : public AError {};
 
         /**
-         * @class ArgumentNumber
+         * @class NetworkException
          * @brief Error class for network errors.
          */
-        class Network : public Error {
+        class NetworkException : public Error {
             public:
                 /**
-                 * @brief Constructor for Network.
+                 * @brief Constructor for NetworkException.
+                 *
                  * @param message The error message.
                  */
-                Network(std::string message);
+                NetworkException(std::string message);
+        };
+
+        /**
+         * @class ServerParserException
+         * @brief Error class for network errors.
+         */
+        class ServerParserException : public Error {
+            public:
+                /**
+                 * @brief Constructor for ServerParserException.
+                 *
+                 * @param message The error message.
+                 */
+                ServerParserException(std::string message);
         };
     };
 };
