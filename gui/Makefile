@@ -12,10 +12,14 @@ SRC			=	src/Error/Error.cpp \
 				\
 				src/Network/Network.cpp \
 				\
+				src/Engine/Engine.cpp \
+				\
 				src/Parsing/ServerParser.cpp \
+				src/Parsing/ParseCommandLine.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 				Parsing/TestParser.cpp \
+				Parsing/TestParseCommandLine.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)

@@ -68,7 +68,7 @@ const std::string Gui::Network::listenServer()
 {
     selectServer();
     std::string data = readInfoServer();
-    if (!_isConnected && data == "WELCOME\n") {
+    if (!_isConnected && data == "WELCOME") {
         sendMessageServer("GRAPHIC\n");
         _isConnected = true;
         return "";
@@ -85,9 +85,9 @@ const std::string Gui::Network::readInfoServer()
     if (!FD_ISSET(_serverFd, &_readFd))
         return "";
     while ((len = read(_serverFd, &buffer, 1)) > 0) {
-        data.append(&buffer, 1);
         if (buffer == '\n')
             break;
+        data.append(&buffer, 1);
     }
     return data;
 }

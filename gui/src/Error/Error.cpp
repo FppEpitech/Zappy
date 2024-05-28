@@ -21,3 +21,8 @@ Gui::Errors::ServerParserException::ServerParserException(std::string message)
 {
     _message = message;
 }
+
+Gui::Errors::ParseCommandLineException::ParseCommandLineException(std::string message)
+{
+    _message = message;
+}
