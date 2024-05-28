@@ -40,7 +40,7 @@ class Gui::Engine {
          * @brief Run the engine loop.
          *
          */
-        void run();
+        void run(void);
 
     private:
 
@@ -51,5 +51,5 @@ class Gui::Engine {
          * @brief Listen the server and update Engine with its commands.
          *
          */
-        void listenServer();
+        void listenServer(void);
 };

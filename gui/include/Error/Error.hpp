@@ -23,6 +23,7 @@ namespace Gui {
          * @brief Error class for network errors.
          */
         class NetworkException : public Error {
+
             public:
                 /**
                  * @brief Constructor for NetworkException.
@@ -37,6 +38,7 @@ namespace Gui {
          * @brief Error class for network errors.
          */
         class ServerParserException : public Error {
+
             public:
                 /**
                  * @brief Constructor for ServerParserException.
@@ -51,6 +53,7 @@ namespace Gui {
          * @brief Error class for parseCommandLine errors.
          */
         class ParseCommandLineException : public Error {
+
             public:
                 /**
                  * @brief Constructor for ParseCommandLineException.

@@ -11,7 +11,7 @@
 
 Gui::Engine::Engine(Network network) : _network(network) {}
 
-void Gui::Engine::run()
+void Gui::Engine::run(void)
 {
     //while (//TODO : renderer.getIsOpen()) {
         listenServer();
@@ -21,7 +21,7 @@ void Gui::Engine::run()
     // }
 }
 
-void Gui::Engine::listenServer()
+void Gui::Engine::listenServer(void)
 {
     std::string command = _network.listenServer();
 

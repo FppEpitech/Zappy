@@ -9,6 +9,8 @@
 
 #include <string>
 
+#define GUI_USAGE "USAGE:\t./zappy_gui -p port -h machine"
+
 namespace Gui {
 
     /**
@@ -37,18 +39,26 @@ class Gui::ParseCommandLine {
         ~ParseCommandLine() = default;
 
         /**
+         * @brief Parse flags in command line.
+         *
+         * @param argc Number of arguments in command line.
+         * @param argv Array with command line arguments.
+         */
+        void parseFlags(int argc, char **argv);
+
+        /**
          * @brief Get the port object.
          *
          * @return int - port
          */
-        int getPort();
+        int getPort(void);
 
         /**
          * @brief Get the hostName object.
          *
          * @return std::string - hostName
          */
-        std::string getHostName();
+        std::string getHostName(void);
 
     private:
 
