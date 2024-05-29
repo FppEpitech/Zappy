@@ -881,3 +881,73 @@ Test(ParseServer, smg_no_message, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'smg' command.");
 }
+
+// command pic
+
+Test(ParseServer, correct_pic_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("pic 1 2 3 9 8 7 6");
+
+    cr_assert_eq(test[0], "1");
+    cr_assert_eq(test[1], "2");
+    cr_assert_eq(test[2], "3");
+    cr_assert_eq(test[3], "9");
+    cr_assert_eq(test[4], "8");
+    cr_assert_eq(test[5], "7");
+    cr_assert_eq(test[6], "6");
+}
+
+Test(ParseServer, correct_pic_command_one_list, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("pic 1 2 3 9");
+
+    cr_assert_eq(test[0], "1");
+    cr_assert_eq(test[1], "2");
+    cr_assert_eq(test[2], "3");
+    cr_assert_eq(test[3], "9");
+}
+
+Test(ParseServer, pic_no_list, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pic 1 2 3 ");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pic' command.");
+}
+
+Test(ParseServer, pic_wrong_list, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pic 1 2 3 9 8 wrong");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pic' command.");
+}
+
+Test(ParseServer, pic_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pic 1 2 wrong 9 8 3");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pic' command.");
+}

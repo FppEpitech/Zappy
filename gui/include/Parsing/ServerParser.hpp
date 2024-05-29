@@ -54,7 +54,7 @@ class Gui::ServerParser {
             INT,
             STRING,
             MESSAGE,
-            TEAMS
+            LIST_INT
         };
 
     private:
@@ -74,7 +74,7 @@ class Gui::ServerParser {
             {"pin", std::vector<ParseType>{INT, INT, INT, INT, INT, INT, INT, INT, INT, INT}},
             {"pex", std::vector<ParseType>{INT}},
             {"pbc", std::vector<ParseType>{INT, MESSAGE}},
-            //pic
+            {"pic", std::vector<ParseType>{INT, INT, INT, LIST_INT}},
             {"pie", std::vector<ParseType>{INT, INT, INT}},
             {"pfk", std::vector<ParseType>{INT}},
             {"pdr", std::vector<ParseType>{INT, INT}},
@@ -127,4 +127,14 @@ class Gui::ServerParser {
          * @return std::vector<std::string> - arguments parsed
          */
         std::vector<std::string> parseMessage(std::istringstream& stream, std::vector<std::string> arguments, std::string commandName);
+
+        /**
+         * @brief Parse a list of int in the command stream.
+         *
+         * @param stream Stream to parse.
+         * @param arguments List of arguments parsed.
+         * @param commandName Name of the server command.
+         * @return std::vector<std::string> - arguments parsed
+         */
+        std::vector<std::string> parseListInt(std::istringstream& stream, std::vector<std::string> arguments, std::string commandName);
 };
