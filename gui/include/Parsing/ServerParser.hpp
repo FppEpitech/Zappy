@@ -52,7 +52,9 @@ class Gui::ServerParser {
          */
         enum ParseType {
             INT,
-            STRING
+            STRING,
+            MESSAGE,
+            TEAMS
         };
 
     private:
@@ -71,7 +73,7 @@ class Gui::ServerParser {
             {"plv", std::vector<ParseType>{INT, INT}},
             {"pin", std::vector<ParseType>{INT, INT, INT, INT, INT, INT, INT, INT, INT, INT}},
             {"pex", std::vector<ParseType>{INT}},
-            //pbc
+            {"pbc", std::vector<ParseType>{INT, MESSAGE}},
             //pic
             {"pie", std::vector<ParseType>{INT, INT, INT}},
             {"pfk", std::vector<ParseType>{INT}},
@@ -115,4 +117,14 @@ class Gui::ServerParser {
          * @return std::vector<std::string> - arguments parsed
          */
         std::vector<std::string> parseString(std::istringstream& stream, std::vector<std::string> arguments);
+
+        /**
+         * @brief Parse a message in the command stream.
+         *
+         * @param stream Stream to parse.
+         * @param arguments List of arguments parsed.
+         * @param commandName Name of the server command.
+         * @return std::vector<std::string> - arguments parsed
+         */
+        std::vector<std::string> parseMessage(std::istringstream& stream, std::vector<std::string> arguments, std::string commandName);
 };

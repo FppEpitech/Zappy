@@ -42,6 +42,11 @@ std::vector<std::string> Gui::ServerParser::parseCommand(const std::string& comm
                 arguments = parseString(stream, arguments);
                 break;
             }
+            case Gui::ServerParser::ParseType::MESSAGE:
+            {
+                arguments = parseMessage(stream, arguments, commandName);
+                return arguments;
+            }
             default:
                 break;
         }
@@ -67,5 +72,20 @@ std::vector<std::string> Gui::ServerParser::parseString(std::istringstream& stre
     std::string str;
     stream >> str;
     arguments.push_back(str);
+    return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::parseMessage(std::istringstream& stream, std::vector<std::string> arguments, std::string commandName)
+{
+    if (stream.fail())
+        throw Errors::ServerParserException("Wrong parameters for '" + commandName + "' command.");
+
+    std::string start;
+    stream >> start;
+    if (stream.fail())
+        throw Errors::ServerParserException("Wrong parameters for '" + commandName + "' command.");
+    std::string end;
+    std::getline(stream, end, '\0');
+    arguments.push_back(start + end);
     return arguments;
 }

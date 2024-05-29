@@ -817,3 +817,40 @@ Test(ParseServer, pie_wrong, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pie' command.");
 }
+
+Test(ParseServer, correct_pbc_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("pbc 1 test of   pbc command 1");
+
+    cr_assert_eq(test[0], "1");
+    cr_assert_eq(test[1], "test of   pbc command 1");
+}
+
+Test(ParseServer, pbc_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pbc wrong good good good");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pbc' command.");
+}
+
+Test(ParseServer, pbc_no_message, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pbc 1");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pbc' command.");
+}
