@@ -86,7 +86,7 @@ class Gui::ServerParser {
             {"sgt", std::vector<ParseType>{INT}},
             {"sst", std::vector<ParseType>{INT}},
             {"seg", std::vector<ParseType>{STRING}},
-            //smg
+            {"smg", std::vector<ParseType>{MESSAGE}},
             {"suc", std::vector<ParseType>{}},
             {"sbp", std::vector<ParseType>{}}
         };

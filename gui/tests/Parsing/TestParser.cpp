@@ -818,6 +818,8 @@ Test(ParseServer, pie_wrong, .timeout = 5)
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pie' command.");
 }
 
+// command pbc
+
 Test(ParseServer, correct_pbc_command, .timeout = 5)
 {
     Gui::ServerParser parser;
@@ -853,4 +855,29 @@ Test(ParseServer, pbc_no_message, .timeout = 5)
         test = error.what();
     }
     cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pbc' command.");
+}
+
+// command smg
+
+Test(ParseServer, correct_smg_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("smg test of   smg command 1");
+
+    cr_assert_eq(test[0], "test of   smg command 1");
+}
+
+Test(ParseServer, smg_no_message, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("smg ");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'smg' command.");
 }
