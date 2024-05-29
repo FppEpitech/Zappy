@@ -42,11 +42,6 @@ std::vector<std::string> Gui::ServerParser::parseCommand(const std::string& comm
                 arguments = parseString(stream, arguments);
                 break;
             }
-            case Gui::ServerParser::ParseType::HASHTAG:
-            {
-                arguments = parseHashtag(stream, arguments, commandName);
-                break;
-            }
             default:
                 break;
         }
@@ -72,17 +67,5 @@ std::vector<std::string> Gui::ServerParser::parseString(std::istringstream& stre
     std::string str;
     stream >> str;
     arguments.push_back(str);
-    return arguments;
-}
-
-std::vector<std::string> Gui::ServerParser::parseHashtag(std::istringstream& stream, std::vector<std::string> arguments, std::string commandName)
-{
-    char hashtag;
-    stream >> hashtag;
-    if (hashtag != '#')
-        throw Errors::ServerParserException("Wrong parameters for '" + commandName + "' command.");
-    int nb;
-    stream >> nb;
-    arguments.push_back(std::to_string(nb));
     return arguments;
 }

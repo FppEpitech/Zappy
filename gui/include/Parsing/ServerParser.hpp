@@ -52,8 +52,7 @@ class Gui::ServerParser {
          */
         enum ParseType {
             INT,
-            STRING,
-            HASHTAG
+            STRING
         };
 
     private:
@@ -67,21 +66,21 @@ class Gui::ServerParser {
             {"msz", std::vector<ParseType>{INT, INT}},
             {"bct", std::vector<ParseType>{INT, INT, INT, INT, INT, INT, INT, INT, INT}},
             {"tna", std::vector<ParseType>{STRING}},
-            {"pnw", std::vector<ParseType>{HASHTAG, INT, INT, INT, INT, STRING}},
-            {"ppo", std::vector<ParseType>{HASHTAG, INT, INT, INT}},
-            {"plv", std::vector<ParseType>{HASHTAG, INT}},
-            {"pin", std::vector<ParseType>{HASHTAG, INT, INT, INT, INT, INT, INT, INT, INT, INT}},
-            {"pex", std::vector<ParseType>{HASHTAG}},
+            {"pnw", std::vector<ParseType>{INT, INT, INT, INT, INT, STRING}},
+            {"ppo", std::vector<ParseType>{INT, INT, INT, INT}},
+            {"plv", std::vector<ParseType>{INT, INT}},
+            {"pin", std::vector<ParseType>{INT, INT, INT, INT, INT, INT, INT, INT, INT, INT}},
+            {"pex", std::vector<ParseType>{INT}},
             //pbc
             //pic
             {"pie", std::vector<ParseType>{INT, INT, INT}},
-            {"pfk", std::vector<ParseType>{HASHTAG}},
-            {"pdr", std::vector<ParseType>{HASHTAG, INT}},
-            {"pgt", std::vector<ParseType>{HASHTAG, INT}},
-            {"pdi", std::vector<ParseType>{HASHTAG}},
-            {"enw", std::vector<ParseType>{HASHTAG, HASHTAG, INT, INT}},
-            {"ebo", std::vector<ParseType>{HASHTAG}},
-            {"edi", std::vector<ParseType>{HASHTAG}},
+            {"pfk", std::vector<ParseType>{INT}},
+            {"pdr", std::vector<ParseType>{INT, INT}},
+            {"pgt", std::vector<ParseType>{INT, INT}},
+            {"pdi", std::vector<ParseType>{INT}},
+            {"enw", std::vector<ParseType>{INT, INT, INT, INT}},
+            {"ebo", std::vector<ParseType>{INT}},
+            {"edi", std::vector<ParseType>{INT}},
             {"sgt", std::vector<ParseType>{INT}},
             {"sst", std::vector<ParseType>{INT}},
             {"seg", std::vector<ParseType>{STRING}},
@@ -116,13 +115,4 @@ class Gui::ServerParser {
          * @return std::vector<std::string> - arguments parsed
          */
         std::vector<std::string> parseString(std::istringstream& stream, std::vector<std::string> arguments);
-
-        /**
-         * @brief Parse an hashtag in the command stream.
-         *
-         * @param stream Stream to parse.
-         * @param arguments List of arguments parsed.
-         * @return std::vector<std::string> - arguments parsed
-         */
-        std::vector<std::string> parseHashtag(std::istringstream& stream, std::vector<std::string> arguments, std::string commandName);
 };
