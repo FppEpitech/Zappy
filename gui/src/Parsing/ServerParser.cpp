@@ -44,13 +44,11 @@ std::vector<std::string> Gui::ServerParser::parseCommand(const std::string& comm
             }
             case Gui::ServerParser::ParseType::MESSAGE:
             {
-                arguments = parseMessage(stream, arguments, commandName);
-                return arguments;
+                return parseMessage(stream, arguments, commandName);
             }
             case Gui::ServerParser::ParseType::LIST_INT:
             {
-                arguments = parseListInt(stream, arguments, commandName);
-                return arguments;
+                return parseListInt(stream, arguments, commandName);
             }
             default:
                 break;
