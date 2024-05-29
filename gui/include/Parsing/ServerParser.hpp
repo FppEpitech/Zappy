@@ -72,6 +72,9 @@ class Gui::ServerParser {
             {"plv", std::vector<ParseType>{HASHTAG, INT}},
             {"pin", std::vector<ParseType>{HASHTAG, INT, INT, INT, INT, INT, INT, INT, INT, INT}},
             {"pex", std::vector<ParseType>{HASHTAG}},
+            //pbc
+            //pic
+            {"pie", std::vector<ParseType>{INT, INT, INT}},
             {"pfk", std::vector<ParseType>{HASHTAG}},
             {"pdr", std::vector<ParseType>{HASHTAG, INT}},
             {"pgt", std::vector<ParseType>{HASHTAG, INT}},
@@ -82,10 +85,9 @@ class Gui::ServerParser {
             {"sgt", std::vector<ParseType>{INT}},
             {"sst", std::vector<ParseType>{INT}},
             {"seg", std::vector<ParseType>{STRING}},
+            //smg
             {"suc", std::vector<ParseType>{}},
             {"sbp", std::vector<ParseType>{}}
-            // TODO : pbc, pic, pie, smg
-            // #15 (https://github.com/FppEpitech/Zappy/issues/15))
         };
 
         /**

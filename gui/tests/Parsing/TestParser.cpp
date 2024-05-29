@@ -946,3 +946,43 @@ Test(ParseServer, sbp_too_long, .timeout = 5)
     }
     cr_assert_str_eq(test.c_str(), "Too many parameters for 'sbp' command.");
 }
+
+// command pie
+
+Test(ParseServer, correct_pie_command, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::vector<std::string> test;
+
+    test = parser.parse("pie 1 2 0");
+
+    cr_assert_eq(test[0], "1");
+    cr_assert_eq(test[1], "2");
+    cr_assert_eq(test[2], "0");
+}
+
+Test(ParseServer, pie_too_long, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pie 1 2 3 4");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Too many parameters for 'pie' command.");
+}
+
+Test(ParseServer, pie_wrong, .timeout = 5)
+{
+    Gui::ServerParser parser;
+    std::string test;
+
+    try {
+        parser.parse("pie 1 wrong 0");
+    } catch (const std::exception &error) {
+        test = error.what();
+    }
+    cr_assert_str_eq(test.c_str(), "Wrong parameters for 'pie' command.");
+}
