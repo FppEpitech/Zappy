@@ -9,8 +9,10 @@
 MAIN 		=	src/main.c
 
 SRC			=	src/list/list.c \
+				src/list/remove.c \
+				src/list/add.c \
 
-TEST_FILES	=	\
+TEST_FILES	=	list/list_test.c \
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
@@ -20,7 +22,7 @@ NAME		= 	zappy_server
 
 # Flags
 INCLUDE		= -I./include
-CXXFLAGS 	= -Wall -Wextra -Werror
+CXXFLAGS 	= -Wall -Wextra -Werror -lgcov
 
 # Colors
 YELLOW 		= /bin/echo -e "\x1b[33m $1\x1b[0m"
@@ -33,7 +35,7 @@ TEST 		= $(addprefix $(TEST_DIR), $(TEST_FILES))
 TEST_OBJ 	= $(TEST:.c=.o)
 TEST_GCNO 	= $(SRC:.c=.gcno)
 TEST_GCDA 	= $(SRC:.c=.gcda)
-TEST_FLAGS 	= -Wall -Wextra -Werror --coverage -lcriterion
+TEST_FLAGS 	= -Wall -Wextra -Werror --coverage -lcriterion -lgcov
 
 CC = gcc
 
