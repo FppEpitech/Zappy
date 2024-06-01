@@ -8,7 +8,7 @@
 #Files
 MAIN 		=	src/main.c
 
-SRC			=	\
+SRC			=	src/list/list.c \
 
 TEST_FILES	=	\
 
