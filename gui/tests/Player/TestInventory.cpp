@@ -10,7 +10,7 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 
-Test(Inventory, FOPEN_MAX, .timeout = 5)
+Test(Inventory, Food, .timeout = 5)
 {
     Gui::Inventory inventory;
 

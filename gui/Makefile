@@ -18,11 +18,13 @@ SRC			=	src/Error/Error.cpp \
 				src/Parsing/ParseCommandLine.cpp \
 				\
 				src/Player/Inventory.cpp \
+				src/Player/Player.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 				Parsing/TestParser.cpp \
 				Parsing/TestParseCommandLine.cpp \
 				Player/TestInventory.cpp \
+				Player/TestPlayer.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
