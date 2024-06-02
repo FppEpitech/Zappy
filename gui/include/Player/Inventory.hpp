@@ -79,9 +79,9 @@ class Gui::Inventory {
         /**
          * @brief Set the Thystame object.
          *
-         * @param thytame Thystame to set.
+         * @param thystame Thystame to set.
          */
-        void setThystame(std::size_t thytame);
+        void setThystame(std::size_t thytsame);
 
         /**
          * @brief Get the Food object.
