@@ -7,6 +7,17 @@
 
 #include "Player/Inventory.hpp"
 
+Gui::Inventory::Inventory()
+{
+    _food = 0;
+    _linemate = 0;
+    _deraumere = 0;
+    _sibur = 0;
+    _mendiane = 0;
+    _phiras = 0;
+    _thystame = 0;
+}
+
 void Gui::Inventory::setFood(std::size_t food)
 {
     _food = food;

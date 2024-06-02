@@ -26,7 +26,7 @@ class Gui::Inventory {
          * @brief Construct a new Inventory object.
          *
          */
-        Inventory() = default;
+        Inventory();
 
         /**
          * @brief Destroy the Inventory object.
