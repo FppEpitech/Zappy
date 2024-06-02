@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <stdbool.h>
+
 #include "type.h"
 
 /**
@@ -32,14 +34,14 @@ void list_free(list_t *list);
 void list_delete(list_t *list, list_node_t *node);
 
 /**
- * @brief Remove the first note of the list.
+ * @brief Remove the first node of the list.
  *
  * @param list List where remove the first node
  */
 void list_remove_front(list_t *list);
 
 /**
- * @brief Remove the last note of the list.
+ * @brief Remove the last node of the list.
  *
  * @param list List where remove the last node
  */
@@ -50,15 +52,15 @@ void list_remove_back(list_t *list);
  *
  * @param list List where add the new node
  * @param data Node to add at the back
- * @return int 0 if succes else 84
+ * @return bool true if succes else false
  */
-int list_add_back(list_t *list, node_data_t data);
+bool list_add_back(list_t *list, node_data_t data);
 
 /**
  * @brief Add a node a the front of the list.
  *
  * @param list List where add the new node
  * @param data Node to add at the front
- * @return int 0 if succes else 84
+ * @return bool true if succes else false
  */
-int list_add_front(list_t *list, node_data_t data);
+bool list_add_front(list_t *list, node_data_t data);

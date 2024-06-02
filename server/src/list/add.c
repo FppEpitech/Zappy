@@ -6,14 +6,16 @@
 */
 
 #include <stdlib.h>
+#include <stdbool.h>
+
 #include "list/type.h"
 
-int list_add_back(list_t *list, node_data_t data)
+bool list_add_back(list_t *list, node_data_t data)
 {
     list_node_t *new = malloc(sizeof(list_node_t));
 
     if (new == NULL)
-        return 84;
+        return false;
     new->data = data;
     new->next = NULL;
     new->prev = list->last;
@@ -23,15 +25,15 @@ int list_add_back(list_t *list, node_data_t data)
     if (list->first == NULL)
         list->first = new;
     list->len += 1;
-    return 0;
+    return true;
 }
 
-int list_add_front(list_t *list, node_data_t data)
+bool list_add_front(list_t *list, node_data_t data)
 {
     list_node_t *new = malloc(sizeof(list_node_t));
 
     if (new == NULL)
-        return 84;
+        return false;
     new->data = data;
     new->next = list->first;
     new->prev = NULL;
@@ -41,5 +43,5 @@ int list_add_front(list_t *list, node_data_t data)
     if (list->last == NULL)
         list->last = new;
     list->len += 1;
-    return 0;
+    return true;
 }
