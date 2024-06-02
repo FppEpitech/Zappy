@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** Zappy GUI
+** Zappy Server
 ** File description:
 ** main
 */
