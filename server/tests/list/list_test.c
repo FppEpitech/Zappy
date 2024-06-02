@@ -10,7 +10,6 @@
 
 #include "list/list.h"
 
-
 Test(list, list_create, .timeout = 5)
 {
     list_t *new_list = list_new();
