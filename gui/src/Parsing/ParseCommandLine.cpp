@@ -38,10 +38,8 @@ void Gui::ParseCommandLine::parseFlags(int argc, char **argv)
         } else
             throw Errors::ParseCommandLineException(GUI_USAGE);
     }
-    if (!isPort || !isHostname) {
-        std::cout << isPort << isHostname << std::endl;
+    if (!isPort || !isHostname)
         throw Errors::ParseCommandLineException(GUI_USAGE);
-    }
 }
 
 int Gui::ParseCommandLine::getPort(void)
