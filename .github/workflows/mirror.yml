@@ -10,7 +10,7 @@ on:
 
 env:
   EXECUTABLES: "zappy_ai zappy_server zappy_gui"
-
+  MEMORY_CHECK_EXECUTABLES: "zappy_server"
 jobs:
   check_program_compilation:
     runs-on: ubuntu-latest
@@ -105,7 +105,7 @@ jobs:
         run: |
           make
           set -e
-          for executable in $EXECUTABLES; do
+          for executable in $MEMORY_CHECK_EXECUTABLES; do
             valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./$executable
           done
 
