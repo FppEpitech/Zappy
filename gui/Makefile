@@ -22,6 +22,7 @@ SRC			=	src/Error/Error.cpp \
 				src/GameDatas/Tile.cpp \
 				\
 				src/Render/Render.cpp \
+				src/Render/UserCamera.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 				Parsing/TestParser.cpp \

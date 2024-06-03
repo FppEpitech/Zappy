@@ -12,6 +12,7 @@
 #define WINDOW_TITLE "Zappy GUI"
 
 #include "raylib.h"
+#include "Render/UserCamera.hpp"
 
 namespace Gui {
 
@@ -54,5 +55,5 @@ class Gui::Render {
 
     private:
 
-        Camera      _camera;    // Camera of the scene.
+        UserCamera      _camera;    // Camera of the scene.
 };
