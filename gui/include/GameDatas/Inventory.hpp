@@ -37,7 +37,7 @@ class Gui::Inventory {
         /**
          * @brief Set the Food object.
          *
-         * @param food Food to set
+         * @param food Food to set.
          */
         void setFood(std::size_t food);
 

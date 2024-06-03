@@ -5,7 +5,7 @@
 ** test player
 */
 
-#include "Player/Player.hpp"
+#include "GameDatas/Player.hpp"
 
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>

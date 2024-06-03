@@ -5,7 +5,7 @@
 ** test inventory
 */
 
-#include "Player/Inventory.hpp"
+#include "GameDatas/Inventory.hpp"
 
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>

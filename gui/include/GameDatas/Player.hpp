@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "Player/Inventory.hpp"
+#include "GameDatas/Inventory.hpp"
 
 namespace Gui {
 

@@ -5,7 +5,7 @@
 ** Inventory
 */
 
-#include "Player/Inventory.hpp"
+#include "GameDatas/Inventory.hpp"
 
 Gui::Inventory::Inventory()
 {

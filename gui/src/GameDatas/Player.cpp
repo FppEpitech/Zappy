@@ -5,7 +5,7 @@
 ** Player
 */
 
-#include "Player/Player.hpp"
+#include "GameDatas/Player.hpp"
 
 Gui::Player::Player(std::size_t id, const std::string &team, std::pair<std::size_t, std::size_t> position)
 {
