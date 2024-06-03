@@ -38,7 +38,7 @@ void Gui::Render::draw()
 
     ClearBackground(RAYWHITE);
     BeginMode3D(_camera);
-                DrawGrid(10, 1.0f);
+    DrawGrid(10, 1.0f);
     EndMode3D();
 
     DrawFPS(10, 10);
