@@ -20,6 +20,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: check_presence_of_pushed_executables
         run: |
+          sudo dnf install raylib-devel -y
           if [ -z "$EXECUTABLES" ]; then
             echo "No executable to check"
             exit 0
