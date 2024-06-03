@@ -101,9 +101,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: make_program
+        run: make
       - name: check_memory
         run: |
-          make
           set -e
           for executable in $MEMORY_CHECK_EXECUTABLES; do
             valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./$executable
