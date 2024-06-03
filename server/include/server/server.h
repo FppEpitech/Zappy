@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -19,7 +20,7 @@
 typedef struct s_server {
     fd_set read_fds;
     fd_set write_fds;
-    int server_fd;
+    size_t server_fd;
     socklen_t addrlen;
     struct sockaddr_in addr;
 } server_t;
@@ -38,3 +39,29 @@ void destroy_server(server_t *server);
  * @return server_t* Server init.
  */
 server_t *create_server(size_t port);
+
+/**
+ * @brief Run the server
+ *
+ * @param server Server struct with all necessary information.
+ * @return bool True if success else false.
+ */
+bool server_run(server_t *server);
+
+/**
+ * @brief Handler of server connection.
+ *
+ * @param server Server struct with all necessary information.
+ * @param fd File Descriptor of th client who try to connect.
+ * @return bool True if success else false.
+ */
+bool server_connection_handler(server_t *server, size_t fd);
+
+/**
+ * @brief Handler of server data reception.
+ *
+ * @param server Server struct with all necessary information.
+ * @param fd File Descriptor of th client who try to connect.
+ * @return bool True if success else false.
+ */
+bool server_data_handler(server_t *server, size_t fd);

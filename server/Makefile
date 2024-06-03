@@ -12,7 +12,10 @@ SRC			=	src/list/list.c \
 				src/list/remove.c \
 				src/list/add.c \
 				\
+				src/server/run.c \
 				src/server/server.c \
+				src/server/read/data.c \
+				src/server/read/connection.c \
 
 TEST_FILES	=	list/list_test.c \
 

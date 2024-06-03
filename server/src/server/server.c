@@ -5,8 +5,6 @@
 ** server
 */
 
-#include <stddef.h>
-
 #include "server/server.h"
 
 static bool init_server(server_t *server)
