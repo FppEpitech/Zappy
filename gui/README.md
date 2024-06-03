@@ -2,7 +2,7 @@
 
 ## **⚙️ Technology Notes**
 
-The game was developed using C++.
+The graphic part of Zappy was developed using C++.
 
 The graphic library used in this project is [raylib](https://www.raylib.com/index.html) developped by Raysan5.
 
