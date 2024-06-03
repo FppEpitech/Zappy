@@ -13,7 +13,7 @@
 
 typedef struct s_app {
     gui_t   *gui;
-    list_t  *client;
+    list_t  *ia;
     server_t *server;
 } app_t;
 

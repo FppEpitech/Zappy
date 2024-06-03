@@ -14,6 +14,8 @@ SRC			=	src/list/list.c \
 				\
 				src/app/app.c \
 				\
+				src/ia/ia.c \
+				\
 				src/server/run.c \
 				src/server/server.c \
 				src/server/read/data.c \

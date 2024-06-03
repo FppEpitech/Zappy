@@ -9,8 +9,10 @@
 
 #include <stddef.h>
 
+#include "ia/ia.h"
+
 typedef union s_node_data {
-    // Struct...
+    ia_t *ia;
 } node_data_t;
 
 typedef struct s_list_node {

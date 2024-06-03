@@ -9,11 +9,20 @@
 
 static int server_reset_fd(app_t *app)
 {
+    list_node_t *temp = app->ia->first;
+    ia_t *ia = NULL;
+
     FD_ZERO(&app->server->read_fds);
     FD_ZERO(&app->server->write_fds);
     FD_SET(app->server->fd, &app->server->read_fds);
     if (app->gui->connected)
         FD_SET(app->gui->fd, &app->server->read_fds);
+    while (temp) {
+        ia = temp->data.ia;
+        FD_SET(ia->fd, &app->server->read_fds);
+        FD_SET(ia->fd, &app->server->write_fds);
+        temp = temp->next;
+    }
     return 0;
 }
 
