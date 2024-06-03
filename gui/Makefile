@@ -20,6 +20,7 @@ SRC			=	src/Error/Error.cpp \
 				src/GameDatas/Inventory.cpp \
 				src/GameDatas/Player.cpp \
 				src/GameDatas/Tile.cpp \
+				src/GameDatas/Team.cpp \
 				\
 				src/Render/Render.cpp \
 				src/Render/UserCamera.cpp \
