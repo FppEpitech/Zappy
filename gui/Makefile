@@ -28,6 +28,7 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				GameDatas/TestInventory.cpp \
 				GameDatas/TestPlayer.cpp \
 				GameDatas/TestTile.cpp \
+				GameDatas/TestTeam.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
@@ -36,7 +37,7 @@ MAIN_OBJ	=	$(MAIN:.cpp=.o)
 NAME		= 	zappy_gui
 
 # Flags
-INCLUDE		= 	-I./include
+INCLUDE		= 	-I./include -I./tests
 CXXFLAGS 	= 	-std=c++20 -Wall -Wextra -Werror
 
 # Colors

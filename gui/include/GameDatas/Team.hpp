@@ -55,6 +55,13 @@ class Gui::Team {
         std::vector<Gui::Player> &getPlayers();
 
         /**
+         * @brief Set the Name object.
+         *
+         * @param name Name of the team.
+        */
+        void setName(const std::string &name);
+
+        /**
          * @brief Add a player to the team.
          *
          * @param player Player to add.

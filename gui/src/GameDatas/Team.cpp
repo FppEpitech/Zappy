@@ -14,6 +14,11 @@ const std::string &Gui::Team::getName() const
     return _name;
 }
 
+void Gui::Team::setName(const std::string &name)
+{
+    _name = name;
+}
+
 std::vector<Gui::Player> &Gui::Team::getPlayers()
 {
     return _players;

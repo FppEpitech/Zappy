@@ -5,10 +5,8 @@
 ** test inventory
 */
 
+#include "CriterionHeaders.hpp"
 #include "GameDatas/Inventory.hpp"
-
-#include <criterion/criterion.h>
-#include <criterion/redirect.h>
 
 Test(Inventory, Food, .timeout = 5)
 {
