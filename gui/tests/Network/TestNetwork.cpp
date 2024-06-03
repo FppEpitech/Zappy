@@ -6,9 +6,7 @@
 */
 
 #include "Network/Network.hpp"
-
-#include <criterion/criterion.h>
-#include <criterion/redirect.h>
+#include "CriterionHeaders.hpp"
 
 
 // Port tests

@@ -6,9 +6,7 @@
 */
 
 #include "GameDatas/Tile.hpp"
-
-#include <criterion/criterion.h>
-#include <criterion/redirect.h>
+#include "CriterionHeaders.hpp"
 
 Test(Tile, position, .timeout = 5)
 {
