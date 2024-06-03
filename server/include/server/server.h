@@ -15,15 +15,14 @@
 #include <sys/select.h>
 #include <netinet/in.h>
 
-#include "gui/gui.h"
-
 #define LISTEN_NUMBER 100
 
-typedef struct s_app{
+typedef struct s_app app_t;
+
+typedef struct s_server {
     fd_set read_fds;
     fd_set write_fds;
-    gui_t  *gui;
-    size_t server_fd;
+    int fd;
     socklen_t addrlen;
     struct sockaddr_in addr;
 } server_t;
@@ -46,28 +45,28 @@ server_t *create_server(size_t port);
 /**
  * @brief Run the server
  *
- * @param server Server struct with all necessary information.
+ * @param app App struct with all necessary information (server, gui, client).
  * @return bool True if success else false.
  */
-bool server_run(server_t *server);
+bool server_run(app_t *app);
 
 /**
  * @brief Handler of server connection.
  *
- * @param server Server struct with all necessary information.
+ * @param app App struct with all necessary information (server, gui, client).
  * @param fd File Descriptor of th client who try to connect.
  * @return bool True if success else false.
  */
-bool server_connection_handler(server_t *server, size_t fd);
+bool server_connection_handler(app_t *app, size_t fd);
 
 /**
  * @brief Handler of server data reception.
  *
- * @param server Server struct with all necessary information.
+ * @param app App struct with all necessary information (server, gui, client).
  * @param fd File Descriptor of th client who try to connect.
  * @return bool True if success else false.
  */
-bool server_data_handler(server_t *server, size_t fd);
+bool server_data_handler(app_t *app, size_t fd);
 
 /**
  * @brief Read a line from a file descriptor.

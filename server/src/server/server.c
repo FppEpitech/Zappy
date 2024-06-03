@@ -23,8 +23,7 @@ server_t *create_server(size_t port)
 {
     server_t *new_server = malloc(sizeof(server_t));
 
-    new_server->gui = malloc(sizeof(gui_t));
-    if (new_server == NULL || new_server->gui == NULL)
+    if (new_server == NULL)
         return NULL;
     new_server->addr.sin_family = AF_INET;
     new_server->addr.sin_addr.s_addr = INADDR_ANY;
@@ -41,6 +40,5 @@ server_t *create_server(size_t port)
 void destroy_server(server_t *server)
 {
     close(server->server_fd);
-    free(server->gui);
     free(server);
 }

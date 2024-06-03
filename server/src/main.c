@@ -7,13 +7,16 @@
 
 #include <stdio.h>
 
-#include "server/server.h"
+#include "app/app.h"
 
 int main(void)
 {
     printf("Welcome to Server\n");
-    server_t *server = create_server(4444);
+    app_t *app = create_app(4444);
 
-    server_run(server);
+    if (app == NULL)
+        return 84;
+    server_run(app);
+    destroy_app(app);
     return 0;
 }

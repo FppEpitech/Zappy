@@ -5,45 +5,47 @@
 ** run
 */
 
-#include "server/server.h"
+#include "app/app.h"
 
-static int server_reset_fd(server_t *server)
+static int server_reset_fd(app_t *app)
 {
-    FD_ZERO(&server->read_fds);
-    FD_ZERO(&server->write_fds);
-    FD_SET(server->server_fd, &server->read_fds);
+    FD_ZERO(&app->server->read_fds);
+    FD_ZERO(&app->server->write_fds);
+    FD_SET(app->server->fd, &app->server->read_fds);
+    if (app->gui->connected)
+        FD_SET(app->gui->fd, &app->server->read_fds);
     return 0;
 }
 
-static int handle_client_read(server_t *server, size_t fd)
+static int handle_client_read(app_t *app, int fd)
 {
-    if (FD_ISSET(fd, &server->read_fds)) {
-        if (fd == server->server_fd) {
-            server_connection_handler(server, fd);
+    if (FD_ISSET(fd, &app->server->read_fds)) {
+        if (fd == app->server->fd) {
+            server_connection_handler(app, fd);
         } else {
-            server_data_handler(server, fd);
+            server_data_handler(app, fd);
         }
     }
     return 0;
 }
 
-static int handle_client_write(server_t *server, size_t fd)
+static int handle_client_write(app_t *app, int fd)
 {
-    (void) server;
+    (void) app;
     (void) fd;
     return 0;
 }
 
-bool server_run(server_t *server)
+bool server_run(app_t *app)
 {
     while (true) {
-        server_reset_fd(server);
-        if (select(FD_SETSIZE, &server->read_fds,
-        &server->write_fds, NULL, NULL) < 0)
+        server_reset_fd(app);
+        if (select(FD_SETSIZE, &app->server->read_fds,
+        &app->server->write_fds, NULL, NULL) < 0)
             return false;
-        for (size_t fd = 0; fd < FD_SETSIZE; fd++) {
-            handle_client_read(server, fd);
-            handle_client_write(server, fd);
+        for (int fd = 0; fd < FD_SETSIZE; fd++) {
+            handle_client_read(app, fd);
+            handle_client_write(app, fd);
         }
     }
     return true;

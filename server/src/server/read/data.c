@@ -5,6 +5,8 @@
 ** Read data
 */
 
+#include <string.h>
+
 #include "server/server.h"
 
 static char *append_char(char *line, char current_char)
@@ -22,7 +24,6 @@ char *read_line(int fd)
 {
     char buffer[1024];
     ssize_t bytes_received;
-    char prev_char = '\0';
     char *line = malloc(sizeof(char) * 1);
 
     line[0] = '\0';
@@ -34,16 +35,15 @@ char *read_line(int fd)
             break;
         }
         line = append_char(line, buffer[0]);
-        prev_char = buffer[0];
         memset(buffer, 0, sizeof(buffer));
         bytes_received = read(fd, buffer, 1);
     }
     return line;
 }
 
-bool server_data_handler(server_t *server, size_t fd)
+bool server_data_handler(app_t *app, size_t fd)
 {
-    (void) server;
+    (void) app;
     char buffer[1024 + 1] = {0};
     ssize_t bytes_read = 0;
 
