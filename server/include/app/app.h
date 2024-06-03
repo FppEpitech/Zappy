@@ -18,7 +18,7 @@ typedef struct s_app {
 } app_t;
 
 /**
- * @brief Create application struct
+ * @brief Create application struct.
  *
  * @param port Port on witch create server.
  * @return app_t* Return app initialized.
@@ -26,7 +26,7 @@ typedef struct s_app {
 app_t *create_app(size_t port);
 
 /**
- * @brief Destroy application struct
+ * @brief Destroy application struct.
  *
  * @param app App to destroy.
  */

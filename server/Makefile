@@ -17,6 +17,7 @@ SRC			=	src/list/list.c \
 				src/ia/ia.c \
 				\
 				src/server/run.c \
+				src/server/client.c \
 				src/server/server.c \
 				src/server/read/data.c \
 				src/server/read/connection.c \

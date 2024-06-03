@@ -16,3 +16,17 @@ client_t *create_client(int fd)
     new_client->fd = fd;
     return new_client;
 }
+
+bool its_client(app_t *app, int fd)
+{
+    list_node_t *temp = app->clients_list->first;
+    client_t *client = NULL;
+
+    while (temp) {
+        client = temp->data.client;
+        if (client->fd == fd)
+            return true;
+        temp = temp->next;
+    }
+    return false;
+}

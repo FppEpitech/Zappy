@@ -7,8 +7,7 @@
 
 #include <string.h>
 
-#include "ia/ia.h"
-#include "app/app.h"
+#include "server/client.h"
 
 bool server_connection_handler(app_t *app, size_t fd)
 {

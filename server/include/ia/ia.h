@@ -17,9 +17,9 @@ typedef struct s_ia {
 } ia_t;
 
 /**
- * @brief Create a ia object
+ * @brief Create a ia object.
  *
- * @param fd File descriptor of ia
- * @return ia_t* Struct ia initialized
+ * @param fd File descriptor of ia.
+ * @return ia_t* Struct ia initialized.
  */
 ia_t *create_ia(int fd);

@@ -9,8 +9,8 @@
 
 #include <stddef.h>
 
-#include "ia/ia.h"
-#include "server/client.h"
+typedef struct s_ia ia_t;
+typedef struct s_client client_t;
 
 typedef union s_node_data {
     ia_t *ia;

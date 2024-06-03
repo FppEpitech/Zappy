@@ -7,7 +7,8 @@
 
 #include <string.h>
 
-#include "server/server.h"
+#include "app/app.h"
+#include "server/client.h"
 
 static char *append_char(char *line, char current_char)
 {
@@ -43,14 +44,13 @@ char *read_line(int fd)
 
 bool server_data_handler(app_t *app, size_t fd)
 {
-    (void) app;
-    char buffer[1024 + 1] = {0};
-    ssize_t bytes_read = 0;
+    char *line = read_line(fd);
 
-    bytes_read = read(fd, buffer, 1024);
-    if (bytes_read <= 0)
-        return false;
-    buffer[bytes_read] = '\0';
-    printf("DATA: [%s]\n", buffer);
+    if (its_client(app, fd)) {
+
+    } else {
+        printf("DATA: [%s]\n", line);
+        free(line);
+    }
     return true;
 }
