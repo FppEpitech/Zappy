@@ -17,7 +17,7 @@ void Gui::Tile::setPosition(std::pair<std::size_t, std::size_t> position)
     _position = position;
 }
 
-std::pair<std::size_t, std::size_t> Gui::Tile::getPosition(void)
+std::pair<std::size_t, std::size_t> Gui::Tile::getPosition(void) const
 {
     return _position;
 }

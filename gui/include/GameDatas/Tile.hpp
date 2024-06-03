@@ -47,7 +47,7 @@ class Gui::Tile {
          *
          * @return std::pair<std::size_t, std::size_t> - position x y
          */
-        std::pair<std::size_t, std::size_t> getPosition(void);
+        std::pair<std::size_t, std::size_t> getPosition(void) const;
 
         /**
          * @brief Inventory of the tile.
