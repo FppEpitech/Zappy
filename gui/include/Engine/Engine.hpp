@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "Render/Render.hpp"
 #include "Network/Network.hpp"
 #include "Parsing/ServerParser.hpp"
 
@@ -44,8 +45,9 @@ class Gui::Engine {
 
     private:
 
-        ServerParser    _parser;    // Parser class for server's command
+        ServerParser    _parser;    // Parser class for server's command.
         Network         _network;   // Network class to connect to the server.
+        Render          _render;    // Render class to draw the scene.
 
         /**
          * @brief Listen the server and update Engine with its commands.

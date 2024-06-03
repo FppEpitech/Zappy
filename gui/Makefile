@@ -20,6 +20,8 @@ SRC			=	src/Error/Error.cpp \
 				src/GameDatas/Inventory.cpp \
 				src/GameDatas/Player.cpp \
 				src/GameDatas/Tile.cpp \
+				\
+				src/Render/Render.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 				Parsing/TestParser.cpp \
@@ -36,7 +38,7 @@ NAME		= 	zappy_gui
 
 # Flags
 INCLUDE		= 	-I./include
-CXXFLAGS 	= 	-std=c++20 -Wall -Wextra -Werror
+CXXFLAGS 	= 	-std=c++20 -Wall -Wextra -Werror -lraylib
 
 # Colors
 YELLOW 		= 	/bin/echo -e "\x1b[33m $1\x1b[0m"
