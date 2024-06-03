@@ -10,9 +10,11 @@
 #include <stddef.h>
 
 #include "ia/ia.h"
+#include "server/client.h"
 
 typedef union s_node_data {
     ia_t *ia;
+    client_t *client;
 } node_data_t;
 
 typedef struct s_list_node {

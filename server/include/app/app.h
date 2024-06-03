@@ -12,9 +12,9 @@
 #include "server/server.h"
 
 typedef struct s_app {
-    gui_t   *gui;
-    list_t  *ia;
-    server_t *server;
+    gui_t       *gui;
+    list_t      *clients_list;
+    server_t    *server;
 } app_t;
 
 /**

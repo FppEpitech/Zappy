@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy Server
 ** File description:
-** Ia struct
+** Client
 */
 
 #pragma once
@@ -11,15 +11,14 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct s_ia {
+typedef struct s_client {
     int     fd;
-    size_t  level;
-} ia_t;
+} client_t;
 
 /**
- * @brief Create a ia object
+ * @brief Create a client object
  *
  * @param fd File descriptor of ia
- * @return ia_t* Struct ia initialized
+ * @return client_t* Struct client initialized
  */
-ia_t *create_ia(int fd);
+client_t *create_client(int fd);

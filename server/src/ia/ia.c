@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy Server
 ** File description:
-** app
+** ia
 */
 
 #include "ia/ia.h"
@@ -15,6 +15,5 @@ ia_t *create_ia(int fd)
         return NULL;
     new_ia->fd = fd;
     new_ia->level = 0;
-    new_ia->have_team = false;
     return new_ia;
 }
