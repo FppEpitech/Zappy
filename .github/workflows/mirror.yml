@@ -95,6 +95,19 @@ jobs:
         if: ${{ env.FAILED == '1' }}
         run: exit 1
 
+  check_memory_leaks:
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: check_memory
+        run: |
+          make
+          set -e
+          for executable in $EXECUTABLES; do
+            valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./$executable
+          done
 
   run_tests:
     needs: [check_program_compilation]
