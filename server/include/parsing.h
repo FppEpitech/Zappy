@@ -1,0 +1,23 @@
+/*
+** EPITECH PROJECT, 2024
+** Zappy
+** File description:
+** parsing
+*/
+
+#pragma once
+
+#define HELP_FLAG_LABEL "--help"
+#define HELP_FLAG "-h"
+#define PORT_FLAG "-p"
+#define WIDTH_FLAG "-x"
+#define HEIGHT_FLAG "-y"
+#define TEAMS_NAMES_FLAG "-n"
+#define CLIENTS_FLAG "-c"
+#define FREQUENCY_FLAG "-f"
+
+#define NB_ARGS_MIN 13
+#define NB_ARGS_HELP 2
+
+#define USAGE "USAGE:\t./zappy_server -p port -x width -y height " \
+                "-n name1 name2 ... -c clientsNb -f freq\n"
