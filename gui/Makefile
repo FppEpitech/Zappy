@@ -31,6 +31,7 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				GameDatas/TestInventory.cpp \
 				GameDatas/TestPlayer.cpp \
 				GameDatas/TestTile.cpp \
+				Render/TestCamera.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
@@ -53,7 +54,7 @@ TEST 		= 	$(addprefix $(TEST_DIR), $(TEST_FILES))
 TEST_OBJ 	= 	$(TEST:.cpp=.o)
 TEST_GCNO 	= 	$(SRC:.cpp=.gcno)
 TEST_GCDA 	= 	$(SRC:.cpp=.gcda)
-TEST_FLAGS 	= 	-Wall -Wextra -Werror --coverage -lcriterion
+TEST_FLAGS 	= 	-Wall -Wextra -Werror --coverage -lcriterion -lraylib
 
 CC	=	g++
 
