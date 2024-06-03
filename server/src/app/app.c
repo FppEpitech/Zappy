@@ -25,7 +25,6 @@ app_t *create_app(size_t port)
 
 void destroy_app(app_t *app)
 {
-
     free(app->gui);
     destroy_server(app->server);
     list_free(app->clients_list);

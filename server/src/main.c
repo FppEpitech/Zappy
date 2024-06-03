@@ -11,11 +11,11 @@
 
 int main(void)
 {
-    printf("Welcome to Server\n");
     app_t *app = create_app(4444);
 
     if (app == NULL)
         return 84;
+    printf("Welcome to Server\n");
     server_run(app);
     destroy_app(app);
     return 0;

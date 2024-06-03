@@ -47,7 +47,6 @@ bool server_data_handler(app_t *app, size_t fd)
     char *line = read_line(fd);
 
     if (its_client(app, fd)) {
-
     } else {
         printf("DATA: [%s]\n", line);
         free(line);

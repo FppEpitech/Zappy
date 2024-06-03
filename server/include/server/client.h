@@ -14,7 +14,7 @@
 #include "app/app.h"
 
 typedef struct s_client {
-    int     fd;
+    int fd;
 } client_t;
 
 /**

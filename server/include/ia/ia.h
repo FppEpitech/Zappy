@@ -12,8 +12,8 @@
 #include <stdbool.h>
 
 typedef struct s_ia {
-    int     fd;
-    size_t  level;
+    int fd;
+    size_t level;
 } ia_t;
 
 /**

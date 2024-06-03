@@ -11,8 +11,6 @@
 #include <stdbool.h>
 
 typedef struct s_gui {
-    bool    connected;
-    size_t  fd;
+    bool connected;
+    size_t fd;
 } gui_t;
-
-
