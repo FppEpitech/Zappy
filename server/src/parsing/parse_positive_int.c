@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "rules.h"
+
 static bool is_str_number(char *str)
 {
     for (int i = 0; str[i]; i++) {
@@ -20,6 +22,6 @@ static bool is_str_number(char *str)
 int parse_positive_int_arg(char *arg)
 {
     if (!is_str_number(arg))
-        return -1;
+        return CODE_ERROR_INVALID_NUMBER;
     return atoi(arg);
 }
