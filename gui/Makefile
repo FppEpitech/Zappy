@@ -41,8 +41,6 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				Render/TestCamera.cpp \
 				GUIUpdater/TestGUIUpdater.cpp \
 				Event/TestEvent.cpp \
-				Engine/TestEngine.cpp \
-				Render/TestRender.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)

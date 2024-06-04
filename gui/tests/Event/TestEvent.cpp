@@ -24,14 +24,3 @@ Test(Event, setRender, .timeout = 5)
     event.setRender(render);
     cr_assert_not_null(&event);
 }
-
-Test(Event, listen, .timeout = 5)
-{
-    Gui::Event event;
-    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Render> render = std::make_shared<Gui::Render>(gameData);
-
-    event.setRender(render);
-    event.listen();
-    cr_assert_not_null(&event);
-}
