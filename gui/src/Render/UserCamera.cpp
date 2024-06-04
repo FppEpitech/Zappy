@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy GUI
 ** File description:
-** Camera
+** UserCamera
 */
 
 #include "Render/UserCamera.hpp"
