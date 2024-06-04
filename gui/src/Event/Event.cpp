@@ -8,7 +8,7 @@
 #include "raylib.h"
 #include "Event/Event.hpp"
 
-Gui::Event::Event(std::shared_ptr<Render> render) : _render(render)
+Gui::Event::Event()
 {
 }
 
@@ -22,6 +22,11 @@ void Gui::Event::listen()
         if (IsKeyPressed(event.first))
             event.second();
     }
+}
+
+void Gui::Event::setRender(std::shared_ptr<Render> render)
+{
+    _render = render;
 }
 
 void Gui::Event::moveUpCamera()
