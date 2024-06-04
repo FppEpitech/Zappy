@@ -19,8 +19,16 @@
 #define NB_ARGS_MIN 13
 #define NB_ARGS_HELP 2
 
+#define CODE_ERROR_MISSING_ARG -1
+#define CODE_ERROR_WRONG_FLAG -2
+#define CODE_ERROR_INVALID_ARG -3
+
 #define USAGE "USAGE:\t./zappy_server -p port -x width -y height " \
                 "-n name1 name2 ... -c clientsNb -f freq\n"
+
+#include "types.h"
+
+#include <stdbool.h>
 
 /**
  * @brief check if the help flag is present
@@ -42,8 +50,13 @@ int parse_positive_int_arg(char *arg);
 /**
  * @brief Parse the client argument.
  *
- * @param arg arguments passed to the server.
+ * @param arg argument passed to the server.
  * @param pos position of the client argument in the arguments.
- * @return int - the number of clients, -1 if the argument is not valid.
+ * @param parsing parsing struct for store the element.
+ * @return int - the result of the parsing.
+ * CODE_ERROR_MISSING_ARG if the arg is missing
+ * CODE_ERROR_INVALID_ARG if the arg is invalid
+ * CODE_ERROR_WRONG_FLAG if the flag is invalid
+ * 0 if the arg is valid.
  */
-int parse_client(char **arg, int pos);
+int parse_client(char **arg, int pos, parsing_t *parsing);
