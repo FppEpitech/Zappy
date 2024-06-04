@@ -12,10 +12,12 @@ SRC			=	src/list/list.c 	\
 				src/list/remove.c 	\
 				src/list/add.c 		\
 				\
-				src/parsing/help.c	\
+				src/parsing/help.c					\
+				src/parsing/parse_positive_int.c	\
 
-TEST_FILES	=	list/list_test.c 	\
-				parsing/help_test.c	\
+TEST_FILES	=	list/list_test.c 					\
+				parsing/help_test.c					\
+				parsing/parse_positive_int_tests.c	\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)

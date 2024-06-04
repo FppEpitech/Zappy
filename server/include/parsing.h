@@ -30,3 +30,11 @@
  * @return int
  */
 int handle_help(int ac, char **av);
+
+/**
+ * @brief parse a positive int argument.
+ *
+ * @param arg argument to parse.
+ * @return int - the parsed argument, -1 if the argument is not a positive int.
+ */
+int parse_positive_int_arg(char *arg);
