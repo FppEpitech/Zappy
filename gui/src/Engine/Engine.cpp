@@ -5,18 +5,21 @@
 ** Engine
 */
 
+#include "Event/Event.hpp"
 #include "Engine/Engine.hpp"
 
 #include <iostream>
 
-Gui::Engine::Engine(Network network) : _network(network) {}
+Gui::Engine::Engine(Network network, std::shared_ptr<Render> render) : _network(network), _render(render) {}
 
 void Gui::Engine::run(void)
 {
-    while (_render.isOpen()) {
+    Event event(_render);
+
+    while (_render->isOpen()) {
         listenServer();
-        // TODO : handleEvents();
-        _render.draw();
+        event.listen();
+        _render->draw();
     }
 }
 
