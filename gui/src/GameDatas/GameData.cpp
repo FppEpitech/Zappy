@@ -6,7 +6,6 @@
 */
 
 #include "GameDatas/GameData.hpp"
-#include "Error/Error.hpp"
 
 Gui::GameData::GameData() {}
 

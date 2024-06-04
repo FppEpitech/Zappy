@@ -7,8 +7,10 @@
 
 #pragma once
 
+#include "Error/Error.hpp"
 #include "GameDatas/Team.hpp"
 #include "GameDatas/Tile.hpp"
+
 
 template<typename T>
 using Map = std::vector<std::vector<T>>;
