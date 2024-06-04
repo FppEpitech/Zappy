@@ -9,8 +9,8 @@
 
 #include "Render/Render.hpp"
 
-#include <unordered_map>
 #include <functional>
+#include <unordered_map>
 
 #define HIGH_CAMERA_INCREASE 0.1
 #define LOW_CAMERA_INCREASE 0.1
