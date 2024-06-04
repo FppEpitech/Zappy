@@ -29,7 +29,7 @@ class Gui::Engine {
          *
          * @param network Network class.
          */
-        Engine(Network network);
+        Engine(Network network, std::shared_ptr<Render> render);
 
         /**
          * @brief Destroy the Engine object.
@@ -45,9 +45,9 @@ class Gui::Engine {
 
     private:
 
-        ServerParser    _parser;    // Parser class for server's command.
-        Network         _network;   // Network class to connect to the server.
-        Render          _render;    // Render class to draw the scene.
+        ServerParser                _parser;    // Parser class for server's command.
+        Network                     _network;   // Network class to connect to the server.
+        std::shared_ptr<Render>     _render;    // Render class to draw the scene.
 
         /**
          * @brief Listen the server and update Engine with its commands.
