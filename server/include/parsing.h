@@ -21,3 +21,12 @@
 
 #define USAGE "USAGE:\t./zappy_server -p port -x width -y height " \
                 "-n name1 name2 ... -c clientsNb -f freq\n"
+
+/**
+ * @brief check if the help flag is present
+ *
+ * @param ac numbers of arguments passed to the server.
+ * @param av arguments passed to the server.
+ * @return int
+ */
+int handle_help(int ac, char **av);

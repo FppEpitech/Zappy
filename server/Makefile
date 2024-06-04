@@ -8,11 +8,14 @@
 #Files
 MAIN 		=	src/main.c
 
-SRC			=	src/list/list.c \
-				src/list/remove.c \
-				src/list/add.c \
+SRC			=	src/list/list.c 	\
+				src/list/remove.c 	\
+				src/list/add.c 		\
+				\
+				src/parsing/help.c	\
 
-TEST_FILES	=	list/list_test.c \
+TEST_FILES	=	list/list_test.c 	\
+				parsing/help_test.c	\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
@@ -77,3 +80,4 @@ tests_run: fclean
 	@$(CC) -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(TEST_FLAGS) $(INCLUDE)
 	./$(TEST_NAME)
 	gcovr --exclude tests/
+	gcovr --exclude tests/ --branches
