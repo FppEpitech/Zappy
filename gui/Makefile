@@ -22,6 +22,9 @@ SRC			=	src/Error/Error.cpp \
 				src/GameDatas/Tile.cpp \
 				src/GameDatas/Team.cpp \
 				src/GameDatas/GameData.cpp \
+				\
+				src/Render/Render.cpp \
+				src/Render/UserCamera.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 				Parsing/TestParser.cpp \
@@ -31,6 +34,7 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				GameDatas/TestTile.cpp \
 				GameDatas/TestTeam.cpp \
 				GameDatas/TestGameData.cpp \
+				Render/TestCamera.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
@@ -40,7 +44,7 @@ NAME		= 	zappy_gui
 
 # Flags
 INCLUDE		= 	-I./include -I./tests
-CXXFLAGS 	= 	-std=c++20 -Wall -Wextra -Werror
+CXXFLAGS 	= 	-std=c++20 -Wall -Wextra -Werror -lraylib
 
 # Colors
 YELLOW 		= 	/bin/echo -e "\x1b[33m $1\x1b[0m"
@@ -53,7 +57,7 @@ TEST 		= 	$(addprefix $(TEST_DIR), $(TEST_FILES))
 TEST_OBJ 	= 	$(TEST:.cpp=.o)
 TEST_GCNO 	= 	$(SRC:.cpp=.gcno)
 TEST_GCDA 	= 	$(SRC:.cpp=.gcda)
-TEST_FLAGS 	= 	-Wall -Wextra -Werror --coverage -lcriterion
+TEST_FLAGS 	= 	-Wall -Wextra -Werror --coverage -lcriterion -lraylib
 
 CC	=	g++
 

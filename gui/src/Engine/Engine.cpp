@@ -13,12 +13,11 @@ Gui::Engine::Engine(Network network) : _network(network) {}
 
 void Gui::Engine::run(void)
 {
-    //while (//TODO : renderer.getIsOpen()) {
+    while (_render.isOpen()) {
         listenServer();
-        // TODO :
-        // handleEvents();
-        // display();
-    // }
+        // TODO : handleEvents();
+        _render.draw();
+    }
 }
 
 void Gui::Engine::listenServer(void)

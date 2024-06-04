@@ -105,6 +105,9 @@ jobs:
     container: epitechcontent/epitest-docker
     steps:
       - uses: actions/checkout@v4
+      - name: install_raylib
+        run: |
+            sudo dnf install raylib-devel -y
       - name: run_tests
         run: make tests_run
         timeout-minutes: 5
