@@ -27,6 +27,8 @@ SRC			=	src/Error/Error.cpp \
 				src/Render/UserCamera.cpp \
 				\
 				src/Event/Event.cpp \
+				\
+				src/GUIUpdater/GUIUpdater.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 				Parsing/TestParser.cpp \
