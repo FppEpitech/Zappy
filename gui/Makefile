@@ -21,6 +21,7 @@ SRC			=	src/Error/Error.cpp \
 				src/GameDatas/Player.cpp \
 				src/GameDatas/Tile.cpp \
 				src/GameDatas/Team.cpp \
+				src/GameDatas/GameData.cpp \
 				\
 				src/Render/Render.cpp \
 				src/Render/UserCamera.cpp \
@@ -32,6 +33,7 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				GameDatas/TestPlayer.cpp \
 				GameDatas/TestTile.cpp \
 				GameDatas/TestTeam.cpp \
+				GameDatas/TestGameData.cpp \
 				Render/TestCamera.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
