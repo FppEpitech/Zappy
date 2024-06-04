@@ -6,9 +6,7 @@
 */
 
 #include "GameDatas/Player.hpp"
-
-#include <criterion/criterion.h>
-#include <criterion/redirect.h>
+#include "CriterionHeaders.hpp"
 
 Test(Player, position, .timeout = 5)
 {

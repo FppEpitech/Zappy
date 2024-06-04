@@ -18,6 +18,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: install_raylib
+        run: |
+            sudo dnf install raylib-devel -y
       - name: check_presence_of_pushed_executables
         run: |
           if [ -z "$EXECUTABLES" ]; then

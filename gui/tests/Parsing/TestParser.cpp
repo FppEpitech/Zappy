@@ -5,10 +5,8 @@
 ** test Msz command
 */
 
+#include "CriterionHeaders.hpp"
 #include "Parsing/ServerParser.hpp"
-
-#include <criterion/criterion.h>
-#include <criterion/redirect.h>
 
 Test(ParseServer, unknown_command, .timeout = 5)
 {
