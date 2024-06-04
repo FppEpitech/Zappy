@@ -8,6 +8,37 @@
 #include "app/app.h"
 #include "server/client.h"
 
+static void reset_ai(app_t *app)
+{
+    list_node_t *temp = app->teams_list->first;
+    list_node_t *ia_temp = NULL;
+    team_t *team = NULL;
+
+    while (temp) {
+        team = temp->data.team;
+        ia_temp = team->list_ai->first;
+        while (ia_temp) {
+            FD_SET(ia_temp->data.ia->fd, &app->server->read_fds);
+            FD_SET(ia_temp->data.ia->fd, &app->server->write_fds);
+            ia_temp = ia_temp->next;
+        }
+        temp = temp->next;
+    }
+}
+
+static void reset_gui(app_t *app)
+{
+    list_node_t *temp_gui = app->gui_list->first;
+    gui_t *gui = NULL;
+
+    while (temp_gui) {
+        gui = temp_gui->data.gui;
+        FD_SET(gui->fd, &app->server->read_fds);
+        FD_SET(gui->fd, &app->server->write_fds);
+        temp_gui = temp_gui->next;
+    }
+}
+
 static int server_reset_fd(app_t *app)
 {
     list_node_t *temp = app->clients_list->first;
@@ -16,14 +47,14 @@ static int server_reset_fd(app_t *app)
     FD_ZERO(&app->server->read_fds);
     FD_ZERO(&app->server->write_fds);
     FD_SET(app->server->fd, &app->server->read_fds);
-    if (app->gui->connected)
-        FD_SET(app->gui->fd, &app->server->read_fds);
     while (temp) {
         client = temp->data.client;
         FD_SET(client->fd, &app->server->read_fds);
         FD_SET(client->fd, &app->server->write_fds);
         temp = temp->next;
     }
+    reset_gui(app);
+    reset_ai(app);
     return 0;
 }
 

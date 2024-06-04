@@ -7,12 +7,17 @@
 
 #pragma once
 
+#include <string.h>
+
+#include "ia/ia.h"
+#include "ia/team.h"
 #include "gui/gui.h"
 #include "list/list.h"
 #include "server/server.h"
 
 typedef struct s_app {
-    gui_t *gui;
+    list_t *gui_list;
+    list_t *teams_list;
     list_t *clients_list;
     server_t *server;
 } app_t;

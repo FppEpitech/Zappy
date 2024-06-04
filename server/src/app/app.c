@@ -14,18 +14,21 @@ app_t *create_app(size_t port)
     if (new_app == NULL)
         return NULL;
     new_app->server = create_server(port);
-    new_app->gui = malloc(sizeof(gui_t));
-    new_app->gui->connected = false;
-    new_app->gui->fd = 0;
+    if (new_app->server == NULL)
+        return NULL;
+    new_app->gui_list = malloc(sizeof(list_t));
     new_app->clients_list = malloc(sizeof(list_t));
-    if (new_app->gui == NULL || new_app->clients_list == NULL)
+    new_app->teams_list = malloc(sizeof(list_t));
+    if (new_app->gui_list == NULL || new_app->clients_list == NULL
+    || new_app->teams_list == NULL)
         return NULL;
     return new_app;
 }
 
 void destroy_app(app_t *app)
 {
-    free(app->gui);
     destroy_server(app->server);
+    list_free(app->gui_list);
     list_free(app->clients_list);
+    list_free(app->teams_list);
 }

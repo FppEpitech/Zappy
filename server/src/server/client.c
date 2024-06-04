@@ -17,7 +17,7 @@ client_t *create_client(int fd)
     return new_client;
 }
 
-bool its_client(app_t *app, int fd)
+bool its_client(app_t *app, size_t fd)
 {
     list_node_t *temp = app->clients_list->first;
     client_t *client = NULL;
@@ -29,4 +29,18 @@ bool its_client(app_t *app, int fd)
         temp = temp->next;
     }
     return false;
+}
+
+list_node_t *find_client(list_t *clients_list, size_t fd)
+{
+    list_node_t *temp = clients_list->first;
+    client_t *client = NULL;
+
+    while (temp) {
+        client = temp->data.client;
+        if (client->fd == fd)
+            return temp;
+        temp = temp->next;
+    }
+    return NULL;
 }

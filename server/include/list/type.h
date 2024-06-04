@@ -10,11 +10,15 @@
 #include <stddef.h>
 
 typedef struct s_ia ia_t;
+typedef struct s_gui gui_t;
+typedef struct s_team team_t;
 typedef struct s_client client_t;
 
 typedef union s_node_data {
     ia_t *ia;
+    gui_t *gui;
     client_t *client;
+    team_t *team;
 } node_data_t;
 
 typedef struct s_list_node {

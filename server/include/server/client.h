@@ -14,7 +14,7 @@
 #include "app/app.h"
 
 typedef struct s_client {
-    int fd;
+    size_t fd;
 } client_t;
 
 /**
@@ -33,4 +33,13 @@ client_t *create_client(int fd);
  * @return true If parameter fd is owned by a client.
  * @return false If parameter fd isn't owned by a client.
  */
-bool its_client(app_t *app, int fd);
+bool its_client(app_t *app, size_t fd);
+
+/**
+ * @brief Find a client thanks to an file descriptor.
+ *
+ * @param clients_list List of clients.
+ * @param fd File descriptor of client.
+ * @return list_node_t* Node of client.
+ */
+list_node_t *find_client(list_t *clients_list, size_t fd);

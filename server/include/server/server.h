@@ -75,3 +75,11 @@ bool server_data_handler(app_t *app, size_t fd);
  * @return char* The line readed.
  */
 char *read_line(int fd);
+
+/**
+ * @brief Handler to delete client/gui/ai who quit the server
+ *
+ * @param app Application with all lists.
+ * @param fd File descriptor of personn who quit.
+ */
+void server_quit_handler(app_t *app, size_t fd);
