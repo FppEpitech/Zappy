@@ -76,5 +76,6 @@ namespace Gui {
                  * @param message The error message.
                  */
                 GuiGameDataException(std::string message);
+        };
     };
 };
