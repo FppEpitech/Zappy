@@ -9,6 +9,12 @@
 
 #include "Render/Render.hpp"
 
+#include <unordered_map>
+#include <functional>
+
+#define HIGH_CAMERA_INCREASE 0.1
+#define LOW_CAMERA_INCREASE 0.1
+
 namespace Gui {
 
     /**
@@ -42,23 +48,43 @@ class Gui::Event {
 
     private:
 
-        std::shared_ptr<Render>       _render;
+        std::shared_ptr<Render>       _render;  // Render class to draw scene.
 
         /**
-         * @brief Handle space event.
+         * @brief Map for events by down key.
          *
          */
-        void spaceEvent();
+        std::unordered_map<KeyboardKey, std::function<void()>> _eventsKeyDown =
+        {
+            {KEY_SPACE, [this](){moveUpCamera();}},
+            {KEY_LEFT_SHIFT, [this](){moveDownCamera();}}
+        };
 
         /**
-         * @brief Handle shift event.
+         * @brief Map for events by pressing key.
          *
          */
-        void shiftEvent();
+        std::unordered_map<KeyboardKey, std::function<void()>> _eventsKeyPressed =
+        {
+            {KEY_THREE, [this](){switchDisplayDebug();}},
+            {KEY_F3, [this](){switchDisplayDebug();}}
+        };
 
         /**
-         * @brief Handle debug event (F3).
+         * @brief Move up the camera.
          *
          */
-        void debugEvent();
+        void moveUpCamera();
+
+        /**
+         * @brief Move down the camera.
+         *
+         */
+        void moveDownCamera();
+
+        /**
+         * @brief Switch on/off the debug display.
+         *
+         */
+        void switchDisplayDebug();
 };
