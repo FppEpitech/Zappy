@@ -14,10 +14,12 @@ SRC			=	src/list/list.c 	\
 				\
 				src/parsing/help.c					\
 				src/parsing/parse_positive_int.c	\
+				src/parsing/parse_client.c			\
 
 TEST_FILES	=	list/list_test.c 					\
 				parsing/help_test.c					\
 				parsing/parse_positive_int_tests.c	\
+				parsing/parse_client_tests.c		\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)

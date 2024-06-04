@@ -38,3 +38,12 @@ int handle_help(int ac, char **av);
  * @return int - the parsed argument, -1 if the argument is not a positive int.
  */
 int parse_positive_int_arg(char *arg);
+
+/**
+ * @brief Parse the client argument.
+ *
+ * @param arg arguments passed to the server.
+ * @param pos position of the client argument in the arguments.
+ * @return int - the number of clients, -1 if the argument is not valid.
+ */
+int parse_client(char **arg, int pos);
