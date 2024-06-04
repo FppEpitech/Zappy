@@ -21,6 +21,7 @@ SRC			=	src/Error/Error.cpp \
 				src/GameDatas/Player.cpp \
 				src/GameDatas/Tile.cpp \
 				src/GameDatas/Team.cpp \
+				src/GameDatas/GameData.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 				Parsing/TestParser.cpp \
@@ -29,6 +30,7 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				GameDatas/TestPlayer.cpp \
 				GameDatas/TestTile.cpp \
 				GameDatas/TestTeam.cpp \
+				GameDatas/TestGameData.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
