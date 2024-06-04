@@ -62,5 +62,19 @@ namespace Gui {
                  */
                 ParseCommandLineException(std::string message);
         };
+
+        /**
+         * @class GuiGameDataException
+         * @brief Error class for GameData errors.
+         */
+        class GuiGameDataException : public Error {
+
+            public:
+                /**
+                 * @brief Constructor for GuiGameDataException.
+                 *
+                 * @param message The error message.
+                 */
+                GuiGameDataException(std::string message);
     };
 };
