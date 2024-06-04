@@ -53,7 +53,36 @@ class Gui::Render {
          */
         void draw();
 
+        /**
+         * @brief Get the Camera object.
+         *
+         * @return std::shared_ptr<Camera> - camera
+         */
+        std::shared_ptr<Camera> getCamera();
+
+        /**
+         * @brief Set the Is Debug object.
+         *
+         * @param isDebug New Is Debug value to set.
+         */
+        void setIsDebug(bool isDebug);
+
+        /**
+         * @brief Get the Is Debug object.
+         *
+         * @return true - diplay debug
+         * @return false - do not display debug
+         */
+        bool getIsDebug(void);
+
+        /**
+         * @brief Display the debug interface.
+         *
+         */
+        void displayDebug(void);
+
     private:
 
         UserCamera      _camera;    // Camera of the scene.
+        bool            _isDebug;   // Display or not the debug informations.
 };
