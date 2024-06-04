@@ -11,7 +11,11 @@
 #include "GameDatas/Team.hpp"
 #include "GameDatas/Tile.hpp"
 
-
+/**
+ * @brief Map type.
+ *
+ * @tparam T Type of the map.
+*/
 template<typename T>
 using Map = std::vector<std::vector<T>>;
 
@@ -94,6 +98,6 @@ class Gui::GameData {
 
     private:
 
-        std::vector<Gui::Team> _teams;
-        Map<Gui::Tile> _map;
+        std::vector<Gui::Team> _teams; // Teams of the game.
+        Map<Gui::Tile> _map; // Map of the game.
 };
