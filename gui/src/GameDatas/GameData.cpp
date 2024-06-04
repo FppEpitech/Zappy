@@ -25,8 +25,8 @@ Gui::Team &Gui::GameData::getTeam(const std::string &name)
 
 void Gui::GameData::addTeam(const Gui::Team &team)
 {
-    for (auto &t : _teams) {
-        if (t.getName() == team.getName())
+    for (auto &registeredTeam : _teams) {
+        if (registeredTeam.getName() == team.getName())
             throw Gui::Errors::GuiGameDataException("Team already exists");
     }
     _teams.push_back(team);
