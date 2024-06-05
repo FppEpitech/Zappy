@@ -26,6 +26,7 @@ void Gui::Render::LoadModels(void)
     _foodModel = LoadModel(MODEL_FOOD);
     _linemateModel = LoadModel(MODEL_LINEMATE);
     _mendianeModel = LoadModel(MODEL_MENDIANE);
+    _phirasModel = LoadModel(MODEL_PHIRAS);
 }
 
 Gui::Render::~Render()
@@ -116,4 +117,7 @@ void Gui::Render::displayResources(Tile tile)
 
     Vector3 posMendiane = POS_MENDIANE;
     DrawModelEx(_mendianeModel, (Vector3){posTile.x + posMendiane.x, posTile.y + posMendiane.y, posTile.z + posMendiane.z}, ROTATION_AXIS_MENDIANE, ROTATION_ANGLE_MENDIANE, SCALE_MENDIANE, WHITE);
+
+    Vector3 posPhiras = POS_PHIRAS;
+    DrawModelEx(_phirasModel, (Vector3){posTile.x + posPhiras.x, posTile.y + posPhiras.y, posTile.z + posPhiras.z}, ROTATION_AXIS_PHIRAS, ROTATION_ANGLE_PHIRAS, SCALE_PHIRAS, WHITE);
 }

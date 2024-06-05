@@ -86,6 +86,7 @@ class Gui::Render {
         Model                       _foodModel;         // Model to display foods.
         Model                       _linemateModel;     // Model to display linemates.
         Model                       _mendianeModel;    // Model to display mendianes.
+        Model                       _phirasModel;    // Model to display mendianes.
 
         /**
          * @brief Load the models to draw.
