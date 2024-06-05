@@ -7,8 +7,8 @@
 
 #include <criterion/criterion.h>
 
-#include "parsing.h"
 #include "types.h"
+#include "parsing.h"
 
 Test(parse_frequency, no_arg_passed)
 {

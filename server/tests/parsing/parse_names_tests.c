@@ -7,8 +7,8 @@
 
 #include <criterion/criterion.h>
 
-#include "parsing.h"
 #include "rules.h"
+#include "parsing.h"
 
 Test(parse_names, no_arg_passed)
 {
