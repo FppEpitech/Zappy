@@ -8,6 +8,7 @@
 #include <criterion/criterion.h>
 
 #include "../include/parsing.h"
+#include "rules.h"
 
 Test(parse_positive_int, test_positive_int)
 {
@@ -16,10 +17,10 @@ Test(parse_positive_int, test_positive_int)
 
 Test(parse_positive_int, test_negative_int)
 {
-    cr_assert_eq(parse_positive_int_arg("-42"), -1, "The function return a wrong value");
+    cr_assert_eq(parse_positive_int_arg("-42"), CODE_ERROR_INVALID_NUMBER, "The function return a wrong value");
 }
 
 Test(parse_positive_int, test_not_int)
 {
-    cr_assert_eq(parse_positive_int_arg("test"), -1, "The function return a wrong value");
+    cr_assert_eq(parse_positive_int_arg("test"), CODE_ERROR_INVALID_NUMBER, "The function return a wrong value");
 }

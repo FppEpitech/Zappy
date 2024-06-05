@@ -9,6 +9,7 @@
 
 #include "types.h"
 #include "parsing.h"
+#include "rules.h"
 
 Test(parse_height, no_arg_passed)
 {
@@ -45,7 +46,7 @@ Test(parse_height, valid_arg_passed)
     int pos = 0;
     int res = parse_height(arg, &pos, parsing);
 
-    cr_assert_eq(res, 0);
+    cr_assert_eq(res, CODE_SUCCESS);
     cr_assert_eq(parsing->height, 10);
     cr_assert_eq(pos, 2);
     free(parsing);

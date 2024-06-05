@@ -32,5 +32,5 @@ int parse_height(char **arg, int *pos, parsing_t *parsing)
     }
     (*pos) += 2;
     parsing->height = result;
-    return CODE_HELP_SUCCESS;
+    return CODE_SUCCESS;
 }

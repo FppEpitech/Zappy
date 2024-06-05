@@ -9,6 +9,7 @@
 
 #include "types.h"
 #include "parsing.h"
+#include "rules.h"
 
 Test(parse_client, no_arg_passed)
 {
