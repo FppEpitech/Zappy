@@ -15,6 +15,7 @@
 #include "ai/ai.h"
 #include "ai/team.h"
 #include "gui/gui.h"
+#include "parsing.h"
 #include "list/list.h"
 #include "game/game.h"
 #include "server/server.h"
@@ -30,12 +31,10 @@ typedef struct s_app {
 /**
  * @brief Create application struct.
  *
- * @param port Port on witch create server.
- * @param height Height of the map.
- * @param width Width of the map.
+ * @param parsing Parsing struct with all necessary information.
  * @return app_t* Return app initialized.
  */
-app_t *create_app(size_t port, int height, int width);
+app_t *create_app(parsing_t *parsing);
 
 /**
  * @brief Destroy application struct.

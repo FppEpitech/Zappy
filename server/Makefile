@@ -29,9 +29,28 @@ SRC			=	src/list/list.c \
 				src/server/write/write_data.c \
 				\
 				src/game/game.c \
+				\
+				src/parsing/help.c					\
+				src/parsing/parse_positive_int.c	\
+				src/parsing/parse_client.c			\
+				src/parsing/parse_port.c			\
+				src/parsing/parse_height.c			\
+				src/parsing/parse_width.c			\
+				src/parsing/arguments.c				\
+				src/parsing/parse_names.c			\
+				src/parsing/parse_frequency.c		\
 
 TEST_FILES	=	list/list_test.c \
 				communication/communication_test.c \
+				parsing/help_test.c					\
+				parsing/parse_positive_int_tests.c	\
+				parsing/parse_client_tests.c		\
+				parsing/parse_width_tests.c			\
+				parsing/parse_height_tests.c		\
+				parsing/parse_port_tests.c			\
+				parsing/parse_frequency_tests.c		\
+				parsing/parse_arguments_tests.c		\
+				parsing/parse_names_tests.c			\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)

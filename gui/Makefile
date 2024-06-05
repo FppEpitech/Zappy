@@ -16,10 +16,31 @@ SRC			=	src/Error/Error.cpp \
 				\
 				src/Parsing/ServerParser.cpp \
 				src/Parsing/ParseCommandLine.cpp \
+				\
+				src/GameDatas/Inventory.cpp \
+				src/GameDatas/Player.cpp \
+				src/GameDatas/Tile.cpp \
+				src/GameDatas/Team.cpp \
+				src/GameDatas/GameData.cpp \
+				\
+				src/Render/Render.cpp \
+				src/Render/UserCamera.cpp \
+				\
+				src/Event/Event.cpp \
+				\
+				src/GUIUpdater/GUIUpdater.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 				Parsing/TestParser.cpp \
 				Parsing/TestParseCommandLine.cpp \
+				GameDatas/TestInventory.cpp \
+				GameDatas/TestPlayer.cpp \
+				GameDatas/TestTile.cpp \
+				GameDatas/TestTeam.cpp \
+				GameDatas/TestGameData.cpp \
+				Render/TestCamera.cpp \
+				GUIUpdater/TestGUIUpdater.cpp \
+				Event/TestEvent.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
@@ -28,8 +49,8 @@ MAIN_OBJ	=	$(MAIN:.cpp=.o)
 NAME		= 	zappy_gui
 
 # Flags
-INCLUDE		= 	-I./include
-CXXFLAGS 	= 	-std=c++20 -Wall -Wextra -Werror
+INCLUDE		= 	-I./include -I./tests
+CXXFLAGS 	= 	-std=c++20 -Wall -Wextra -Werror -lraylib
 
 # Colors
 YELLOW 		= 	/bin/echo -e "\x1b[33m $1\x1b[0m"
@@ -42,7 +63,7 @@ TEST 		= 	$(addprefix $(TEST_DIR), $(TEST_FILES))
 TEST_OBJ 	= 	$(TEST:.cpp=.o)
 TEST_GCNO 	= 	$(SRC:.cpp=.gcno)
 TEST_GCDA 	= 	$(SRC:.cpp=.gcda)
-TEST_FLAGS 	= 	-Wall -Wextra -Werror --coverage -lcriterion
+TEST_FLAGS 	= 	-Wall -Wextra -Werror --coverage -lcriterion -lraylib
 
 CC	=	g++
 

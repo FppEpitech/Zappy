@@ -26,3 +26,8 @@ Gui::Errors::ParseCommandLineException::ParseCommandLineException(std::string me
 {
     _message = message;
 }
+
+Gui::Errors::GuiGameDataException::GuiGameDataException(std::string message)
+{
+    _message = message;
+}

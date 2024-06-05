@@ -42,10 +42,13 @@ std::vector<std::string> Gui::ServerParser::parseCommand(const std::string& comm
                 arguments = parseString(stream, arguments);
                 break;
             }
-            case Gui::ServerParser::ParseType::HASHTAG:
+            case Gui::ServerParser::ParseType::MESSAGE:
             {
-                arguments = parseHashtag(stream, arguments, commandName);
-                break;
+                return parseMessage(stream, arguments, commandName);
+            }
+            case Gui::ServerParser::ParseType::LIST_INT:
+            {
+                return parseListInt(stream, arguments, commandName);
             }
             default:
                 break;
@@ -75,14 +78,32 @@ std::vector<std::string> Gui::ServerParser::parseString(std::istringstream& stre
     return arguments;
 }
 
-std::vector<std::string> Gui::ServerParser::parseHashtag(std::istringstream& stream, std::vector<std::string> arguments, std::string commandName)
+std::vector<std::string> Gui::ServerParser::parseMessage(std::istringstream& stream, std::vector<std::string> arguments, std::string commandName)
 {
-    char hashtag;
-    stream >> hashtag;
-    if (hashtag != '#')
+    if (stream.fail())
         throw Errors::ServerParserException("Wrong parameters for '" + commandName + "' command.");
-    int nb;
-    stream >> nb;
-    arguments.push_back(std::to_string(nb));
+
+    std::string start;
+    stream >> start;
+    if (stream.fail())
+        throw Errors::ServerParserException("Wrong parameters for '" + commandName + "' command.");
+    std::string end;
+    std::getline(stream, end, '\0');
+    arguments.push_back(start + end);
     return arguments;
+}
+
+std::vector<std::string> Gui::ServerParser::parseListInt(std::istringstream& stream, std::vector<std::string> arguments, std::string commandName)
+{
+    if (stream.fail())
+        throw Errors::ServerParserException("Wrong parameters for '" + commandName + "' command.");
+    while (1) {
+        int player;
+        stream >> player;
+        if (stream.fail())
+            throw Errors::ServerParserException("Wrong parameters for '" + commandName + "' command.");
+        arguments.push_back(std::to_string(player));
+        if((stream.eof()))
+            return arguments;
+    }
 }

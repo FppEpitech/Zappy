@@ -5,10 +5,9 @@
 ** test parseCommandLine
 */
 
+#include "CriterionHeaders.hpp"
 #include "Parsing/ParseCommandLine.hpp"
 
-#include <criterion/criterion.h>
-#include <criterion/redirect.h>
 #include <stdlib.h>
 
 Test(ParseCommandLine, command_correct, .timeout = 5)
