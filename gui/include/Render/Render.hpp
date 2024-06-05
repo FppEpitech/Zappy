@@ -83,6 +83,7 @@ class Gui::Render {
         std::shared_ptr<GameData>   _gameData;  // GameData class to store the game's data.
 
         Model                       _tileModel; // Model to display for tiles.
+        Model                       _foodModel; // Model to display for food.
 
         /**
          * @brief Load the models to draw.
@@ -101,4 +102,10 @@ class Gui::Render {
          *
          */
         void displayMap();
+
+        /**
+         * @brief Display the food.
+         *
+         */
+        void displayFood(Tile tile);
 };

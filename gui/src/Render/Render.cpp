@@ -23,6 +23,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
 void Gui::Render::LoadModels(void)
 {
     _tileModel = LoadModel(MODEL_TILE);
+    _foodModel = LoadModel(MODEL_FOOD);
 }
 
 Gui::Render::~Render()
@@ -43,7 +44,6 @@ void Gui::Render::draw()
     ClearBackground(RAYWHITE);
 
     BeginMode3D(*_camera.getCamera());
-    DrawGrid(20, 1.0f);
     displayMap();
     EndMode3D();
 
@@ -87,7 +87,17 @@ void Gui::Render::displayDebug(void)
 void Gui::Render::displayMap()
 {
     for (auto &line : _gameData->getMap()) {
-        for (auto &tile : line)
+        for (auto &tile : line) {
             DrawModel(_tileModel, tile.getPositionIn3DSpace(), 0.001f, WHITE);
+            displayFood(tile);
+        }
     }
+}
+
+void Gui::Render::displayFood(Tile tile)
+{
+    Vector3 posTile = tile.getPositionIn3DSpace();
+    Vector3 posFood = POS_FOOD;
+
+    DrawModelEx(_foodModel, (Vector3){posTile.x + posFood.x, posTile.y + posFood.y, posTile.z + posFood.z}, ROTATION_AXIS_FOOD, ROTATION_ANGLE_FOOD, SCALE_FOOD, WHITE);
 }

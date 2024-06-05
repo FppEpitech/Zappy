@@ -17,3 +17,11 @@
 #define MODEL_DERAUMERE     "assets/deraumere.glb"
 
 #define SIZE_TILE           6
+
+#define SCALE_FOOD          (Vector3){2, 2, 2}
+
+#define ROTATION_ANGLE_FOOD -90
+
+#define ROTATION_AXIS_FOOD  (Vector3){1, 0, 0}
+
+#define POS_FOOD            (Vector3){1, 0.1, 1}
