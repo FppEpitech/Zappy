@@ -96,6 +96,8 @@ void Gui::Render::displayMap()
 
 void Gui::Render::displayFood(Tile tile)
 {
+    if (tile._inventory.getFood() == 0)
+        return;
     Vector3 posTile = tile.getPositionIn3DSpace();
     Vector3 posFood = POS_FOOD;
 
