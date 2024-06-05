@@ -125,3 +125,17 @@ int parse_port(char **arg, int *pos, parsing_t *parsing);
  * 0 if the arg is valid.
  */
 int parse_width(char **arg, int *pos, parsing_t *parsing);
+
+/**
+ * @brief Parse the names argument.
+ *
+ * @param arg argument passed to the server.
+ * @param pos pointer to position of the names argument in the arguments.
+ * @param parsing parsing struct for store the element.
+ * @return int - the result of the parsing.
+ * CODE_ERROR_MISSING_ARG if the arg is missing
+ * CODE_ERROR_WRONG_FLAG if the flag is invalid
+ * CODE_ERROR_MALLOC_FAILEd if any malloc failed
+ * 0 if the arg is valid.
+ */
+int parse_names(char **arg, int *pos, parsing_t *parsing);

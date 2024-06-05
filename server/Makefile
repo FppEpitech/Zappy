@@ -19,6 +19,7 @@ SRC			=	src/list/list.c 	\
 				src/parsing/parse_height.c			\
 				src/parsing/parse_width.c			\
 				src/parsing/arguments.c				\
+				src/parsing/parse_names.c			\
 				src/parsing/parse_frequency.c		\
 
 TEST_FILES	=	list/list_test.c 					\
@@ -30,6 +31,7 @@ TEST_FILES	=	list/list_test.c 					\
 				parsing/parse_port_tests.c			\
 				parsing/parse_frequency_tests.c		\
 				parsing/parse_arguments_tests.c		\
+				parsing/parse_names_tests.c			\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
