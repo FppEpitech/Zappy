@@ -36,13 +36,14 @@ void Gui::GUIUpdater::updateMapSize(const std::vector<std::string> &data)
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid map size");
     }
+    if (args.size() != 2)
+        throw Gui::Errors::GuiUpdaterException("Invalid map size");
     _gameData->setMapSize(args[0], args[1]);
 }
 
 void Gui::GUIUpdater::updateMapContent(const std::vector<std::string> &data)
 {
     std::vector<size_t> args;
-    Map<Gui::Tile> newMap;
     size_t tmp = 0;
 
     try {
@@ -72,6 +73,8 @@ void Gui::GUIUpdater::updateTeamNames(const std::vector<std::string> &data)
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid team names");
     }
+    if (_gameData->getTeams().empty())
+        throw Gui::Errors::GuiUpdaterException("Invalid team names");
 }
 
 void Gui::GUIUpdater::updateTeamMember(const std::vector<std::string> &data)
@@ -89,6 +92,8 @@ void Gui::GUIUpdater::updateTeamMember(const std::vector<std::string> &data)
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid team member");
     }
+    if (args.size() != 5)
+        throw Gui::Errors::GuiUpdaterException("Invalid team member");
     if (args[2] < 1 || args[2] > 4)
         throw Gui::Errors::GuiUpdaterException("Invalid player orientation");
     if (args[3] < 1 || args[3] > 8)
@@ -113,6 +118,8 @@ void Gui::GUIUpdater::updatePlayerPosition(const std::vector<std::string> &data)
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid player position");
     }
+    if (args.size() != 4)
+        throw Gui::Errors::GuiUpdaterException("Invalid player position");
     if (args[3] < 1 || args[3] > 4)
         throw Gui::Errors::GuiUpdaterException("Invalid player orientation");
     for (auto &team : _gameData.get()->getTeams())
@@ -136,6 +143,8 @@ void Gui::GUIUpdater::updatePlayerLevel(const std::vector<std::string> &data)
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid player level");
     }
+    if (args.size() != 2)
+        throw Gui::Errors::GuiUpdaterException("Invalid player level");
     if (args[1] < 1 || args[1] > 8)
         throw Gui::Errors::GuiUpdaterException("Invalid player level");
     for (auto &team : _gameData->getTeams())
@@ -159,6 +168,8 @@ void Gui::GUIUpdater::updatePlayerInventory(const std::vector<std::string> &data
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid player inventory");
     }
+    if (args.size() != 10)
+        throw Gui::Errors::GuiUpdaterException("Invalid player inventory");
     for (auto &team : _gameData->getTeams())
         for (auto &player : team.getPlayers())
             if (player.getId() == args[0])
@@ -181,7 +192,7 @@ void Gui::GUIUpdater::updatePlayerExpulsion(const std::vector<std::string> &data
     for (auto &team : _gameData->getTeams())
         for (size_t i = 0; i < team.getPlayers().size(); i++)
             if (team.getPlayers()[i].getId() == id)
-                return;
+                return; // TODO: Implement the player state
 }
 
 void Gui::GUIUpdater::updatePlayerBroadcast(const std::vector<std::string> &data)
