@@ -110,61 +110,61 @@ class Gui::Render {
          * @brief Display the map.
          *
          */
-        void displayMap(void);
+        void displayMap(void) const;
 
         /**
          * @brief Display the food.
          *
          * @param tile Tile with food.
          */
-        void displayFood(Tile tile);
+        void displayFood(Tile tile) const;
 
         /**
          * @brief Display resources.
          *
          * @param tile Tile with resources.
          */
-        void displayResources(Tile tile);
+        void displayResources(Tile tile) const;
 
         /**
          * @brief Display Linemate.
          *
          * @param tile Tile with resources.
          */
-        void displayLinemate(Tile tile);
+        void displayLinemate(Tile tile) const;
 
         /**
          * @brief Display Mendiane.
          *
          * @param tile Tile with resources.
          */
-        void displayMendiane(Tile tile);
+        void displayMendiane(Tile tile) const;
 
         /**
          * @brief Display Phiras.
          *
          * @param tile Tile with resources.
          */
-        void displayPhiras(Tile tile);
+        void displayPhiras(Tile tile) const;
 
         /**
          * @brief Display Sibur.
          *
          * @param tile Tile with resources.
          */
-        void displaySibur(Tile tile);
+        void displaySibur(Tile tile) const;
 
         /**
          * @brief Display Thystam.
          *
          * @param tile Tile with resources.
          */
-        void displayThystame(Tile tile);
+        void displayThystame(Tile tile) const;
 
         /**
          * @brief Display Deraumere.
          *
          * @param tile Tile with resources.
          */
-        void displayDeraumere(Tile tile);
+        void displayDeraumere(Tile tile) const;
 };

@@ -90,7 +90,7 @@ void Gui::Render::displayDebug(void)
     }
 }
 
-void Gui::Render::displayMap(void)
+void Gui::Render::displayMap(void) const
 {
     for (auto &line : _gameData->getMap()) {
         for (auto &tile : line) {
@@ -101,7 +101,7 @@ void Gui::Render::displayMap(void)
     }
 }
 
-void Gui::Render::displayFood(Tile tile)
+void Gui::Render::displayFood(Tile tile) const
 {
     if (tile._inventory.getFood() == 0)
         return;
@@ -111,7 +111,7 @@ void Gui::Render::displayFood(Tile tile)
     DrawModelEx(_foodModel, (Vector3){posTile.x + posFood.x, posTile.y + posFood.y, posTile.z + posFood.z}, ROTATION_AXIS_FOOD, ROTATION_ANGLE_FOOD, SCALE_FOOD, WHITE);
 }
 
-void Gui::Render::displayResources(Tile tile)
+void Gui::Render::displayResources(Tile tile) const
 {
     displayLinemate(tile);
     displayMendiane(tile);
@@ -121,7 +121,7 @@ void Gui::Render::displayResources(Tile tile)
     displayDeraumere(tile);
 }
 
-void Gui::Render::displayLinemate(Tile tile)
+void Gui::Render::displayLinemate(Tile tile) const
 {
     Vector3 posTile = tile.getPositionIn3DSpace();
 
@@ -131,7 +131,7 @@ void Gui::Render::displayLinemate(Tile tile)
     }
 }
 
-void Gui::Render::displayMendiane(Tile tile)
+void Gui::Render::displayMendiane(Tile tile) const
 {
     Vector3 posTile = tile.getPositionIn3DSpace();
 
@@ -141,7 +141,7 @@ void Gui::Render::displayMendiane(Tile tile)
     }
 }
 
-void Gui::Render::displayPhiras(Tile tile)
+void Gui::Render::displayPhiras(Tile tile) const
 {
     Vector3 posTile = tile.getPositionIn3DSpace();
 
@@ -151,7 +151,7 @@ void Gui::Render::displayPhiras(Tile tile)
     }
 }
 
-void Gui::Render::displaySibur(Tile tile)
+void Gui::Render::displaySibur(Tile tile) const
 {
     Vector3 posTile = tile.getPositionIn3DSpace();
 
@@ -161,7 +161,7 @@ void Gui::Render::displaySibur(Tile tile)
     }
 }
 
-void Gui::Render::displayThystame(Tile tile)
+void Gui::Render::displayThystame(Tile tile) const
 {
     Vector3 posTile = tile.getPositionIn3DSpace();
 
@@ -171,7 +171,7 @@ void Gui::Render::displayThystame(Tile tile)
     }
 }
 
-void Gui::Render::displayDeraumere(Tile tile)
+void Gui::Render::displayDeraumere(Tile tile) const
 {
     Vector3 posTile = tile.getPositionIn3DSpace();
 
