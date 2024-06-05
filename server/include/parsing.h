@@ -97,3 +97,17 @@ int parse_frequency(char **arg, int *pos, parsing_t *parsing);
  * 0 if the arg is valid.
  */
 int parse_height(char **arg, int *pos, parsing_t *parsing);
+
+/**
+ * @brief Parse the port argument.
+ *
+ * @param arg argument passed to the server.
+ * @param pos pointer to position of the port argument in the arguments.
+ * @param parsing parsing struct for store the element.
+ * @return int - the result of the parsing.
+ * CODE_ERROR_MISSING_ARG if the arg is missing
+ * CODE_ERROR_INVALID_ARG if the arg is invalid
+ * CODE_ERROR_WRONG_FLAG if the flag is invalid
+ * 0 if the arg is valid.
+ */
+int parse_port(char **arg, int *pos, parsing_t *parsing);
