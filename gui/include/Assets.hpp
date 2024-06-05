@@ -7,4 +7,5 @@
 
 #pragma once
 
-#define MODEL_TILE "assets/building_platform.glb"
+#define MODEL_TILE  "assets/building_platform.glb"
+#define SIZE_TILE   6
