@@ -78,12 +78,14 @@ class Gui::Render {
 
     private:
 
-        UserCamera                  _camera;    // Camera of the scene.
-        bool                        _isDebug;   // Display or not the debug informations.
-        std::shared_ptr<GameData>   _gameData;  // GameData class to store the game's data.
+        UserCamera                  _camera;            // Camera of the scene.
+        bool                        _isDebug;           // Display or not the debug informations.
+        std::shared_ptr<GameData>   _gameData;          // GameData class to store the game's data.
 
-        Model                       _tileModel; // Model to display for tiles.
-        Model                       _foodModel; // Model to display for food.
+        Model                       _tileModel;         // Model to display tiles.
+        Model                       _foodModel;         // Model to display foods.
+        Model                       _linemateModel;     // Model to display linemates.
+        Model                       _mendianeModel;    // Model to display mendianes.
 
         /**
          * @brief Load the models to draw.
@@ -106,6 +108,14 @@ class Gui::Render {
         /**
          * @brief Display the food.
          *
+         * @param tile Tile with food.
          */
         void displayFood(Tile tile);
+
+        /**
+         * @brief Display resources.
+         *
+         * @param tile Tile wit resources.
+         */
+        void displayResources(Tile tile);
 };

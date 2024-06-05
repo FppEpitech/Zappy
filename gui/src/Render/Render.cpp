@@ -24,6 +24,8 @@ void Gui::Render::LoadModels(void)
 {
     _tileModel = LoadModel(MODEL_TILE);
     _foodModel = LoadModel(MODEL_FOOD);
+    _linemateModel = LoadModel(MODEL_LINEMATE);
+    _mendianeModel = LoadModel(MODEL_MENDIANE);
 }
 
 Gui::Render::~Render()
@@ -41,7 +43,7 @@ void Gui::Render::draw()
     UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
     BeginDrawing();
 
-    ClearBackground(RAYWHITE);
+    ClearBackground(SKYBLUE);
 
     BeginMode3D(*_camera.getCamera());
     displayMap();
@@ -90,6 +92,7 @@ void Gui::Render::displayMap()
         for (auto &tile : line) {
             DrawModel(_tileModel, tile.getPositionIn3DSpace(), 0.001f, WHITE);
             displayFood(tile);
+            displayResources(tile);
         }
     }
 }
@@ -102,4 +105,15 @@ void Gui::Render::displayFood(Tile tile)
     Vector3 posFood = POS_FOOD;
 
     DrawModelEx(_foodModel, (Vector3){posTile.x + posFood.x, posTile.y + posFood.y, posTile.z + posFood.z}, ROTATION_AXIS_FOOD, ROTATION_ANGLE_FOOD, SCALE_FOOD, WHITE);
+}
+
+void Gui::Render::displayResources(Tile tile)
+{
+    Vector3 posTile = tile.getPositionIn3DSpace();
+
+    Vector3 posLinemate = POS_LINEMATE;
+    DrawModelEx(_linemateModel, (Vector3){posTile.x + posLinemate.x, posTile.y + posLinemate.y, posTile.z + posLinemate.z}, ROTATION_AXIS_LINEMATE, ROTATION_ANGLE_LINEMATE, SCALE_LINEMATE, WHITE);
+
+    Vector3 posMendiane = POS_MENDIANE;
+    DrawModelEx(_mendianeModel, (Vector3){posTile.x + posMendiane.x, posTile.y + posMendiane.y, posTile.z + posMendiane.z}, ROTATION_AXIS_MENDIANE, ROTATION_ANGLE_MENDIANE, SCALE_MENDIANE, WHITE);
 }
