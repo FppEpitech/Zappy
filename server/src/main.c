@@ -7,8 +7,20 @@
 
 #include <stdio.h>
 
-int main(void)
+#include "parsing.h"
+
+int main(int ac, char **av)
 {
-    printf("Welcome to Server\n");
+    parsing_t *parsing = parse_arg(ac, av);
+
+    if (!parsing)
+        return 84;
+    printf("Port: %d\n", parsing->port);
+    printf("Width: %d\n", parsing->width);
+    printf("Height: %d\n", parsing->height);
+    printf("ClientsNb: %d\n", parsing->clientsNb);
+    printf("Freq: %d\n", parsing->freq);
+    for (int i = 0; parsing->names[i]; i++)
+        printf("Name %d: %s\n", i, parsing->names[i]);
     return 0;
 }
