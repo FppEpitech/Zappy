@@ -51,7 +51,7 @@ int parse_positive_int_arg(char *arg);
  * @brief Parse the client argument.
  *
  * @param arg argument passed to the server.
- * @param pos position of the client argument in the arguments.
+ * @param pos pointer to position of the client argument in the arguments.
  * @param parsing parsing struct for store the element.
  * @return int - the result of the parsing.
  * CODE_ERROR_MISSING_ARG if the arg is missing
@@ -59,4 +59,4 @@ int parse_positive_int_arg(char *arg);
  * CODE_ERROR_WRONG_FLAG if the flag is invalid
  * 0 if the arg is valid.
  */
-int parse_client(char **arg, int pos, parsing_t *parsing);
+int parse_client(char **arg, int *pos, parsing_t *parsing);
