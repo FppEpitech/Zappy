@@ -31,6 +31,15 @@
 #include <stdbool.h>
 
 /**
+ * @brief Parse the arguments passed to the server.
+ *
+ * @param ac numbers of arguments passed to the server.
+ * @param av arguments passed to the server.
+ * @return int - -1 in case of error, 0 otherwise.
+ */
+int parse_arg(int ac, char **av);
+
+/**
  * @brief check if the help flag is present
  *
  * @param ac numbers of arguments passed to the server.
