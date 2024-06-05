@@ -9,7 +9,7 @@ import sys
 import socket
 import select
 
-from ai.src.utils.utils import stringify_data
+from ai.src.utils.utils import stringifyData
 
 class API:
     """
@@ -31,9 +31,9 @@ class API:
     ----------
 
     Methods :
-        send_data(data : str, timeout : int = None)
+        sendData(data : str, timeout : int = None)
             send data to the server
-        receive_data(timeout : int = None)
+        receiveData(timeout : int = None)
             receive data from the server
         connect(team_name : str)
             connect to the server
@@ -66,7 +66,7 @@ class API:
         self.outputs.append(self.sock)
 
 
-    def send_data(self, data : str, timeout : int = None):
+    def sendData(self, data : str, timeout : int = None):
         """
         Send data to the server
 
@@ -83,10 +83,10 @@ class API:
         for s in write:
             if s == self.sock:
                 s.send(data.encode())
-                print("sent : ", stringify_data(data), flush=True, file=sys.stderr)
+                print("sent : ", stringifyData(data), flush=True, file=sys.stderr)
 
 
-    def receive_data(self, timeout : int = None):
+    def receiveData(self, timeout : int = None):
         """
         Receive data from the server
 
@@ -103,12 +103,12 @@ class API:
                     print("Server disconnected")
                     sys.exit(0)
                 else:
-                    print("received :", stringify_data(data.decode()), flush=True, file=sys.stderr)
+                    print("received :", stringifyData(data.decode()), flush=True, file=sys.stderr)
                     return data.decode()
         return None
 
 
-    def connect(self, team_name : str):
+    def connect(self, teamName : str):
         """
         Connect to the server
 
@@ -128,27 +128,27 @@ class API:
             y : int
                 the y size of the map
         """
-        welcome = self.receive_data()
+        welcome = self.receiveData()
         if welcome != "WELCOME\n":
             raise Exception("Error: invalid welcome message")
 
-        self.send_data(f"{team_name}\n")
-        client_num, data = self.receive_data().split('\n', 1)
+        self.sendData(f"{teamName}\n")
+        clientNum, data = self.receiveData().split('\n', 1)
         data = data.split(' ')
 
         if len(data) != 2:
             raise Exception("Error: invalid map size")
         try:
-            client_num = int(client_num)
+            clientNum = int(clientNum)
             x = int(data[0])
             y = int(data[1])
         except Exception as e:
             raise Exception("Error: invalid map size")
 
         print("Connected to server")
-        print(f"Client number: {client_num}")
+        print(f"Client number: {clientNum}")
         print(f"Map size: x = {x}, y = {y}")
-        return client_num, x, y
+        return clientNum, x, y
 
 
     def close(self):
