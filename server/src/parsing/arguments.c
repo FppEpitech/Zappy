@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** argument
+** Parse all arguments given to the server.
 */
 
 #include <stdio.h>

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** Parse positive int
+** Parse positive int argument for the server
 */
 
 #include <stdlib.h>

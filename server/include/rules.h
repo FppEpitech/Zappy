@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** rules
+** Rules for the server
 */
 
 #pragma once

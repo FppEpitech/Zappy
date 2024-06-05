@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** parse_width
+** Parse width argument for the server
 */
 
 #include <stdio.h>

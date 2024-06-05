@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** parse_port
+** Parse client argument for the server.
 */
 
 #include <stdio.h>

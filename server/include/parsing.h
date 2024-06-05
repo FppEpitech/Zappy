@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** parsing
+** Header file for parsing the arguments passed to the server.
 */
 
 #pragma once

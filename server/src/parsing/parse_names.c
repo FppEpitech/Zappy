@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** parse_name
+** Parse names arguments for the server
 */
 
 #include <stdio.h>

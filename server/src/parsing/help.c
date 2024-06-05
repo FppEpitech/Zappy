@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** help
+** Handle help flag.
 */
 
 #include "parsing.h"
