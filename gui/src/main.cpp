@@ -17,7 +17,7 @@ int main(int argc, char **argv)
         Gui::ParseCommandLine parseLine(argc, argv);
         Gui::Network net(parseLine.getPort(), parseLine.getHostName());
         net.connectToServer();
-        Gui::Engine engine(net, std::make_shared<Gui::Render>());
+        Gui::Engine engine(net);
         engine.run();
     } catch (const std::exception &error) {
         std::cout << error.what() << std::endl;

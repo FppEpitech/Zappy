@@ -13,6 +13,7 @@
 
 #include "raylib.h"
 #include "Render/UserCamera.hpp"
+#include "GameDatas/GameData.hpp"
 
 namespace Gui {
 
@@ -31,7 +32,7 @@ class Gui::Render {
          * @brief Construct a new Render object.
          *
          */
-        Render();
+        Render(std::shared_ptr<GameData> gameData);
 
         /**
          * @brief Destroy the Render object.
@@ -85,4 +86,5 @@ class Gui::Render {
 
         UserCamera      _camera;    // Camera of the scene.
         bool            _isDebug;   // Display or not the debug informations.
+        std::shared_ptr<GameData> _gameData; // GameData class to store the game's data.
 };

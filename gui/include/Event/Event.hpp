@@ -32,7 +32,7 @@ class Gui::Event {
          * @brief Construct a new Event object.
          *
          */
-        Event(std::shared_ptr<Render> render);
+        Event();
 
         /**
          * @brief Destroy the Event object.
@@ -45,6 +45,13 @@ class Gui::Event {
          *
          */
         void listen();
+
+        /**
+         * @brief Set the Render object.
+         *
+         * @param render Render class.
+         */
+        void setRender(std::shared_ptr<Render> render);
 
     private:
 
