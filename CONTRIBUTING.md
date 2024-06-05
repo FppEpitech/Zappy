@@ -55,3 +55,4 @@ Some keys:
 - Always include the headers in the following order:
     - Project headers
     - Standard library headers
+- Include headers from the shortest to the longest.
