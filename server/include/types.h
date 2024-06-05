@@ -8,7 +8,7 @@
 #pragma once
 
 /**
- * @brief struct for parsing the arguments
+ * @brief Struct for parsing the arguments.
  *
  */
 typedef struct s_parsing {
