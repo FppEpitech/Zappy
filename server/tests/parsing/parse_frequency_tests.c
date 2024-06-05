@@ -44,7 +44,7 @@ Test(parse_frequency, valid_arg_passed)
     int res = parse_frequency(arg, &pos, parsing);
 
     cr_assert_eq(res, 0);
-    cr_assert_eq(parsing->clientsNb, 10);
+    cr_assert_eq(parsing->freq, 10);
     cr_assert_eq(pos, 2);
 }
 

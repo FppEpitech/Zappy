@@ -44,7 +44,7 @@ Test(parse_height, valid_arg_passed)
     int res = parse_height(arg, &pos, parsing);
 
     cr_assert_eq(res, 0);
-    cr_assert_eq(parsing->clientsNb, 10);
+    cr_assert_eq(parsing->height, 10);
     cr_assert_eq(pos, 2);
 }
 

@@ -44,7 +44,7 @@ Test(parse_port, valid_arg_passed)
     int res = parse_port(arg, &pos, parsing);
 
     cr_assert_eq(res, 0);
-    cr_assert_eq(parsing->clientsNb, 10);
+    cr_assert_eq(parsing->port, 10);
     cr_assert_eq(pos, 2);
 }
 
