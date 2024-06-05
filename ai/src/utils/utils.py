@@ -5,7 +5,7 @@
 ## utils
 ##
 
-def stringify_data(data : str):
+def stringifyData(data : str):
     """
     Transform data to a string to print it
 
