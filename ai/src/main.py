@@ -8,6 +8,8 @@
 
 import sys
 
+from ai.src.network.API import API
+
 # Port min
 PORT_MIN = 0
 # Port max
@@ -54,7 +56,12 @@ def get_args(av=sys.argv):
     return host, port, name
 
 def main():
-    print("Welcome to the AI")
+        host, port, team_name = get_args()
+        api = API(host, port)
+        api.connect(team_name)
+        while True:
+            api.receive_data()
+
 
 if __name__ == "__main__":
     try:
