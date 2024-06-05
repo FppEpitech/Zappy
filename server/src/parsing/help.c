@@ -15,6 +15,7 @@ static void print_help(void)
 {
     printf("USAGE:\t./zappy_server -p port -x width -y height "
     "-n name1 name2 ... -c clientsNb -f freq\n");
+    fflush(stdout);
 }
 
 int handle_help(int ac, char **av)
