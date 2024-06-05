@@ -69,9 +69,11 @@ static int check_all_parameters(int ac, char **av, parsing_t *parsing)
 
     while (pos < ac) {
         result = check_one_parameter(&pos, av, parsing);
-        if (result == -1)
+        if (result == CODE_ERROR_MISSING_ARG ||
+                result == CODE_ERROR_INVALID_ARG ||
+                result == CODE_ERROR_MALLOC_FAILED)
             return CODE_FAILLURE;
-        if (result == -2) {
+        if (result == CODE_ERROR_WRONG_FLAG) {
             dprintf(2, "Error: missing argument\n");
             return CODE_FAILLURE;
         }
