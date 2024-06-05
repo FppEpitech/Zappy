@@ -31,6 +31,6 @@ int parse_width(char **arg, int *pos, parsing_t *parsing)
         return CODE_ERROR_INVALID_ARG;
     }
     (*pos) += 2;
-    parsing->clientsNb = result;
+    parsing->width = result;
     return 0;
 }
