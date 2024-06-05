@@ -5,10 +5,10 @@
 ** help_test
 */
 
+#include "../include/parsing.h"
+
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
-
-#include "../include/parsing.h"
 
 #define USAGE "USAGE:\t./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq\n"
 

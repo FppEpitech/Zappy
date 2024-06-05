@@ -5,11 +5,11 @@
 ** parse_frequency_tests
 */
 
-#include <criterion/criterion.h>
-
 #include "types.h"
 #include "parsing.h"
 #include "rules.h"
+
+#include <criterion/criterion.h>
 
 Test(parse_frequency, no_arg_passed)
 {

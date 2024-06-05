@@ -5,10 +5,10 @@
 ** Parse positive int argument for the server
 */
 
+#include "rules.h"
+
 #include <stdlib.h>
 #include <stdbool.h>
-
-#include "rules.h"
 
 static bool is_str_number(char *str)
 {

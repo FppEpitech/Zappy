@@ -5,12 +5,12 @@
 ** Parse all arguments given to the server.
 */
 
+#include "rules.h"
+#include "parsing.h"
+
 #include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
-
-#include "parsing.h"
-#include "rules.h"
 
 static parsing_t *init_parsing(void)
 {
@@ -72,7 +72,7 @@ static int check_all_parameters(int ac, char **av, parsing_t *parsing)
         if (result == -1)
             return CODE_FAILLURE;
         if (result == -2) {
-            dprintf(2, "Error: missing argument 2\n");
+            dprintf(2, "Error: missing argument\n");
             return CODE_FAILLURE;
         }
     }

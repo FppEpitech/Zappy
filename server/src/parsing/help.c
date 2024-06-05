@@ -5,8 +5,8 @@
 ** Handle help flag.
 */
 
-#include "parsing.h"
 #include "rules.h"
+#include "parsing.h"
 
 #include <stdio.h>
 #include <string.h>

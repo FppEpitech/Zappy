@@ -5,10 +5,10 @@
 ** parse_positive_int_tests
 */
 
-#include <criterion/criterion.h>
-
 #include "../include/parsing.h"
 #include "rules.h"
+
+#include <criterion/criterion.h>
 
 Test(parse_positive_int, test_positive_int)
 {

@@ -5,14 +5,14 @@
 ** Parse client argument for the server.
 */
 
+#include "rules.h"
+#include "types.h"
+#include "parsing.h"
+
 #include <stdio.h>
 #include <stddef.h>
 #include <string.h>
 #include <stdbool.h>
-
-#include "rules.h"
-#include "types.h"
-#include "parsing.h"
 
 int parse_client(char **arg, int *pos, parsing_t *parsing)
 {

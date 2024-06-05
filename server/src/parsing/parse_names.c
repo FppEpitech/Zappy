@@ -5,15 +5,15 @@
 ** Parse names arguments for the server
 */
 
+#include "rules.h"
+#include "types.h"
+#include "parsing.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
 #include <stdbool.h>
-
-#include "rules.h"
-#include "types.h"
-#include "parsing.h"
 
 static int get_size_names(char **arg, int pos)
 {

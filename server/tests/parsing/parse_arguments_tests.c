@@ -5,9 +5,9 @@
 ** parse_arguments_tests
 */
 
-#include <criterion/criterion.h>
-
 #include "../include/parsing.h"
+
+#include <criterion/criterion.h>
 
 Test(parse_arguments, test_help_flag)
 {

@@ -5,10 +5,10 @@
 ** parse_names_tests
 */
 
-#include <criterion/criterion.h>
-
 #include "rules.h"
 #include "parsing.h"
+
+#include <criterion/criterion.h>
 
 Test(parse_names, no_arg_passed)
 {
