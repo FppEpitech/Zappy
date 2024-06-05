@@ -111,7 +111,7 @@ class Gui::Player {
          * @brief Inventory of the player.
          *
          */
-        Inventory                               _inventory;
+        Inventory                               inventory;
 
     private:
 

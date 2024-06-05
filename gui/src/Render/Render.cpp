@@ -103,7 +103,7 @@ void Gui::Render::displayMap(void) const
 
 void Gui::Render::displayFood(Tile tile) const
 {
-    if (tile._inventory.getFood() == 0)
+    if (tile.inventory.getFood() == 0)
         return;
     Vector3 posTile = tile.getPositionIn3DSpace();
     Vector3 posFood = POS_FOOD;
@@ -125,7 +125,7 @@ void Gui::Render::displayLinemate(Tile tile) const
 {
     Vector3 posTile = tile.getPositionIn3DSpace();
 
-    if (tile._inventory.getLinemate() != 0) {
+    if (tile.inventory.getLinemate() != 0) {
         Vector3 posLinemate = POS_LINEMATE;
         DrawModelEx(_linemateModel, (Vector3){posTile.x + posLinemate.x, posTile.y + posLinemate.y, posTile.z + posLinemate.z}, ROTATION_AXIS_LINEMATE, ROTATION_ANGLE_LINEMATE, SCALE_LINEMATE, WHITE);
     }
@@ -135,7 +135,7 @@ void Gui::Render::displayMendiane(Tile tile) const
 {
     Vector3 posTile = tile.getPositionIn3DSpace();
 
-    if (tile._inventory.getMendiane() != 0) {
+    if (tile.inventory.getMendiane() != 0) {
         Vector3 posMendiane = POS_MENDIANE;
         DrawModelEx(_mendianeModel, (Vector3){posTile.x + posMendiane.x, posTile.y + posMendiane.y, posTile.z + posMendiane.z}, ROTATION_AXIS_MENDIANE, ROTATION_ANGLE_MENDIANE, SCALE_MENDIANE, WHITE);
     }
@@ -145,7 +145,7 @@ void Gui::Render::displayPhiras(Tile tile) const
 {
     Vector3 posTile = tile.getPositionIn3DSpace();
 
-    if (tile._inventory.getPhiras() != 0) {
+    if (tile.inventory.getPhiras() != 0) {
         Vector3 posPhiras = POS_PHIRAS;
         DrawModelEx(_phirasModel, (Vector3){posTile.x + posPhiras.x, posTile.y + posPhiras.y, posTile.z + posPhiras.z}, ROTATION_AXIS_PHIRAS, ROTATION_ANGLE_PHIRAS, SCALE_PHIRAS, WHITE);
     }
@@ -155,7 +155,7 @@ void Gui::Render::displaySibur(Tile tile) const
 {
     Vector3 posTile = tile.getPositionIn3DSpace();
 
-    if (tile._inventory.getSibur() != 0) {
+    if (tile.inventory.getSibur() != 0) {
         Vector3 posSibur = POS_SIBUR;
         DrawModelEx(_siburModel, (Vector3){posTile.x + posSibur.x, posTile.y + posSibur.y, posTile.z + posSibur.z}, ROTATION_AXIS_SIBUR, ROTATION_ANGLE_SIBUR, SCALE_SIBUR, WHITE);
     }
@@ -165,7 +165,7 @@ void Gui::Render::displayThystame(Tile tile) const
 {
     Vector3 posTile = tile.getPositionIn3DSpace();
 
-    if (tile._inventory.getThystame() != 0) {
+    if (tile.inventory.getThystame() != 0) {
         Vector3 posThystame = POS_THYSTAME;
         DrawModelEx(_thystameModel, (Vector3){posTile.x + posThystame.x, posTile.y + posThystame.y, posTile.z + posThystame.z}, ROTATION_AXIS_THYSTAME, ROTATION_ANGLE_THYSTAME, SCALE_THYSTAME, WHITE);
     }
@@ -175,7 +175,7 @@ void Gui::Render::displayDeraumere(Tile tile) const
 {
     Vector3 posTile = tile.getPositionIn3DSpace();
 
-    if (tile._inventory.getDeraumere() != 0) {
+    if (tile.inventory.getDeraumere() != 0) {
         Vector3 posDeraumere = POS_DERAUMERE;
         DrawModelEx(_deraumereModel, (Vector3){posTile.x + posDeraumere.x, posTile.y + posDeraumere.y, posTile.z + posDeraumere.z}, ROTATION_AXIS_DERAUMERE, ROTATION_ANGLE_DERAUMERE, SCALE_DERAUMERE, WHITE);
     }

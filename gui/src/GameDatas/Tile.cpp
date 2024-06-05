@@ -13,7 +13,7 @@ Gui::Tile::Tile(std::pair<std::size_t, std::size_t> position)
     setPosition(position);
 }
 
-Gui::Tile::Tile(std::pair<std::size_t, std::size_t> position, Inventory inventory) : _inventory(inventory)
+Gui::Tile::Tile(std::pair<std::size_t, std::size_t> position, Inventory inventory) : inventory(inventory)
 {
     setPosition(position);
 }

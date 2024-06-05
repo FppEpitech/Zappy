@@ -69,7 +69,7 @@ class Gui::Tile {
          * @brief Inventory of the tile.
          *
          */
-        Inventory       _inventory;
+        Inventory       inventory;
 
     private:
 
