@@ -27,6 +27,8 @@ SRC			=	src/Error/Error.cpp \
 				src/Render/UserCamera.cpp \
 				\
 				src/Event/Event.cpp \
+				\
+				src/GUIUpdater/GUIUpdater.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 				Parsing/TestParser.cpp \
@@ -37,6 +39,8 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				GameDatas/TestTeam.cpp \
 				GameDatas/TestGameData.cpp \
 				Render/TestCamera.cpp \
+				GUIUpdater/TestGUIUpdater.cpp \
+				Event/TestEvent.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
