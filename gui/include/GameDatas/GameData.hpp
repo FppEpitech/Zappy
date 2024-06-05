@@ -120,6 +120,15 @@ class Gui::GameData {
          */
         Gui::Tile &getTile(size_t x, size_t y);
 
+        /**
+         * @brief Set the Tile object.
+         *
+         * @param x X position of the tile.
+         * @param y Y position of the tile.
+         * @param tile Tile to set.
+         */
+        void setTile(const Gui::Tile &tile);
+
     private:
 
         std::vector<Gui::Team> _teams; // Teams of the game.

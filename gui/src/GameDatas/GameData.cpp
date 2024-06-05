@@ -98,3 +98,10 @@ Gui::Tile &Gui::GameData::getTile(size_t x, size_t y)
         throw Gui::Errors::GuiGameDataException("Tile not found");
     return _map[x][y];
 }
+
+void Gui::GameData::setTile(const Gui::Tile &tile)
+{
+    if (tile.getPosition().first >= _map.size() || tile.getPosition().second >= _map[tile.getPosition().first].size())
+        throw Gui::Errors::GuiGameDataException("Tile not found");
+    _map[tile.getPosition().first][tile.getPosition().second] = tile;
+}
