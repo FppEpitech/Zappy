@@ -8,11 +8,30 @@
 #Files
 MAIN 		=	src/main.c
 
-SRC			=	src/list/list.c \
-				src/list/remove.c \
-				src/list/add.c \
+SRC			=	src/list/list.c 	\
+				src/list/remove.c 	\
+				src/list/add.c 		\
+				\
+				src/parsing/help.c					\
+				src/parsing/parse_positive_int.c	\
+				src/parsing/parse_client.c			\
+				src/parsing/parse_port.c			\
+				src/parsing/parse_height.c			\
+				src/parsing/parse_width.c			\
+				src/parsing/arguments.c				\
+				src/parsing/parse_names.c			\
+				src/parsing/parse_frequency.c		\
 
-TEST_FILES	=	list/list_test.c \
+TEST_FILES	=	list/list_test.c 					\
+				parsing/help_test.c					\
+				parsing/parse_positive_int_tests.c	\
+				parsing/parse_client_tests.c		\
+				parsing/parse_width_tests.c			\
+				parsing/parse_height_tests.c		\
+				parsing/parse_port_tests.c			\
+				parsing/parse_frequency_tests.c		\
+				parsing/parse_arguments_tests.c		\
+				parsing/parse_names_tests.c			\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
@@ -77,3 +96,4 @@ tests_run: fclean
 	@$(CC) -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(TEST_FLAGS) $(INCLUDE)
 	./$(TEST_NAME)
 	gcovr --exclude tests/
+	gcovr --exclude tests/ --branches
