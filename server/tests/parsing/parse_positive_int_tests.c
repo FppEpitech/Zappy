@@ -5,8 +5,8 @@
 ** parse_positive_int_tests
 */
 
-#include "../include/parsing.h"
 #include "rules.h"
+#include "../include/parsing.h"
 
 #include <criterion/criterion.h>
 

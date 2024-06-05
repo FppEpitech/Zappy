@@ -5,9 +5,9 @@
 ** parse_height_tests
 */
 
+#include "rules.h"
 #include "types.h"
 #include "parsing.h"
-#include "rules.h"
 
 #include <criterion/criterion.h>
 
