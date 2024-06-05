@@ -25,9 +25,10 @@ Test(Tile, inventory, .timeout = 5)
 {
     Gui::Tile tile(std::pair<std::size_t, std::size_t>(1, 2));
 
-    tile._inventory.setFood(34);
-    cr_assert_eq(tile._inventory.getFood(), 34);
+    tile.inventory.setFood(34);
+    cr_assert_eq(tile.inventory.getFood(), 34);
 }
+
 Test(Tile, constructor, .timeout = 5)
 {
     Gui::Tile tile(std::pair<std::size_t, std::size_t>(1, 2), Gui::Inventory(34, 23, 12, 0, 0, 0, 0));
