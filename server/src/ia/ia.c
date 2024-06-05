@@ -5,11 +5,6 @@
 ** ia
 */
 
-#define _GNU_SOURCE
-
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "app/app.h"
 #include "server/client.h"
 
@@ -24,8 +19,9 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     new_ia->fd = fd;
     new_ia->level = 0;
     new_ia->list_messages = list_new();
-    asprintf(&nb_place, "%ld\n", team->max_place - (team->list_ai->len + 1));
-    asprintf(&map_size, "%d %d\n", app->game->width, app->game->height);
+    nb_place = format_string("%ld\n", team->max_place -
+    (team->list_ai->len + 1));
+    map_size = format_string("%d %d\n", app->game->width, app->game->height);
     add_message(new_ia->list_messages, nb_place);
     add_message(new_ia->list_messages, map_size);
     return new_ia;
@@ -51,7 +47,7 @@ bool add_ia(app_t *app, size_t fd, char *line)
     return true;
 }
 
-ia_t *check_ia(team_t *team, size_t fd)
+static ia_t *check_ia(team_t *team, size_t fd)
 {
     list_node_t *ia_temp = team->list_ai->first;
 

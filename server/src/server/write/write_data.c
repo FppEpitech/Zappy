@@ -10,6 +10,24 @@
 #include "app/app.h"
 #include "list/list.h"
 
+char *format_string(const char *format, ...)
+{
+    char *result;
+    va_list args;
+    int length;
+
+    va_start(args, format);
+    length = vsnprintf(NULL, 0, format, args);
+    va_end(args);
+    result = malloc(length + 1);
+    if (result == NULL)
+        return NULL;
+    va_start(args, format);
+    vsnprintf(result, length + 1, format, args);
+    va_end(args);
+    return result;
+}
+
 void add_message(list_t *list, char *message)
 {
     node_data_t message_team;

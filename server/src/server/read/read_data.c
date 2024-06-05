@@ -43,6 +43,25 @@ char *read_line(int fd)
     return line;
 }
 
+static void handle_request(app_t *app, size_t fd, char *line)
+{
+    gui_t *gui = find_gui(app, fd);
+    ia_t *ia = find_ia(app, fd);
+
+    if (gui != NULL) {
+        if (gui->list_messages->len == 10)
+            return;
+        (void) line;
+        return;
+    }
+    if (ia != NULL) {
+        if (ia->list_messages->len == 10)
+            return;
+        (void) line;
+        return;
+    }
+}
+
 bool server_data_handler(app_t *app, size_t fd)
 {
     char *line = read_line(fd);
@@ -59,47 +78,7 @@ bool server_data_handler(app_t *app, size_t fd)
             add_ia(app, fd, line);
         }
     } else {
-        printf("DATA: [%s]\n", line);
-        if (strcmp("team\r", line) == 0) {
-            list_node_t *temp = app->teams_list->first;
-            team_t *team = NULL;
-
-            while (temp) {
-                team = temp->data.team;
-                list_node_t *ia_temp = team->list_ai->first;
-                printf("Name of the team: [%s]\n", team->name);
-                while (ia_temp) {
-                    printf("fd: [%ld]\n", ia_temp->data.ia->fd);
-                    ia_temp = ia_temp->next;
-                }
-                printf("\n\n");
-                temp = temp->next;
-            }
-        }
-
-        if (strcmp("gui\r", line) == 0) {
-            list_node_t *temp = app->gui_list->first;
-            gui_t *gui = NULL;
-
-            while (temp) {
-                gui = temp->data.gui;
-                printf("FD GUI: [%ld]\n", gui->fd);
-                temp = temp->next;
-            }
-            printf("\n\n");
-        }
-
-        if (strcmp("client\r", line) == 0) {
-            list_node_t *temp = app->clients_list->first;
-            client_t *client = NULL;
-
-            while (temp) {
-                client = temp->data.client;
-                printf("FD client: [%ld]\n", client->fd);
-                temp = temp->next;
-            }
-            printf("\n\n");
-        }
+        handle_request(app, fd, line);
         free(line);
     }
     return true;

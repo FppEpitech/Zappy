@@ -103,3 +103,12 @@ bool write_message(list_t *list_messages, size_t fd);
  * @param message Message to add in the list.
  */
 void add_message(list_t *list, char *message);
+
+/**
+ * @brief Format a string with parameters.
+ *
+ * @param format Format of string.
+ * @param ... All args to format in the string.
+ * @return char* The string formated.
+ */
+char *format_string(const char *format, ...);
