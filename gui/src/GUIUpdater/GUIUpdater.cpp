@@ -203,5 +203,254 @@ void Gui::GUIUpdater::updatePlayerBroadcast(const std::vector<std::string> &data
     for (auto &team : _gameData->getTeams())
         for (size_t i = 0; i < team.getPlayers().size(); i++)
             if (team.getPlayers()[i].getId() == id)
-                return;
+                return; // TODO: Implement the player state
+}
+
+void Gui::GUIUpdater::updatePlayerStartIncantation(const std::vector<std::string> &data)
+{
+    std::vector<size_t> args;
+    size_t tmp = 0;
+
+    try {
+        for (size_t i = 0; i < data.size(); i++) {
+            int temp = std::stoi(data[i], &tmp);
+            args.push_back(temp);
+            if (temp < 0 || tmp != data[i].size())
+                throw Gui::Errors::GuiUpdaterException("Invalid player start incantation");
+        }
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException("Invalid player start incantation");
+    }
+    if (args.size() < 4)
+        throw Gui::Errors::GuiUpdaterException("Invalid player start incantation");
+    for (auto &team : _gameData->getTeams())
+        for (auto &player : team.getPlayers())
+            if (player.getId() == args[0])
+                return; // TODO: Implement the player state
+}
+
+void Gui::GUIUpdater::updatePlayerEndIncantation(const std::vector<std::string> &data)
+{
+    std::vector<size_t> args;
+    size_t tmp = 0;
+
+    try {
+        for (size_t i = 0; i < data.size(); i++) {
+            int temp = std::stoi(data[i], &tmp);
+            args.push_back(temp);
+            if (temp < 0 || tmp != data[i].size())
+                throw Gui::Errors::GuiUpdaterException("Invalid player end incantation");
+        }
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException("Invalid player end incantation");
+    }
+    if (args.size() != 3)
+        throw Gui::Errors::GuiUpdaterException("Invalid player end incantation");
+    for (auto &team : _gameData->getTeams())
+        for (auto &player : team.getPlayers())
+            if (player.getId() == args[0])
+                return; // TODO: Implement the player state
+}
+
+void Gui::GUIUpdater::updatePlayerEggLaying(const std::vector<std::string> &data)
+{
+    size_t id = 0;
+    size_t tmp = 0;
+
+    try {
+        int temp = std::stoi(data[0], &tmp);
+        if (temp < 0 || tmp != data[0].size())
+            throw Gui::Errors::GuiUpdaterException("Invalid egg laying");
+        id = temp;
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException("Invalid egg laying");
+    }
+    for (auto &team : _gameData->getTeams())
+        for (size_t i = 0; i < team.getPlayers().size(); i++)
+            if (team.getPlayers()[i].getId() == id)
+                return; // TODO: Implement the player state and egg class
+}
+
+void Gui::GUIUpdater::updatePlayerRessourceDropping(const std::vector<std::string> &data)
+{
+    std::vector<size_t> args;
+    size_t tmp = 0;
+
+    try {
+        for (size_t i = 0; i < data.size(); i++) {
+            int temp = std::stoi(data[i], &tmp);
+            args.push_back(temp);
+            if (temp < 0 || tmp != data[i].size())
+                throw Gui::Errors::GuiUpdaterException("Invalid ressource dropping");
+        }
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException("Invalid ressource dropping");
+    }
+    if (args.size() != 2)
+        throw Gui::Errors::GuiUpdaterException("Invalid ressource dropping");
+    for (auto &team : _gameData->getTeams())
+        for (auto &player : team.getPlayers())
+            if (player.getId() == args[0])
+                return; // TODO: Implement the player state
+}
+
+void Gui::GUIUpdater::updatePlayerRessourceCollecting(const std::vector<std::string> &data)
+{
+    std::vector<size_t> args;
+    size_t tmp = 0;
+
+    try {
+        for (size_t i = 0; i < data.size(); i++) {
+            int temp = std::stoi(data[i], &tmp);
+            args.push_back(temp);
+            if (temp < 0 || tmp != data[i].size())
+                throw Gui::Errors::GuiUpdaterException("Invalid ressource collecting");
+        }
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException("Invalid ressource collecting");
+    }
+    if (args.size() != 2)
+        throw Gui::Errors::GuiUpdaterException("Invalid ressource collecting");
+    for (auto &team : _gameData->getTeams())
+        for (auto &player : team.getPlayers())
+            if (player.getId() == args[0])
+                return; // TODO: Implement the player state
+}
+
+void Gui::GUIUpdater::updatePlayerDeath(const std::vector<std::string> &data)
+{
+    size_t id = 0;
+    size_t tmp = 0;
+
+    try {
+        int temp = std::stoi(data[0], &tmp);
+        if (temp < 0 || tmp != data[0].size())
+            throw Gui::Errors::GuiUpdaterException("Invalid player death");
+        id = temp;
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException("Invalid player death");
+    }
+    for (auto &team : _gameData->getTeams())
+        for (size_t i = 0; i < team.getPlayers().size(); i++)
+            if (team.getPlayers()[i].getId() == id)
+                return; // TODO: Implement the player state
+}
+
+void Gui::GUIUpdater::updateEggLaidByPlayer(const std::vector<std::string> &data)
+{
+    std::vector<size_t> args;
+    size_t tmp = 0;
+
+    try {
+        for (size_t i = 0; i < data.size(); i++) {
+            int temp = std::stoi(data[i], &tmp);
+            args.push_back(temp);
+            if (temp < 0 || tmp != data[i].size())
+                throw Gui::Errors::GuiUpdaterException("Invalid egg laid by player");
+        }
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException("Invalid egg laid by player");
+    }
+    if (args.size() != 4)
+        throw Gui::Errors::GuiUpdaterException("Invalid egg laid by player");
+    for (auto &team : _gameData->getTeams())
+        for (auto &player : team.getPlayers())
+            if (player.getId() == args[0])
+                return; // TODO: Implement the egg class
+}
+
+void Gui::GUIUpdater::updatePlayerBorn(const std::vector<std::string> &data)
+{
+    size_t id = 0;
+    size_t tmp = 0;
+
+    try {
+        int temp = std::stoi(data[0], &tmp);
+        if (temp < 0 || tmp != data[0].size())
+            throw Gui::Errors::GuiUpdaterException("Invalid player born");
+        id = temp;
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException("Invalid player born");
+    }
+    for (auto &team : _gameData->getTeams())
+        for (size_t i = 0; i < team.getPlayers().size(); i++)
+            if (team.getPlayers()[i].getId() == id)
+                return; // TODO: Implement the player state and egg class
+}
+
+void Gui::GUIUpdater::updateEggDeath(const std::vector<std::string> &data)
+{
+    size_t id = 0;
+    size_t tmp = 0;
+
+    try {
+        int temp = std::stoi(data[0], &tmp);
+        if (temp < 0 || tmp != data[0].size())
+            throw Gui::Errors::GuiUpdaterException("Invalid egg death");
+        id = temp;
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException("Invalid egg death");
+    }
+    for (auto &team : _gameData->getTeams())
+        for (size_t i = 0; i < team.getPlayers().size(); i++)
+            if (team.getPlayers()[i].getId() == id)
+                return; // TODO: Implement the egg class
+}
+
+void Gui::GUIUpdater::updateTimeUnitRequest(const std::vector<std::string> &data)
+{
+    size_t timeUnit = 0;
+    size_t tmp = 0;
+
+    try {
+        int temp = std::stoi(data[0], &tmp);
+        if (temp < 0 || tmp != data[0].size())
+            throw Gui::Errors::GuiUpdaterException("Invalid time unit request");
+        timeUnit = temp;
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException("Invalid time unit request");
+    }
+    (void)timeUnit;
+    return; // TODO: Implement the time unit request
+}
+
+void Gui::GUIUpdater::updateTimeUnitModification(const std::vector<std::string> &data)
+{
+    size_t timeUnit = 0;
+    size_t tmp = 0;
+
+    try {
+        int temp = std::stoi(data[0], &tmp);
+        if (temp < 0 || tmp != data[0].size())
+            throw Gui::Errors::GuiUpdaterException("Invalid time unit modification");
+        timeUnit = temp;
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException("Invalid time unit modification");
+    }
+    (void)timeUnit;
+    return; // TODO: Implement the time unit modification
+}
+
+void Gui::GUIUpdater::updateEndOfGame(const std::vector<std::string> &data)
+{
+    (void)data;
+    return; // TODO: Implement the end of game
+}
+
+void Gui::GUIUpdater::updateMessageFromServer(const std::vector<std::string> &data)
+{
+    (void)data;
+    return; // TODO: Implement the message from server
+}
+
+void Gui::GUIUpdater::updateUnknownMessage(const std::vector<std::string> &data)
+{
+    (void)data;
+    return; // TODO: Implement the unknown message
+}
+
+void Gui::GUIUpdater::updateCommandParameter(const std::vector<std::string> &data)
+{
+    (void)data;
+    return; // TODO: Implement the command parameter
 }
