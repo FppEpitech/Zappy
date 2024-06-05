@@ -16,9 +16,9 @@
 namespace Gui {
 
     /**
-     * @brief GUIUpdater class
+     * @brief GUIUpdater class.
      *
-     * This class is used to update the GUI GameData to ensure the GUI is up to date
+     * This class is used to update the GUI GameData to ensure the GUI is up to date.
      */
     class GUIUpdater;
 }
@@ -28,28 +28,28 @@ class Gui::GUIUpdater {
     public:
 
         /**
-         * @brief Construct a new GUIUpdater object
+         * @brief Construct a new GUIUpdater object.
          *
-         * @param gameData The GUI GameData to update
+         * @param gameData The GUI GameData to update.
         */
         GUIUpdater(std::shared_ptr<GameData> gameData);
 
         /**
-         * @brief Destroy the GUIUpdater object
+         * @brief Destroy the GUIUpdater object.
         */
         ~GUIUpdater() = default;
 
         /**
-         * @brief Update the GUI GameData
+         * @brief Update the GUI GameData.
          *
-         * @param command The command to update the GUI GameData
-         * @param data The data to update the GUI GameData
+         * @param command The command to update the GUI GameData.
+         * @param data The data to update the GUI GameData.
         */
         void update(const std::string &command, const std::vector<std::string> &data);
 
     private:
 
-        std::shared_ptr<GameData> _gameData;
+        std::shared_ptr<GameData> _gameData; // The GUI GameData to update.
 
         std::unordered_map<std::string, std::function<void(std::vector<std::string>)>> _updateMap =
         {
@@ -62,68 +62,68 @@ class Gui::GUIUpdater {
             {"pin", [this](std::vector<std::string> data){updatePlayerInventory(data);}},
             {"pex", [this](std::vector<std::string> data){updatePlayerExpulsion(data);}},
             {"pbc", [this](std::vector<std::string> data){updatePlayerBroadcast(data);}},
-        };
+        }; // The map of commands to update the GUI GameData.
 
         /**
-         * @brief Update the GUI GameData map size
+         * @brief Update the GUI GameData map size.
          *
-         * @param data The data to update the GUI GameData map size
+         * @param data The data to update the GUI GameData map size.
         */
         void updateMapSize(const std::vector<std::string> &data);
 
         /**
-         * @brief Update the GUI GameData map content
+         * @brief Update the GUI GameData map content.
          *
-         * @param data The data to update the GUI GameData map content
+         * @param data The data to update the GUI GameData map content.
         */
         void updateMapContent(const std::vector<std::string> &data);
 
         /**
-         * @brief Update the GUI GameData team names
+         * @brief Update the GUI GameData team names.
          *
-         * @param data The data to update the GUI GameData team names
+         * @param data The data to update the GUI GameData team names.
         */
         void updateTeamNames(const std::vector<std::string> &data);
 
         /**
-         * @brief Update the GUI GameData team member
+         * @brief Update the GUI GameData team member.
          *
-         * @param data The data to update the GUI GameData team member
+         * @param data The data to update the GUI GameData team member.
         */
         void updateTeamMember(const std::vector<std::string> &data);
 
         /**
-         * @brief Update the GUI GameData player position
+         * @brief Update the GUI GameData player position.
          *
-         * @param data The data to update the GUI GameData player position
+         * @param data The data to update the GUI GameData player position.
         */
         void updatePlayerPosition(const std::vector<std::string> &data);
 
         /**
-         * @brief Update the GUI GameData player level
+         * @brief Update the GUI GameData player level.
          *
-         * @param data The data to update the GUI GameData player level
+         * @param data The data to update the GUI GameData player level.
         */
         void updatePlayerLevel(const std::vector<std::string> &data);
 
         /**
-         * @brief Update the GUI GameData player inventory
+         * @brief Update the GUI GameData player inventory.
          *
-         * @param data The data to update the GUI GameData player inventory
+         * @param data The data to update the GUI GameData player inventory.
         */
         void updatePlayerInventory(const std::vector<std::string> &data);
 
         /**
-         * @brief Update the GUI GameData player expulsion
+         * @brief Update the GUI GameData player expulsion.
          *
-         * @param data The data to update the GUI GameData player expulsion
+         * @param data The data to update the GUI GameData player expulsion.
         */
         void updatePlayerExpulsion(const std::vector<std::string> &data);
 
         /**
-         * @brief Update the GUI GameData player broadcast
+         * @brief Update the GUI GameData player broadcast.
          *
-         * @param data The data to update the GUI GameData player broadcast
+         * @param data The data to update the GUI GameData player broadcast.
         */
         void updatePlayerBroadcast(const std::vector<std::string> &data);
 };
