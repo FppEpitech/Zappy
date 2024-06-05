@@ -20,6 +20,7 @@ Test(parse_names, no_arg_passed)
     int res = parse_names(arg, &pos, parsing);
 
     cr_assert_eq(res, CODE_ERROR_MISSING_ARG);
+    free(parsing);
 }
 
 Test(parse_names, one_arg_test)
@@ -32,6 +33,7 @@ Test(parse_names, one_arg_test)
     int res = parse_names(arg, &pos, parsing);
 
     cr_assert_eq(res, CODE_SUCCESS);
+    free(parsing);
 }
 
 Test(parse_names, many_arg_test)
@@ -44,6 +46,7 @@ Test(parse_names, many_arg_test)
     int res = parse_names(arg, &pos, parsing);
 
     cr_assert_eq(res, CODE_SUCCESS);
+    free(parsing);
 }
 
 Test(parse_names, wrong_flag)
@@ -56,6 +59,7 @@ Test(parse_names, wrong_flag)
     int res = parse_names(arg, &pos, parsing);
 
     cr_assert_eq(res, CODE_ERROR_WRONG_FLAG);
+    free(parsing);
 }
 
 Test(parse_names, other_arg_after)
@@ -68,4 +72,5 @@ Test(parse_names, other_arg_after)
     int res = parse_names(arg, &pos, parsing);
 
     cr_assert_eq(res, CODE_SUCCESS);
+    free(parsing);
 }

@@ -49,4 +49,5 @@ Test(parse_arguments, classic_test)
     av[14] = NULL;
     parsing_t *result = parse_arg(14, av);
     cr_assert_not_null(result, "The function return a wrong value");
+    free(av);
 }

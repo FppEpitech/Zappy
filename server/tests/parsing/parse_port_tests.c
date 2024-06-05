@@ -20,6 +20,7 @@ Test(parse_port, no_arg_passed)
     int res = parse_port(arg, &pos, parsing);
 
     cr_assert_eq(res, CODE_ERROR_MISSING_ARG);
+    free(parsing);
 }
 
 Test(parse_port, invalid_arg_passed)
@@ -32,6 +33,7 @@ Test(parse_port, invalid_arg_passed)
     int res = parse_port(arg, &pos, parsing);
 
     cr_assert_eq(res, CODE_ERROR_INVALID_ARG);
+    free(parsing);
 }
 
 Test(parse_port, valid_arg_passed)
@@ -46,6 +48,7 @@ Test(parse_port, valid_arg_passed)
     cr_assert_eq(res, 0);
     cr_assert_eq(parsing->port, 10);
     cr_assert_eq(pos, 2);
+    free(parsing);
 }
 
 Test(parse_port, invalid_flag_passed)
@@ -58,4 +61,5 @@ Test(parse_port, invalid_flag_passed)
     int res = parse_port(arg, &pos, parsing);
 
     cr_assert_eq(res, CODE_ERROR_WRONG_FLAG);
+    free(parsing);
 }
