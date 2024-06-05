@@ -74,6 +74,14 @@ class Gui::GameData {
         void addTeam(const std::string &name);
 
         /**
+         * @brief Add a player to a team.
+         *
+         * @param teamName Name of the team.
+         * @param player Player to add.
+         */
+        void addPlayerToTeam(const std::string &teamName, const Gui::Player &player);
+
+        /**
          * @brief Get the Map object.
          *
          * @return Map<Gui::Tile>& Map of the game.
@@ -86,6 +94,22 @@ class Gui::GameData {
          * @param map Map of the game.
          */
         void setMap(const Map<Gui::Tile> &map);
+
+        /**
+         * @brief Set the Map Size object.
+         *
+         * @param x X size of the map.
+         * @param y Y size of the map.
+         * @note This method resizes the map.
+         */
+        void setMapSize(size_t x, size_t y);
+
+        /**
+         * @brief Get the Map Size object.
+         *
+         * @return std::pair<size_t, size_t> Size of the map.
+         */
+        std::pair<size_t, size_t> getMapSize();
 
         /**
          * @brief Get a Tile object.
