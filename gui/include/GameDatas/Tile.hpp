@@ -34,7 +34,7 @@ class Gui::Tile {
          * @brief Destroy the Tile object.
          *
          */
-        ~Tile();
+        ~Tile() = default;
 
         /**
          * @brief Set the Position object.
@@ -51,6 +51,13 @@ class Gui::Tile {
         std::pair<std::size_t, std::size_t> getPosition(void) const;
 
         /**
+         * @brief Get the Position In Space object.
+         *
+         * @return Vector3 - position in space
+         */
+        Vector3 getPositionIn3DSpace(void);
+
+        /**
          * @brief Inventory of the tile.
          *
          */
@@ -58,6 +65,6 @@ class Gui::Tile {
 
     private:
 
-        std::pair<std::size_t, std::size_t>     _position;  // Position x y.
-        Model                                   _model;     // Model to display tile.
+        std::pair<std::size_t, std::size_t>     _position;          // Position x y.
+        Vector3                                 _positionIn3DSpace;   // Position in 3D space.
 };

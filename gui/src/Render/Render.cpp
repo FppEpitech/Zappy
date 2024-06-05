@@ -5,6 +5,7 @@
 ** Render
 */
 
+#include "Assets.hpp"
 #include "Render/Render.hpp"
 
 #include <string>
@@ -16,6 +17,12 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     DisableCursor();
     SetTargetFPS(140);
     _isDebug = false;
+    this->LoadModels();
+}
+
+void Gui::Render::LoadModels(void)
+{
+    _tileModel = LoadModel(MODEL_TILE);
 }
 
 Gui::Render::~Render()
@@ -37,6 +44,7 @@ void Gui::Render::draw()
 
     BeginMode3D(*_camera.getCamera());
     DrawGrid(20, 1.0f);
+    displayMap();
     EndMode3D();
 
     displayDebug();
@@ -73,5 +81,13 @@ void Gui::Render::displayDebug(void)
             std::to_string(_camera.getCamera()->target.y) + " / " +
             std::to_string(_camera.getCamera()->target.z)
             ).c_str(), 10, 50, 20, LIME);
+    }
+}
+
+void Gui::Render::displayMap()
+{
+    for (auto &line : _gameData->getMap()) {
+        for (auto &tile : line)
+            DrawModel(_tileModel, tile.getPositionIn3DSpace(), 0.001f, WHITE);
     }
 }
