@@ -12,6 +12,16 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+static int (*parse_args[])(char **arg, int *pos, parsing_t *parsing) = {
+    &parse_port,
+    &parse_width,
+    &parse_height,
+    &parse_names,
+    &parse_client,
+    &parse_frequency,
+    NULL
+};
+
 static parsing_t *init_parsing(void)
 {
     parsing_t *parsing = malloc(sizeof(parsing_t));
@@ -31,26 +41,16 @@ static parsing_t *init_parsing(void)
 
 static int check_one_parameter(int *pos, char **av, parsing_t *parsing)
 {
-    int result = parse_client(av, pos, parsing);
+    int result = 0;
+    int i = 0;
 
-    if (result != CODE_ERROR_WRONG_FLAG)
-        return result;
-    result = parse_port(av, pos, parsing);
-    if (result != CODE_ERROR_WRONG_FLAG)
-        return result;
-    result = parse_width(av, pos, parsing);
-    if (result != CODE_ERROR_WRONG_FLAG)
-        return result;
-    result = parse_height(av, pos, parsing);
-    if (result != CODE_ERROR_WRONG_FLAG)
-        return result;
-    result = parse_frequency(av, pos, parsing);
-    if (result != CODE_ERROR_WRONG_FLAG)
-        return result;
-    result = parse_names(av, pos, parsing);
-    if (result != CODE_ERROR_WRONG_FLAG)
-        return result;
-    return result;
+    while (parse_args[i] != NULL) {
+        result = parse_args[i](av, pos, parsing);
+        if (result != CODE_ERROR_WRONG_FLAG)
+            return result;
+        i++;
+    }
+    return CODE_ERROR_WRONG_FLAG;
 }
 
 static bool is_all_parameters_parsed(parsing_t *parsing)

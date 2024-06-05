@@ -19,8 +19,11 @@ static int get_size_names(char **arg, int pos)
 {
     int i = pos + 1;
 
-    while (arg[i] != NULL || arg[i][0] != '-')
+    while (arg[i] != NULL) {
+        if (arg[i][0] == '-')
+            break;
         i++;
+    }
     return i - pos - 1;
 }
 
