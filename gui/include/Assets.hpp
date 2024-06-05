@@ -7,14 +7,16 @@
 
 #pragma once
 
-#define MODEL_TILE                  "assets/tile.glb"
-#define MODEL_FOOD                  "assets/food.glb"
-#define MODEL_LINEMATE              "assets/linemate.glb"
-#define MODEL_MENDIANE              "assets/mendiane.glb"
-#define MODEL_PHIRAS                "assets/phiras.glb"
-#define MODEL_SIBUR                 "assets/sibur.glb"
-#define MODEL_THYSTAME              "assets/thystame.glb"
-#define MODEL_DERAUMERE             "assets/deraumere.glb"
+#define PATH_ASSETS                 "assets/"
+
+#define MODEL_TILE                  PATH_ASSETS "tile.glb"
+#define MODEL_FOOD                  PATH_ASSETS "food.glb"
+#define MODEL_LINEMATE              PATH_ASSETS "linemate.glb"
+#define MODEL_MENDIANE              PATH_ASSETS "mendiane.glb"
+#define MODEL_PHIRAS                PATH_ASSETS "phiras.glb"
+#define MODEL_SIBUR                 PATH_ASSETS "sibur.glb"
+#define MODEL_THYSTAME              PATH_ASSETS "thystame.glb"
+#define MODEL_DERAUMERE             PATH_ASSETS "deraumere.glb"
 
 #define SIZE_TILE                   6
 
