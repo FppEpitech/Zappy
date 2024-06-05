@@ -5,9 +5,9 @@
 ** argument
 */
 
+#include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 #include "parsing.h"
 

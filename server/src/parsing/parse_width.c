@@ -5,14 +5,14 @@
 ** parse_width
 */
 
+#include <stdio.h>
 #include <stddef.h>
 #include <string.h>
-#include <stdio.h>
 #include <stdbool.h>
 
-#include "parsing.h"
 #include "rules.h"
 #include "types.h"
+#include "parsing.h"
 
 int parse_width(char **arg, int *pos, parsing_t *parsing)
 {

@@ -5,14 +5,14 @@
 ** parse_port
 */
 
+#include <stdio.h>
 #include <stddef.h>
 #include <string.h>
-#include <stdio.h>
 #include <stdbool.h>
 
-#include "parsing.h"
 #include "rules.h"
 #include "types.h"
+#include "parsing.h"
 
 int parse_frequency(char **arg, int *pos, parsing_t *parsing)
 {
