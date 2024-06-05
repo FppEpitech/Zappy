@@ -53,7 +53,7 @@ class Gui::Tile {
         /**
          * @brief Get the Position In Space object.
          *
-         * @return Vector3 - position in space
+         * @return Vector3 - Position in space.
          */
         Vector3 getPositionIn3DSpace(void);
 
@@ -65,6 +65,6 @@ class Gui::Tile {
 
     private:
 
-        std::pair<std::size_t, std::size_t>     _position;          // Position x y.
-        Vector3                                 _positionIn3DSpace;   // Position in 3D space.
+        std::pair<std::size_t, std::size_t>     _position;              // Position x y.
+        Vector3                                 _positionIn3DSpace;     // Position in 3D space.
 };
