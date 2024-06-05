@@ -10,13 +10,11 @@
 Gui::Inventory::Inventory()
 {
     _food = 0;
-    _linemate = 0;
-    _deraumere = 0;
-    _sibur = 0;
-    _mendiane = 0;
-    _phiras = 0;
-    _thystame = 0;
+    for (size_t i = 0; i < RessourcesNumber; i++)
+        _ressources[i] = 0;
 }
+
+Gui::Inventory::Inventory(std::size_t food, std::size_t linemate, std::size_t deraumere, std::size_t sibur, std::size_t mendiane, std::size_t phiras, std::size_t thystame) : _food(food), _ressources{linemate, deraumere, sibur, mendiane, phiras, thystame} {}
 
 void Gui::Inventory::setFood(std::size_t food)
 {
@@ -25,32 +23,38 @@ void Gui::Inventory::setFood(std::size_t food)
 
 void Gui::Inventory::setLinemate(std::size_t linemate)
 {
-    _linemate = linemate;
+    _ressources[0] = linemate;
 }
 
 void Gui::Inventory::setDeraumere(std::size_t deraumere)
 {
-    _deraumere = deraumere;
+    _ressources[1] = deraumere;
 }
 
 void Gui::Inventory::setSibur(std::size_t sibur)
 {
-    _sibur = sibur;
+    _ressources[2] = sibur;
 }
 
 void Gui::Inventory::setMendiane(std::size_t mendiane)
 {
-    _mendiane = mendiane;
+    _ressources[3] = mendiane;
 }
 
 void Gui::Inventory::setPhiras(std::size_t phiras)
 {
-    _phiras = phiras;
+    _ressources[4] = phiras;
 }
 
 void Gui::Inventory::setThystame(std::size_t thystame)
 {
-    _thystame = thystame;
+    _ressources[5] = thystame;
+}
+
+void Gui::Inventory::setRessources(Ressources ressources)
+{
+    for (size_t i = 0; i < RessourcesNumber; i++)
+        _ressources[i] = ressources[i];
 }
 
 std::size_t Gui::Inventory::getFood(void)
@@ -60,30 +64,35 @@ std::size_t Gui::Inventory::getFood(void)
 
 std::size_t Gui::Inventory::getLinemate(void)
 {
-    return _linemate;
+    return _ressources[0];
 }
 
 std::size_t Gui::Inventory::getDeraumere(void)
 {
-    return _deraumere;
+    return _ressources[1];
 }
 
 std::size_t Gui::Inventory::getSibur(void)
 {
-    return _sibur;
+    return _ressources[2];
 }
 
 std::size_t Gui::Inventory::getMendiane(void)
 {
-    return _mendiane;
+    return _ressources[3];
 }
 
 std::size_t Gui::Inventory::getPhiras(void)
 {
-    return _phiras;
+    return _ressources[4];
 }
 
 std::size_t Gui::Inventory::getThystame(void)
 {
-    return _thystame;
+    return _ressources[5];
+}
+
+Ressources &Gui::Inventory::getRessources(void)
+{
+    return _ressources;
 }
