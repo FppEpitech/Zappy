@@ -17,7 +17,7 @@ PORT_MAX = 65535
 # Localhost
 LOCALHOST = "127.0.0.1"
 
-def write_help():
+def writeHelp(exitCode : int = 0):
     """
     Print the help message
     """
@@ -31,11 +31,11 @@ def write_help():
     print("\t-h machine\tis the name of the machine; localhost by default")
     print("\t--help\t\tprint this help")
     print("")
+    sys.exit(exitCode)
 
-def get_args(av=sys.argv):
+def getArgs(av=sys.argv):
     if len(av) == 2 and av[1] == "--help":
-        write_help()
-        sys.exit(0)
+        writeHelp(0)
     host = LOCALHOST
     port = -1
     name = ""
@@ -51,16 +51,15 @@ def get_args(av=sys.argv):
             raise Exception("Error: invalid arguments")
     except Exception as e:
         print("Error: invalid arguments")
-        write_help()
-        sys.exit(84)
+        writeHelp(84)
     return host, port, name
 
 def main():
-        host, port, team_name = get_args()
+        host, port, teamName = getArgs()
         api = API(host, port)
-        api.connect(team_name)
+        api.connect(teamName)
         while True:
-            api.receive_data()
+            api.receiveData()
 
 
 if __name__ == "__main__":
