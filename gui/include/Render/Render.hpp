@@ -15,6 +15,9 @@
 #include "Render/UserCamera.hpp"
 #include "GameDatas/GameData.hpp"
 
+#include <functional>
+#include <unordered_map>
+
 namespace Gui {
 
     /**
@@ -85,8 +88,11 @@ class Gui::Render {
         Model                       _tileModel;         // Model to display tiles.
         Model                       _foodModel;         // Model to display foods.
         Model                       _linemateModel;     // Model to display linemates.
-        Model                       _mendianeModel;    // Model to display mendianes.
-        Model                       _phirasModel;    // Model to display mendianes.
+        Model                       _mendianeModel;     // Model to display mendianes.
+        Model                       _phirasModel;       // Model to display phiras.
+        Model                       _siburModel;        // Model to display siburs.
+        Model                       _thystameModel;     // Model to display thystames.
+        Model                       _deraumereModel;    // Model to display deraumeres.
 
         /**
          * @brief Load the models to draw.
@@ -104,7 +110,7 @@ class Gui::Render {
          * @brief Display the map.
          *
          */
-        void displayMap();
+        void displayMap(void);
 
         /**
          * @brief Display the food.
@@ -116,7 +122,49 @@ class Gui::Render {
         /**
          * @brief Display resources.
          *
-         * @param tile Tile wit resources.
+         * @param tile Tile with resources.
          */
         void displayResources(Tile tile);
+
+        /**
+         * @brief Display Linemate.
+         *
+         * @param tile Tile with resources.
+         */
+        void displayLinemate(Tile tile);
+
+        /**
+         * @brief Display Mendiane.
+         *
+         * @param tile Tile with resources.
+         */
+        void displayMendiane(Tile tile);
+
+        /**
+         * @brief Display Phiras.
+         *
+         * @param tile Tile with resources.
+         */
+        void displayPhiras(Tile tile);
+
+        /**
+         * @brief Display Sibur.
+         *
+         * @param tile Tile with resources.
+         */
+        void displaySibur(Tile tile);
+
+        /**
+         * @brief Display Thystam.
+         *
+         * @param tile Tile with resources.
+         */
+        void displayThystame(Tile tile);
+
+        /**
+         * @brief Display Deraumere.
+         *
+         * @param tile Tile with resources.
+         */
+        void displayDeraumere(Tile tile);
 };
