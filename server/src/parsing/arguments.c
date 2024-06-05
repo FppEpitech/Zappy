@@ -42,13 +42,17 @@ static int check_all_parameters(int ac, char **av, parsing_t *parsing)
     int result = 0;
 
     while (1) {
-        if (pos >= ac)
-            break;
+        if (pos >= ac) {
+            dprintf(2, "Error: missing argument\n");
+            return -1;
+        }
         result = check_one_parameter(&pos, av, parsing);
         if (result == -1)
             return -1;
-        if (result == -2)
+        if (result == -2) {
             dprintf(2, "Error: invalid argument\n");
+            return -1;
+        }
     }
     return 0;
 }
