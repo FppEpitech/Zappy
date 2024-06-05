@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "raylib.h"
 #include "GameDatas/Inventory.hpp"
 
 namespace Gui {
@@ -33,7 +34,7 @@ class Gui::Tile {
          * @brief Destroy the Tile object.
          *
          */
-        ~Tile() = default;
+        ~Tile();
 
         /**
          * @brief Set the Position object.
@@ -58,4 +59,5 @@ class Gui::Tile {
     private:
 
         std::pair<std::size_t, std::size_t>     _position;  // Position x y.
+        Model                                   _model;     // Model to display tile.
 };
