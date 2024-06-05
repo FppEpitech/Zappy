@@ -13,14 +13,25 @@
 
 static int check_one_parameter(int *pos, char **av, parsing_t *parsing)
 {
-    int result = -2;
+    int result = parse_client(av, pos, parsing);
 
-    printf("pos: %d\n", *pos);
-    result = parse_client(av, pos, parsing);
     if (result == CODE_ERROR_MISSING_ARG || result == CODE_ERROR_INVALID_ARG)
         return -1;
-    printf("result: %d\n", result);
-    dprintf(2, "Error: wrong flag\n");
+    result = parse_port(av, pos, parsing);
+    if (result == CODE_ERROR_MISSING_ARG || result == CODE_ERROR_INVALID_ARG)
+        return -1;
+    result = parse_width(av, pos, parsing);
+    if (result == CODE_ERROR_MISSING_ARG || result == CODE_ERROR_INVALID_ARG)
+        return -1;
+    result = parse_height(av, pos, parsing);
+    if (result == CODE_ERROR_MISSING_ARG || result == CODE_ERROR_INVALID_ARG)
+        return -1;
+    result = parse_frequency(av, pos, parsing);
+    if (result == CODE_ERROR_MISSING_ARG || result == CODE_ERROR_INVALID_ARG)
+        return -1;
+    result = parse_names(av, pos, parsing);
+    if (result == CODE_ERROR_MISSING_ARG || result == CODE_ERROR_INVALID_ARG)
+        return -1;
     return result;
 }
 
@@ -34,8 +45,10 @@ static int check_all_parameters(int ac, char **av, parsing_t *parsing)
         if (pos >= ac)
             break;
         result = check_one_parameter(&pos, av, parsing);
-        if (result == -2 || result == -1)
+        if (result == -1)
             return -1;
+        if (result == -2)
+            dprintf(2, "Error: invalid argument\n");
     }
     return 0;
 }
