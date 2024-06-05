@@ -72,8 +72,15 @@ static int handle_client_read(app_t *app, int fd)
 
 static int handle_client_write(app_t *app, int fd)
 {
-    (void) app;
-    (void) fd;
+    gui_t *gui = find_gui(app, fd);
+    ia_t *ia = find_ia(app, fd);
+
+    if (gui != NULL) {
+        write_message(gui->list_messages, gui->fd);
+    }
+    if (ia != NULL) {
+        write_message(ia->list_messages, ia->fd);
+    }
     return 0;
 }
 

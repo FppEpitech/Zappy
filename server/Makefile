@@ -21,11 +21,14 @@ SRC			=	src/list/list.c \
 				src/ia/team.c \
 				\
 				src/server/run.c \
-				src/server/client.c \
 				src/server/quit.c \
+				src/server/client.c \
 				src/server/server.c \
-				src/server/read/data.c \
+				src/server/read/read_data.c \
 				src/server/read/connection.c \
+				src/server/write/write_data.c \
+				\
+				src/game/game.c \
 
 TEST_FILES	=	list/list_test.c \
 

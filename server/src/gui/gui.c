@@ -14,6 +14,7 @@ gui_t *create_gui(int fd)
     if (new_gui == NULL)
         return NULL;
     new_gui->fd = fd;
+    new_gui->list_messages = list_new();
     return new_gui;
 }
 
@@ -25,4 +26,17 @@ bool add_gui(app_t *app, size_t fd)
     list_add_back(app->gui_list, data);
     list_delete(app->clients_list, find_client(app->clients_list, fd));
     return true;
+}
+
+gui_t *find_gui(app_t *app, size_t fd)
+{
+    list_node_t *temp = app->gui_list->first;
+
+    while (temp) {
+        if (temp->data.gui->fd == fd) {
+            return temp->data.gui;
+        }
+        temp = temp->next;
+    }
+    return NULL;
 }
