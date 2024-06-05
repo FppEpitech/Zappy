@@ -92,7 +92,7 @@ std::size_t Gui::Inventory::getThystame(void)
     return _ressources[5];
 }
 
-Ressources &Gui::Inventory::getRessources(void)
+Gui::Inventory::Ressources &Gui::Inventory::getRessources(void)
 {
     return _ressources;
 }
