@@ -7,11 +7,11 @@
 
 #include <string.h>
 
-#include "ia/ia.h"
+#include "ai/ai.h"
 #include "app/app.h"
 #include "server/client.h"
 
-static char *append_char(char *line, char current_char)
+char *append_char(char *line, char current_char)
 {
     int len_line = 0;
 
@@ -43,19 +43,19 @@ char *read_line(int fd)
     return line;
 }
 
-static void handle_request(app_t *app, size_t fd, char *line)
+void handle_request(app_t *app, size_t fd, char *line)
 {
     gui_t *gui = find_gui(app, fd);
-    ia_t *ia = find_ia(app, fd);
+    ia_t *ai = find_ia(app, fd);
 
     if (gui != NULL) {
-        if (gui->list_messages->len == 10)
+        if (gui->list_messages->len >= 10)
             return;
         (void) line;
         return;
     }
-    if (ia != NULL) {
-        if (ia->list_messages->len == 10)
+    if (ai != NULL) {
+        if (ai->list_messages->len >= 10)
             return;
         (void) line;
         return;

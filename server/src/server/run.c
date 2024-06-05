@@ -18,8 +18,8 @@ static void reset_ai(app_t *app)
         team = temp->data.team;
         ia_temp = team->list_ai->first;
         while (ia_temp) {
-            FD_SET(ia_temp->data.ia->fd, &app->server->read_fds);
-            FD_SET(ia_temp->data.ia->fd, &app->server->write_fds);
+            FD_SET(ia_temp->data.ai->fd, &app->server->read_fds);
+            FD_SET(ia_temp->data.ai->fd, &app->server->write_fds);
             ia_temp = ia_temp->next;
         }
         temp = temp->next;
@@ -39,7 +39,7 @@ static void reset_gui(app_t *app)
     }
 }
 
-static int server_reset_fd(app_t *app)
+void server_reset_fd(app_t *app)
 {
     list_node_t *temp = app->clients_list->first;
     client_t *client = NULL;
@@ -55,10 +55,9 @@ static int server_reset_fd(app_t *app)
     }
     reset_gui(app);
     reset_ai(app);
-    return 0;
 }
 
-static int handle_client_read(app_t *app, int fd)
+int handle_client_read(app_t *app, int fd)
 {
     if (FD_ISSET(fd, &app->server->read_fds)) {
         if (fd == app->server->fd) {
@@ -70,16 +69,16 @@ static int handle_client_read(app_t *app, int fd)
     return 0;
 }
 
-static int handle_client_write(app_t *app, int fd)
+int handle_client_write(app_t *app, int fd)
 {
     gui_t *gui = find_gui(app, fd);
-    ia_t *ia = find_ia(app, fd);
+    ia_t *ai = find_ia(app, fd);
 
     if (gui != NULL) {
         write_message(gui->list_messages, gui->fd);
     }
-    if (ia != NULL) {
-        write_message(ia->list_messages, ia->fd);
+    if (ai != NULL) {
+        write_message(ai->list_messages, ai->fd);
     }
     return 0;
 }

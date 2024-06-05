@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy Server
 ** File description:
-** ia
+** ai
 */
 
 #include "app/app.h"
@@ -37,7 +37,7 @@ bool add_ia(app_t *app, size_t fd, char *line)
         team = temp->data.team;
         if (strcmp(line, team->name) == 0 &&
         (team->max_place - team->list_ai->len) > 0) {
-            data.ia = create_ia(app, fd, team);
+            data.ai = create_ia(app, fd, team);
             list_add_back(team->list_ai, data);
             list_delete(app->clients_list, find_client(app->clients_list, fd));
             return true;
@@ -52,8 +52,8 @@ static ia_t *check_ia(team_t *team, size_t fd)
     list_node_t *ia_temp = team->list_ai->first;
 
     while (ia_temp) {
-        if (ia_temp->data.ia->fd == fd)
-            return ia_temp->data.ia;
+        if (ia_temp->data.ai->fd == fd)
+            return ia_temp->data.ai;
         ia_temp = ia_temp->next;
     }
     return NULL;
@@ -63,13 +63,13 @@ ia_t *find_ia(app_t *app, size_t fd)
 {
     list_node_t *temp = app->teams_list->first;
     team_t *team = NULL;
-    ia_t *ia = NULL;
+    ia_t *ai = NULL;
 
     while (temp) {
         team = temp->data.team;
-        ia = check_ia(team, fd);
-        if (ia != NULL) {
-            return ia;
+        ai = check_ia(team, fd);
+        if (ai != NULL) {
+            return ai;
         }
         temp = temp->next;
     }

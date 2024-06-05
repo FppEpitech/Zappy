@@ -5,7 +5,7 @@
 ** team
 */
 
-#include "ia/team.h"
+#include "ai/team.h"
 
 team_t *create_team(char *name, int max_place)
 {

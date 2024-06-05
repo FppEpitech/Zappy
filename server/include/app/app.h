@@ -12,8 +12,8 @@
 #include <stdarg.h>
 #include <string.h>
 
-#include "ia/ia.h"
-#include "ia/team.h"
+#include "ai/ai.h"
+#include "ai/team.h"
 #include "gui/gui.h"
 #include "list/list.h"
 #include "game/game.h"

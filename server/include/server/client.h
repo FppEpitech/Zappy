@@ -20,7 +20,7 @@ typedef struct s_client {
 /**
  * @brief Create a client object.
  *
- * @param fd File descriptor of ia
+ * @param fd File descriptor of ai
  * @return client_t* Struct client initialized
  */
 client_t *create_client(int fd);

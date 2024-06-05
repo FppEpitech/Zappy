@@ -48,7 +48,7 @@ static bool check_ia(team_t *team, size_t fd)
 
     ia_temp = team->list_ai->first;
     while (ia_temp) {
-        if (ia_temp->data.ia->fd == fd) {
+        if (ia_temp->data.ai->fd == fd) {
             list_delete(team->list_ai, ia_temp);
             return true;
         }

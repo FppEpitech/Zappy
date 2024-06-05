@@ -112,3 +112,46 @@ void add_message(list_t *list, char *message);
  * @return char* The string formated.
  */
 char *format_string(const char *format, ...);
+
+/**
+ * @brief Reset fd on write and read list.
+ *
+ * @param app Application with list of read and write fd.
+ */
+void server_reset_fd(app_t *app);
+
+/**
+ * @brief Handle request of command from GUI or AI.
+ *
+ * @param app Application with list of AI and GUI.
+ * @param fd File descriptor who do a request.
+ * @param line Request.
+ */
+void handle_request(app_t *app, size_t fd, char *line);
+
+/**
+ * @brief Append a char to a string.
+ *
+ * @param line String where append a char.
+ * @param current_char CHar to append
+ * @return char* String with char append.
+ */
+char *append_char(char *line, char current_char);
+
+/**
+ * @brief Handler to write to the corresponding fd.
+ *
+ * @param app Application with all informations.
+ * @param fd File descriptor to write
+ * @return int Error code.
+ */
+int handle_client_read(app_t *app, int fd);
+
+/**
+ * @brief Handler to read the corresponding fd.
+ *
+ * @param app Application with all informations.
+ * @param fd File descriptor to read
+ * @return int Error code.
+ */
+int handle_client_write(app_t *app, int fd);

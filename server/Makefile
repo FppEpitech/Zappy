@@ -14,11 +14,11 @@ SRC			=	src/list/list.c \
 				\
 				src/app/app.c \
 				\
-				src/ia/ia.c \
+				src/ai/ai.c \
 				\
 				src/gui/gui.c \
 				\
-				src/ia/team.c \
+				src/ai/team.c \
 				\
 				src/server/run.c \
 				src/server/quit.c \
@@ -31,6 +31,7 @@ SRC			=	src/list/list.c \
 				src/game/game.c \
 
 TEST_FILES	=	list/list_test.c \
+				communication/communication_test.c \
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
@@ -95,3 +96,4 @@ tests_run: fclean
 	@$(CC) -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(TEST_FLAGS) $(INCLUDE)
 	./$(TEST_NAME)
 	gcovr --exclude tests/
+	gcovr --exclude tests/ --branches

@@ -11,7 +11,7 @@
 
 
 #include "list/list.h"
-#include "ia/team.h"
+#include "ai/team.h"
 #include <string.h>
 
 int main(int argc, char **argv)
