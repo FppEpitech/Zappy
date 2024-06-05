@@ -15,6 +15,9 @@
 #include "Render/UserCamera.hpp"
 #include "GameDatas/GameData.hpp"
 
+#include <functional>
+#include <unordered_map>
+
 namespace Gui {
 
     /**
@@ -78,11 +81,18 @@ class Gui::Render {
 
     private:
 
-        UserCamera                  _camera;    // Camera of the scene.
-        bool                        _isDebug;   // Display or not the debug informations.
-        std::shared_ptr<GameData>   _gameData;  // GameData class to store the game's data.
+        UserCamera                  _camera;            // Camera of the scene.
+        bool                        _isDebug;           // Display or not the debug informations.
+        std::shared_ptr<GameData>   _gameData;          // GameData class to store the game's data.
 
-        Model                       _tileModel; // Model to display for tiles.
+        Model                       _tileModel;         // Model to display tiles.
+        Model                       _foodModel;         // Model to display foods.
+        Model                       _linemateModel;     // Model to display linemates.
+        Model                       _mendianeModel;     // Model to display mendianes.
+        Model                       _phirasModel;       // Model to display phiras.
+        Model                       _siburModel;        // Model to display siburs.
+        Model                       _thystameModel;     // Model to display thystames.
+        Model                       _deraumereModel;    // Model to display deraumeres.
 
         /**
          * @brief Load the models to draw.
@@ -100,5 +110,61 @@ class Gui::Render {
          * @brief Display the map.
          *
          */
-        void displayMap();
+        void displayMap(void) const;
+
+        /**
+         * @brief Display the food.
+         *
+         * @param tile Tile with food.
+         */
+        void displayFood(Tile tile) const;
+
+        /**
+         * @brief Display resources.
+         *
+         * @param tile Tile with resources.
+         */
+        void displayResources(Tile tile) const;
+
+        /**
+         * @brief Display Linemate.
+         *
+         * @param tile Tile with resources.
+         */
+        void displayLinemate(Tile tile) const;
+
+        /**
+         * @brief Display Mendiane.
+         *
+         * @param tile Tile with resources.
+         */
+        void displayMendiane(Tile tile) const;
+
+        /**
+         * @brief Display Phiras.
+         *
+         * @param tile Tile with resources.
+         */
+        void displayPhiras(Tile tile) const;
+
+        /**
+         * @brief Display Sibur.
+         *
+         * @param tile Tile with resources.
+         */
+        void displaySibur(Tile tile) const;
+
+        /**
+         * @brief Display Thystam.
+         *
+         * @param tile Tile with resources.
+         */
+        void displayThystame(Tile tile) const;
+
+        /**
+         * @brief Display Deraumere.
+         *
+         * @param tile Tile with resources.
+         */
+        void displayDeraumere(Tile tile) const;
 };
