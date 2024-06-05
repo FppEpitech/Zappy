@@ -11,8 +11,6 @@
 
 #define RessourcesNumber 6
 
-using Ressources = size_t [RessourcesNumber];
-
 namespace Gui {
 
     /**
@@ -25,6 +23,8 @@ namespace Gui {
 class Gui::Inventory {
 
     public:
+
+        using Ressources = size_t [RessourcesNumber];
 
         /**
          * @brief Construct a new Inventory object.
