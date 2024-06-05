@@ -32,5 +32,5 @@ int parse_client(char **arg, int *pos, parsing_t *parsing)
     }
     (*pos) += 2;
     parsing->clientsNb = result;
-    return 0;
+    return CODE_SUCCESS;
 }

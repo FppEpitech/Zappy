@@ -32,5 +32,5 @@ int parse_frequency(char **arg, int *pos, parsing_t *parsing)
     }
     (*pos) += 2;
     parsing->freq = result;
-    return 0;
+    return CODE_SUCCESS;
 }

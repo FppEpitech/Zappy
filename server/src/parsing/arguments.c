@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #include "parsing.h"
+#include "rules.h"
 
 static parsing_t *init_parsing(void)
 {
@@ -69,17 +70,17 @@ static int check_all_parameters(int ac, char **av, parsing_t *parsing)
     while (pos < ac) {
         result = check_one_parameter(&pos, av, parsing);
         if (result == -1)
-            return -1;
+            return CODE_FAILLURE;
         if (result == -2) {
             dprintf(2, "Error: missing argument 2\n");
-            return -1;
+            return CODE_FAILLURE;
         }
     }
     if (!is_all_parameters_parsed(parsing)) {
         dprintf(2, "Error: missing argument\n");
-        return -1;
+        return CODE_FAILLURE;
     }
-    return 0;
+    return CODE_SUCCESS;
 }
 
 parsing_t *parse_arg(int ac, char **av)
@@ -94,7 +95,7 @@ parsing_t *parse_arg(int ac, char **av)
         dprintf(2, "Error: not enough arguments\n");
         return NULL;
     }
-    if (check_all_parameters(ac, av, parsing) == -1)
+    if (check_all_parameters(ac, av, parsing) == CODE_FAILLURE)
         return NULL;
     return parsing;
 }

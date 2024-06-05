@@ -32,5 +32,5 @@ int parse_port(char **arg, int *pos, parsing_t *parsing)
     }
     (*pos) += 2;
     parsing->port = result;
-    return 0;
+    return CODE_SUCCESS;
 }

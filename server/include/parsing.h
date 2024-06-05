@@ -19,10 +19,6 @@
 #define NB_ARGS_MIN 13
 #define NB_ARGS_HELP 2
 
-#define CODE_ERROR_MISSING_ARG -1
-#define CODE_ERROR_WRONG_FLAG -2
-#define CODE_ERROR_INVALID_ARG -3
-
 #include "types.h"
 
 #include <stdbool.h>

@@ -6,6 +6,7 @@
 */
 
 #include "parsing.h"
+#include "rules.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -22,7 +23,7 @@ int handle_help(int ac, char **av)
     if (ac == NB_ARGS_HELP && (strcmp(av[1], HELP_FLAG) == 0
     || strcmp(av[1], HELP_FLAG_LABEL) == 0)) {
         print_help();
-        return 1;
+        return CODE_HELP_SUCCESS;
     }
-    return 0;
+    return CODE_SUCCESS;
 }
