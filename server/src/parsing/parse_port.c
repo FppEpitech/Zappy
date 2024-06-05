@@ -26,7 +26,8 @@ int parse_port(char **arg, int *pos, parsing_t *parsing)
     }
     result = parse_positive_int_arg(arg[*pos + 1]);
     if (result == CODE_ERROR_INVALID_NUMBER) {
-        dprintf(2, "Error: invalid argument for -p, must be a positive value\n");
+        dprintf(2, "Error: invalid argument for -p, "
+            "must be a positive value\n");
         return CODE_ERROR_INVALID_ARG;
     }
     (*pos) += 2;

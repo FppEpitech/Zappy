@@ -10,6 +10,8 @@
 
 #include "../include/parsing.h"
 
+#define USAGE "USAGE:\t./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq\n"
+
 Test(help_test, test_help_label)
 {
     char **av = malloc(sizeof(char *) * 3);
