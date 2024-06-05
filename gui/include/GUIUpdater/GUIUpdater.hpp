@@ -54,7 +54,7 @@ class Gui::GUIUpdater {
         std::unordered_map<std::string, std::function<void(std::vector<std::string>)>> _updateMap =
         {
             {"msz", [this](std::vector<std::string> data){updateMapSize(data);}},
-            {"btc", [this](std::vector<std::string> data){updateMapContent(data);}},
+            {"bct", [this](std::vector<std::string> data){updateMapContent(data);}},
             {"tna", [this](std::vector<std::string> data){updateTeamNames(data);}},
             {"pnw", [this](std::vector<std::string> data){updateTeamMember(data);}},
             {"ppo", [this](std::vector<std::string> data){updatePlayerPosition(data);}},
