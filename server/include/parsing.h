@@ -32,9 +32,9 @@
  *
  * @param ac numbers of arguments passed to the server.
  * @param av arguments passed to the server.
- * @return int - -1 in case of error, 0 otherwise.
+ * @return parsing_t - NULL in case of error, the structure otherwise.
  */
-int parse_arg(int ac, char **av);
+parsing_t *parse_arg(int ac, char **av);
 
 /**
  * @brief check if the help flag is present
