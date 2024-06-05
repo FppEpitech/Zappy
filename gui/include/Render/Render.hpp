@@ -76,15 +76,29 @@ class Gui::Render {
          */
         bool getIsDebug(void);
 
+    private:
+
+        UserCamera                  _camera;    // Camera of the scene.
+        bool                        _isDebug;   // Display or not the debug informations.
+        std::shared_ptr<GameData>   _gameData;  // GameData class to store the game's data.
+
+        Model                       _tileModel; // Model to display for tiles.
+
+        /**
+         * @brief Load the models to draw.
+         *
+         */
+        void LoadModels(void);
+
         /**
          * @brief Display the debug interface.
          *
          */
         void displayDebug(void);
 
-    private:
-
-        UserCamera      _camera;    // Camera of the scene.
-        bool            _isDebug;   // Display or not the debug informations.
-        std::shared_ptr<GameData> _gameData; // GameData class to store the game's data.
+        /**
+         * @brief Display the map.
+         *
+         */
+        void displayMap();
 };
