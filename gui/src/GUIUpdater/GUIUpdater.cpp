@@ -13,11 +13,9 @@ Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData) : _gameData(game
 void Gui::GUIUpdater::update(const std::string &command, const std::vector<std::string> &data)
 {
     try {
-        for (auto &iterator : _updateMap) {
-            if (iterator.first == command) {
+        for (auto &iterator : _updateMap)
+            if (iterator.first == command)
                 iterator.second(data);
-            }
-        }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
@@ -57,14 +55,13 @@ void Gui::GUIUpdater::updateMapContent(const std::vector<std::string> &data)
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid map content");
     }
-    for (size_t y = 0; y < _gameData.get()->getMapSize().second; y++) {
-        for (size_t x = 0; x < _gameData->getMapSize().first; x++) {
-            if (args[0] == x && args[1] == y) {
-                newMap[y][x] = Gui::Tile(std::make_pair(x, y), Gui::Inventory(args[2], args[3], args[4], args[5], args[6], args[7], args[8]));
-            }
-        }
+    if (args.size() != 9)
+        throw Gui::Errors::GuiUpdaterException("Invalid map content");
+    try {
+        _gameData.get()->setTile(Gui::Tile(std::make_pair(args[0], args[1]), Gui::Inventory(args[2], args[3], args[4], args[5], args[6], args[7], args[8])));
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException("Invalid map content");
     }
-    _gameData->setMap(newMap);
 }
 
 void Gui::GUIUpdater::updateTeamNames(const std::vector<std::string> &data)
