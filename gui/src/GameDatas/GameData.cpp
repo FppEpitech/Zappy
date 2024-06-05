@@ -85,6 +85,10 @@ void Gui::GameData::setMapSize(size_t x, size_t y)
 
 std::pair<size_t, size_t> Gui::GameData::getMapSize()
 {
+    if (_map.empty())
+        return std::make_pair(0, 0);
+    if (_map[0].empty())
+        return std::make_pair(_map.size(), 0);
     return std::make_pair(_map.size(), _map[0].size());
 }
 
