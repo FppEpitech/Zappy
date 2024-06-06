@@ -68,9 +68,8 @@ ia_t *find_ia(app_t *app, size_t fd)
     while (temp) {
         team = temp->data.team;
         ai = check_ia(team, fd);
-        if (ai != NULL) {
+        if (ai != NULL)
             return ai;
-        }
         temp = temp->next;
     }
     return NULL;

@@ -33,9 +33,8 @@ gui_t *find_gui(app_t *app, size_t fd)
     list_node_t *temp = app->gui_list->first;
 
     while (temp) {
-        if (temp->data.gui->fd == fd) {
+        if (temp->data.gui->fd == fd)
             return temp->data.gui;
-        }
         temp = temp->next;
     }
     return NULL;

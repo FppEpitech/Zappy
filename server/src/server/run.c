@@ -60,11 +60,10 @@ void server_reset_fd(app_t *app)
 int handle_client_read(app_t *app, int fd)
 {
     if (FD_ISSET(fd, &app->server->read_fds)) {
-        if (fd == app->server->fd) {
+        if (fd == app->server->fd)
             server_connection_handler(app, fd);
-        } else {
+        else
             server_data_handler(app, fd);
-        }
     }
     return 0;
 }
@@ -74,12 +73,10 @@ int handle_client_write(app_t *app, int fd)
     gui_t *gui = find_gui(app, fd);
     ia_t *ai = find_ia(app, fd);
 
-    if (gui != NULL) {
+    if (gui != NULL)
         write_message(gui->list_messages, gui->fd);
-    }
-    if (ai != NULL) {
+    if (ai != NULL)
         write_message(ai->list_messages, ai->fd);
-    }
     return 0;
 }
 

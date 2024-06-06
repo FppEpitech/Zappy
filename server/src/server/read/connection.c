@@ -23,7 +23,7 @@ bool server_connection_handler(app_t *app, size_t fd)
     if (data.client == NULL)
         return false;
     list_add_back(app->clients_list, data);
-    write(client_fd, "WELCOME\n", strlen("WELCOME\n"));
+    write(client_fd, WELCOME_MESSAGE, WELCOME_MESSAGE_LEN);
     printf("NEW CONNECTION !\n");
     return true;
 }

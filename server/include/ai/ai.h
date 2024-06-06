@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy Server
 ** File description:
-** AI struct
+** AI
 */
 
 #pragma once
@@ -26,7 +26,7 @@ typedef struct s_ia {
  *
  * @param app Application with list of team.
  * @param fd File descriptor of AI.
- * @param team Team of AI
+ * @param team Team of AI.
  * @return ia_t* Struct ai initialized.
  */
 ia_t *create_ia(app_t *app, int fd, team_t *team);

@@ -17,6 +17,8 @@ char *append_char(char *line, char current_char)
 
     len_line = strlen(line);
     line = realloc(line, len_line + 2);
+    if (line == NULL)
+        return NULL;
     line[len_line] = current_char;
     line[len_line + 1] = '\0';
     return line;
@@ -28,6 +30,8 @@ char *read_line(int fd)
     ssize_t bytes_received;
     char *line = malloc(sizeof(char) * 1);
 
+    if (line == NULL)
+        return NULL;
     line[0] = '\0';
     memset(buffer, 0, sizeof(buffer));
     bytes_received = read(fd, buffer, 1);
@@ -72,11 +76,10 @@ bool server_data_handler(app_t *app, size_t fd)
         return true;
     }
     if (its_client(app, fd)) {
-        if (strcmp(line, "GRAPHIC\r") == 0) {
+        if (strcmp(line, "GRAPHIC\r") == 0)
             add_gui(app, fd);
-        } else {
+        else
             add_ia(app, fd, line);
-        }
     } else {
         handle_request(app, fd, line);
         free(line);

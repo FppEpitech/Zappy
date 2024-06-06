@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy Server
 ** File description:
-** App struct
+** App
 */
 
 #pragma once

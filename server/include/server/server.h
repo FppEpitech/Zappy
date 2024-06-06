@@ -18,6 +18,8 @@
 #include "list/list.h"
 
 #define LISTEN_NUMBER 100
+#define WELCOME_MESSAGE "WELCOME\n"
+#define WELCOME_MESSAGE_LEN 8
 
 typedef struct s_app app_t;
 
