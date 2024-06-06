@@ -77,5 +77,20 @@ namespace Gui {
                  */
                 GuiGameDataException(std::string message);
         };
+
+        /**
+         * @class GuiUpdaterException
+         * @brief Error class for GUIUpdater errors.
+         */
+        class GuiUpdaterException : public Error {
+
+            public:
+                /**
+                 * @brief Constructor for GuiUpdaterException.
+                 *
+                 * @param message The error message.
+                 */
+                GuiUpdaterException(std::string message);
+        };
     };
 };
