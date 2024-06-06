@@ -70,6 +70,10 @@ const std::string Gui::Network::listenServer()
     std::string data = readInfoServer();
     if (!_isConnected && data == "WELCOME") {
         sendMessageServer("GRAPHIC\n");
+        sendMessageServer("sgt\n");
+        sendMessageServer("msz\n");
+        sendMessageServer("mct\n");
+        sendMessageServer("tna\n");
         _isConnected = true;
         return "";
     }
