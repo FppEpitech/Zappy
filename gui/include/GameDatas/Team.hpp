@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "raylib.h"
 #include "GameDatas/Player.hpp"
 
 #include <vector>
@@ -30,9 +31,7 @@ class Gui::Team {
          *
          * @param name Name of the team.
          */
-        Team(const std::string &name);
-
-        // TODO: Add the necessity to set a skin for the team.
+        Team(const std::string &name, const std::string &modelPath);
 
         /**
          * @brief Destroy the Team object.
@@ -85,11 +84,16 @@ class Gui::Team {
         */
         std::shared_ptr<Gui::Player> getPlayer(std::size_t id);
 
-        // TODO: Add a setter and a getter for the skin of the team.
+        /**
+         * @brief Get the Model object.
+         *
+         * @return Model - Model asset of the Team.
+         */
+        Model getModel(void);
 
     private:
 
-        std::string _name; // Name of the team.
-        std::vector<Gui::Player> _players; // Players of the team.
-        // TODO: Add a skin for the team using raylib.
+        std::string                 _name;      // Name of the team.
+        std::vector<Gui::Player>    _players;   // Players of the team.
+        Model                       _model;     // Model asset of the team.
 };
