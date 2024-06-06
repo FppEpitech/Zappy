@@ -39,6 +39,8 @@ SRC			=	src/list/list.c \
 				src/parsing/arguments.c				\
 				src/parsing/parse_names.c			\
 				src/parsing/parse_frequency.c		\
+				\
+				src/map/map.c						\
 
 TEST_FILES	=	list/list_test.c \
 				communication/communication_test.c \
