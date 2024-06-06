@@ -39,7 +39,7 @@ void Gui::Engine::listenServer(void)
         std::string keyCommand;
 
         stream >> keyCommand;
-        _guiUpdater.update(keyCommand, command);
+        _guiUpdater.update(keyCommand, arguments);
     }
     catch (const std::exception &error) {
         std::cout << error.what() << std::endl;

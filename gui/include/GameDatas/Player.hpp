@@ -29,7 +29,7 @@ class Gui::Player {
          * @param team Team name of the player.
          * @param position Position of the Player.
          */
-        Player(std::size_t id, const std::string &team, std::pair<std::size_t, std::size_t> position);
+        Player(std::size_t id, const std::string &team, std::pair<std::size_t, std::size_t> position, std::size_t orientation, std::size_t level = 1);
 
         /**
          * @brief Destroy the Player object.
@@ -57,6 +57,13 @@ class Gui::Player {
          * @param level Level of the player.
          */
         void setLevel(std::size_t level);
+
+        /**
+         * @brief Set the Orientation object.
+         *
+         * @param orientation Orientation of the player.
+         */
+        void setOrientation(std::size_t orientation);
 
         /**
          * @brief Set the Team object.
@@ -87,6 +94,13 @@ class Gui::Player {
         std::size_t getLevel(void) const;
 
         /**
+         * @brief Get the Orientation object.
+         *
+         * @return std::size_t - orientation
+         */
+        std::size_t getOrientation(void) const;
+
+        /**
          * @brief Get the Team object.
          *
          * @return std::string - team name
@@ -97,12 +111,13 @@ class Gui::Player {
          * @brief Inventory of the player.
          *
          */
-        Inventory                               _inventory;
+        Inventory                               inventory;
 
     private:
 
-        std::pair<std::size_t, std::size_t>     _position;  // Position x y.
         std::size_t                             _id;        // Id of the player.
-        std::size_t                             _level;     // Level between 1 - 8.
         std::string                             _team;      // Team name.
+        std::pair<std::size_t, std::size_t>     _position;  // Position x y.
+        std::size_t                             _orientation; // Orientation of the player.
+        std::size_t                             _level;     // Level between 1 - 8.
 };

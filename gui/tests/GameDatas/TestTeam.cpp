@@ -22,7 +22,7 @@ Test(Team, players, .timeout = 5)
 {
     Gui::Team team("TEAM1");
 
-    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2));
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
     team.getPlayers().push_back(player);
 
     cr_assert_eq(team.getPlayers().size(), 1);
@@ -36,7 +36,7 @@ Test(Team, addPlayer, .timeout = 5)
 {
     Gui::Team team("TEAM1");
 
-    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2));
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
     team.addPlayer(player);
 
     cr_assert_eq(team.getPlayers().size(), 1);
@@ -50,7 +50,7 @@ Test(Team, removePlayer, .timeout = 5)
 {
     Gui::Team team("TEAM1");
 
-    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2));
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
     team.addPlayer(player);
 
     cr_assert_eq(team.getPlayers().size(), 1);
@@ -63,7 +63,7 @@ Test(Team, getPlayer, .timeout = 5)
 {
     Gui::Team team("TEAM1");
 
-    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2));
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
     team.addPlayer(player);
 
     cr_assert_eq(team.getPlayers().size(), 1);
@@ -79,7 +79,7 @@ Test(Team, getPlayerFailing, .timeout = 5)
 {
     Gui::Team team("TEAM1");
 
-    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2));
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
     team.addPlayer(player);
 
     cr_assert_eq(team.getPlayers().size(), 1);
@@ -92,7 +92,7 @@ Test(Team, removePlayerFailing, .timeout = 5)
 {
     Gui::Team team("TEAM1");
 
-    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2));
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
     team.addPlayer(player);
 
     cr_assert_eq(team.getPlayers().size(), 1);

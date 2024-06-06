@@ -1,23 +1,24 @@
 /*
 ** EPITECH PROJECT, 2024
-** Zappy GUI
+** Zappy Server
 ** File description:
 ** main
 */
 
 #include <stdio.h>
+#include <string.h>
 
+#include "app/app.h"
+#include "ai/team.h"
 #include "parsing.h"
+#include "list/list.h"
 
 #include "list/list.h"
 
 int main(int ac, char **av)
 {
     parsing_t *parsing = parse_arg(ac, av);
-    list_t ***map; //must alloc
-    list_t *players = list_new();
-
-
+    app_t *app = NULL;
 
     if (!parsing)
         return 84;
@@ -28,5 +29,10 @@ int main(int ac, char **av)
     printf("Freq: %d\n", parsing->freq);
     for (int i = 0; parsing->names[i]; i++)
         printf("Name %d: %s\n", i, parsing->names[i]);
+    app = create_app(parsing);
+    if (app == NULL)
+        return 84;
+    server_run(app);
+    destroy_app(app);
     return 0;
 }
