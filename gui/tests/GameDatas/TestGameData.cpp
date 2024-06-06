@@ -5,15 +5,17 @@
 ** GameData
 */
 
+#include "Assets.hpp"
 #include "CriterionHeaders.hpp"
 #include "GameDatas/GameData.hpp"
 
 Test(GameData, Teams, .timeout = 5)
 {
+    InitWindow(1,1,"ok");
     Gui::GameData gameData;
 
-    Gui::Team team1("TEAM1");
-    Gui::Team team2("TEAM2");
+    Gui::Team team1("TEAM1", MODEL_PLAYER);
+    Gui::Team team2("TEAM2", MODEL_PLAYER);
 
     gameData.addTeam(team1);
     gameData.addTeam(team2);
@@ -21,20 +23,23 @@ Test(GameData, Teams, .timeout = 5)
     cr_assert_eq(gameData.getTeams().size(), 2);
     cr_assert_eq(gameData.getTeam("TEAM1").getName(), "TEAM1");
     cr_assert_eq(gameData.getTeam("TEAM2").getName(), "TEAM2");
+    CloseWindow();
 }
 
 Test(GameData, AddTeam, .timeout = 5)
 {
+    InitWindow(1,1,"ok");
     Gui::GameData gameData;
 
-    Gui::Team team1("TEAM1");
+    Gui::Team team1("TEAM1", MODEL_PLAYER);
 
     gameData.addTeam(team1);
-    gameData.addTeam("TEAM2");
+    gameData.addTeam("TEAM2", MODEL_PLAYER);
 
     cr_assert_eq(gameData.getTeams().size(), 2);
     cr_assert_eq(gameData.getTeam("TEAM1").getName(), "TEAM1");
     cr_assert_eq(gameData.getTeam("TEAM2").getName(), "TEAM2");
+    CloseWindow();
 }
 
 Test(GameData, SetMap, .timeout = 5)
@@ -79,25 +84,29 @@ Test(GameData, GetTile, .timeout = 5)
 
 Test(GameData, NoTeamFound, .timeout = 5)
 {
+    InitWindow(1,1,"ok");
     Gui::GameData gameData;
 
-    Gui::Team team1("TEAM1");
+    Gui::Team team1("TEAM1", MODEL_PLAYER);
 
     gameData.addTeam(team1);
 
     cr_assert_throw(gameData.getTeam("TEAM2"), Gui::Errors::GuiGameDataException);
+    CloseWindow();
 }
 
 Test(GameData, TeamAlreadyExisting, .timeout = 5)
 {
+    InitWindow(1,1,"ok");
     Gui::GameData gameData;
 
-    Gui::Team team1("TEAM1");
+    Gui::Team team1("TEAM1", MODEL_PLAYER);
 
     gameData.addTeam(team1);
 
     cr_assert_throw(gameData.addTeam(team1), Gui::Errors::GuiGameDataException);
-    cr_assert_throw(gameData.addTeam("TEAM1"), Gui::Errors::GuiGameDataException);
+    cr_assert_throw(gameData.addTeam("TEAM1", MODEL_PLAYER), Gui::Errors::GuiGameDataException);
+    CloseWindow();
 }
 
 Test(GameData, TileNotFound, .timeout = 5)
