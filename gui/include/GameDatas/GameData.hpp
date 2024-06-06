@@ -109,7 +109,7 @@ class Gui::GameData {
          *
          * @return std::pair<size_t, size_t> Size of the map.
          */
-        std::pair<size_t, size_t> getMapSize();
+        std::pair<size_t, size_t> getMapSize() const;
 
         /**
          * @brief Get a Tile object.
