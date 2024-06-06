@@ -55,6 +55,7 @@ TEST_FILES	=	list/list_test.c \
 				parsing/parse_arguments_tests.c		\
 				parsing/parse_names_tests.c			\
 				map/map_test.c \
+				ai/move_command.c \
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
