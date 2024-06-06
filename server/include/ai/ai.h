@@ -40,7 +40,7 @@ ia_t *create_ia(app_t *app, int fd, team_t *team);
  * @return true If no error.
  * @return false If error.
  */
-bool add_ia(app_t *app, size_t fd, char *line);
+void add_ia(app_t *app, size_t fd, char *line);
 
 /**
  * @brief Find the AI throught a file descriptor.

@@ -39,7 +39,7 @@ typedef struct s_server {
 void destroy_server(server_t *server);
 
 /**
- * @brief Create a server object
+ * @brief Create a server object.
  *
  * @param port Port on witch bind server.
  * @return server_t* Server init.
@@ -47,7 +47,7 @@ void destroy_server(server_t *server);
 server_t *create_server(size_t port);
 
 /**
- * @brief Run the server
+ * @brief Run the server.
  *
  * @param app App struct with all necessary information (server, gui, client).
  * @return bool True if success else false.
@@ -81,7 +81,7 @@ bool server_data_handler(app_t *app, size_t fd);
 char *read_line(int fd);
 
 /**
- * @brief Handler to delete client/gui/ai who quit the server
+ * @brief Handler to delete client/gui/ai who quit the server.
  *
  * @param app Application with all lists.
  * @param fd File descriptor of personn who quit.
@@ -91,7 +91,7 @@ void server_quit_handler(app_t *app, size_t fd);
 /**
  * @brief Write message to the correspondinf fd.
  *
- * @param list_messages List of all messages
+ * @param list_messages List of all messages.
  * @param fd File descriptor where send message.
  * @return true If message was well send.
  * @return false If message wasn't well send.
@@ -99,7 +99,7 @@ void server_quit_handler(app_t *app, size_t fd);
 bool write_message(list_t *list_messages, size_t fd);
 
 /**
- * @brief Add a message to write
+ * @brief Add a message to write.
  *
  * @param list List in witch add the message.
  * @param message Message to add in the list.
@@ -135,7 +135,7 @@ void handle_request(app_t *app, size_t fd, char *line);
  * @brief Append a char to a string.
  *
  * @param line String where append a char.
- * @param current_char CHar to append
+ * @param current_char Char to append.
  * @return char* String with char append.
  */
 char *append_char(char *line, char current_char);
@@ -144,16 +144,16 @@ char *append_char(char *line, char current_char);
  * @brief Handler to write to the corresponding fd.
  *
  * @param app Application with all informations.
- * @param fd File descriptor to write
+ * @param fd File descriptor to write.
  * @return int Error code.
  */
-int handle_client_read(app_t *app, int fd);
+void handle_client_read(app_t *app, int fd);
 
 /**
  * @brief Handler to read the corresponding fd.
  *
  * @param app Application with all informations.
- * @param fd File descriptor to read
+ * @param fd File descriptor to read.
  * @return int Error code.
  */
-int handle_client_write(app_t *app, int fd);
+void handle_client_write(app_t *app, int fd);

@@ -108,11 +108,11 @@ Test(communication, add_ia_with_multiple_team, .timeout = 5)
     node_data_t data;
     data.team = create_team(strdup("team 1\r"), 1);
     list_add_front(app->teams_list, data);
-    cr_assert_eq(true, add_ia(app, 1, "team 1\r"));
+    add_ia(app, 1, "team 1\r");
 
     data.team = create_team(strdup("team 2\r"), 1);
     list_add_front(app->teams_list, data);
-    cr_assert_eq(true, add_ia(app, 4, "team 2\r"));
+    add_ia(app, 4, "team 2\r");
     destroy_app(app);
 }
 
@@ -135,7 +135,7 @@ Test(communication, add_ia_in_no_existing_team, .timeout = 5)
     list_add_front(app->teams_list, data);
     add_ia(app, 1, "team\r");
 
-    cr_assert_eq(true, add_ia(app, 1, "team\r"));
+    add_ia(app, 1, "team\r");
     destroy_app(app);
 }
 
@@ -613,7 +613,7 @@ Test(communication, handle_client_read_server, .timeout = 5)
     app_t *app = create_app(parsing);
     cr_assert_not_null(app);
 
-    cr_assert_eq(0, handle_client_read(app, app->server->fd));
+    handle_client_read(app, app->server->fd);
 }
 
 Test(communication, handle_client_write_ai, .timeout = 5)
@@ -643,7 +643,7 @@ Test(communication, handle_client_write_ai, .timeout = 5)
     add_ia(app, 5, "team 2");
     add_ia(app, 18, "team 2");
 
-    cr_assert_eq(0, handle_client_write(app, 4));
+    handle_client_write(app, 4);
     destroy_app(app);
 }
 
@@ -664,7 +664,7 @@ Test(communication, handle_client_write_gui, .timeout = 5)
     add_gui(app, 1);
     add_gui(app, 2);
 
-    cr_assert_eq(0, handle_client_write(app, 2));
+    handle_client_write(app, 2);
     destroy_app(app);
 }
 
@@ -685,8 +685,8 @@ Test(communication, add_ai_to_complete_team, .timeout = 5)
     node_data_t data;
     data.team = create_team(strdup("team 1"), 1);
     list_add_front(app->teams_list, data);
-    cr_assert_eq(true, add_ia(app, 1, "team 1"));
-    cr_assert_eq(true, add_ia(app, 8, "team 1"));
+    add_ia(app, 1, "team 1");
+    add_ia(app, 8, "team 1");
 
     destroy_app(app);
 }

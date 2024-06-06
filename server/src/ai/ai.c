@@ -27,7 +27,7 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     return new_ia;
 }
 
-bool add_ia(app_t *app, size_t fd, char *line)
+void add_ia(app_t *app, size_t fd, char *line)
 {
     list_node_t *temp = app->teams_list->first;
     team_t *team = NULL;
@@ -40,11 +40,10 @@ bool add_ia(app_t *app, size_t fd, char *line)
             data.ai = create_ia(app, fd, team);
             list_add_back(team->list_ai, data);
             list_delete(app->clients_list, find_client(app->clients_list, fd));
-            return true;
+            return;
         }
         temp = temp->next;
     }
-    return true;
 }
 
 static ia_t *check_ia(team_t *team, size_t fd)

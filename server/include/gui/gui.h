@@ -33,7 +33,7 @@ gui_t *create_gui(int fd);
  * @return true If no error.
  * @return false If error.
  */
-bool add_gui(app_t *app, size_t fd);
+void add_gui(app_t *app, size_t fd);
 
 /**
  * @brief Find a gui throw a file descriptor.
