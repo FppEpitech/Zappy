@@ -9,9 +9,15 @@
 
 #include "parsing.h"
 
+#include "list/list.h"
+
 int main(int ac, char **av)
 {
     parsing_t *parsing = parse_arg(ac, av);
+    list_t ***map; //must alloc
+    list_t *players = list_new();
+
+
 
     if (!parsing)
         return 84;
