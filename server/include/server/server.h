@@ -145,7 +145,6 @@ char *append_char(char *line, char current_char);
  *
  * @param app Application with all informations.
  * @param fd File descriptor to write.
- * @return int Error code.
  */
 void handle_client_read(app_t *app, int fd);
 
@@ -154,6 +153,5 @@ void handle_client_read(app_t *app, int fd);
  *
  * @param app Application with all informations.
  * @param fd File descriptor to read.
- * @return int Error code.
  */
 void handle_client_write(app_t *app, int fd);

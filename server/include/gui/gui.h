@@ -30,8 +30,6 @@ gui_t *create_gui(int fd);
  *
  * @param app Application with list of gui.
  * @param fd File descriptor of GUI.
- * @return true If no error.
- * @return false If error.
  */
 void add_gui(app_t *app, size_t fd);
 

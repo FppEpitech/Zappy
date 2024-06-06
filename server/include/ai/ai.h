@@ -37,8 +37,6 @@ ia_t *create_ia(app_t *app, int fd, team_t *team);
  * @param app Application with list of team.
  * @param fd File descriptor of AI.
  * @param line Line with name of the team.
- * @return true If no error.
- * @return false If error.
  */
 void add_ia(app_t *app, size_t fd, char *line);
 
