@@ -15,9 +15,19 @@
 
 typedef struct s_app app_t;
 
+typedef enum {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST,
+} orientation_t;
+
 typedef struct s_ia {
     size_t fd;
     list_t *list_messages;
+    size_t x;
+    size_t y;
+    orientation_t direction;
     size_t level;
 } ia_t;
 

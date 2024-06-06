@@ -7,9 +7,9 @@
 
 #include <string.h>
 
-#include "ai/ai.h"
 #include "app/app.h"
 #include "server/client.h"
+#include "ai/command_ai.h"
 
 char *append_char(char *line, char current_char)
 {
@@ -61,7 +61,7 @@ void handle_request(app_t *app, size_t fd, char *line)
     if (ai != NULL) {
         if (ai->list_messages->len >= 10)
             return;
-        (void) line;
+        command_ai_handler(app, ai, line);
         return;
     }
 }
@@ -76,7 +76,7 @@ bool server_data_handler(app_t *app, size_t fd)
         return true;
     }
     if (its_client(app, fd)) {
-        if (strcmp(line, "GRAPHIC\r") == 0)
+        if (strcmp(line, "GRAPHIC") == 0)
             add_gui(app, fd);
         else
             add_ia(app, fd, line);

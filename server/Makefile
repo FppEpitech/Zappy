@@ -15,10 +15,11 @@ SRC			=	src/list/list.c \
 				src/app/app.c \
 				\
 				src/ai/ai.c \
+				src/ai/team.c \
+				src/ai/cmd/handler.c \
+				src/ai/cmd/move.c \
 				\
 				src/gui/gui.c \
-				\
-				src/ai/team.c \
 				\
 				src/server/run.c \
 				src/server/quit.c \
