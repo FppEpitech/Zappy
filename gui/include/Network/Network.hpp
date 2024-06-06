@@ -85,6 +85,13 @@ class Gui::Network {
          */
         const std::string listenServer();
 
+        /**
+         * @brief Send a message to the Server.
+         *
+         * @param message to send to the server
+         */
+        void sendMessageServer(const std::string& message);
+
     private:
 
         /**
@@ -99,13 +106,6 @@ class Gui::Network {
          * @return const std::string - server message
          */
         const std::string readInfoServer();
-
-        /**
-         * @brief Send a message to the Server.
-         *
-         * @param message to send to the server
-         */
-        void sendMessageServer(const std::string& message);
 
         int             _port;          // server port
         std::string     _hostName;      // server hostname
