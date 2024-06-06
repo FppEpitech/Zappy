@@ -16,6 +16,8 @@ Gui::Engine::Engine(Network network) : _network(network), _gameData(std::make_sh
 {
     _render = std::make_shared<Render>(_gameData);
     _event.setRender(_render);
+    _tick = NO_TICK;
+    _lastTick = clock();
 }
 
 void Gui::Engine::run(void)
@@ -24,6 +26,7 @@ void Gui::Engine::run(void)
         listenServer();
         _event.listen();
         _render->draw();
+        sendMessageUpdate();
     }
 }
 
@@ -44,4 +47,20 @@ void Gui::Engine::listenServer(void)
     catch (const std::exception &error) {
         std::cout << error.what() << std::endl;
     }
+}
+
+void Gui::Engine::sendMessageUpdate(void)
+{
+    clock_t currentTick = clock();
+
+    if ((int)(_tick) == NO_TICK && (float)(currentTick - _lastTick) / CLOCKS_PER_SEC < (1))
+        return;
+    if ((int)(_tick) != NO_TICK && (float)(currentTick - _lastTick) / CLOCKS_PER_SEC < (_tick))
+        return;
+    _lastTick = clock();
+
+    _network.sendMessageServer("sgt\n");
+    _network.sendMessageServer("msz\n");
+    _network.sendMessageServer("mct\n");
+    _network.sendMessageServer("tna\n");
 }
