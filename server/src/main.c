@@ -25,10 +25,8 @@ int main(int ac, char **av)
     display_map(map, 5, 5);
     free_map(map, 5, 5);
     printf("Port: %d\n", parsing->port);
-    printf("Width: %d\n", parsing->width);
-    printf("Height: %d\n", parsing->height);
-    printf("ClientsNb: %d\n", parsing->clientsNb);
-    printf("Freq: %d\n", parsing->freq);
+    printf("Width: %d, Height: %d\n", parsing->width, parsing->height);
+    printf("ClientsNb: %d, Freq: %d\n", parsing->clientsNb, parsing->freq);
     for (int i = 0; parsing->names[i]; i++)
         printf("Name %d: %s\n", i, parsing->names[i]);
     app = create_app(parsing);
