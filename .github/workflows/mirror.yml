@@ -21,7 +21,6 @@ jobs:
       - name: install_raylib
         run: |
             sudo dnf install raylib-devel -y
-            sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel libXi-devel libXcursor-devel libXinerama-devel libatomic -y
       - name: check_presence_of_pushed_executables
         run: |
           if [ -z "$EXECUTABLES" ]; then
@@ -109,7 +108,6 @@ jobs:
       - name: install_raylib
         run: |
             sudo dnf install raylib-devel -y
-            sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel libXi-devel libXcursor-devel libXinerama-devel libatomic -y
       - name: run_tests
         run: make tests_run
         timeout-minutes: 5
