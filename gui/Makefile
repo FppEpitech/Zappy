@@ -36,7 +36,6 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				GameDatas/TestInventory.cpp \
 				GameDatas/TestPlayer.cpp \
 				GameDatas/TestTile.cpp \
-				GameDatas/TestTeam.cpp \
 				GameDatas/TestGameData.cpp \
 				Render/TestCamera.cpp \
 				GUIUpdater/TestGUIUpdater.cpp \

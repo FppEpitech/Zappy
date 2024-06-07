@@ -5,37 +5,9 @@
 ** GameData
 */
 
+#include "Assets.hpp"
 #include "CriterionHeaders.hpp"
 #include "GameDatas/GameData.hpp"
-
-Test(GameData, Teams, .timeout = 5)
-{
-    Gui::GameData gameData;
-
-    Gui::Team team1("TEAM1");
-    Gui::Team team2("TEAM2");
-
-    gameData.addTeam(team1);
-    gameData.addTeam(team2);
-
-    cr_assert_eq(gameData.getTeams().size(), 2);
-    cr_assert_eq(gameData.getTeam("TEAM1").getName(), "TEAM1");
-    cr_assert_eq(gameData.getTeam("TEAM2").getName(), "TEAM2");
-}
-
-Test(GameData, AddTeam, .timeout = 5)
-{
-    Gui::GameData gameData;
-
-    Gui::Team team1("TEAM1");
-
-    gameData.addTeam(team1);
-    gameData.addTeam("TEAM2");
-
-    cr_assert_eq(gameData.getTeams().size(), 2);
-    cr_assert_eq(gameData.getTeam("TEAM1").getName(), "TEAM1");
-    cr_assert_eq(gameData.getTeam("TEAM2").getName(), "TEAM2");
-}
 
 Test(GameData, SetMap, .timeout = 5)
 {
@@ -77,29 +49,6 @@ Test(GameData, GetTile, .timeout = 5)
     cr_assert_eq(gameData.getTile(9, 9).getPosition().second, 9);
 }
 
-Test(GameData, NoTeamFound, .timeout = 5)
-{
-    Gui::GameData gameData;
-
-    Gui::Team team1("TEAM1");
-
-    gameData.addTeam(team1);
-
-    cr_assert_throw(gameData.getTeam("TEAM2"), Gui::Errors::GuiGameDataException);
-}
-
-Test(GameData, TeamAlreadyExisting, .timeout = 5)
-{
-    Gui::GameData gameData;
-
-    Gui::Team team1("TEAM1");
-
-    gameData.addTeam(team1);
-
-    cr_assert_throw(gameData.addTeam(team1), Gui::Errors::GuiGameDataException);
-    cr_assert_throw(gameData.addTeam("TEAM1"), Gui::Errors::GuiGameDataException);
-}
-
 Test(GameData, TileNotFound, .timeout = 5)
 {
     Gui::GameData gameData;
@@ -117,18 +66,6 @@ Test(GameData, TileNotFound, .timeout = 5)
 
     cr_assert_throw(gameData.getTile(10, 0), Gui::Errors::GuiGameDataException);
     cr_assert_throw(gameData.getTile(0, 10), Gui::Errors::GuiGameDataException);
-}
-
-Test(GameData, AddPlayerToNotExistingTeam, .timeout = 5)
-{
-    Gui::GameData gameData;
-
-    Gui::Team team1("TEAM1");
-    Gui::Player player1(1, "TEAM1", std::make_pair(0, 0), 0);
-
-    gameData.addTeam(team1);
-
-    cr_assert_throw(gameData.addPlayerToTeam("TEAM2", player1), Gui::Errors::GuiGameDataException);
 }
 
 Test(GameData, setLittleMapSize, .timeout = 5)

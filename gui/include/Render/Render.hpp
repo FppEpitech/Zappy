@@ -107,6 +107,12 @@ class Gui::Render {
         void displayDebug(void);
 
         /**
+         * @brief Display players.
+         *
+         */
+        void displayPlayers(void) const;
+
+        /**
          * @brief Display the map.
          *
          */
