@@ -97,7 +97,7 @@ void Gui::Render::displayPlayers(void) const
         for (auto &player : team.getPlayers()) {
             Vector3 posPlayer = (Vector3){(float)(player.getPosition().first), 0, (float)(player.getPosition().second)};
             Vector3 posAssetPlayer = POS_PLAYER;
-            DrawModelEx(team.getModel(), (Vector3){posPlayer.x + posAssetPlayer.x, posPlayer.y + posAssetPlayer.y, posPlayer.z + posAssetPlayer.z}, ROTATION_AXIS_PLAYER, ROTATION_ANGLE_PLAYER, SCALE_PLAYER, WHITE);
+            DrawModelEx(team.getPlayerModel(), (Vector3){posPlayer.x + posAssetPlayer.x, posPlayer.y + posAssetPlayer.y, posPlayer.z + posAssetPlayer.z}, ROTATION_AXIS_PLAYER, ROTATION_ANGLE_PLAYER, SCALE_PLAYER, WHITE);
         }
     }
 }

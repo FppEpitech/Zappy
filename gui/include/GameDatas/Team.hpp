@@ -90,11 +90,11 @@ class Gui::Team {
          *
          * @return Model - Model asset of the Team.
          */
-        Model getModel(void) const;
+        Model getPlayerModel(void) const;
 
     private:
 
         std::string                 _name;      // Name of the team.
         std::vector<Gui::Player>    _players;   // Players of the team.
-        Model                       _model;     // Model asset of the team.
+        Model                       _playerModel;     // Model player asset of the team.
 };

@@ -9,7 +9,7 @@
 
 Gui::Team::Team(const std::string &name, const std::string &playerModelPath) : _name(name)
 {
-    _model = LoadModel(playerModelPath.c_str());
+    _playerModel = LoadModel(playerModelPath.c_str());
 }
 
 const std::string &Gui::Team::getName() const
@@ -53,7 +53,7 @@ std::shared_ptr<Gui::Player> Gui::Team::getPlayer(std::size_t id)
     return nullptr;
 }
 
-Model Gui::Team::getModel(void) const
+Model Gui::Team::getPlayerModel(void) const
 {
-    return _model;
+    return _playerModel;
 }
