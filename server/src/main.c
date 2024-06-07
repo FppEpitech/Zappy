@@ -9,21 +9,14 @@
 #include <string.h>
 
 #include "app/app.h"
-#include "ai/team.h"
-#include "parsing.h"
-#include "map/map.h"
 
 int main(int ac, char **av)
 {
     parsing_t *parsing = parse_arg(ac, av);
     app_t *app = NULL;
-    tile_t **map = NULL;
 
     if (!parsing)
         return 84;
-    map = get_map(parsing->width, parsing->height);
-    display_map(map, 2, 2);
-    free_map(map, 2);
     printf("Port: %d\n", parsing->port);
     printf("Width: %d, Height: %d\n", parsing->width, parsing->height);
     printf("ClientsNb: %d, Freq: %d\n", parsing->clientsNb, parsing->freq);

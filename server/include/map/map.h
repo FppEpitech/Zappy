@@ -39,13 +39,13 @@ typedef struct tile_s {
 } tile_t;
 
 /**
- * @brief Get the map objec.
+ * @brief Create the map objec.
  *
  * @param width Width of the map.
  * @param height Height of the map.
  * @return tile_t** Map of tile.
  */
-tile_t **get_map(int width, int height);
+tile_t **create_map(int width, int height);
 
 /**
  * @brief Free the map of tiles.

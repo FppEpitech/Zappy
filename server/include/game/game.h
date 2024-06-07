@@ -7,9 +7,12 @@
 
 #pragma once
 
+#include "map/map.h"
+
 typedef struct s_game {
     int height;
     int width;
+    tile_t **map;
 } game_t;
 
 /**

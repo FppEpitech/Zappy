@@ -9,7 +9,7 @@
 #include "stdlib.h"
 #include "map/map.h"
 
-tile_t **get_map(int width, int height)
+tile_t **create_map(int width, int height)
 {
     tile_t **map = malloc(sizeof(tile_t *) * height);
 

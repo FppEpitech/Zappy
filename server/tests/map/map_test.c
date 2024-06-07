@@ -17,7 +17,7 @@ void redirect_all_stdout(void)
 
 Test(map, map_create, .timeout = 5)
 {
-    tile_t **new_map = get_map(10, 15);
+    tile_t **new_map = create_map(10, 15);
 
     cr_assert_not_null(new_map);
     cr_assert_eq(new_map[0][0].deraumere, 0);
@@ -32,7 +32,7 @@ Test(map, map_create, .timeout = 5)
 
 Test(map, change_mendiane, .timeout = 5)
 {
-    tile_t **new_map = get_map(10, 15);
+    tile_t **new_map = create_map(10, 15);
 
     new_map[0][0].mendiane = 1;
 
@@ -50,7 +50,7 @@ Test(map, change_mendiane, .timeout = 5)
 Test(map, display_map, .init = redirect_all_stdout)
 {
     int width = 2, height = 2;
-    tile_t **new_map = get_map(width, height);
+    tile_t **new_map = create_map(width, height);
 
     new_map[0][0].food = 1;
     new_map[0][1].food = 2;
@@ -63,7 +63,7 @@ Test(map, display_map, .init = redirect_all_stdout)
 
 Test(map, free_map, .timeout = 5)
 {
-    tile_t **new_map = get_map(10, 15);
+    tile_t **new_map = create_map(10, 15);
 
     cr_assert_not_null(new_map);
     free_map(new_map, 15);
