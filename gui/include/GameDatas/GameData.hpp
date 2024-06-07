@@ -11,6 +11,8 @@
 #include "GameDatas/Team.hpp"
 #include "GameDatas/Tile.hpp"
 
+#define NO_TICK int(-1)
+
 /**
  * @brief Map type.
  *
@@ -130,8 +132,37 @@ class Gui::GameData {
          */
         void setTile(const Gui::Tile &tile);
 
+        /**
+         * @brief Restart the last tick clock.
+         *
+         */
+        void restartLastTick(void);
+
+        /**
+         * @brief Set the Server Tick object.
+         *
+         * @param tick Tick of the server.
+         */
+        void setServerTick(std::size_t tick);
+
+        /**
+         * @brief Get the Last Tick object.
+         *
+         * @return clock_t - Last Tick.
+         */
+        clock_t getLastTick() const;
+
+        /**
+         * @brief Get the Server Tick object.
+         *
+         * @return std::size_t - Server Tick.
+         */
+        std::size_t getServerTick() const;
+
     private:
 
-        std::vector<Gui::Team> _teams; // Teams of the game.
-        Map<Gui::Tile> _map; // Map of the game.
+        std::vector<Gui::Team>      _teams;         // Teams of the game.
+        Map<Gui::Tile>              _map;           // Map of the game.
+        std::size_t                 _serverTick;    // Tick value of the server.
+        clock_t                     _lastTick;      // Last tick of the GameData (based on the server tick).
 };

@@ -268,6 +268,16 @@ Test(GUIUpdater, updateEggDeathErrorValue2, .timeout = 5)
     cr_assert_throw(guiUpdater.update("edi", {"-1"}), Gui::Errors::GuiUpdaterException);
 }
 
+Test(GUIUpdater, updateTimeUnitRequest, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    guiUpdater.update("sgt", {"5"});
+
+    cr_assert_eq(gameData->getServerTick(), 5);
+}
+
 Test(GUIUpdater, updateTimeUnitRequestErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
