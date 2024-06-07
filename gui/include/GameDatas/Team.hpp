@@ -31,11 +31,11 @@ class Gui::Team {
          * @brief Construct a new Team object.
          *
          * @param name Name of the team.
+         * @param playerModelPath Path to the team model asset for players.
          * @param eggSkinPath Path to the skin of the team.
          */
         Team(const std::string &name, const std::string &eggModelPath);
-
-        // TODO: Add the necessity to set a skin for the team.
+        Team(const std::string &name, const std::string &playerModelPath);
 
         /**
          * @brief Destroy the Team object.
@@ -112,6 +112,12 @@ class Gui::Team {
         std::shared_ptr<Gui::Player> getPlayer(std::size_t id);
 
         /**
+         * @brief Get the Model object.
+         *
+         * @return Model - Model asset of the Team.
+         */
+        Model getPlayerModel(void) const;
+        /**
          * @brief Get the Egg object.
          *
          * @param id Id of the egg.
@@ -137,6 +143,9 @@ class Gui::Team {
 
     private:
 
+        std::string                 _name;      // Name of the team.
+        std::vector<Gui::Player>    _players;   // Players of the team.
+        Model                       _playerModel;     // Model player asset of the team.
         std::string _name; // Name of the team.
         std::vector<Gui::Player> _players; // Players of the team.
         std::vector<Gui::Egg> _eggs; // Eggs of the team.

@@ -51,6 +51,7 @@ void Gui::Render::draw()
 
     BeginMode3D(*_camera.getCamera());
     displayMap();
+    displayPlayers();
     displayEggs();
     EndMode3D();
 
@@ -88,6 +89,17 @@ void Gui::Render::displayDebug(void)
             std::to_string(_camera.getCamera()->target.y) + " / " +
             std::to_string(_camera.getCamera()->target.z)
             ).c_str(), 10, 50, 20, LIME);
+    }
+}
+
+void Gui::Render::displayPlayers(void) const
+{
+    for (auto &team : _gameData->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            Vector3 posPlayer = (Vector3){(float)(player.getPosition().first), 0, (float)(player.getPosition().second)};
+            Vector3 posAssetPlayer = POS_PLAYER;
+            DrawModelEx(team.getPlayerModel(), (Vector3){posPlayer.x + posAssetPlayer.x, posPlayer.y + posAssetPlayer.y, posPlayer.z + posAssetPlayer.z}, ROTATION_AXIS_PLAYER, ROTATION_ANGLE_PLAYER, SCALE_PLAYER, WHITE);
+        }
     }
 }
 

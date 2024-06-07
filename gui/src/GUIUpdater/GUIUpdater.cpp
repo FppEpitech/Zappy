@@ -5,9 +5,9 @@
 ** GUIUpdater
 */
 
-#include "GUIUpdater/GUIUpdater.hpp"
-#include "Error/Error.hpp"
 #include "Assets.hpp"
+#include "Error/Error.hpp"
+#include "GUIUpdater/GUIUpdater.hpp"
 
 Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData) : _gameData(gameData) {}
 
@@ -70,6 +70,7 @@ void Gui::GUIUpdater::updateTeamNames(const std::vector<std::string> &data)
 {
     try {
         for (size_t i = 0; i < data.size(); i++)
+            _gameData->addTeam(data[i], MODEL_PLAYER);
             _gameData->addTeam(data[i], MODEL_EGG);
         // TODO: Implement a system that allows to set a different model for each team.
     } catch (const std::exception &error) {
@@ -466,8 +467,7 @@ void Gui::GUIUpdater::updateTimeUnitRequest(const std::vector<std::string> &data
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid time unit request");
     }
-    (void)timeUnit;
-    return; // TODO: Implement the time unit request
+    _gameData->setServerTick(timeUnit);
 }
 
 void Gui::GUIUpdater::updateTimeUnitModification(const std::vector<std::string> &data)

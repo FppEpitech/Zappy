@@ -11,6 +11,8 @@ Gui::GameData::GameData()
 {
     _teams = std::vector<Gui::Team>();
     _map = Map<Gui::Tile>();
+    _serverTick = NO_TICK;
+    _lastTick = clock();
 }
 
 std::vector<Gui::Team> &Gui::GameData::getTeams()
@@ -36,12 +38,14 @@ void Gui::GameData::addTeam(const Gui::Team &team)
     _teams.push_back(team);
 }
 
+void Gui::GameData::addTeam(const std::string &name, const std::string &playerModelPath)
 void Gui::GameData::addTeam(const std::string &name, const std::string &eggModelPath)
 {
     for (auto &team : _teams) {
         if (team.getName() == name)
             throw Gui::Errors::GuiGameDataException("Team already exists");
     }
+    _teams.push_back(Gui::Team(name, playerModelPath));
     _teams.push_back(Gui::Team(name, eggModelPath));
 }
 
@@ -104,4 +108,24 @@ void Gui::GameData::setTile(const Gui::Tile &tile)
     if (tile.getPosition().first >= _map.size() || tile.getPosition().second >= _map[tile.getPosition().first].size())
         throw Gui::Errors::GuiGameDataException("Tile not found");
     _map[tile.getPosition().first][tile.getPosition().second] = tile;
+}
+
+void Gui::GameData::restartLastTick(void)
+{
+    _lastTick = clock();
+}
+
+void Gui::GameData::setServerTick(std::size_t tick)
+{
+    _serverTick = tick;
+}
+
+clock_t Gui::GameData::getLastTick() const
+{
+    return _lastTick;
+}
+
+std::size_t Gui::GameData::getServerTick() const
+{
+    return _serverTick;
 }

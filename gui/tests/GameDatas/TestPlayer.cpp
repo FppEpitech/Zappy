@@ -68,3 +68,13 @@ Test(Player, orientation, .timeout = 5)
     player.setOrientation(3);
     cr_assert_eq(player.getOrientation(), 3);
 }
+
+Test(Player, state, .timeout = 5)
+{
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
+
+    cr_assert_eq(player.getState(), Gui::Player::IDLE);
+
+    player.setState(Gui::Player::EJECT);
+    cr_assert_eq(player.getState(), Gui::Player::EJECT);
+}

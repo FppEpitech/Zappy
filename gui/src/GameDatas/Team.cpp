@@ -7,6 +7,10 @@
 
 #include "GameDatas/Team.hpp"
 
+Gui::Team::Team(const std::string &name, const std::string &playerModelPath) : _name(name)
+{
+    _playerModel = LoadModel(playerModelPath.c_str());
+}
 Gui::Team::Team(const std::string &name, const std::string &eggModelPath)
     : _name{name}
 {
@@ -77,6 +81,11 @@ std::shared_ptr<Gui::Player> Gui::Team::getPlayer(std::size_t id)
         }
     }
     return nullptr;
+}
+
+Model Gui::Team::getPlayerModel(void) const
+{
+    return _playerModel;
 }
 
 std::shared_ptr<Gui::Egg> Gui::Team::getEgg(std::size_t id)

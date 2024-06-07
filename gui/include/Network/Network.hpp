@@ -33,8 +33,8 @@ class Gui::Network {
         /**
          * @brief Construct a new Network object.
          *
-         * @param port of the server
-         * @param hostName of the server
+         * @param port Port of the server.
+         * @param hostName Host of the server.
          */
         Network(int port, const std::string& hostName);
 
@@ -47,28 +47,28 @@ class Gui::Network {
         /**
          * @brief Set the port object.
          *
-         * @param port of the server
+         * @param port Port of the server.
          */
         void setPort(int port);
 
         /**
          * @brief Set the host name object.
          *
-         * @param hostName of the server
+         * @param hostName Host of the server.
          */
         void setHostName(const std::string& hostName);
 
         /**
          * @brief Get the port object.
          *
-         * @return const int - port of the server
+         * @return const int - Port of the server.
          */
         int getPort() const;
 
         /**
          * @brief Get the host name object.
          *
-         * @return const std::string - host name of the server
+         * @return const std::string - Host name of the server.
          */
         std::string getHostName() const;
 
@@ -81,9 +81,16 @@ class Gui::Network {
         /**
          * @brief Listen the server and return it message.
          *
-         * @return std::string - message of the server.
+         * @return std::string - Message of the server.
          */
         const std::string listenServer();
+
+        /**
+         * @brief Send a message to the Server.
+         *
+         * @param message Message to send to the server.
+         */
+        void sendMessageServer(const std::string& message);
 
     private:
 
@@ -96,16 +103,9 @@ class Gui::Network {
         /**
          * @brief Read the server output.
          *
-         * @return const std::string - server message
+         * @return const std::string - Server message.
          */
         const std::string readInfoServer();
-
-        /**
-         * @brief Send a message to the Server.
-         *
-         * @param message to send to the server
-         */
-        void sendMessageServer(const std::string& message);
 
         int             _port;          // server port
         std::string     _hostName;      // server hostname
