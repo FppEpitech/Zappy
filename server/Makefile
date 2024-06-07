@@ -8,9 +8,27 @@
 #Files
 MAIN 		=	src/main.c
 
-SRC			=	src/list/list.c 	\
-				src/list/remove.c 	\
-				src/list/add.c 		\
+SRC			=	src/list/list.c \
+				src/list/remove.c \
+				src/list/add.c \
+				\
+				src/app/app.c \
+				\
+				src/ai/ai.c \
+				\
+				src/gui/gui.c \
+				\
+				src/ai/team.c \
+				\
+				src/server/run.c \
+				src/server/quit.c \
+				src/server/client.c \
+				src/server/server.c \
+				src/server/read/read_data.c \
+				src/server/read/connection.c \
+				src/server/write/write_data.c \
+				\
+				src/game/game.c \
 				\
 				src/parsing/help.c					\
 				src/parsing/parse_positive_int.c	\
@@ -22,7 +40,8 @@ SRC			=	src/list/list.c 	\
 				src/parsing/parse_names.c			\
 				src/parsing/parse_frequency.c		\
 
-TEST_FILES	=	list/list_test.c 					\
+TEST_FILES	=	list/list_test.c \
+				communication/communication_test.c \
 				parsing/help_test.c					\
 				parsing/parse_positive_int_tests.c	\
 				parsing/parse_client_tests.c		\
@@ -41,7 +60,7 @@ NAME		= 	zappy_server
 
 # Flags
 INCLUDE		= -I./include
-CXXFLAGS 	= -Wall -Wextra -Werror -lgcov
+CXXFLAGS 	= -Wall -Wextra -Werror
 
 # Colors
 YELLOW 		= /bin/echo -e "\x1b[33m $1\x1b[0m"
@@ -54,7 +73,7 @@ TEST 		= $(addprefix $(TEST_DIR), $(TEST_FILES))
 TEST_OBJ 	= $(TEST:.c=.o)
 TEST_GCNO 	= $(SRC:.c=.gcno)
 TEST_GCDA 	= $(SRC:.c=.gcda)
-TEST_FLAGS 	= -Wall -Wextra -Werror --coverage -lcriterion -lgcov
+TEST_FLAGS 	= -Wall -Wextra -Werror --coverage -lcriterion
 
 CC = gcc
 
