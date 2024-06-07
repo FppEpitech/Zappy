@@ -20,10 +20,12 @@ Gui::Engine::Engine(Network network) : _network(network), _gameData(std::make_sh
 
 void Gui::Engine::run(void)
 {
-    while (_render->isOpen()) {
+
+    while (_render->isOpen() && !_gameData->getIsEndGame()) {
         listenServer();
         _event.listen();
         _render->draw();
+        sendMessageUpdate();
     }
 }
 
@@ -39,9 +41,25 @@ void Gui::Engine::listenServer(void)
         std::string keyCommand;
 
         stream >> keyCommand;
-        _guiUpdater.update(keyCommand, command);
+        _guiUpdater.update(keyCommand, arguments);
     }
     catch (const std::exception &error) {
         std::cout << error.what() << std::endl;
     }
+}
+
+void Gui::Engine::sendMessageUpdate(void)
+{
+    clock_t currentTick = clock();
+
+    if ((int)(_gameData->getServerTick()) == NO_TICK && (float)(currentTick - _gameData->getLastTick()) / CLOCKS_PER_SEC < (1))
+        return;
+    if ((int)(_gameData->getServerTick()) != NO_TICK && (float)(currentTick - _gameData->getLastTick()) / CLOCKS_PER_SEC < (_gameData->getServerTick()))
+        return;
+    _gameData->restartLastTick();
+
+    _network.sendMessageServer("sgt\n");
+    _network.sendMessageServer("msz\n");
+    _network.sendMessageServer("mct\n");
+    _network.sendMessageServer("tna\n");
 }

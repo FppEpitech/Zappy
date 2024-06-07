@@ -6,6 +6,9 @@ Thank you for contributing to this project! To maintain a high standard of quali
 
 1. [Commit Conventions](#commit-conventions)
 2. [Branch Naming](#branch-naming)
+3. [Naming conventions](#naming-conventions)
+4. [Doxygen](#doxygen)
+5. [Includes](#includes)
 
 ## Commit Conventions
 
@@ -22,3 +25,34 @@ To maintain an organized repository, we have naming conventions for branches. He
 - **documentation** : For adding or updating documentation -> `doc/<short description>`
 
 Please adhere to these conventions to facilitate collaboration and project maintenance. Happy coding!
+
+## Naming conventions
+
+We follow a mix between the [Epitech coding-style](https://github.com/ronanboiteau/NormEZ/blob/master/epitech_coding_styles_pdf/epitech_c_coding_style.pdf) and our in-house coding style.
+
+- In C : snake_case (Epitech)
+- In C++ : 
+    - variables = camelCase
+    - classes = PascalCase
+    - functions = camelCase
+    - constants = ALL_CAPS
+    - macros = ALL_CAPS
+    - namespaces = PascalCase
+    - enums = camelCase
+    - structs = snake_case
+    - files & folders = PascalCase
+    - root folders = snake_case
+- In Python : Same as our C++ conventions
+
+## Doxygen
+We use [doxygen](https://www.doxygen.nl/manual/docblocks.html) to document our code. 
+Some keys:
+- If it is a sentence, always start with an uppercase and end comment with a dot.
+- For classes variables, comment right after //.
+
+## Includes
+- Always include the necessary headers ONLY.
+- Always include the headers in the following order:
+    - Project headers
+    - Standard library headers
+- Include headers from the shortest to the longest.

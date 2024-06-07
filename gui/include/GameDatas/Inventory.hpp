@@ -9,6 +9,8 @@
 
 #include <iostream>
 
+#define RessourcesNumber 6
+
 namespace Gui {
 
     /**
@@ -22,11 +24,26 @@ class Gui::Inventory {
 
     public:
 
+        using Ressources = size_t [RessourcesNumber];
+
         /**
          * @brief Construct a new Inventory object.
          *
          */
         Inventory();
+
+        /**
+         * @brief Construct a new Inventory object.
+         *
+         * @param food Food to set.
+         * @param linemate Linemate to set.
+         * @param deraumere Deraumere to set.
+         * @param sibur Sibur to set.
+         * @param mendiane Mendiane to set.
+         * @param phiras Phiras to set.
+         * @param thystame Thystame to set.
+         */
+        Inventory(std::size_t food, std::size_t linemate, std::size_t deraumere, std::size_t sibur, std::size_t mendiane, std::size_t phiras, std::size_t thystame);
 
         /**
          * @brief Destroy the Inventory object.
@@ -84,6 +101,13 @@ class Gui::Inventory {
         void setThystame(std::size_t thytsame);
 
         /**
+         * @brief Set the Ressources object.
+         *
+         * @param ressources Ressources to set.
+         */
+        void setRessources(Ressources ressources);
+
+        /**
          * @brief Get the Food object.
          *
          * @return std::size_t - food
@@ -132,13 +156,15 @@ class Gui::Inventory {
          */
         std::size_t getThystame(void);
 
+        /**
+         * @brief Get the Ressources object.
+         *
+         * @return Ressources - ressources
+        */
+        Ressources &getRessources(void);
+
     private:
 
-        std::size_t     _food;
-        std::size_t     _linemate;
-        std::size_t     _deraumere;
-        std::size_t     _sibur;
-        std::size_t     _mendiane;
-        std::size_t     _phiras;
-        std::size_t     _thystame;
+        std::size_t     _food;    // Food.
+        Ressources      _ressources;    // Ressources.
 };

@@ -31,6 +31,14 @@ class Gui::Tile {
         Tile(std::pair<std::size_t, std::size_t> position);
 
         /**
+         * @brief Construct a new Tile object.
+         *
+         * @param position Set the position of the tile.
+         * @param inventory Set the inventory of the tile.
+         */
+        Tile(std::pair<std::size_t, std::size_t> position, Inventory inventory);
+
+        /**
          * @brief Destroy the Tile object.
          *
          */
@@ -61,7 +69,7 @@ class Gui::Tile {
          * @brief Inventory of the tile.
          *
          */
-        Inventory       _inventory;
+        Inventory       inventory;
 
     private:
 

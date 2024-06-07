@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "raylib.h"
+#include "GameDatas/Egg.hpp"
 #include "GameDatas/Player.hpp"
 
 #include <vector>
@@ -29,16 +31,16 @@ class Gui::Team {
          * @brief Construct a new Team object.
          *
          * @param name Name of the team.
+         * @param playerModelPath Path to the team model asset for players.
+         * @param eggSkinPath Path to the skin of the team.
          */
-        Team(const std::string &name);
-
-        // TODO: Add the necessity to set a skin for the team.
+        Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath);
 
         /**
          * @brief Destroy the Team object.
          *
          */
-        ~Team() = default;
+        ~Team();
 
         /**
          * @brief Get the Name object.
@@ -55,6 +57,13 @@ class Gui::Team {
         std::vector<Gui::Player> &getPlayers();
 
         /**
+         * @brief Get the Eggs object.
+         *
+         * @return std::vector<Gui::Egg>& Eggs of the team.
+        */
+        std::vector<Gui::Egg> &getEggs();
+
+        /**
          * @brief Set the Name object.
          *
          * @param name Name of the team.
@@ -69,6 +78,13 @@ class Gui::Team {
         void addPlayer(const Gui::Player &player);
 
         /**
+         * @brief Add an egg to the team.
+         *
+         * @param egg Egg to add.
+        */
+        void addEgg(const Gui::Egg &egg);
+
+        /**
          * @brief Remove a player from the team.
          *
          * @param id Id of the player to remove.
@@ -78,6 +94,15 @@ class Gui::Team {
         bool removePlayer(std::size_t id);
 
         /**
+         * @brief Remove an egg from the team.
+         *
+         * @param id Id of the egg to remove.
+         * @return true If the egg has been removed.
+         * @return false If the egg has not been removed.
+        */
+        bool removeEgg(std::size_t id);
+
+        /**
          * @brief Get the Player object.
          *
          * @param id Id of the player.
@@ -85,11 +110,47 @@ class Gui::Team {
         */
         std::shared_ptr<Gui::Player> getPlayer(std::size_t id);
 
-        // TODO: Add a setter and a getter for the skin of the team.
+        /**
+         * @brief Get the Model object.
+         *
+         * @return Model - Model asset of the Team.
+         */
+        Model getPlayerModel() const;
+
+        /**
+         * @brief Set the Model object.
+         *
+         * @param playerModelPath Path to the team model asset for players.
+         */
+        void setPlayerModelPath(const std::string &playerModelPath);
+
+        /**
+         * @brief Get the Egg object.
+         *
+         * @param id Id of the egg.
+         * @return std::shared_ptr<Gui::Egg> Egg.
+        */
+        std::shared_ptr<Gui::Egg> getEgg(std::size_t id);
+
+        /**
+         * @brief Get the Egg Model Path object.
+         *
+         * @return const std::string& Path to the eggs Model of the team.
+         */
+        Model getEggModel() const;
+
+        /**
+         * @brief Set the Egg Model Path object.
+         *
+         * @param eggSkinPath Path to the eggs Model of the team.
+         */
+        void setEggModelPath(const std::string &eggModelPath);
 
     private:
 
-        std::string _name; // Name of the team.
-        std::vector<Gui::Player> _players; // Players of the team.
-        // TODO: Add a skin for the team using raylib.
+        std::string                 _name;      // Name of the team.
+        std::vector<Gui::Player>    _players;   // Players of the team.
+        Model                       _playerModel;     // Model player asset of the team.
+        std::vector<Gui::Egg>       _eggs;      // Eggs of the team.
+        Model                       _eggModel;  // Eggs Model of the team.
 };

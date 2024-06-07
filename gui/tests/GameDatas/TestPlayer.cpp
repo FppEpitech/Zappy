@@ -7,10 +7,11 @@
 
 #include "GameDatas/Player.hpp"
 #include "CriterionHeaders.hpp"
+#include "Error/Error.hpp"
 
 Test(Player, position, .timeout = 5)
 {
-    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2));
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
 
     cr_assert_eq(player.getPosition().first, 1);
     cr_assert_eq(player.getPosition().second, 2);
@@ -22,7 +23,7 @@ Test(Player, position, .timeout = 5)
 
 Test(Player, id, .timeout = 5)
 {
-    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2));
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
 
     cr_assert_eq(player.getId(), 3);
 
@@ -32,7 +33,7 @@ Test(Player, id, .timeout = 5)
 
 Test(Player, level, .timeout = 5)
 {
-    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2));
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
 
     cr_assert_eq(player.getLevel(), 1);
 
@@ -42,7 +43,7 @@ Test(Player, level, .timeout = 5)
 
 Test(Player, team, .timeout = 5)
 {
-    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2));
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
 
     cr_assert_eq(player.getTeam(), "TEAM1");
 
@@ -52,8 +53,28 @@ Test(Player, team, .timeout = 5)
 
 Test(Player, inventory, .timeout = 5)
 {
-    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2));
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
 
-    player._inventory.setFood(34);
-    cr_assert_eq(player._inventory.getFood(), 34);
+    player.inventory.setFood(34);
+    cr_assert_eq(player.inventory.getFood(), 34);
+}
+
+Test(Player, orientation, .timeout = 5)
+{
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
+
+    cr_assert_eq(player.getOrientation(), 1);
+
+    player.setOrientation(3);
+    cr_assert_eq(player.getOrientation(), 3);
+}
+
+Test(Player, state, .timeout = 5)
+{
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
+
+    cr_assert_eq(player.getState(), Gui::Player::IDLE);
+
+    player.setState(Gui::Player::EJECT);
+    cr_assert_eq(player.getState(), Gui::Player::EJECT);
 }

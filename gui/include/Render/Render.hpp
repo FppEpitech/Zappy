@@ -107,10 +107,23 @@ class Gui::Render {
         void displayDebug(void);
 
         /**
+         * @brief Display players.
+         *
+         */
+        void displayPlayers(void) const;
+
+        /**
          * @brief Display the map.
          *
          */
         void displayMap(void) const;
+
+        /**
+         * @brief Display the eggs.
+         *
+         * @param tile Tile with eggs.
+        */
+        void displayEggs(Tile tile) const;
 
         /**
          * @brief Display the food.
