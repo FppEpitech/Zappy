@@ -23,6 +23,7 @@ int main(int ac, char **av)
     for (int i = 0; parsing->names[i]; i++)
         printf("Name %d: %s\n", i, parsing->names[i]);
     app = create_app(parsing);
+    display_map(app->game->map, app->game->height, app->game->width);
     if (app == NULL)
         return 84;
     server_run(app);
