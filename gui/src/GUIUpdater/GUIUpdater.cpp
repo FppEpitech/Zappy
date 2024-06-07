@@ -443,7 +443,7 @@ void Gui::GUIUpdater::updateEndOfGame(const std::vector<std::string> &data)
 {
     (void)data;
     _gameData->setIsEndGame(true);
-    std::cout << "The game end" << std::endl;
+    std::cout << "Team \"" + data[0] + "\" win this game !" << std::endl;
 }
 
 void Gui::GUIUpdater::updateMessageFromServer(const std::vector<std::string> &data)

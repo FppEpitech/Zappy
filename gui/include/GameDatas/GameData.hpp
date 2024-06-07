@@ -160,7 +160,7 @@ class Gui::GameData {
         std::size_t getServerTick() const;
 
         /**
-         * @brief Set the IsEnd Game object
+         * @brief Set the IsEnd Game object.
          *
          * @param isEndGame EndGame state.
          */
