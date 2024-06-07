@@ -7,6 +7,7 @@
 
 #include "GUIUpdater/GUIUpdater.hpp"
 #include "Error/Error.hpp"
+#include "Assets.hpp"
 
 Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData) : _gameData(gameData) {}
 
@@ -69,7 +70,8 @@ void Gui::GUIUpdater::updateTeamNames(const std::vector<std::string> &data)
 {
     try {
         for (size_t i = 0; i < data.size(); i++)
-            _gameData->addTeam(data[i]);
+            _gameData->addTeam(data[i], MODEL_EGG);
+        // TODO: Implement a system that allows to set a different model for each team.
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid team names");
     }
@@ -98,9 +100,11 @@ void Gui::GUIUpdater::updateTeamMember(const std::vector<std::string> &data)
         throw Gui::Errors::GuiUpdaterException("Invalid player orientation");
     if (args[3] < 1 || args[3] > 8)
         throw Gui::Errors::GuiUpdaterException("Invalid player level");
-    for (auto &team : _gameData->getTeams())
-        if (team.getName() == data[0])
+    for (auto &team : _gameData->getTeams()) {
+        if (team.getName() == data[0]) {
             team.addPlayer(Gui::Player(args[0], data[0], std::make_pair(args[1], args[2]), args[3], args[4]));
+        }
+    }
 }
 
 void Gui::GUIUpdater::updatePlayerPosition(const std::vector<std::string> &data)
@@ -122,10 +126,14 @@ void Gui::GUIUpdater::updatePlayerPosition(const std::vector<std::string> &data)
         throw Gui::Errors::GuiUpdaterException("Invalid player position");
     if (args[3] < 1 || args[3] > 4)
         throw Gui::Errors::GuiUpdaterException("Invalid player orientation");
-    for (auto &team : _gameData.get()->getTeams())
-        for (auto &player : team.getPlayers())
-            if (player.getId() == args[0])
+    for (auto &team : _gameData.get()->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == args[0]) {
                 player.setPosition(std::make_pair(args[1], args[2]));
+                player.setOrientation(args[3]);
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updatePlayerLevel(const std::vector<std::string> &data)
@@ -147,10 +155,13 @@ void Gui::GUIUpdater::updatePlayerLevel(const std::vector<std::string> &data)
         throw Gui::Errors::GuiUpdaterException("Invalid player level");
     if (args[1] < 1 || args[1] > 8)
         throw Gui::Errors::GuiUpdaterException("Invalid player level");
-    for (auto &team : _gameData->getTeams())
-        for (auto &player : team.getPlayers())
-            if (player.getId() == args[0])
+    for (auto &team : _gameData->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == args[0]) {
                 player.setLevel(args[1]);
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updatePlayerInventory(const std::vector<std::string> &data)
@@ -170,10 +181,14 @@ void Gui::GUIUpdater::updatePlayerInventory(const std::vector<std::string> &data
     }
     if (args.size() != 10)
         throw Gui::Errors::GuiUpdaterException("Invalid player inventory");
-    for (auto &team : _gameData->getTeams())
-        for (auto &player : team.getPlayers())
-            if (player.getId() == args[0])
+    for (auto &team : _gameData->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == args[0]) {
                 player.inventory = Gui::Inventory(args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
+                player.setPosition(std::make_pair(args[1], args[2]));
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updatePlayerExpulsion(const std::vector<std::string> &data)
@@ -189,10 +204,13 @@ void Gui::GUIUpdater::updatePlayerExpulsion(const std::vector<std::string> &data
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid player expulsion");
     }
-    for (auto &team : _gameData->getTeams())
-        for (size_t i = 0; i < team.getPlayers().size(); i++)
-            if (team.getPlayers()[i].getId() == id)
+    for (auto &team : _gameData->getTeams()) {
+        for (size_t i = 0; i < team.getPlayers().size(); i++) {
+            if (team.getPlayers()[i].getId() == id) {
                 return; // TODO: Implement the player state
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updatePlayerBroadcast(const std::vector<std::string> &data)
@@ -208,10 +226,13 @@ void Gui::GUIUpdater::updatePlayerBroadcast(const std::vector<std::string> &data
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid player broadcast");
     }
-    for (auto &team : _gameData->getTeams())
-        for (size_t i = 0; i < team.getPlayers().size(); i++)
-            if (team.getPlayers()[i].getId() == id)
+    for (auto &team : _gameData->getTeams()) {
+        for (size_t i = 0; i < team.getPlayers().size(); i++) {
+            if (team.getPlayers()[i].getId() == id) {
                 return; // TODO: Implement the player state
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updatePlayerStartIncantation(const std::vector<std::string> &data)
@@ -231,10 +252,13 @@ void Gui::GUIUpdater::updatePlayerStartIncantation(const std::vector<std::string
     }
     if (args.size() < 4)
         throw Gui::Errors::GuiUpdaterException("Invalid player start incantation");
-    for (auto &team : _gameData->getTeams())
-        for (auto &player : team.getPlayers())
-            if (player.getId() == args[0])
+    for (auto &team : _gameData->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == args[0]) {
                 return; // TODO: Implement the player state
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updatePlayerEndIncantation(const std::vector<std::string> &data)
@@ -254,10 +278,13 @@ void Gui::GUIUpdater::updatePlayerEndIncantation(const std::vector<std::string> 
     }
     if (args.size() != 3)
         throw Gui::Errors::GuiUpdaterException("Invalid player end incantation");
-    for (auto &team : _gameData->getTeams())
-        for (auto &player : team.getPlayers())
-            if (player.getId() == args[0])
+    for (auto &team : _gameData->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == args[0]) {
                 return; // TODO: Implement the player state
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updatePlayerEggLaying(const std::vector<std::string> &data)
@@ -273,10 +300,13 @@ void Gui::GUIUpdater::updatePlayerEggLaying(const std::vector<std::string> &data
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid egg laying");
     }
-    for (auto &team : _gameData->getTeams())
-        for (size_t i = 0; i < team.getPlayers().size(); i++)
-            if (team.getPlayers()[i].getId() == id)
+    for (auto &team : _gameData->getTeams()) {
+        for (size_t i = 0; i < team.getPlayers().size(); i++) {
+            if (team.getPlayers()[i].getId() == id) {
                 return; // TODO: Implement the player state and egg class
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updatePlayerRessourceDropping(const std::vector<std::string> &data)
@@ -296,10 +326,13 @@ void Gui::GUIUpdater::updatePlayerRessourceDropping(const std::vector<std::strin
     }
     if (args.size() != 2)
         throw Gui::Errors::GuiUpdaterException("Invalid ressource dropping");
-    for (auto &team : _gameData->getTeams())
-        for (auto &player : team.getPlayers())
-            if (player.getId() == args[0])
+    for (auto &team : _gameData->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == args[0]) {
                 return; // TODO: Implement the player state
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updatePlayerRessourceCollecting(const std::vector<std::string> &data)
@@ -319,10 +352,13 @@ void Gui::GUIUpdater::updatePlayerRessourceCollecting(const std::vector<std::str
     }
     if (args.size() != 2)
         throw Gui::Errors::GuiUpdaterException("Invalid ressource collecting");
-    for (auto &team : _gameData->getTeams())
-        for (auto &player : team.getPlayers())
-            if (player.getId() == args[0])
+    for (auto &team : _gameData->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == args[0]) {
                 return; // TODO: Implement the player state
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updatePlayerDeath(const std::vector<std::string> &data)
@@ -338,10 +374,13 @@ void Gui::GUIUpdater::updatePlayerDeath(const std::vector<std::string> &data)
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid player death");
     }
-    for (auto &team : _gameData->getTeams())
-        for (size_t i = 0; i < team.getPlayers().size(); i++)
-            if (team.getPlayers()[i].getId() == id)
+    for (auto &team : _gameData->getTeams()) {
+        for (size_t i = 0; i < team.getPlayers().size(); i++) {
+            if (team.getPlayers()[i].getId() == id) {
                 return; // TODO: Implement the player state
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updateEggLaidByPlayer(const std::vector<std::string> &data)
@@ -361,10 +400,13 @@ void Gui::GUIUpdater::updateEggLaidByPlayer(const std::vector<std::string> &data
     }
     if (args.size() != 4)
         throw Gui::Errors::GuiUpdaterException("Invalid egg laid by player");
-    for (auto &team : _gameData->getTeams())
-        for (auto &player : team.getPlayers())
-            if (player.getId() == args[0])
+    for (auto &team : _gameData->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == args[0]) {
                 return; // TODO: Implement the egg class
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updatePlayerBorn(const std::vector<std::string> &data)
@@ -380,10 +422,13 @@ void Gui::GUIUpdater::updatePlayerBorn(const std::vector<std::string> &data)
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid player born");
     }
-    for (auto &team : _gameData->getTeams())
-        for (size_t i = 0; i < team.getPlayers().size(); i++)
-            if (team.getPlayers()[i].getId() == id)
+    for (auto &team : _gameData->getTeams()) {
+        for (size_t i = 0; i < team.getPlayers().size(); i++) {
+            if (team.getPlayers()[i].getId() == id) {
                 return; // TODO: Implement the player state and egg class
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updateEggDeath(const std::vector<std::string> &data)
@@ -399,10 +444,13 @@ void Gui::GUIUpdater::updateEggDeath(const std::vector<std::string> &data)
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid egg death");
     }
-    for (auto &team : _gameData->getTeams())
-        for (size_t i = 0; i < team.getPlayers().size(); i++)
-            if (team.getPlayers()[i].getId() == id)
+    for (auto &team : _gameData->getTeams()) {
+        for (size_t i = 0; i < team.getPlayers().size(); i++) {
+            if (team.getPlayers()[i].getId() == id) {
                 return; // TODO: Implement the egg class
+            }
+        }
+    }
 }
 
 void Gui::GUIUpdater::updateTimeUnitRequest(const std::vector<std::string> &data)
