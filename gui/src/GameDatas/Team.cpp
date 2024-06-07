@@ -7,9 +7,9 @@
 
 #include "GameDatas/Team.hpp"
 
-Gui::Team::Team(const std::string &name, const std::string &modelPath) : _name(name)
+Gui::Team::Team(const std::string &name, const std::string &playerModelPath) : _name(name)
 {
-    _model = LoadModel(modelPath.c_str());
+    _model = LoadModel(playerModelPath.c_str());
 }
 
 const std::string &Gui::Team::getName() const
@@ -53,7 +53,7 @@ std::shared_ptr<Gui::Player> Gui::Team::getPlayer(std::size_t id)
     return nullptr;
 }
 
-Model Gui::Team::getModel(void)
+Model Gui::Team::getModel(void) const
 {
     return _model;
 }

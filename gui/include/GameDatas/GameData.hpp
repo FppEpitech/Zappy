@@ -70,9 +70,9 @@ class Gui::GameData {
          * @brief Add a team to the game.
          *
          * @param name Name of the team.
-         * @param modelPath Path to the asset of the team.
+         * @param playerModelPath Path to the asset of the team for players.
          */
-        void addTeam(const std::string &name, const std::string &modelPath);
+        void addTeam(const std::string &name, const std::string &playerModelPath);
 
         /**
          * @brief Add a player to a team.

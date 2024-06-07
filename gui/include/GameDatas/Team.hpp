@@ -30,8 +30,9 @@ class Gui::Team {
          * @brief Construct a new Team object.
          *
          * @param name Name of the team.
+         * @param playerModelPath Path to the team model asset for players.
          */
-        Team(const std::string &name, const std::string &modelPath);
+        Team(const std::string &name, const std::string &playerModelPath);
 
         /**
          * @brief Destroy the Team object.
@@ -89,7 +90,7 @@ class Gui::Team {
          *
          * @return Model - Model asset of the Team.
          */
-        Model getModel(void);
+        Model getModel(void) const;
 
     private:
 

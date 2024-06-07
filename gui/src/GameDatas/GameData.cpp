@@ -36,13 +36,13 @@ void Gui::GameData::addTeam(const Gui::Team &team)
     _teams.push_back(team);
 }
 
-void Gui::GameData::addTeam(const std::string &name, const std::string &modelPath)
+void Gui::GameData::addTeam(const std::string &name, const std::string &playerModelPath)
 {
     for (auto &team : _teams) {
         if (team.getName() == name)
             throw Gui::Errors::GuiGameDataException("Team already exists");
     }
-    _teams.push_back(Gui::Team(name, modelPath));
+    _teams.push_back(Gui::Team(name, playerModelPath));
 }
 
 void Gui::GameData::addPlayerToTeam(const std::string &teamName, const Gui::Player &player)
