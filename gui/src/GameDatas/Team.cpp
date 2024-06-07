@@ -20,8 +20,6 @@ const std::string &Gui::Team::getName() const
 
 Gui::Team::~Team()
 {
-    UnloadModel(_playerModel);
-    UnloadModel(_eggModel);
 }
 
 void Gui::Team::setName(const std::string &name)
