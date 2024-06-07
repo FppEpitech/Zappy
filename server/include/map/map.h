@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <stddef.h>
 #include <stdbool.h>
 
 /**
@@ -28,38 +29,37 @@ enum entity_type_e {
 * @brief Struct for a map's tile.
 */
 typedef struct tile_s {
-    int food;
-    int linemate;
-    int deraumere;
-    int sibur;
-    int mendiane;
-    int phiras;
-    int thystame;
+    size_t food;
+    size_t linemate;
+    size_t deraumere;
+    size_t sibur;
+    size_t mendiane;
+    size_t phiras;
+    size_t thystame;
 } tile_t;
 
 /**
-* @brief Get the map object.
-*
-* @param width
-* @param height
-* @return tile_t***
-*/
-tile_t ***get_map(int width, int height);
+ * @brief Get the map objec.
+ *
+ * @param width Width of the map.
+ * @param height Height of the map.
+ * @return tile_t** Map of tile.
+ */
+tile_t **get_map(int width, int height);
 
 /**
-* @brief Get the tile object.
-*
-* @param map
-* @param height
-* @param width
-*/
-void free_map(tile_t ***map, int height, int width);
+ * @brief Free the map of tiles.
+ *
+ * @param map Map to free.
+ * @param height Number of tab to free.
+ */
+void free_map(tile_t **map, int height);
 
 /**
-* @brief Display the map object.
-*
-* @param map
-* @param height
-* @param width
-*/
-void display_map(tile_t ***map, int height, int width);
+ * @brief Display the maps of tile with the content.
+ *
+ * @param map Map to display.
+ * @param height Height of the map.
+ * @param width Width of the map.
+ */
+void display_map(tile_t **map, int height, int width);
