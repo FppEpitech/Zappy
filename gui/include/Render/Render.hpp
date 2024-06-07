@@ -119,6 +119,13 @@ class Gui::Render {
         void displayMap(void) const;
 
         /**
+         * @brief Display the eggs.
+         *
+         * @param tile Tile with eggs.
+        */
+        void displayEggs(Tile tile) const;
+
+        /**
          * @brief Display the food.
          *
          * @param tile Tile with food.

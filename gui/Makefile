@@ -22,6 +22,7 @@ SRC			=	src/Error/Error.cpp \
 				src/GameDatas/Tile.cpp \
 				src/GameDatas/Team.cpp \
 				src/GameDatas/GameData.cpp \
+				src/GameDatas/Egg.cpp \
 				\
 				src/Render/Render.cpp \
 				src/Render/UserCamera.cpp \
@@ -37,6 +38,7 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				GameDatas/TestPlayer.cpp \
 				GameDatas/TestTile.cpp \
 				GameDatas/TestGameData.cpp \
+				GameDatas/TestEgg.cpp \
 				Render/TestCamera.cpp \
 				GUIUpdater/TestGUIUpdater.cpp \
 				Event/TestEvent.cpp \

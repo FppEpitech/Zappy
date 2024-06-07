@@ -109,6 +109,20 @@ void Gui::Render::displayMap(void) const
             DrawModel(_tileModel, tile.getPositionIn3DSpace(), 0.001f, WHITE);
             displayFood(tile);
             displayResources(tile);
+            displayEggs(tile);
+        }
+    }
+}
+
+void Gui::Render::displayEggs(Tile tile) const
+{
+    for (auto &team : _gameData->getTeams()) {
+        for (auto &egg: team.getEggs()) {
+            if (egg.getPosition().first != tile.getPosition().first || egg.getPosition().second != tile.getPosition().second)
+                continue;
+            Vector3 posEggModel = POS_EGG;
+            Vector3 posTile = tile.getPositionIn3DSpace();
+            DrawModelEx(team.getEggModel(), (Vector3){posTile.x + posEggModel.x, posTile.y + posEggModel.y, posTile.z + posEggModel.z}, ROTATION_AXIS_EGG, ROTATION_ANGLE_EGG, SCALE_EGG, WHITE);
         }
     }
 }
