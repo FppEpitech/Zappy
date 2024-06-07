@@ -12,7 +12,6 @@ static orientation_t choose_direction(void)
 {
     int random = 0;
 
-    srand(time(NULL));
     random = rand() % 4;
     if (random == 0)
         return NORTH;

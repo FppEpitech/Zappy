@@ -5,8 +5,6 @@
 ** map
 */
 
-#include <time.h>
-
 #include "stdio.h"
 #include "stdlib.h"
 #include "map/map.h"
@@ -43,7 +41,6 @@ void distribute_resources(tile_t **map, int width, int height)
     size_t resources[] = {total_food, total_linemate, total_deraumere,
     total_sibur, total_mendiane, total_phiras, total_thystame};
 
-    srand(time(NULL));
     for (size_t index_entity = 0; index_entity < 7; index_entity++) {
         for (size_t nb = 0; nb < resources[index_entity]; nb++) {
             incremente_ressources(index_entity, map, rand() % height,

@@ -10,7 +10,7 @@
 static void create_teams(parsing_t *parsing, app_t *app)
 {
     for (size_t index = 0; parsing->names[index]; index++)
-        add_team(app->teams_list, parsing->names[index], parsing->clientsNb);
+        add_team(app, parsing->names[index], parsing->clientsNb);
 }
 
 app_t *create_app(parsing_t *parsing)

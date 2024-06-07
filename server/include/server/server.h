@@ -163,4 +163,4 @@ void handle_client_write(app_t *app, int fd);
  * @param y Coord y of new vector.
  * @return vector2i_t* New vector.
  */
-vector2i_t *vector2i_new(int x, int y);
+vector2i_t *create_vector2i(int x, int y);

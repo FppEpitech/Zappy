@@ -13,6 +13,8 @@
 
 #include "list/list.h"
 
+typedef struct s_app app_t;
+
 typedef struct s_team {
     list_t *list_ai;
     list_t *egg_position;
@@ -25,15 +27,23 @@ typedef struct s_team {
  *
  * @param name Name of the team.
  * @param max_place Max place in a team.
+ * @param app Application with list of team.
  * @return team_t* Team created.
  */
-team_t *create_team(char *name, size_t max_place);
+team_t *create_team(app_t *app, char *name, size_t max_place);
 
 /**
  * @brief Add a team in the list.
  *
- * @param teams List of teams.
+ * @param app Application with list of teams.
  * @param team_name Name of the team to add.
  * @param max_place Maximum places in a team.
  */
-void add_team(list_t *teams, char *team_name, size_t max_place);
+void add_team(app_t *app, char *team_name, size_t max_place);
+
+/**
+ * @brief Display all egg position of all team.
+ *
+ * @param app Application with list of team.
+ */
+void display_egg_position(app_t *app);

@@ -14,7 +14,7 @@ typedef struct s_gui gui_t;
 typedef struct s_team team_t;
 typedef struct s_client client_t;
 
-typedef union s_vector2i {
+typedef struct s_vector2i {
     int x;
     int y;
 } vector2i_t;

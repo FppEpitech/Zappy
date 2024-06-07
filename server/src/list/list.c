@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "list/type.h"
 
-vector2i_t *vector2i_new(int x, int y)
+vector2i_t *create_vector2i(int x, int y)
 {
     vector2i_t *new_coord = malloc(sizeof(vector2i_t));
 
