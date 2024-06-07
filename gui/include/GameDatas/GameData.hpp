@@ -71,7 +71,7 @@ class Gui::GameData {
          *
          * @param name Name of the team.
          */
-        void addTeam(const std::string &name);
+        void addTeam(const std::string &name, const std::string &eggModelPath);
 
         /**
          * @brief Add a player to a team.
