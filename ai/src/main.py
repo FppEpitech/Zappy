@@ -8,7 +8,7 @@
 
 import sys
 
-from ai.src.network.API import API
+from ai.src.Network.API import API
 
 # Port min
 PORT_MIN = 0
