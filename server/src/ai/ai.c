@@ -29,14 +29,16 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     ia_t *new_ia = malloc(sizeof(ia_t));
     char *nb_place = NULL;
     char *map_size = NULL;
+    int x = team->egg_position->first->data.coord->x;
+    int y = team->egg_position->first->data.coord->y;
 
     if (new_ia == NULL)
         return NULL;
     new_ia->fd = fd;
     new_ia->level = 1;
     new_ia->direction = choose_direction();
-    new_ia->x = 0;
-    new_ia->y = 0;
+    list_remove_front(team->egg_position);
+    new_ia->position = create_vector2i(x, y);
     new_ia->list_messages = list_new();
     nb_place = format_string("%ld\n", team->max_place -
     (team->list_ai->len + 1));

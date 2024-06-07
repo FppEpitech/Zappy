@@ -47,3 +47,12 @@ void add_team(app_t *app, char *team_name, size_t max_place);
  * @param app Application with list of team.
  */
 void display_egg_position(app_t *app);
+
+/**
+ * @brief Add egg in the list.
+ *
+ * @param eggs List of egg.
+ * @param random_x Position x of egg.
+ * @param random_y Position y of egg.
+ */
+void add_egg(list_t *eggs, int random_x, int random_y);

@@ -7,7 +7,7 @@
 
 #include "app/app.h"
 
-static void add_egg(list_t *eggs, int random_x, int random_y)
+void add_egg(list_t *eggs, int random_x, int random_y)
 {
     node_data_t data;
 

@@ -11,19 +11,23 @@
 static void forward_cmd(app_t *app, ia_t *ai)
 {
     if (ai->direction == NORTH) {
-        ai->y = (ai->y == 0) ? (app->game->height - 1) : (ai->y - 1);
+        ai->position->y = (ai->position->y == 0) ?
+        (int)(app->game->height - 1) : (int)(ai->position->y - 1);
         return;
     }
     if (ai->direction == EAST) {
-        ai->x = (ai->x == app->game->width - 1) ? (0) : (ai->x + 1);
+        ai->position->x = (ai->position->x == (int) app->game->width - 1) ?
+        (0) : (ai->position->x + 1);
         return;
     }
     if (ai->direction == SOUTH) {
-        ai->y = (ai->y == app->game->height - 1) ? (0) : (ai->y + 1);
+        ai->position->y = (ai->position->y == (int) app->game->height - 1) ?
+        (0) : (ai->position->y + 1);
         return;
     }
     if (ai->direction == WEST) {
-        ai->x = (ai->x == 0) ? (app->game->width - 1) : (ai->x - 1);
+        ai->position->x = (ai->position->x == 0) ?
+        (int)(app->game->width - 1) : (int)(ai->position->x - 1);
         return;
     }
 }
