@@ -9,6 +9,7 @@
 import sys
 
 from ai.src.Network.API import API
+from ai.src.Errors.ArgsException import ArgsException
 
 # Port min
 PORT_MIN = 0
@@ -48,16 +49,17 @@ def getArgs(av=sys.argv):
             elif av[i] == "-h":
                 host = av[i + 1]
         if port < PORT_MIN or port > PORT_MAX or name == "":
-            raise Exception("Error: invalid arguments")
+            raise ArgsException("Error: invalid arguments")
     except Exception as e:
-        print("Error: invalid arguments")
+        print("Error: invalid arguments", file=sys.stderr, flush=True)
         writeHelp(84)
     return host, port, name
 
 def main():
         host, port, teamName = getArgs()
         api = API(host, port)
-        api.connect(teamName)
+        api.connect()
+        api.initConnection(teamName)
         while True:
             api.receiveData()
 
@@ -66,5 +68,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print(e)
+        print(e, file=sys.stderr)
         sys.exit(84)
