@@ -5,9 +5,9 @@
 ** map
 */
 
-#include "map/map.h"
-#include "stdlib.h"
 #include "stdio.h"
+#include "stdlib.h"
+#include "map/map.h"
 
 tile_t **get_map(int width, int height)
 {
