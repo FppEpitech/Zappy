@@ -17,7 +17,7 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     if (new_ia == NULL)
         return NULL;
     new_ia->fd = fd;
-    new_ia->level = 0;
+    new_ia->level = 1;
     new_ia->list_messages = list_new();
     nb_place = format_string("%ld\n", team->max_place -
     (team->list_ai->len + 1));
