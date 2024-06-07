@@ -16,8 +16,6 @@
 
 #include <time.h>
 
-#define NO_TICK int(-1)
-
 namespace Gui {
 
     /**
@@ -58,8 +56,6 @@ class Gui::Engine {
         Event                       _event;         // Event class to listen the user's inputs.
         std::shared_ptr<GameData>   _gameData;      // GameData class to store the game's data.
         GUIUpdater                  _guiUpdater;    // GUIUpdater class to update the GUI.
-        std::size_t                 _tick;          // Tick value of the server.
-        clock_t                     _lastTick;      // Last tick of the Engine (based on the server tick).
 
         /**
          * @brief Listen the server and update Engine with its commands.

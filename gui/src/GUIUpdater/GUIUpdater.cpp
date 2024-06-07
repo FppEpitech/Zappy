@@ -418,8 +418,7 @@ void Gui::GUIUpdater::updateTimeUnitRequest(const std::vector<std::string> &data
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid time unit request");
     }
-    (void)timeUnit;
-    return; // TODO: Implement the time unit request
+    _gameData->setServerTick(timeUnit);
 }
 
 void Gui::GUIUpdater::updateTimeUnitModification(const std::vector<std::string> &data)
