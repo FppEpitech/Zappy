@@ -8,6 +8,23 @@
 #include "app/app.h"
 #include "server/client.h"
 
+static orientation_t choose_direction(void)
+{
+    int random = 0;
+
+    srand(time(NULL));
+    random = rand() % 4;
+    if (random == 0)
+        return NORTH;
+    if (random == 1)
+        return SOUTH;
+    if (random == 2)
+        return EAST;
+    if (random == 3)
+        return WEST;
+    return NORTH;
+}
+
 ia_t *create_ia(app_t *app, int fd, team_t *team)
 {
     ia_t *new_ia = malloc(sizeof(ia_t));
@@ -18,7 +35,7 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
         return NULL;
     new_ia->fd = fd;
     new_ia->level = 1;
-    new_ia->direction = NORTH;
+    new_ia->direction = choose_direction();
     new_ia->x = 0;
     new_ia->y = 0;
     new_ia->list_messages = list_new();
