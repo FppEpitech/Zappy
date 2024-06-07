@@ -5,7 +5,9 @@
 ## AI Makefile
 ##
 
-NAME	=	zappy_ai
+NAME		=	zappy_ai
+
+TEST_NAME 	= 	zappy_ai_tests
 
 all: $(NAME)
 
@@ -20,8 +22,12 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	rm -f ../$(NAME)
+	rm -f $(TEST_NAME)
 
 re: fclean all
 
 tests_run:
+	cp tests/MainTest.py $(TEST_NAME)
+	chmod 775 $(TEST_NAME)
+	cp $(TEST_NAME) ../
 # TODO #11 (https://github.com/FppEpitech/Zappy/issues/11)
