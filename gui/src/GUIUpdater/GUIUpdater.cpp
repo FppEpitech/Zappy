@@ -387,10 +387,16 @@ void Gui::GUIUpdater::updateEggLaidByPlayer(const std::vector<std::string> &data
 {
     std::vector<size_t> args;
     size_t tmp = 0;
+    int serverId = 0;
 
     try {
         for (size_t i = 0; i < data.size(); i++) {
             int temp = std::stoi(data[i], &tmp);
+            if (i == 1 && temp == -1) {
+                serverId = temp;
+                args.push_back(0);
+                continue;
+            }
             args.push_back(temp);
             if (temp < 0 || tmp != data[i].size())
                 throw Gui::Errors::GuiUpdaterException("Invalid egg laid by player");
@@ -401,9 +407,13 @@ void Gui::GUIUpdater::updateEggLaidByPlayer(const std::vector<std::string> &data
     if (args.size() != 4)
         throw Gui::Errors::GuiUpdaterException("Invalid egg laid by player");
     for (auto &team : _gameData->getTeams()) {
+        if (serverId != 0) {
+            team.addEgg(Gui::Egg(args[0], team.getName(), std::make_pair(args[2], args[3])));
+            std::cout << "Egg laid by player" << std::endl;
+        }
         for (auto &player : team.getPlayers()) {
-            if (player.getId() == args[0]) {
-                return; // TODO: Implement the egg class
+            if (player.getId() == args[1]) {
+                team.addEgg(Gui::Egg(args[0], team.getName(), std::make_pair(args[2], args[3])));
             }
         }
     }
