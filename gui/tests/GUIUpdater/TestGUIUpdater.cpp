@@ -327,3 +327,15 @@ Test(GUIUpdater, updateCommandParameter, .timeout = 5)
     guiUpdater.update("sbp", {"test"});
     cr_assert_not_null(&guiUpdater);
 }
+
+Test(GUIUpdater, updateEndOfGame, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    cr_assert(!gameData->getIsEndGame());
+
+    guiUpdater.update("seg", {});
+
+    cr_assert(gameData->getIsEndGame());
+}

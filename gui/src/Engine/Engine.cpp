@@ -20,7 +20,8 @@ Gui::Engine::Engine(Network network) : _network(network), _gameData(std::make_sh
 
 void Gui::Engine::run(void)
 {
-    while (_render->isOpen()) {
+
+    while (_render->isOpen() && !_gameData->getIsEndGame()) {
         listenServer();
         _event.listen();
         _render->draw();
