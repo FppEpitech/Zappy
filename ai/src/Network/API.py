@@ -9,7 +9,8 @@ import sys
 import socket
 import select
 
-from ai.src.utils.utils import stringifyData
+from ai.src.Utils.Utils import stringifyData
+from ai.src.Network.APIException import APIException
 
 class API:
     """
@@ -61,7 +62,17 @@ class API:
         self.inputs : list = []
         self.outputs : list = []
         self.sock : socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.connect((self.host, self.port))
+
+
+    def connect(self):
+        """
+        Connect to the server
+        Add the socket to the inputs and outputs lists
+        """
+        try:
+            self.sock.connect((self.host, self.port))
+        except Exception as e:
+            raise APIException("connection to the server failed")
         self.inputs.append(self.sock)
         self.outputs.append(self.sock)
 
@@ -73,8 +84,7 @@ class API:
         Parameters :
             data : str
                 the data to send
-            timeout : intprint("Error: invalid map size")
-            sys.exit(84)
+            timeout : int
                 the timeout to wait for the server to be ready to receive data
                 (default is None which means no timeout)
         """
@@ -108,9 +118,9 @@ class API:
         return None
 
 
-    def connect(self, teamName : str):
+    def initConnection(self, teamName : str):
         """
-        Connect to the server
+        Function to do the first exchange with the server
 
         Send the team name to the server
         Receive the client number and the map size from the server
@@ -130,20 +140,20 @@ class API:
         """
         welcome = self.receiveData()
         if welcome != "WELCOME\n":
-            raise Exception("Error: invalid welcome message")
+            raise APIException("invalid welcome message")
 
         self.sendData(f"{teamName}\n")
         clientNum, data = self.receiveData().split('\n', 1)
         data = data.split(' ')
 
         if len(data) != 2:
-            raise Exception("Error: invalid map size")
+            raise APIException("invalid map size")
         try:
             clientNum = int(clientNum)
             x = int(data[0])
             y = int(data[1])
         except Exception as e:
-            raise Exception("Error: invalid map size")
+            raise APIException("invalid map size")
 
         print("Connected to server")
         print(f"Client number: {clientNum}")
