@@ -24,5 +24,18 @@ void command_ai_handler(app_t *app, ia_t *ai, char *line);
  * @param app Application with necessary information.
  * @param ai AI who have done a command.
  * @param line The command of AI.
+ * @return true If command was find.
+ * @return false If command wasn't find.
  */
 bool move_command(app_t *app, ia_t *ai, char *line);
+
+/**
+ * @brief Handler of command who send object info(Look, Inventory)
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ * @param line The command of AI.
+ * @return true If command was find.
+ * @return false If command wasn't find.
+ */
+bool object_info_command(app_t *app, ia_t *ai, char *line);

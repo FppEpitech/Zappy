@@ -18,6 +18,7 @@ SRC			=	src/list/list.c \
 				src/ai/team.c \
 				src/ai/cmd/handler.c \
 				src/ai/cmd/move.c \
+				src/ai/cmd/object_info.c \
 				\
 				src/gui/gui.c \
 				\
