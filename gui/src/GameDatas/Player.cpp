@@ -7,7 +7,7 @@
 
 #include "GameDatas/Player.hpp"
 
-Gui::Player::Player(std::size_t id, const std::string &team, std::pair<std::size_t, std::size_t> position, std::size_t orientation, std::size_t level) : _id(id), _team(team), _position(position), _orientation(orientation), _level(level)
+Gui::Player::Player(std::size_t id, const std::string &team, std::pair<std::size_t, std::size_t> position, std::size_t orientation, std::size_t level) : _id(id), _team(team), _position(position), _orientation(orientation), _level(level), _state(Gui::Player::IDLE)
 {
 }
 
@@ -36,6 +36,11 @@ void Gui::Player::setTeam(const std::string &team)
     _team = team;
 }
 
+void Gui::Player::setState(PlayerState state)
+{
+    _state = state;
+}
+
 std::pair<std::size_t, std::size_t> Gui::Player::getPosition(void) const
 {
     return _position;
@@ -59,4 +64,9 @@ std::size_t Gui::Player::getOrientation(void) const
 std::string Gui::Player::getTeam(void) const
 {
     return _team;
+}
+
+Gui::Player::PlayerState Gui::Player::getState(void) const
+{
+    return _state;
 }
