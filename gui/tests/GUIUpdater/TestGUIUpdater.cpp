@@ -335,7 +335,7 @@ Test(GUIUpdater, updateEndOfGame, .timeout = 5)
 
     cr_assert(!gameData->getIsEndGame());
 
-    guiUpdater.update("seg", {});
+    guiUpdater.update("seg", {"TEAM"});
 
     cr_assert(gameData->getIsEndGame());
 }
