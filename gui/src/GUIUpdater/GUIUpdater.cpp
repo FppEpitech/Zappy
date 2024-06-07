@@ -441,8 +441,8 @@ void Gui::GUIUpdater::updateTimeUnitModification(const std::vector<std::string> 
 
 void Gui::GUIUpdater::updateEndOfGame(const std::vector<std::string> &data)
 {
-    (void)data;
-    return; // TODO: Implement the end of game
+    _gameData->setIsEndGame(true);
+    std::cout << "Team \"" + data[0] + "\" win this game !" << std::endl;
 }
 
 void Gui::GUIUpdater::updateMessageFromServer(const std::vector<std::string> &data)

@@ -159,10 +159,26 @@ class Gui::GameData {
          */
         std::size_t getServerTick() const;
 
+        /**
+         * @brief Set the IsEnd Game object.
+         *
+         * @param isEndGame EndGame state.
+         */
+        void setIsEndGame(bool isEndGame);
+
+        /**
+         * @brief Get the IsEnd Game object.
+         *
+         * @return true - The game is finished.
+         * @return false - The game continue.
+         */
+        bool getIsEndGame() const;
+
     private:
 
         std::vector<Gui::Team>      _teams;         // Teams of the game.
         Map<Gui::Tile>              _map;           // Map of the game.
         std::size_t                 _serverTick;    // Tick value of the server.
         clock_t                     _lastTick;      // Last tick of the GameData (based on the server tick).
+        bool                        _isEndGame;     // Is true if the game is finished.
 };
