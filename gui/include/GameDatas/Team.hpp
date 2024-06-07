@@ -34,8 +34,7 @@ class Gui::Team {
          * @param playerModelPath Path to the team model asset for players.
          * @param eggSkinPath Path to the skin of the team.
          */
-        Team(const std::string &name, const std::string &eggModelPath);
-        Team(const std::string &name, const std::string &playerModelPath);
+        Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath);
 
         /**
          * @brief Destroy the Team object.
@@ -116,7 +115,15 @@ class Gui::Team {
          *
          * @return Model - Model asset of the Team.
          */
-        Model getPlayerModel(void) const;
+        Model getPlayerModel() const;
+
+        /**
+         * @brief Set the Model object.
+         *
+         * @param playerModelPath Path to the team model asset for players.
+         */
+        void setPlayerModelPath(const std::string &playerModelPath);
+
         /**
          * @brief Get the Egg object.
          *
@@ -139,16 +146,11 @@ class Gui::Team {
          */
         void setEggModelPath(const std::string &eggModelPath);
 
-        // TODO: Add a setter and a getter for the skin of the team.
-
     private:
 
         std::string                 _name;      // Name of the team.
         std::vector<Gui::Player>    _players;   // Players of the team.
         Model                       _playerModel;     // Model player asset of the team.
-        std::string _name; // Name of the team.
-        std::vector<Gui::Player> _players; // Players of the team.
-        std::vector<Gui::Egg> _eggs; // Eggs of the team.
-        Model _eggModel; // Eggs Model of the team.
-        // TODO: Add a skin for the team using raylib.
+        std::vector<Gui::Egg>       _eggs;      // Eggs of the team.
+        Model                       _eggModel;  // Eggs Model of the team.
 };

@@ -7,13 +7,9 @@
 
 #include "GameDatas/Team.hpp"
 
-Gui::Team::Team(const std::string &name, const std::string &playerModelPath) : _name(name)
+Gui::Team::Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath) : _name(name)
 {
     _playerModel = LoadModel(playerModelPath.c_str());
-}
-Gui::Team::Team(const std::string &name, const std::string &eggModelPath)
-    : _name{name}
-{
     _eggModel = LoadModel(eggModelPath.c_str());
 }
 
@@ -24,6 +20,8 @@ const std::string &Gui::Team::getName() const
 
 Gui::Team::~Team()
 {
+    UnloadModel(_playerModel);
+    UnloadModel(_eggModel);
 }
 
 void Gui::Team::setName(const std::string &name)
@@ -86,6 +84,11 @@ std::shared_ptr<Gui::Player> Gui::Team::getPlayer(std::size_t id)
 Model Gui::Team::getPlayerModel(void) const
 {
     return _playerModel;
+}
+
+void Gui::Team::setPlayerModelPath(const std::string &playerModelPath)
+{
+    _playerModel = LoadModel(playerModelPath.c_str());
 }
 
 std::shared_ptr<Gui::Egg> Gui::Team::getEgg(std::size_t id)

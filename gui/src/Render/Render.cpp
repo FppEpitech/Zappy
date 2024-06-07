@@ -52,7 +52,6 @@ void Gui::Render::draw()
     BeginMode3D(*_camera.getCamera());
     displayMap();
     displayPlayers();
-    displayEggs();
     EndMode3D();
 
     displayDebug();

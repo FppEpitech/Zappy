@@ -70,9 +70,8 @@ void Gui::GUIUpdater::updateTeamNames(const std::vector<std::string> &data)
 {
     try {
         for (size_t i = 0; i < data.size(); i++)
-            _gameData->addTeam(data[i], MODEL_PLAYER);
-            _gameData->addTeam(data[i], MODEL_EGG);
-        // TODO: Implement a system that allows to set a different model for each team.
+            _gameData->addTeam(data[i], MODEL_PLAYER, MODEL_EGG);
+        // TODO: Implement a system that allows to set different models for each team.
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid team names");
     }
