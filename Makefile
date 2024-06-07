@@ -75,3 +75,9 @@ zappy_server_tests_run:
 
 zappy_ai_tests_run:
 	@make tests_run -C ai
+
+doc:
+	@doxygen doc/doxygen/Doxyfile && make -C doc/doxygen/latex
+	@mv doc/doxygen/latex/refman.pdf ./doc
+
+.PHONY: doc
