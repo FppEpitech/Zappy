@@ -14,12 +14,18 @@ typedef struct s_gui gui_t;
 typedef struct s_team team_t;
 typedef struct s_client client_t;
 
+typedef union s_vector2i {
+    int x;
+    int y;
+} vector2i_t;
+
 typedef union s_node_data {
     ia_t *ai;
     gui_t *gui;
     client_t *client;
     team_t *team;
     char *message;
+    vector2i_t *coord;
 } node_data_t;
 
 typedef struct s_list_node {

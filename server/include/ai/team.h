@@ -15,6 +15,7 @@
 
 typedef struct s_team {
     list_t *list_ai;
+    list_t *egg_position;
     char *name;
     size_t max_place;
 } team_t;

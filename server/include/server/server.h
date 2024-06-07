@@ -155,3 +155,12 @@ void handle_client_read(app_t *app, int fd);
  * @param fd File descriptor to read.
  */
 void handle_client_write(app_t *app, int fd);
+
+/**
+ * @brief Create new vector2i object.
+ *
+ * @param x Coord x of new vector.
+ * @param y Coord y of new vector.
+ * @return vector2i_t* New vector.
+ */
+vector2i_t *vector2i_new(int x, int y);

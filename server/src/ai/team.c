@@ -7,6 +7,12 @@
 
 #include "ai/team.h"
 
+static void distribute_egg(team_t *new_team)
+{
+    (void) new_team;
+    return;
+}
+
 team_t *create_team(char *name, size_t max_place)
 {
     team_t *new_team = malloc(sizeof(team_t));
@@ -16,6 +22,8 @@ team_t *create_team(char *name, size_t max_place)
     new_team->name = name;
     new_team->max_place = max_place;
     new_team->list_ai = list_new();
+    new_team->egg_position = list_new();
+    distribute_egg(new_team);
     if (new_team->list_ai == NULL)
         return NULL;
     return new_team;
