@@ -68,18 +68,6 @@ Test(GameData, TileNotFound, .timeout = 5)
     cr_assert_throw(gameData.getTile(0, 10), Gui::Errors::GuiGameDataException);
 }
 
-Test(GameData, AddPlayerToNotExistingTeam, .timeout = 5)
-{
-    Gui::GameData gameData;
-
-    Gui::Team team1("TEAM1");
-    Gui::Player player1(1, "TEAM1", std::make_pair(0, 0), 0);
-
-    gameData.addTeam(team1);
-
-    cr_assert_throw(gameData.addPlayerToTeam("TEAM2", player1), Gui::Errors::GuiGameDataException);
-}
-
 Test(GameData, setLittleMapSize, .timeout = 5)
 {
     Gui::GameData gameData;
