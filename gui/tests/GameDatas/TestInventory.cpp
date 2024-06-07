@@ -70,3 +70,32 @@ Test(Inventory, Thystame, .timeout = 5)
     inventory.setThystame(54);
     cr_assert_eq(inventory.getThystame(), 54);
 }
+
+Test(Inventory, setRessources, .timeout = 5)
+{
+    Gui::Inventory inventory;
+    Gui::Inventory::Ressources ressources = {1, 2, 3, 4, 5, 6};
+
+    inventory.setRessources(ressources);
+    cr_assert_eq(inventory.getLinemate(), 1);
+    cr_assert_eq(inventory.getDeraumere(), 2);
+    cr_assert_eq(inventory.getSibur(), 3);
+    cr_assert_eq(inventory.getMendiane(), 4);
+    cr_assert_eq(inventory.getPhiras(), 5);
+    cr_assert_eq(inventory.getThystame(), 6);
+}
+
+Test(Inventory, getRessources, .timeout = 5)
+{
+    Gui::Inventory inventory;
+    Gui::Inventory::Ressources ressources = {1, 2, 3, 4, 5, 6};
+
+    inventory.setRessources(ressources);
+    Gui::Inventory::Ressources &ressources2 = inventory.getRessources();
+    cr_assert_eq(ressources2[0], 1);
+    cr_assert_eq(ressources2[1], 2);
+    cr_assert_eq(ressources2[2], 3);
+    cr_assert_eq(ressources2[3], 4);
+    cr_assert_eq(ressources2[4], 5);
+    cr_assert_eq(ressources2[5], 6);
+}

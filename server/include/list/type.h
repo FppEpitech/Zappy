@@ -9,8 +9,17 @@
 
 #include <stddef.h>
 
+typedef struct s_ia ia_t;
+typedef struct s_gui gui_t;
+typedef struct s_team team_t;
+typedef struct s_client client_t;
+
 typedef union s_node_data {
-    // Struct...
+    ia_t *ai;
+    gui_t *gui;
+    client_t *client;
+    team_t *team;
+    char *message;
 } node_data_t;
 
 typedef struct s_list_node {

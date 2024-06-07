@@ -31,3 +31,8 @@ Gui::Errors::GuiGameDataException::GuiGameDataException(std::string message)
 {
     _message = message;
 }
+
+Gui::Errors::GuiUpdaterException::GuiUpdaterException(std::string message)
+{
+    _message = message;
+}
