@@ -5,8 +5,9 @@
 ** GUIUpdater
 */
 
-#include "GUIUpdater/GUIUpdater.hpp"
+#include "Assets.hpp"
 #include "Error/Error.hpp"
+#include "GUIUpdater/GUIUpdater.hpp"
 
 Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData) : _gameData(gameData) {}
 
@@ -69,7 +70,7 @@ void Gui::GUIUpdater::updateTeamNames(const std::vector<std::string> &data)
 {
     try {
         for (size_t i = 0; i < data.size(); i++)
-            _gameData->addTeam(data[i]);
+            _gameData->addTeam(data[i], MODEL_PLAYER);
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid team names");
     }
