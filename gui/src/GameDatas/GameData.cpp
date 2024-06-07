@@ -40,8 +40,8 @@ void Gui::GameData::addTeam(const Gui::Team &team)
 
 void Gui::GameData::addTeam(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath)
 {
-    for (auto &team : _teams) {
-        if (team.getName() == name)
+    for (auto &regsiteredTeam : _teams) {
+        if (regsiteredTeam.getName() == name)
             throw Gui::Errors::GuiGameDataException("Team already exists");
     }
     _teams.push_back(Gui::Team(name, playerModelPath, eggModelPath));
