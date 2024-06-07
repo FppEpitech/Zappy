@@ -107,6 +107,12 @@ class Gui::Render {
         void displayDebug(void);
 
         /**
+         * @brief Display the eggs.
+         *
+        */
+        void displayEggs(void) const;
+
+        /**
          * @brief Display the map.
          *
          */

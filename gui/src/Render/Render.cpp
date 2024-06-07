@@ -51,6 +51,7 @@ void Gui::Render::draw()
 
     BeginMode3D(*_camera.getCamera());
     displayMap();
+    displayEggs();
     EndMode3D();
 
     displayDebug();
@@ -97,6 +98,18 @@ void Gui::Render::displayMap(void) const
             DrawModel(_tileModel, tile.getPositionIn3DSpace(), 0.001f, WHITE);
             displayFood(tile);
             displayResources(tile);
+        }
+    }
+}
+
+void Gui::Render::displayEggs(void) const
+{
+    for (auto &team : _gameData->getTeams()) {
+        for (auto &egg: team.getEggs()) {
+            std::cout << "Displaying egg" << std::endl;
+            Vector3 posEgg = (Vector3){(float)egg.getPosition().first, 0, (float)egg.getPosition().second};
+            Vector3 posEggModel = POS_EGG;
+            DrawModelEx(team.getEggModel(), (Vector3){posEgg.x + posEggModel.x, posEgg.y + posEggModel.y, posEgg.z + posEggModel.z}, ROTATION_AXIS_EGG, ROTATION_ANGLE_EGG, SCALE_EGG, WHITE);
         }
     }
 }
