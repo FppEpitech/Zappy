@@ -9,9 +9,6 @@
 #include <string.h>
 
 #include "app/app.h"
-#include "ai/team.h"
-#include "parsing.h"
-#include "list/list.h"
 
 int main(int ac, char **av)
 {
@@ -21,10 +18,8 @@ int main(int ac, char **av)
     if (!parsing)
         return 84;
     printf("Port: %d\n", parsing->port);
-    printf("Width: %d\n", parsing->width);
-    printf("Height: %d\n", parsing->height);
-    printf("ClientsNb: %d\n", parsing->clientsNb);
-    printf("Freq: %d\n", parsing->freq);
+    printf("Width: %d, Height: %d\n", parsing->width, parsing->height);
+    printf("ClientsNb: %d, Freq: %d\n", parsing->clientsNb, parsing->freq);
     for (int i = 0; parsing->names[i]; i++)
         printf("Name %d: %s\n", i, parsing->names[i]);
     app = create_app(parsing);

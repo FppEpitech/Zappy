@@ -15,5 +15,8 @@ game_t *create_game(int height, int width)
         return NULL;
     new_game->height = height;
     new_game->width = width;
+    new_game->map = create_map(width, height);
+    if (new_game->map == NULL)
+        return NULL;
     return new_game;
 }
