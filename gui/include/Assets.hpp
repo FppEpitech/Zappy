@@ -7,7 +7,7 @@
 
 #pragma once
 
-#define PATH_ASSETS                 "assets/"
+#define PATH_ASSETS                 "gui/assets/"
 
 #define MODEL_TILE                  PATH_ASSETS "tile.glb"
 #define MODEL_FOOD                  PATH_ASSETS "food.glb"
