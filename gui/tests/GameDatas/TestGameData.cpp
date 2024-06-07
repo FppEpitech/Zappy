@@ -91,3 +91,13 @@ Test(GameData, getEmptyMapSize, .timeout = 5)
     cr_assert_eq(gameData.getMapSize().first, 2);
     cr_assert_eq(gameData.getMapSize().second, 0);
 }
+
+Test(GameData, endGame, .timeout = 5)
+{
+    Gui::GameData gameData;
+
+    cr_assert(!gameData.getIsEndGame());
+
+    gameData.setIsEndGame(true);
+    cr_assert(gameData.getIsEndGame());
+}

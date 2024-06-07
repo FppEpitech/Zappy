@@ -74,14 +74,14 @@ $(NAME): $(OBJ) $(MAIN_OBJ)
 	@$(CC) $(MAIN_OBJ) $(OBJ) -o $(NAME) $(CXXFLAGS) $(INCLUDE) && \
 	$(call YELLOW,"✅ $@") || \
 	$(call YELLOW,"❌ $@")
-	cp $(NAME) ../
+	mv $(NAME) ../
 
 clean:
 	rm -f $(MAIN_OBJ) $(OBJ)
 	@$(call GREEN,"✅ [$@] done !")
 
 fclean: clean tests_clean
-	@rm -f $(NAME) $(TEST_NAME)
+	@rm -f $(TEST_NAME)
 	@rm -f ../$(NAME)
 	@$(call GREEN,"✅ [$@] done !")
 

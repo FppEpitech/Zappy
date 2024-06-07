@@ -13,6 +13,7 @@ Gui::GameData::GameData()
     _map = Map<Gui::Tile>();
     _serverTick = NO_TICK;
     _lastTick = clock();
+    _isEndGame = false;
 }
 
 std::vector<Gui::Team> &Gui::GameData::getTeams()
@@ -126,4 +127,14 @@ clock_t Gui::GameData::getLastTick() const
 std::size_t Gui::GameData::getServerTick() const
 {
     return _serverTick;
+}
+
+void Gui::GameData::setIsEndGame(bool isEndGame)
+{
+    _isEndGame = isEndGame;
+}
+
+bool Gui::GameData::getIsEndGame() const
+{
+    return _isEndGame;
 }
