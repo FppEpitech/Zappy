@@ -6,12 +6,7 @@
 */
 
 #include "server/client.h"
-
-static void look_cmd(app_t *app, ia_t *ai)
-{
-    (void) app;
-    (void) ai;
-}
+#include "ai/command_ai.h"
 
 bool object_info_command(app_t *app, ia_t *ai, char *line)
 {

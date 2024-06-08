@@ -1,0 +1,62 @@
+/*
+** EPITECH PROJECT, 2024
+** Zappy Server
+** File description:
+** AI command move
+*/
+
+#include "server/client.h"
+
+static int get_x_line(app_t *app, ia_t *ai, int index_line)
+{
+    int depart_x = ai->position->x;
+
+    for (int level_ai = index_line; level_ai != 0; level_ai--) {
+        if (depart_x - 1 < 0)
+            depart_x = app->game->height - 1;
+        else
+            depart_x--;
+    }
+    return depart_x;
+}
+
+static int decremente_value(app_t *app, int depart_y, int decompte)
+{
+    if (depart_y + decompte < 0)
+        return ((int) app->game->width - 1);
+    else if (depart_y + decompte == (int) app->game->width)
+        return 0;
+    else
+        return depart_y + decompte;
+}
+
+static int get_y_line(app_t *app, ia_t *ai, int index_tile)
+{
+    int depart_y = ai->position->y;
+    int goal = index_tile;
+    int decompte = 0;
+
+    if (index_tile == 0)
+        return depart_y;
+    if (index_tile < 0)
+        decompte = -1;
+    else
+        decompte = 1;
+    for (int index = 0; index != goal; index += decompte) {
+        depart_y = decremente_value(app, depart_y, decompte);
+    }
+    return depart_y;
+}
+
+void look_north(app_t *app, ia_t *ai, int index_line)
+{
+    int x = get_x_line(app, ai, index_line);
+    int y = 0;
+
+    printf("\n");
+    for (int index_tile = (-index_line); index_tile <= index_line; index_tile++) {
+        y = get_y_line(app, ai, index_tile);
+        printf("x: [%d] | [%d] :y\n", x, y);
+    }
+    printf("\n");
+}
