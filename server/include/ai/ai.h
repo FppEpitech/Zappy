@@ -23,6 +23,7 @@ typedef enum {
 } orientation_t;
 
 typedef struct s_inventory {
+    size_t food;
     size_t linemate;
     size_t deraumere;
     size_t sibur;

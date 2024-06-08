@@ -12,7 +12,9 @@
 static void inventory_cmd(ia_t *ai)
 {
     char *reply = format_string(
-        "[%s %d, %s %d, %s %d, %s %d, %s %d, %s %d]\n",
+        "[%s %d, %s %d, %s %d, %s %d, %s %d, %s %d, %s %d]\n",
+        "food",
+        ai->inventory->food,
         "linemate",
         ai->inventory->linemate,
         "deraumere",
