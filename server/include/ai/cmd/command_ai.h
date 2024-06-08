@@ -50,3 +50,27 @@ bool object_info_command(app_t *app, ia_t *ai, char *line);
  * @return false If command wasn't find.
  */
 bool little_command(app_t *app, ia_t *ai, char *line);
+
+/**
+ * @brief Command eject.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ */
+void eject_cmd(app_t *app, ia_t *ai);
+
+/**
+ * @brief Command eject player.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ */
+void eject_player(app_t *app, ia_t *ai);
+
+/**
+ * @brief Command eject egg.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ */
+void eject_egg(app_t *app, ia_t *ai);

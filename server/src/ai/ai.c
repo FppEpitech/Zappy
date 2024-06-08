@@ -29,8 +29,7 @@ static void add_message_to_ia(app_t *app, team_t *team, ia_t *new_ia)
     char *nb_place = NULL;
     char *map_size = NULL;
 
-    nb_place = format_string("%ld\n", team->max_place -
-    (team->list_ai->len + 1));
+    nb_place = format_string("%ld\n", team->egg_position->len);
     map_size = format_string("%d %d\n", app->game->width, app->game->height);
     add_message(new_ia->list_messages, nb_place);
     add_message(new_ia->list_messages, map_size);
@@ -79,7 +78,7 @@ void add_ia(app_t *app, size_t fd, char *line)
     while (temp) {
         team = temp->data.team;
         if (strcmp(line, team->name) == 0 &&
-        (team->max_place - team->list_ai->len) > 0) {
+        team->egg_position->len > 0) {
             data.ai = create_ia(app, fd, team);
             list_add_back(team->list_ai, data);
             list_delete(app->clients_list, find_client(app->clients_list, fd));

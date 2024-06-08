@@ -52,8 +52,8 @@ team_t *create_team(app_t *app, char *name, size_t max_place)
     new_team->list_ai = list_new();
     new_team->egg_position = list_new();
     for (size_t index_egg = 0; index_egg < new_team->max_place; index_egg++) {
-        add_egg(new_team->egg_position, rand() % app->game->height,
-        rand() % app->game->width);
+        add_egg(new_team->egg_position, rand() % app->game->width,
+        rand() % app->game->height);
     }
     if (new_team->list_ai == NULL)
         return NULL;

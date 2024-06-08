@@ -42,33 +42,27 @@ static bool server_quit_client(list_t *clients_list, size_t fd)
     return false;
 }
 
-static bool check_ia(team_t *team, size_t fd, app_t *app)
+static void check_ia(app_t *app, team_t *team, list_node_t *ia_temp)
 {
+    list_delete(team->list_ai, ia_temp);
+    if (team->max_place > team->egg_position->len) {
+        add_egg(team->egg_position, rand() % app->game->height,
+        rand() % app->game->width);
+    }
+}
+
+static bool server_quit_ia(app_t *app, size_t fd)
+{
+    team_t *team = find_team(app, fd);
     list_node_t *ia_temp = NULL;
 
     ia_temp = team->list_ai->first;
     while (ia_temp) {
         if (ia_temp->data.ai->fd == fd) {
-            list_delete(team->list_ai, ia_temp);
-            add_egg(team->egg_position, rand() % app->game->height,
-            rand() % app->game->width);
+            check_ia(app, team, ia_temp);
             return true;
         }
         ia_temp = ia_temp->next;
-    }
-    return false;
-}
-
-static bool server_quit_ia(app_t *app, size_t fd)
-{
-    list_node_t *temp = app->teams_list->first;
-    team_t *team = NULL;
-
-    while (temp) {
-        team = temp->data.team;
-        if (check_ia(team, fd, app) == true)
-            return true;
-        temp = temp->next;
     }
     return false;
 }
