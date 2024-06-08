@@ -25,6 +25,7 @@ SRC			=	src/list/list.c \
 				src/ai/cmd/look/look_west.c \
 				src/ai/cmd/other/other_handler.c \
 				src/ai/cmd/other/take_cmd.c \
+				src/ai/cmd/other/set_cmd.c \
 				src/ai/cmd/other/fork_cmd.c \
 				src/ai/cmd/other/dead_cmd.c \
 				src/ai/cmd/other/connect_nbr_cmd.c \

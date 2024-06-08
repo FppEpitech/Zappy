@@ -105,3 +105,11 @@ void connect_nbr_cmd(app_t *app, ia_t *ai);
  * @param ai AI who have done a command.
  */
 void take_cmd(app_t *app, ia_t *ai);
+
+/**
+ * @brief Command set objects.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ */
+void set_cmd(app_t *app, ia_t *ai);
