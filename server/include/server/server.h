@@ -164,3 +164,11 @@ void handle_client_write(app_t *app, int fd);
  * @return vector2i_t* New vector.
  */
 vector2i_t *create_vector2i(int x, int y);
+
+/**
+ * @brief Concat two string.
+ *
+ * @param str1 First strings
+ * @param str2 Second string to concat to the first.
+ */
+void concatenate_strings(char **str1, char *str2);

@@ -7,7 +7,7 @@
 
 #include "app/app.h"
 #include "server/client.h"
-#include "ai/command_ai.h"
+#include "ai/cmd/command_ai.h"
 
 void command_ai_handler(app_t *app, ia_t *ai, char *line)
 {

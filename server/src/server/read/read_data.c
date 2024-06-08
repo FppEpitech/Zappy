@@ -9,7 +9,19 @@
 
 #include "app/app.h"
 #include "server/client.h"
-#include "ai/command_ai.h"
+#include "ai/cmd/command_ai.h"
+
+void concatenate_strings(char **str1, char *str2) {
+    size_t len1 = strlen(*str1);
+    size_t len2 = strlen(str2);
+    char* result = realloc(*str1, len1 + len2 + 1);
+
+    if (result == NULL) {
+        return;
+    }
+    *str1 = result;
+    strcat(*str1, str2);
+}
 
 char *append_char(char *line, char current_char)
 {
@@ -144,6 +156,10 @@ bool server_data_handler(app_t *app, size_t fd)
         if (strcmp("level_up", line) == 0) {
             ia_t *ai = find_ia(app, fd);
             ai->level++;
+        }
+
+        if (strcmp("egg", line) == 0) {
+            display_egg_position(app);
         }
         handle_request(app, fd, line);
         free(line);

@@ -52,7 +52,6 @@ static bool check_ia(team_t *team, size_t fd, app_t *app)
             list_delete(team->list_ai, ia_temp);
             add_egg(team->egg_position, rand() % app->game->height,
             rand() % app->game->width);
-            display_egg_position(app);
             return true;
         }
         ia_temp = ia_temp->next;

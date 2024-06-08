@@ -5,19 +5,20 @@
 ** AI command move
 */
 
+#include "ai/cmd/look.h"
 #include "server/client.h"
 
-static int get_x_line(app_t *app, ia_t *ai, int index_line)
+static int get_y_line(app_t *app, ia_t *ai, int index_line)
 {
-    int depart_x = ai->position->x;
+    int depart_y = ai->position->y;
 
     for (int level_ai = index_line; level_ai != 0; level_ai--) {
-        if (depart_x - 1 < 0)
-            depart_x = app->game->height - 1;
+        if (depart_y - 1 < 0)
+            depart_y = app->game->height - 1;
         else
-            depart_x--;
+            depart_y--;
     }
-    return depart_x;
+    return depart_y;
 }
 
 static int decremente_value(app_t *app, int depart_y, int decompte)
@@ -30,9 +31,9 @@ static int decremente_value(app_t *app, int depart_y, int decompte)
         return depart_y + decompte;
 }
 
-static int get_y_line(app_t *app, ia_t *ai, int index_tile)
+static int get_x_line(app_t *app, ia_t *ai, int index_tile)
 {
-    int depart_y = ai->position->y;
+    int depart_y = ai->position->x;
     int goal = index_tile;
     int decompte = 0;
 
@@ -48,15 +49,19 @@ static int get_y_line(app_t *app, ia_t *ai, int index_tile)
     return depart_y;
 }
 
-void look_north(app_t *app, ia_t *ai, int index_line)
+void look_north(app_t *app, ia_t *ai, int index_line, char **reply)
 {
-    int x = get_x_line(app, ai, index_line);
-    int y = 0;
+    vector2i_t *pos = create_vector2i(0, 0);
+    pos->y = get_y_line(app, ai, index_line);
 
     printf("\n");
     for (int index_tile = (-index_line); index_tile <= index_line; index_tile++) {
-        y = get_y_line(app, ai, index_tile);
-        printf("x: [%d] | [%d] :y\n", x, y);
+        pos->x = get_x_line(app, ai, index_tile);
+        printf("x: [%d] | [%d] :y\n", pos->x, pos->y);
+        check_player(pos, app, reply, ai);
+        check_egg(pos, app, reply);
+        if (index_line != (int) ai->level || index_tile != index_line)
+            concatenate_strings(reply, ",");
     }
     printf("\n");
 }

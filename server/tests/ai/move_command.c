@@ -8,7 +8,7 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 
-#include "ai/command_ai.h"
+#include "ai/cmd/command_ai.h"
 #include "server/client.h"
 
 Test(ai_command_move, forward_command_y_border_north, .timeout = 5)
