@@ -41,7 +41,7 @@ bool move_command(app_t *app, ia_t *ai, char *line);
 bool object_info_command(app_t *app, ia_t *ai, char *line);
 
 /**
- * @brief Handler of little command (Connect_nbr)
+ * @brief Handler of other command (Connect_nbr)
  *
  * @param app Application with necessary information.
  * @param ai AI who have done a command.
@@ -49,7 +49,7 @@ bool object_info_command(app_t *app, ia_t *ai, char *line);
  * @return true If command was find.
  * @return false If command wasn't find.
  */
-bool little_command(app_t *app, ia_t *ai, char *line);
+bool other_command(app_t *app, ia_t *ai, char *line);
 
 /**
  * @brief Command eject.
@@ -81,3 +81,27 @@ void eject_egg(app_t *app, ia_t *ai);
  * @param app Application with necessary information.
  */
 void dead_response(app_t *app);
+
+/**
+ * @brief Command to fork and create an egg.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ */
+void fork_cmd(app_t *app, ia_t *ai);
+
+/**
+ * @brief Command to know the place available in the team's ai.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ */
+void connect_nbr_cmd(app_t *app, ia_t *ai);
+
+/**
+ * @brief Command take objects.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ */
+void take_cmd(app_t *app, ia_t *ai);
