@@ -32,6 +32,7 @@ SRC			=	src/list/list.c \
 				src/ai/cmd/eject/eject_handler.c \
 				src/ai/cmd/eject/eject_player.c \
 				src/ai/cmd/eject/eject_egg.c \
+				src/ai/cmd/broadcast/broadcast_cmd.c \
 				src/ai/cmd/object_info.c \
 				\
 				src/gui/gui.c \

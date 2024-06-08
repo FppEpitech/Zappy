@@ -20,5 +20,7 @@ void command_ai_handler(app_t *app, ia_t *ai, char *line)
         return;
     if (other_command(app, ai, line))
         return;
+    if (broadcast_command(app, ai, line))
+        return;
     add_message(ai->list_messages, bad_command);
 }

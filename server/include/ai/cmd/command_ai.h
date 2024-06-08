@@ -113,3 +113,11 @@ void take_cmd(app_t *app, ia_t *ai);
  * @param ai AI who have done a command.
  */
 void set_cmd(app_t *app, ia_t *ai);
+
+/**
+ * @brief Command Broadcast.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ */
+bool broadcast_command(app_t *app, ia_t *ai, char *line);
