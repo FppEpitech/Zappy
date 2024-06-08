@@ -15,6 +15,32 @@ void add_egg(list_t *eggs, int random_x, int random_y)
     list_add_back(eggs, data);
 }
 
+static bool check_team(team_t *team, size_t fd)
+{
+    list_node_t *ia_temp = team->list_ai->first;
+
+    while (ia_temp) {
+        if (ia_temp->data.ai->fd == fd)
+            return true;
+        ia_temp = ia_temp->next;
+    }
+    return false;
+}
+
+team_t *find_team(app_t *app, size_t fd)
+{
+    list_node_t *temp = app->teams_list->first;
+    team_t *team = NULL;
+
+    while (temp) {
+        team = temp->data.team;
+        if (check_team(team, fd))
+            return team;
+        temp = temp->next;
+    }
+    return NULL;
+}
+
 team_t *create_team(app_t *app, char *name, size_t max_place)
 {
     team_t *new_team = malloc(sizeof(team_t));

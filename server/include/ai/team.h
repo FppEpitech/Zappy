@@ -56,3 +56,12 @@ void display_egg_position(app_t *app);
  * @param random_y Position y of egg.
  */
 void add_egg(list_t *eggs, int random_x, int random_y);
+
+/**
+ * @brief Find the team of fd given.
+ *
+ * @param app Application with list of teams.
+ * @param fd File descriptor of the team to find.
+ * @return team_t* Team finded.
+ */
+team_t *find_team(app_t *app, size_t fd);

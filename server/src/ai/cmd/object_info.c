@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy Server
 ** File description:
-** AI command move
+** AI command object info
 */
 
 #include "ai/cmd/look.h"
