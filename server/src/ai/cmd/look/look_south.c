@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy Server
 ** File description:
-** AI command look north
+** AI command look south
 */
 
 #include "ai/cmd/look.h"
@@ -13,10 +13,10 @@ static int get_y_line(app_t *app, ia_t *ai, int index_line)
     int depart_y = ai->position->y;
 
     for (int level_ai = index_line; level_ai != 0; level_ai--) {
-        if (depart_y - 1 < 0)
-            depart_y = app->game->height - 1;
+        if (depart_y + 1 == (int) app->game->height)
+            depart_y = 0;
         else
-            depart_y--;
+            depart_y++;
     }
     return depart_y;
 }
@@ -49,7 +49,7 @@ static int get_x_line(app_t *app, ia_t *ai, int index_tile)
     return depart_x;
 }
 
-void look_north(app_t *app, ia_t *ai, int index_line, char **reply)
+void look_south(app_t *app, ia_t *ai, int index_line, char **reply)
 {
     vector2i_t *pos = create_vector2i(0, 0);
 

@@ -86,13 +86,13 @@ void display_map(tile_t **map, int height, int width)
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             printf("[%d %d]:\n", i, j);
-            printf("\tFood: %ld\n", map[i][j].food);
-            printf("\tLinemate: %ld\n", map[i][j].linemate);
-            printf("\tDeraumere: %ld\n", map[i][j].deraumere);
-            printf("\tSibur: %ld\n", map[i][j].sibur);
-            printf("\tMendiane: %ld\n", map[i][j].mendiane);
-            printf("\tPhiras: %ld\n", map[i][j].phiras);
-            printf("\tThystame: %ld\n", map[i][j].thystame);
+            printf("\tFood: %ld\n", map[j][i].food);
+            printf("\tLinemate: %ld\n", map[j][i].linemate);
+            printf("\tDeraumere: %ld\n", map[j][i].deraumere);
+            printf("\tSibur: %ld\n", map[j][i].sibur);
+            printf("\tMendiane: %ld\n", map[j][i].mendiane);
+            printf("\tPhiras: %ld\n", map[j][i].phiras);
+            printf("\tThystame: %ld\n", map[j][i].thystame);
         }
     }
 }

@@ -47,6 +47,15 @@ void check_player(vector2i_t *pos, app_t *app, char **reply, ia_t *ai);
 void check_egg(vector2i_t *pos, app_t *app, char **reply);
 
 /**
+ * @brief Check if there is resources in pos indicate.
+ *
+ * @param pos Pos to check.
+ * @param app Application with necessary information.
+ * @param reply Reply where add player
+ */
+void check_resources(vector2i_t *pos, app_t *app, char **reply);
+
+/**
  * @brief Handler of look command with the north orientation.
  *
  * @param app Application with necessary information.
@@ -55,3 +64,33 @@ void check_egg(vector2i_t *pos, app_t *app, char **reply);
  * @param reply Reply of command look.
  */
 void look_north(app_t *app, ia_t *ai, int index_line, char **reply);
+
+/**
+ * @brief Handler of look command with the east orientation.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ * @param index_line Index for line to get elements.
+ * @param reply Reply of command look.
+ */
+void look_east(app_t *app, ia_t *ai, int index_line, char **reply);
+
+/**
+ * @brief Handler of look command with the south orientation.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ * @param index_line Index for line to get elements.
+ * @param reply Reply of command look.
+ */
+void look_south(app_t *app, ia_t *ai, int index_line, char **reply);
+
+/**
+ * @brief Handler of look command with the west orientation.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ * @param index_line Index for line to get elements.
+ * @param reply Reply of command look.
+ */
+void look_west(app_t *app, ia_t *ai, int index_line, char **reply);

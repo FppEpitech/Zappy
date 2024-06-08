@@ -61,7 +61,7 @@ Test(communication, reset_fd, .timeout = 5)
 
     cr_assert_not_null(app);
     node_data_t data;
-    data.team = create_team(strdup("team 1\r"), 1);
+    data.team = create_team(app, strdup("team 1\r"), 1);
     list_add_front(app->teams_list, data);
     add_ia(app, 1, "team 1\r");
     server_reset_fd(app);
@@ -82,7 +82,7 @@ Test(communication, add_ia_in_team, .timeout = 5)
 
     cr_assert_not_null(app);
     node_data_t data;
-    data.team = create_team(strdup("team 1\r"), 1);
+    data.team = create_team(app, strdup("team 1\r"), 1);
     list_add_front(app->teams_list, data);
     add_ia(app, 1, "team 1\r");
 
@@ -106,11 +106,11 @@ Test(communication, add_ia_with_multiple_team, .timeout = 5)
     cr_assert_not_null(app);
 
     node_data_t data;
-    data.team = create_team(strdup("team 1\r"), 1);
+    data.team = create_team(app, strdup("team 1\r"), 1);
     list_add_front(app->teams_list, data);
     add_ia(app, 1, "team 1\r");
 
-    data.team = create_team(strdup("team 2\r"), 1);
+    data.team = create_team(app, strdup("team 2\r"), 1);
     list_add_front(app->teams_list, data);
     add_ia(app, 4, "team 2\r");
     destroy_app(app);
@@ -131,7 +131,7 @@ Test(communication, add_ia_in_no_existing_team, .timeout = 5)
 
     cr_assert_not_null(app);
     node_data_t data;
-    data.team = create_team(strdup("team 1\r"), 1);
+    data.team = create_team(app, strdup("team 1\r"), 1);
     list_add_front(app->teams_list, data);
     add_ia(app, 1, "team\r");
 
@@ -154,7 +154,7 @@ Test(communication, dont_find_ia, .timeout = 5)
 
     cr_assert_not_null(app);
     node_data_t data;
-    data.team = create_team(strdup("team 1\r"), 1);
+    data.team = create_team(app, strdup("team 1\r"), 1);
     list_add_front(app->teams_list, data);
     add_ia(app, 1, "team 1\r");
 
@@ -339,13 +339,13 @@ Test(communication, quit_ia, .timeout = 5)
     cr_assert_not_null(app);
 
     node_data_t data;
-    data.team = create_team(strdup("team 1"), 3);
+    data.team = create_team(app, strdup("team 1"), 3);
     list_add_front(app->teams_list, data);
     add_ia(app, 1, "team 1");
     add_ia(app, 8, "team 1");
     add_ia(app, 12, "team 1");
 
-    data.team = create_team(strdup("team 2"), 3);
+    data.team = create_team(app, strdup("team 2"), 3);
     list_add_front(app->teams_list, data);
     add_ia(app, 4, "team 2");
     add_ia(app, 5, "team 2");
@@ -373,13 +373,13 @@ Test(communication, quit_bad_ia, .timeout = 5)
     cr_assert_not_null(app);
 
     node_data_t data;
-    data.team = create_team(strdup("team 1"), 3);
+    data.team = create_team(app, strdup("team 1"), 3);
     list_add_front(app->teams_list, data);
     add_ia(app, 1, "team 1");
     add_ia(app, 8, "team 1");
     add_ia(app, 12, "team 1");
 
-    data.team = create_team(strdup("team 2"), 3);
+    data.team = create_team(app, strdup("team 2"), 3);
     list_add_front(app->teams_list, data);
     add_ia(app, 4, "team 2");
     add_ia(app, 5, "team 2");
@@ -537,13 +537,13 @@ Test(communication, request_from_ia, .timeout = 5)
     cr_assert_not_null(app);
 
     node_data_t data;
-    data.team = create_team(strdup("team 1"), 3);
+    data.team = create_team(app, strdup("team 1"), 3);
     list_add_front(app->teams_list, data);
     add_ia(app, 1, "team 1");
     add_ia(app, 8, "team 1");
     add_ia(app, 12, "team 1");
 
-    data.team = create_team(strdup("team 2"), 3);
+    data.team = create_team(app, strdup("team 2"), 3);
     list_add_front(app->teams_list, data);
     add_ia(app, 4, "team 2");
     add_ia(app, 5, "team 2");
@@ -568,13 +568,13 @@ Test(communication, request_from_ai_but_too_many_request, .timeout = 5)
     cr_assert_not_null(app);
 
     node_data_t data;
-    data.team = create_team(strdup("team 1"), 3);
+    data.team = create_team(app, strdup("team 1"), 3);
     list_add_front(app->teams_list, data);
     add_ia(app, 1, "team 1");
     add_ia(app, 8, "team 1");
     add_ia(app, 12, "team 1");
 
-    data.team = create_team(strdup("team 2"), 3);
+    data.team = create_team(app, strdup("team 2"), 3);
     list_add_front(app->teams_list, data);
     add_ia(app, 4, "team 2");
     add_ia(app, 5, "team 2");
@@ -631,13 +631,13 @@ Test(communication, handle_client_write_ai, .timeout = 5)
     cr_assert_not_null(app);
 
     node_data_t data;
-    data.team = create_team(strdup("team 1"), 3);
+    data.team = create_team(app, strdup("team 1"), 3);
     list_add_front(app->teams_list, data);
     add_ia(app, 1, "team 1");
     add_ia(app, 8, "team 1");
     add_ia(app, 12, "team 1");
 
-    data.team = create_team(strdup("team 2"), 3);
+    data.team = create_team(app, strdup("team 2"), 3);
     list_add_front(app->teams_list, data);
     add_ia(app, 4, "team 2");
     add_ia(app, 5, "team 2");
@@ -683,7 +683,7 @@ Test(communication, add_ai_to_complete_team, .timeout = 5)
     cr_assert_not_null(app);
 
     node_data_t data;
-    data.team = create_team(strdup("team 1"), 1);
+    data.team = create_team(app, strdup("team 1"), 1);
     list_add_front(app->teams_list, data);
     add_ia(app, 1, "team 1");
     add_ia(app, 8, "team 1");

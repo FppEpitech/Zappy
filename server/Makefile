@@ -20,6 +20,9 @@ SRC			=	src/list/list.c \
 				src/ai/cmd/move.c \
 				src/ai/cmd/look/look_handler.c \
 				src/ai/cmd/look/look_north.c \
+				src/ai/cmd/look/look_east.c \
+				src/ai/cmd/look/look_south.c \
+				src/ai/cmd/look/look_west.c \
 				src/ai/cmd/object_info.c \
 				\
 				src/gui/gui.c \

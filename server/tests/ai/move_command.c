@@ -29,8 +29,12 @@ Test(ai_command_move, forward_command_y_border_north, .timeout = 5)
 
     ia_t *ai = find_ia(app, 1);
 
+    ai->position->x = 0;
+    ai->position->y = 0;
+    ai->direction = NORTH;
+
     command_ai_handler(app, ai, "Forward");
-    cr_assert_eq(ai->y, parsing->height - 1);
+    cr_assert_eq(ai->position->y, parsing->height - 1);
 }
 
 Test(ai_command_move, forward_command_y_not_border_north, .timeout = 5)
@@ -50,10 +54,12 @@ Test(ai_command_move, forward_command_y_not_border_north, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
-    ai->y = 1;
+    ai->position->y = 1;
+
+    ai->direction = NORTH;
 
     command_ai_handler(app, ai, "Forward");
-    cr_assert_eq(ai->y, 0);
+    cr_assert_eq(ai->position->y, 0);
 }
 
 Test(ai_command_move, forward_command_y_border_south, .timeout = 5)
@@ -73,11 +79,11 @@ Test(ai_command_move, forward_command_y_border_south, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
-    ai->y = 9;
+    ai->position->y = 9;
     ai->direction = SOUTH;
 
     command_ai_handler(app, ai, "Forward");
-    cr_assert_eq(ai->y, 0);
+    cr_assert_eq(ai->position->y, 0);
 }
 
 Test(ai_command_move, forward_command_y_not_border_south, .timeout = 5)
@@ -97,11 +103,11 @@ Test(ai_command_move, forward_command_y_not_border_south, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
-    ai->y = 13;
+    ai->position->y = 13;
     ai->direction = SOUTH;
 
     command_ai_handler(app, ai, "Forward");
-    cr_assert_eq(ai->y, 14);
+    cr_assert_eq(ai->position->y, 14);
 }
 
 Test(ai_command_move, forward_command_y_border_east, .timeout = 5)
@@ -121,11 +127,11 @@ Test(ai_command_move, forward_command_y_border_east, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
-    ai->x = 14;
+    ai->position->x = 14;
     ai->direction = EAST;
 
     command_ai_handler(app, ai, "Forward");
-    cr_assert_eq(ai->x, 0);
+    cr_assert_eq(ai->position->x, 0);
 }
 
 Test(ai_command_move, forward_command_y_not_border_east, .timeout = 5)
@@ -145,11 +151,11 @@ Test(ai_command_move, forward_command_y_not_border_east, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
-    ai->x = 8;
+    ai->position->x = 8;
     ai->direction = EAST;
 
     command_ai_handler(app, ai, "Forward");
-    cr_assert_eq(ai->x, 9);
+    cr_assert_eq(ai->position->x, 9);
 }
 
 Test(ai_command_move, forward_command_y_border_west, .timeout = 5)
@@ -169,11 +175,11 @@ Test(ai_command_move, forward_command_y_border_west, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
-    ai->x = 0;
+    ai->position->x = 0;
     ai->direction = WEST;
 
     command_ai_handler(app, ai, "Forward");
-    cr_assert_eq(ai->x, parsing->width - 1);
+    cr_assert_eq(ai->position->x, parsing->width - 1);
 }
 
 Test(ai_command_move, forward_command_y_not_border_west, .timeout = 5)
@@ -193,11 +199,11 @@ Test(ai_command_move, forward_command_y_not_border_west, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
-    ai->x = 1;
+    ai->position->x = 1;
     ai->direction = WEST;
 
     command_ai_handler(app, ai, "Forward");
-    cr_assert_eq(ai->x, 0);
+    cr_assert_eq(ai->position->x, 0);
 }
 
 Test(ai_command_move, left_command_when_north, .timeout = 5)
@@ -217,6 +223,7 @@ Test(ai_command_move, left_command_when_north, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
+    ai->direction = NORTH;
 
     command_ai_handler(app, ai, "Left");
     cr_assert_eq(ai->direction, WEST);
@@ -239,8 +246,8 @@ Test(ai_command_move, left_command_when_west, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
+    ai->direction = WEST;
 
-    command_ai_handler(app, ai, "Left");
     command_ai_handler(app, ai, "Left");
     cr_assert_eq(ai->direction, SOUTH);
 }
@@ -262,9 +269,8 @@ Test(ai_command_move, left_command_when_south, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
+    ai->direction = SOUTH;
 
-    command_ai_handler(app, ai, "Left");
-    command_ai_handler(app, ai, "Left");
     command_ai_handler(app, ai, "Left");
     cr_assert_eq(ai->direction, EAST);
 }
@@ -286,10 +292,8 @@ Test(ai_command_move, left_command_when_east, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
+    ai->direction = EAST;
 
-    command_ai_handler(app, ai, "Left");
-    command_ai_handler(app, ai, "Left");
-    command_ai_handler(app, ai, "Left");
     command_ai_handler(app, ai, "Left");
     cr_assert_eq(ai->direction, NORTH);
 }
@@ -311,6 +315,7 @@ Test(ai_command_move, right_command_when_north, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
+    ai->direction = NORTH;
 
     command_ai_handler(app, ai, "Right");
     cr_assert_eq(ai->direction, EAST);
@@ -333,10 +338,10 @@ Test(ai_command_move, right_command_when_west, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
+    ai->direction = WEST;
 
     command_ai_handler(app, ai, "Right");
-    command_ai_handler(app, ai, "Right");
-    cr_assert_eq(ai->direction, SOUTH);
+    cr_assert_eq(ai->direction, NORTH);
 }
 
 Test(ai_command_move, right_command_when_south, .timeout = 5)
@@ -356,9 +361,8 @@ Test(ai_command_move, right_command_when_south, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
+    ai->direction = SOUTH;
 
-    command_ai_handler(app, ai, "Right");
-    command_ai_handler(app, ai, "Right");
     command_ai_handler(app, ai, "Right");
     cr_assert_eq(ai->direction, WEST);
 }
@@ -380,10 +384,8 @@ Test(ai_command_move, right_command_when_east, .timeout = 5)
     add_ia(app, 1, "team 2");
 
     ia_t *ai = find_ia(app, 1);
+    ai->direction = EAST;
 
     command_ai_handler(app, ai, "Right");
-    command_ai_handler(app, ai, "Right");
-    command_ai_handler(app, ai, "Right");
-    command_ai_handler(app, ai, "Right");
-    cr_assert_eq(ai->direction, NORTH);
+    cr_assert_eq(ai->direction, SOUTH);
 }
