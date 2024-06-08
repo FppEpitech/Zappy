@@ -9,6 +9,7 @@
 
 #include "app/app.h"
 #include "server/client.h"
+#include "ai/cmd/command_ai.h"
 
 static bool server_quit_gui(list_t *gui_list, size_t fd)
 {
@@ -60,6 +61,7 @@ static bool server_quit_ia(app_t *app, size_t fd)
     while (ia_temp) {
         if (ia_temp->data.ai->fd == fd) {
             check_ia(app, team, ia_temp);
+            dead_response(app);
             return true;
         }
         ia_temp = ia_temp->next;

@@ -74,3 +74,10 @@ void eject_player(app_t *app, ia_t *ai);
  * @param ai AI who have done a command.
  */
 void eject_egg(app_t *app, ia_t *ai);
+
+/**
+ * @brief Dead response for all other AI.
+ *
+ * @param app Application with necessary information.
+ */
+void dead_response(app_t *app);
