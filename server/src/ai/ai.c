@@ -24,11 +24,36 @@ static orientation_t choose_direction(void)
     return NORTH;
 }
 
+static void add_message_to_ia(app_t *app, team_t *team, ia_t *new_ia)
+{
+    char *nb_place = NULL;
+    char *map_size = NULL;
+
+    nb_place = format_string("%ld\n", team->max_place -
+    (team->list_ai->len + 1));
+    map_size = format_string("%d %d\n", app->game->width, app->game->height);
+    add_message(new_ia->list_messages, nb_place);
+    add_message(new_ia->list_messages, map_size);
+}
+
+static inventory_t *create_inventory(void)
+{
+    inventory_t *new_inventory = malloc(sizeof(inventory_t));
+
+    if (new_inventory == NULL)
+        return NULL;
+    new_inventory->linemate = 0;
+    new_inventory->deraumere = 0;
+    new_inventory->sibur = 0;
+    new_inventory->mendiane = 0;
+    new_inventory->phiras = 0;
+    new_inventory->thystame = 0;
+    return new_inventory;
+}
+
 ia_t *create_ia(app_t *app, int fd, team_t *team)
 {
     ia_t *new_ia = malloc(sizeof(ia_t));
-    char *nb_place = NULL;
-    char *map_size = NULL;
     int x = team->egg_position->first->data.coord->x;
     int y = team->egg_position->first->data.coord->y;
 
@@ -40,11 +65,8 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     list_remove_front(team->egg_position);
     new_ia->position = create_vector2i(x, y);
     new_ia->list_messages = list_new();
-    nb_place = format_string("%ld\n", team->max_place -
-    (team->list_ai->len + 1));
-    map_size = format_string("%d %d\n", app->game->width, app->game->height);
-    add_message(new_ia->list_messages, nb_place);
-    add_message(new_ia->list_messages, map_size);
+    new_ia->inventory = create_inventory();
+    add_message_to_ia(app, team, new_ia);
     return new_ia;
 }
 

@@ -22,11 +22,21 @@ typedef enum {
     WEST,
 } orientation_t;
 
+typedef struct s_inventory {
+    size_t linemate;
+    size_t deraumere;
+    size_t sibur;
+    size_t mendiane;
+    size_t phiras;
+    size_t thystame;
+} inventory_t;
+
 typedef struct s_ia {
     size_t fd;
     list_t *list_messages;
     vector2i_t *position;
     orientation_t direction;
+    inventory_t *inventory;
     size_t level;
 } ia_t;
 
