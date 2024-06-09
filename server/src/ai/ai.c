@@ -61,6 +61,16 @@ static incantation_info_t *create_incantation(void)
     return new_incantation;
 }
 
+static time_info_t *create_time(void)
+{
+    time_info_t *new_time = malloc(sizeof(time_info_t));
+
+    if (new_time == NULL)
+        return NULL;
+    new_time->stuck = false;
+    return new_time;
+}
+
 ia_t *create_ia(app_t *app, int fd, team_t *team)
 {
     ia_t *new_ia = malloc(sizeof(ia_t));
@@ -74,9 +84,11 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     new_ia->direction = choose_direction();
     list_remove_front(team->egg_position);
     new_ia->position = create_vector2i(x, y);
+    new_ia->list_command = list_new();
     new_ia->list_messages = list_new();
     new_ia->inventory = create_inventory();
     new_ia->incantation = create_incantation();
+    new_ia->time = create_time();
     add_message_to_ia(app, team, new_ia);
     return new_ia;
 }

@@ -32,6 +32,12 @@ typedef struct s_inventory {
     size_t thystame;
 } inventory_t;
 
+typedef struct s_time_info {
+    bool stuck;
+    struct timeval start_stuck;
+    struct timeval total_stuck;
+} time_info_t;
+
 typedef struct s_incantation_info {
     bool status_incantation;
     size_t target_level;
@@ -39,12 +45,14 @@ typedef struct s_incantation_info {
 
 typedef struct s_ia {
     size_t fd;
+    list_t *list_command;
     list_t *list_messages;
     vector2i_t *position;
     orientation_t direction;
     inventory_t *inventory;
     incantation_info_t *incantation;
     size_t level;
+    time_info_t *time;
 } ia_t;
 
 /**
@@ -74,3 +82,11 @@ void add_ia(app_t *app, size_t fd, char *line);
  * @return ia_t* AI find or NULL if not find.
  */
 ia_t *find_ia(app_t *app, size_t fd);
+
+/**
+ * @brief Add a command to the list
+ *
+ * @param ai Ai who do the command
+ * @param line Command.
+ */
+void add_command_to_list(ia_t *ai, char *line);

@@ -9,6 +9,14 @@
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
 
+void add_command_to_list(ia_t *ai, char *line)
+{
+    node_data_t node;
+
+    node.command = line;
+    list_add_back(ai->list_command, node);
+}
+
 void command_ai_handler(app_t *app, ia_t *ai, char *line)
 {
     char *bad_command = NULL;

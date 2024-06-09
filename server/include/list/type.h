@@ -25,6 +25,7 @@ typedef union s_node_data {
     client_t *client;
     team_t *team;
     char *message;
+    char *command;
     vector2i_t *coord;
 } node_data_t;
 

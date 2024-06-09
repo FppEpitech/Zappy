@@ -15,13 +15,13 @@ bool incantation_command(app_t *app, ia_t *ai, char *line)
         printf("Check incantation begin\n");
         if (check_incantation(app, ai, BEGIN) == false) {
             printf("FAILD at begin verification\n");
-            return true;
+            return false;
         }
         printf("SUCCESS at begin verification\n");
         update_status(app, ai);
         if (check_incantation(app, ai, END) == false) {
             printf("FAILD at end verification\n");
-            return true;
+            return false;
         }
         printf("SUCCESS at end verification\n");
         level_up(app, ai);
