@@ -57,6 +57,8 @@ static bool server_quit_ia(app_t *app, size_t fd)
     team_t *team = find_team(app, fd);
     list_node_t *ia_temp = NULL;
 
+    if (team == NULL)
+        return false;
     ia_temp = team->list_ai->first;
     while (ia_temp) {
         if (ia_temp->data.ai->fd == fd) {

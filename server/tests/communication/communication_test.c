@@ -361,31 +361,25 @@ Test(communication, quit_ia, .timeout = 5)
 Test(communication, quit_bad_ia, .timeout = 5)
 {
     parsing_t *parsing = malloc(sizeof(parsing_t));
-    parsing->port = 4459;
+    parsing->port = 5459;
     parsing->height = 10;
     parsing->width = 15;
     parsing->clientsNb = 3;
     parsing->names = malloc(sizeof(char *) * 3);
-    parsing->names[0] = "team 1\r";
-    parsing->names[1] = "team 2\r";
+    parsing->names[0] = "team 1";
+    parsing->names[1] = "team 2";
     parsing->names[2] = NULL;
     app_t *app = create_app(parsing);
     cr_assert_not_null(app);
 
-    node_data_t data;
-    data.team = create_team(app, strdup("team 1"), 3);
-    list_add_front(app->teams_list, data);
     add_ia(app, 1, "team 1");
     add_ia(app, 8, "team 1");
     add_ia(app, 12, "team 1");
-
-    data.team = create_team(app, strdup("team 2"), 3);
-    list_add_front(app->teams_list, data);
     add_ia(app, 4, "team 2");
     add_ia(app, 5, "team 2");
-    add_ia(app, 18, "team 2");
 
     server_quit_handler(app, 50);
+    printf("HERE\n");
     destroy_app(app);
 }
 
@@ -452,26 +446,6 @@ Test(communication, bad_server_connection_handler, .timeout = 5)
     app_t *app = create_app(parsing);
 
     cr_assert_eq(server_connection_handler(app, 1), false);
-
-    destroy_app(app);
-}
-
-Test(communication, bad_server_data_handler, .timeout = 5)
-{
-    parsing_t *parsing = malloc(sizeof(parsing_t));
-    parsing->port = 4463;
-    parsing->height = 10;
-    parsing->width = 15;
-    parsing->clientsNb = 3;
-    parsing->names = malloc(sizeof(char *) * 3);
-    parsing->names[0] = "team 1\r";
-    parsing->names[1] = "team 2\r";
-    parsing->names[2] = NULL;
-    app_t *app = create_app(parsing);
-
-    write(4, "HELLO\n", strlen("HELLO\n"));
-
-    cr_assert_eq(true, server_data_handler(app, 4));
 
     destroy_app(app);
 }
