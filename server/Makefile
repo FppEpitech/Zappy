@@ -33,7 +33,11 @@ SRC			=	src/list/list.c \
 				src/ai/cmd/eject/eject_player.c \
 				src/ai/cmd/eject/eject_egg.c \
 				src/ai/cmd/broadcast/broadcast_cmd.c \
+				src/ai/cmd/incantation/incantation_handler.c \
+				src/ai/cmd/incantation/check_incantation.c \
 				src/ai/cmd/object_info.c \
+				src/ai/cmd/incantation/update_status.c \
+				src/ai/cmd/incantation/level_up.c \
 				\
 				src/gui/gui.c \
 				\

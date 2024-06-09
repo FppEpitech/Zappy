@@ -32,12 +32,18 @@ typedef struct s_inventory {
     size_t thystame;
 } inventory_t;
 
+typedef struct s_incantation_info {
+    bool status_incantation;
+    size_t target_level;
+} incantation_info_t;
+
 typedef struct s_ia {
     size_t fd;
     list_t *list_messages;
     vector2i_t *position;
     orientation_t direction;
     inventory_t *inventory;
+    incantation_info_t *incantation;
     size_t level;
 } ia_t;
 

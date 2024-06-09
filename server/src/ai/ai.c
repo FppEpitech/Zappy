@@ -50,6 +50,17 @@ static inventory_t *create_inventory(void)
     return new_inventory;
 }
 
+static incantation_info_t *create_incantation(void)
+{
+    incantation_info_t *new_incantation = malloc(sizeof(incantation_info_t));
+
+    if (new_incantation == NULL)
+        return NULL;
+    new_incantation->status_incantation = false;
+    new_incantation->target_level = 0;
+    return new_incantation;
+}
+
 ia_t *create_ia(app_t *app, int fd, team_t *team)
 {
     ia_t *new_ia = malloc(sizeof(ia_t));
@@ -65,6 +76,7 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     new_ia->position = create_vector2i(x, y);
     new_ia->list_messages = list_new();
     new_ia->inventory = create_inventory();
+    new_ia->incantation = create_incantation();
     add_message_to_ia(app, team, new_ia);
     return new_ia;
 }

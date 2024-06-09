@@ -9,6 +9,9 @@
 
 #include "ai/ai.h"
 
+#define BEGIN 1
+#define END 2
+
 /**
  * @brief Handler of AI command.
  *
@@ -119,5 +122,46 @@ void set_cmd(app_t *app, ia_t *ai);
  *
  * @param app Application with necessary information.
  * @param ai AI who have done a command.
+ * @param line The command of AI.
+ * @return true If command was find.
+ * @return false If command wasn't find.
  */
 bool broadcast_command(app_t *app, ia_t *ai, char *line);
+
+/**
+ * @brief
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have done a command.
+ * @param line The command of AI.
+ * @return true If command was find.
+ * @return false If command wasn't find.
+ */
+bool incantation_command(app_t *app, ia_t *ai, char *line);
+
+/**
+ * @brief Check condition of incantation
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have launch the incantation.
+ * @param status BEGIN or END (to know if I have to verify status incantation)
+ * @return true If condition is good
+ * @return false If condition isn't good
+ */
+bool check_incantation(app_t *app, ia_t *ai, int status);
+
+/**
+ * @brief Update status incantation of all participating people.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have launch the incantation.
+ */
+void update_status(app_t *app, ia_t *ai);
+
+/**
+ * @brief Level up all player of incantation and delete all ressources.
+ *
+ * @param app Application with necessary information.
+ * @param ai AI who have launch the incantation.
+ */
+void level_up(app_t *app, ia_t *ai);
