@@ -96,5 +96,4 @@ void look_cmd(app_t *app, ia_t *ai)
     }
     concatenate_strings(&reply, "]\n");
     add_message(ai->list_messages, reply);
-    set_time_stuck(ai, 7 / app->game->freq);
 }

@@ -29,17 +29,18 @@ static void inventory_cmd(app_t *app, ia_t *ai)
         ai->inventory->thystame
     );
     add_message(ai->list_messages, reply);
-    set_time_stuck(ai, 1 / app->game->freq);
 }
 
 bool object_info_command(app_t *app, ia_t *ai, char *line)
 {
     if (strcmp("Look", line) == 0) {
         look_cmd(app, ai);
+        set_time_stuck(ai, 7 / app->game->freq);
         return true;
     }
     if (strcmp("Inventory", line) == 0) {
         inventory_cmd(app, ai);
+        set_time_stuck(ai, 1 / app->game->freq);
         return true;
     }
     return false;

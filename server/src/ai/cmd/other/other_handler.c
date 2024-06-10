@@ -13,10 +13,12 @@ static bool object_cmd_handler(app_t *app, ia_t *ai, char *line)
 {
     if (strcmp("Take object", line) == 0) {
         take_cmd(app, ai);
+        set_time_stuck(ai, 7 / app->game->freq);
         return true;
     }
     if (strcmp("Set object", line) == 0) {
         set_cmd(app, ai);
+        set_time_stuck(ai, 7 / app->game->freq);
         return true;
     }
     return false;
@@ -30,10 +32,12 @@ bool other_command(app_t *app, ia_t *ai, char *line)
     }
     if (strcmp("Fork", line) == 0) {
         fork_cmd(app, ai);
+        set_time_stuck(ai, 42 / app->game->freq);
         return true;
     }
     if (strcmp("Eject", line) == 0) {
         eject_cmd(app, ai);
+        set_time_stuck(ai, 7 / app->game->freq);
         return true;
     }
     if (object_cmd_handler(app, ai, line))

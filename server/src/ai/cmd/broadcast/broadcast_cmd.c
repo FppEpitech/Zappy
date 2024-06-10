@@ -44,6 +44,7 @@ bool broadcast_command(app_t *app, ia_t *ai, char *line)
         reply = format_string("ok\n");
         browse_ia(app, ai, line + 10);
         add_message(ai->list_messages, reply);
+        set_time_stuck(ai, 7 / app->game->freq);
         return true;
     }
     return false;
