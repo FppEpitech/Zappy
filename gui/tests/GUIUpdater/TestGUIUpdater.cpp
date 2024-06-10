@@ -109,11 +109,55 @@ Test(GUIUpdater, updateMapContentErrorValue2, .timeout = 5)
     cr_assert_throw(guiUpdater.update("bct", {"5", "5", "2", "3", "4", "5", "6", "7", "8"}),Gui::Errors::GuiUpdaterException);
 }
 
+Test(GUIUpdater, updateTeamNames, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    guiUpdater.update("tna", {"TEAM1"});
+    cr_assert_eq(gameData->getTeams()[0].getName(), "TEAM1");
+}
+
+Test(GUIUpdater, updateTeamNamesError, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    guiUpdater.update("tna", {"test"});
+    cr_assert_throw(guiUpdater.update("tna", {"test"}), Gui::Errors::GuiUpdaterException);
+}
+
 Test(GUIUpdater, updateTeamNamesInvalidNumberOfArguments, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     Gui::GUIUpdater guiUpdater(gameData);
     cr_assert_throw(guiUpdater.update("tna", {}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updateTeamMember, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+
+    guiUpdater.update("pnw", {"TEAM1", "1", "1", "1", "1", "1"});
+    cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getTeam(), "TEAM1");
+    cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getId(), 1);
+    cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getLevel(), 1);
+    cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getPosition().first, 1);
+    cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getPosition().second, 1);
+}
+
+Test(GUIUpdater, updateTeamMemberErrorValue, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    cr_assert_throw(guiUpdater.update("pnw", {"TEAM1", "-1", "1", "1", "1", "1"}), Gui::Errors::GuiUpdaterException);
+    cr_assert_throw(guiUpdater.update("pnw", {"TEAM1", "1", "1", "50", "1", "1"}), Gui::Errors::GuiUpdaterException);
+    cr_assert_throw(guiUpdater.update("pnw", {"TEAM1", "1", "1", "1", "50", "1"}), Gui::Errors::GuiUpdaterException);
 }
 
 Test(GUIUpdater, updateTeamMemberError, .timeout = 5)
@@ -131,7 +175,7 @@ Test(GUIUpdater, updateTeamMemberInvalidNumberOfArguments, .timeout = 5)
     cr_assert_throw(guiUpdater.update("pnw", {}), Gui::Errors::GuiUpdaterException);
 }
 
-Test(GUIUpdater, updateTeamMemberErrorValue, .timeout = 5)
+Test(GUIUpdater, updateTeamMemberErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData.get()->setMapSize(10, 10);
@@ -140,13 +184,26 @@ Test(GUIUpdater, updateTeamMemberErrorValue, .timeout = 5)
     cr_assert_throw(guiUpdater.update("pnw", {"1", "1", "1", "0", "1", "1"}), Gui::Errors::GuiUpdaterException);
 }
 
-Test(GUIUpdater, updateTeamMemberErrorValue2, .timeout = 5)
+Test(GUIUpdater, updateTeamMemberErrorValue3, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData.get()->setMapSize(10, 10);
     Gui::GUIUpdater guiUpdater(gameData);
 
     cr_assert_throw(guiUpdater.update("pnw", {"1", "1", "1", "2", "0", "1"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerPosition, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("ppo", {"1", "1", "1", "1"});
+    cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getPosition().first, 1);
+    cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getPosition().second, 1);
 }
 
 Test(GUIUpdater, updatePlayerPositionErrorValue, .timeout = 5)
@@ -182,6 +239,28 @@ Test(GUIUpdater, updatePlayerPositionOrientationErrorValue, .timeout = 5)
     cr_assert_throw(guiUpdater.update("ppo", {"1", "1", "0", "50"}), Gui::Errors::GuiUpdaterException);
 }
 
+Test(GUIUpdater, updatePlayerPositionOrientationInvalidNumberOfArguments, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    cr_assert_throw(guiUpdater.update("ppo", {"1", "1", "1"}), Gui::Errors::GuiUpdaterException);
+
+}
+
+Test(GUIUpdater, updatePlayerLevel, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("plv", {"1", "2"});
+    cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getLevel(), 2);
+}
+
 Test(GUIUpdater, updatePlayerLevelErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
@@ -215,6 +294,24 @@ Test(GUIUpdater, updatePlayerLevelInvalidNumberOfArguments, .timeout = 5)
     cr_assert_throw(guiUpdater.update("plv", {}), Gui::Errors::GuiUpdaterException);
 }
 
+Test(GUIUpdater, updatePlayerInventory, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("pin", {"1", "1", "1", "1", "1", "1", "1", "1", "1", "1"});
+    cr_assert_eq(gameData.get()->getTeam("TEAM1").getPlayer(1).get()->inventory.getFood(), 1);
+    cr_assert_eq(gameData.get()->getTeam("TEAM1").getPlayer(1).get()->inventory.getLinemate(), 1);
+    cr_assert_eq(gameData.get()->getTeam("TEAM1").getPlayer(1).get()->inventory.getDeraumere(), 1);
+    cr_assert_eq(gameData.get()->getTeam("TEAM1").getPlayer(1).get()->inventory.getSibur(), 1);
+    cr_assert_eq(gameData.get()->getTeam("TEAM1").getPlayer(1).get()->inventory.getMendiane(), 1);
+    cr_assert_eq(gameData.get()->getTeam("TEAM1").getPlayer(1).get()->inventory.getPhiras(), 1);
+    cr_assert_eq(gameData.get()->getTeam("TEAM1").getPlayer(1).get()->inventory.getThystame(), 1);
+}
+
 Test(GUIUpdater, updatePlayerInventoryError, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
@@ -231,6 +328,28 @@ Test(GUIUpdater, updatePlayerInventoryErrorValue, .timeout = 5)
     cr_assert_throw(guiUpdater.update("pin", {"-5"}), Gui::Errors::GuiUpdaterException);
 }
 
+Test(GUIUpdater, updatePlayerInventoryInvalidNumberOfArguments, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    cr_assert_throw(guiUpdater.update("pin", {"1"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerExpulsion, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("pex", {"1"});
+    cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getPosition().first, 1);
+    cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getPosition().second, 1);
+}
+
 Test(GUIUpdater, updatePlayerExpulsionError, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
@@ -245,6 +364,19 @@ Test(GUIUpdater, updatePlayerExpulsionErrorValue, .timeout = 5)
     Gui::GUIUpdater guiUpdater(gameData);
 
     cr_assert_throw(guiUpdater.update("pex", {"-5"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerBroadcast, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("pbc", {"1", "test"});
+    cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getPosition().first, 1);
+    cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getPosition().second, 1);
 }
 
 Test(GUIUpdater, updatePlayerBroadcastError, .timeout = 5)
@@ -266,10 +398,246 @@ Test(GUIUpdater, updatePlayerBroadcastErrorValue, .timeout = 5)
 Test(GUIUpdater, updatePlayerStartIncantation, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    gameData.get()->setMapSize(10, 10);
     Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
 
     guiUpdater.update("pic", {"1", "1", "1", "1"});
+    cr_assert_not_null(&guiUpdater);
+}
+
+Test(GUIUpdater, updatePlayerStartIncantationErrorValue, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    cr_assert_throw(guiUpdater.update("pic", {"test", "1", "1"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerStartIncantationErrorValue2, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    cr_assert_throw(guiUpdater.update("pic", {"-1"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerEndIncantationInvalidNumberOfArguments, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    cr_assert_throw(guiUpdater.update("pie", {}), Gui::Errors::GuiUpdaterException);
+
+}
+
+Test(GUIUpdater, updatePlayerEndIncantation, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("pie", {"1", "1", "1"});
+    cr_assert_not_null(&guiUpdater);
+}
+
+Test(GUIUpdater, updatePlayerEndIncantationErrorValue, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    cr_assert_throw(guiUpdater.update("pie", {"test", "1", "1"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerEndIncantationErrorValue2, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    cr_assert_throw(guiUpdater.update("pie", {"-1"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerStartIncantationInvalidNumberOfArguments, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    cr_assert_throw(guiUpdater.update("pic", {}), Gui::Errors::GuiUpdaterException);
+
+}
+Test(GUIUpdater, updatePlayerEggLaying, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("pfk", {"1"});
+    cr_assert_not_null(&guiUpdater);
+}
+
+Test(GUIUpdater, updatePlayerEggLayingErrorValue, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    cr_assert_throw(guiUpdater.update("pfk", {"test"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerEggLayingErrorValue2, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    cr_assert_throw(guiUpdater.update("pfk", {"-1"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerRessourceDropping, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("pdr", {"1", "1"});
+    cr_assert_not_null(&guiUpdater);
+}
+
+Test(GUIUpdater, updatePlayerRessourceDroppingErrorValue, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    cr_assert_throw(guiUpdater.update("pdr", {"1", "test"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerRessourceDroppingErrorValue2, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    cr_assert_throw(guiUpdater.update("pdr", {"-1"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerRessourceDroppingInvalidNumberOfArguments, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    cr_assert_throw(guiUpdater.update("pdr", {}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updateRessourceCollecting, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("pgt", {"1", "1"});
+    cr_assert_not_null(&guiUpdater);
+}
+
+Test(GUIUpdater, updateRessourceCollectingErrorValue, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    cr_assert_throw(guiUpdater.update("pgt", {"1", "test"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updateRessourceCollectingErrorValue2, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    cr_assert_throw(guiUpdater.update("pgt", {"-1"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updateRessourceCollectingInvalidNumberOfArguments, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    cr_assert_throw(guiUpdater.update("pgt", {}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerDeath, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("pdi", {"1"});
+    cr_assert_not_null(&guiUpdater);
+}
+
+Test(GUIUpdater, updatePlayerDeathErrorValue, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    cr_assert_throw(guiUpdater.update("pdi", {"test", "test"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerDeathErrorValue2, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    cr_assert_throw(guiUpdater.update("pdi", {"-1"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updateEggLaidByPlayer, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("enw", {"1", "1", "1", "1"});
+    cr_assert_not_null(&guiUpdater);
+}
+
+Test(GUIUpdater, updateEggLaidByPlayerServerId, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    gameData.get()->setMapSize(10, 10);
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData.get()->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData.get()->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("enw", {"1", "-1", "1", "1"});
     cr_assert_not_null(&guiUpdater);
 }
 
@@ -289,6 +657,26 @@ Test(GUIUpdater, updateEggLaidByPlayerErrorValue2, .timeout = 5)
     cr_assert_throw(guiUpdater.update("enw", {"-1", "-1", "-1", "-1"}), Gui::Errors::GuiUpdaterException);
 }
 
+Test(GUIUpdater, updateEggLaidByPlayerInvalidNumberOfArguments, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    cr_assert_throw(guiUpdater.update("enw", {}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updatePlayerBorn, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData.get()->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("ebo", {"1"});
+    cr_assert_not_null(&guiUpdater);
+}
+
 Test(GUIUpdater, updatePlayerBornErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
@@ -303,6 +691,17 @@ Test(GUIUpdater, updatePlayerBornErrorValue2, .timeout = 5)
     Gui::GUIUpdater guiUpdater(gameData);
 
     cr_assert_throw(guiUpdater.update("ebo", {"-1"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updateEggDeath, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+    gameData.get()->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+
+    guiUpdater.update("edi", {"1"});
+    cr_assert_not_null(&guiUpdater);
 }
 
 Test(GUIUpdater, updateEggDeathErrorValue, .timeout = 5)
@@ -347,6 +746,16 @@ Test(GUIUpdater, updateTimeUnitRequestErrorValue2, .timeout = 5)
     cr_assert_throw(guiUpdater.update("sgt", {"-1"}), Gui::Errors::GuiUpdaterException);
 }
 
+Test(GUIUpdater, updateTimeUnitModification, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+    gameData->addTeam("TEAM1", "not_tested", "not_tested");
+
+    guiUpdater.update("sst", {"1"});
+    cr_assert_not_null(&guiUpdater);
+}
+
 Test(GUIUpdater, updateTimeUnitModificationErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
@@ -361,6 +770,28 @@ Test(GUIUpdater, updateTimeUnitModificationErrorValue2, .timeout = 5)
     Gui::GUIUpdater guiUpdater(gameData);
 
     cr_assert_throw(guiUpdater.update("sst", {"-1"}), Gui::Errors::GuiUpdaterException);
+}
+
+Test(GUIUpdater, updateEndOfGame, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    cr_assert(!gameData->getIsEndGame());
+
+    guiUpdater.update("seg", {"TEAM"});
+
+    cr_assert(gameData->getIsEndGame());
+}
+
+Test(GUIUpdater, updateMessageFromServer, .timeout = 5)
+{
+    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
+    gameData.get()->setMapSize(10, 10);
+    Gui::GUIUpdater guiUpdater(gameData);
+
+    guiUpdater.update("smg", {"test"});
+    cr_assert_not_null(&guiUpdater);
 }
 
 Test(GUIUpdater, updateUnknownMessage, .timeout = 5)
@@ -379,16 +810,4 @@ Test(GUIUpdater, updateCommandParameter, .timeout = 5)
 
     guiUpdater.update("sbp", {"test"});
     cr_assert_not_null(&guiUpdater);
-}
-
-Test(GUIUpdater, updateEndOfGame, .timeout = 5)
-{
-    std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    Gui::GUIUpdater guiUpdater(gameData);
-
-    cr_assert(!gameData->getIsEndGame());
-
-    guiUpdater.update("seg", {"TEAM"});
-
-    cr_assert(gameData->getIsEndGame());
 }

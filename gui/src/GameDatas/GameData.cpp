@@ -109,7 +109,7 @@ void Gui::GameData::setTile(const Gui::Tile &tile)
     _map[tile.getPosition().first][tile.getPosition().second] = tile;
 }
 
-void Gui::GameData::restartLastTick(void)
+void Gui::GameData::restartLastTick()
 {
     _lastTick = clock();
 }
