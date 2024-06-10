@@ -409,7 +409,7 @@ void Gui::GUIUpdater::updateEggLaidByPlayer(const std::vector<std::string> &data
     for (auto &team : _gameData->getTeams()) {
         if (serverId != 0) {
             team.addEgg(Gui::Egg(args[0], team.getName(), std::make_pair(args[2], args[3])));
-            std::cout << "Egg laid by player" << std::endl;
+            // std::cout << "Egg laid by player" << std::endl;
         }
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[1]) {

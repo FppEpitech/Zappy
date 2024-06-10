@@ -14,7 +14,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     : _gameData(gameData)
 {
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
-    DisableCursor();
+    // DisableCursor();
     SetTargetFPS(140);
     _isDebug = false;
     this->LoadModels();
@@ -93,13 +93,57 @@ void Gui::Render::displayDebug(void)
     }
 }
 
-void Gui::Render::displayPlayers(void) const
+#define FLOAT_MAX     340282346638528859811704183484516925440.0f
+
+void Gui::Render::displayPlayers(void)
 {
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
             Vector3 posPlayer = (Vector3){(float)(player.getPosition().first), 0, (float)(player.getPosition().second)};
             Vector3 posAssetPlayer = POS_PLAYER;
             DrawModelEx(team.getPlayerModel(), (Vector3){posPlayer.x + posAssetPlayer.x, posPlayer.y + posAssetPlayer.y, posPlayer.z + posAssetPlayer.z}, ROTATION_AXIS_PLAYER, ROTATION_ANGLE_PLAYER, SCALE_PLAYER, WHITE);
+            BoundingBox towerBBox = GetMeshBoundingBox(_gameData->getTeams()[0].getPlayerModel().meshes[0]);
+            DrawBoundingBox(towerBBox, LIME);
+
+            Ray ray;
+            RayCollision collision;
+            collision.distance = FLOAT_MAX;
+            collision.hit = false;
+
+            ray = GetScreenToWorldRayEx(GetMousePosition(), *_camera.getCamera(), GetScreenWidth(), GetScreenHeight());
+
+            // // BoundingBox towerBBox = GetMeshBoundingBox(_gameData->getTeams()[0].getPlayerModel().meshes[0]);
+
+
+            RayCollision boxHitInfo = GetRayCollisionBox(ray, towerBBox);
+            // DrawBoundingBox(towerBBox, LIME);
+
+            if ((boxHitInfo.hit) && (boxHitInfo.distance < collision.distance))
+                {
+                    std::cout << "hit" << std::endl;
+            //         collision = boxHitInfo;
+
+            //         RayCollision meshHitInfo;
+            //         for (int m = 0; m < _gameData->getTeams()[0].getPlayerModel().meshCount; m++)
+            //         {
+            //             // NOTE: We consider the model.transform for the collision check but
+            //             // it can be checked against any transform Matrix, used when checking against same
+            //             // model drawn multiple times with multiple transforms
+            //             meshHitInfo = GetRayCollisionMesh(ray, _gameData->getTeams()[0].getPlayerModel().meshes[m], _gameData->getTeams()[0].getPlayerModel().transform);
+            //             if (meshHitInfo.hit)
+            //             {
+            //                 // Save the closest hit mesh
+            //                 if ((!collision.hit) || (collision.distance > meshHitInfo.distance)) collision = meshHitInfo;
+
+            //                 break;  // Stop once one mesh collision is detected, the colliding mesh is m
+            //             }
+            //         }
+
+            //         if (meshHitInfo.hit)
+            //         {
+            //             collision = meshHitInfo;
+            //         }
+                }
         }
     }
 }
