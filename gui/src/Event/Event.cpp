@@ -29,6 +29,11 @@ void Gui::Event::setRender(std::shared_ptr<Render> render)
     _render = render;
 }
 
+void Gui::Event::setGameData(std::shared_ptr<GameData> gameData)
+{
+    _gameData = gameData;
+}
+
 void Gui::Event::moveUpCamera()
 {
     _render->getCamera()->position.y += HIGH_CAMERA_INCREASE;
@@ -47,4 +52,14 @@ void Gui::Event::switchDisplayDebug()
         _render->setIsDebug(false);
     else
         _render->setIsDebug(true);
+}
+
+void Gui::Event::switchPovLeft()
+{
+
+}
+
+void Gui::Event::switchPovRight()
+{
+
 }

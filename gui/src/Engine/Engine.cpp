@@ -5,6 +5,7 @@
 ** Engine
 */
 
+#include "Assets.hpp"
 #include "Event/Event.hpp"
 #include "Engine/Engine.hpp"
 #include "GUIUpdater/GUIUpdater.hpp"
@@ -16,6 +17,7 @@ Gui::Engine::Engine(Network network) : _network(network), _gameData(std::make_sh
 {
     _render = std::make_shared<Render>(_gameData);
     _event.setRender(_render);
+    _event.setGameData(_gameData);
 }
 
 void Gui::Engine::run(void)

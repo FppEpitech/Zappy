@@ -53,9 +53,17 @@ class Gui::Event {
          */
         void setRender(std::shared_ptr<Render> render);
 
+        /**
+         * @brief Set the GameData object.
+         *
+         * @param gameData GameData class.
+         */
+        void setGameData(std::shared_ptr<GameData> gameData);
+
     private:
 
-        std::shared_ptr<Render>       _render;  // Render class to draw scene.
+        std::shared_ptr<Render>         _render;    // Render class to draw scene.
+        std::shared_ptr<GameData>       _gameData;  // GameData class to contain scene.
 
         /**
          * @brief Map for events by down key.
@@ -74,7 +82,9 @@ class Gui::Event {
         std::unordered_map<KeyboardKey, std::function<void()>> _eventsKeyPressed =
         {
             {KEY_THREE, [this](){switchDisplayDebug();}},
-            {KEY_F3, [this](){switchDisplayDebug();}}
+            {KEY_F3, [this](){switchDisplayDebug();}},
+            {KEY_ONE, [this](){switchPovLeft();}},
+            {KEY_TWO, [this](){switchPovRight();}}
         };
 
         /**
@@ -94,4 +104,16 @@ class Gui::Event {
          *
          */
         void switchDisplayDebug();
+
+        /**
+         * @brief Switch of pov by left.
+         *
+         */
+        void switchPovLeft();
+
+        /**
+         * @brief Switch of pov by right.
+         *
+         */
+        void switchPovRight();
 };
