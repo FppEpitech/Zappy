@@ -196,5 +196,5 @@ class Gui::GameData {
         std::size_t                 _serverTick;    // Tick value of the server.
         clock_t                     _lastTick;      // Last tick of the GameData (based on the server tick).
         bool                        _isEndGame;     // Is true if the game is finished.
-        std::string                _lastError;     // Last error message.
+        std::string                 _lastError;     // Last error message.
 };

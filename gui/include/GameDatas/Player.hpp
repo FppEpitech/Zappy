@@ -164,5 +164,5 @@ class Gui::Player {
         std::size_t                             _orientation;   // Orientation of the player.
         std::size_t                             _level;         // Level between 1 - 8.
         PlayerState                             _state;         // Player state.
-        std::string                            _broadcast;     // Broadcast message.
+        std::string                             _broadcast;     // Broadcast message.
 };
