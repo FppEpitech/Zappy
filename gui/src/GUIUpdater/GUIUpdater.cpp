@@ -86,17 +86,16 @@ void Gui::GUIUpdater::updateTeamMember(const std::vector<std::string> &data)
 
     try {
         for (size_t i = 0; i < data.size() - 1; i++) {
-            std::cout << data[i] << std::endl;
             int temp = std::stoi(data[i], &tmp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException("Invalid team member1");
+                throw Gui::Errors::GuiUpdaterException("Invalid team member");
             args.push_back(temp);
         }
     } catch (const std::exception &error) {
-        throw Gui::Errors::GuiUpdaterException("Invalid team member2");
+        throw Gui::Errors::GuiUpdaterException("Invalid team member");
     }
     if (args.size() != 5)
-        throw Gui::Errors::GuiUpdaterException("Invalid team member3");
+        throw Gui::Errors::GuiUpdaterException("Invalid team member");
     if (args[3] < 1 || args[3] > 4)
         throw Gui::Errors::GuiUpdaterException("Invalid player orientation");
     if (args[4] < 1 || args[4] > 8)
@@ -411,7 +410,6 @@ void Gui::GUIUpdater::updateEggLaidByPlayer(const std::vector<std::string> &data
     for (auto &team : _gameData->getTeams()) {
         if (serverId != 0) {
             team.addEgg(Gui::Egg(args[0], team.getName(), std::make_pair(args[2], args[3])));
-            std::cout << "Egg laid by player" << std::endl;
         }
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[1])
