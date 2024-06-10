@@ -17,18 +17,18 @@ void Gui::GUIUpdater::update(const std::string &command, const std::vector<std::
     try {
         for (auto &iterator : _updateMap) {
             if (iterator.first == command) {
-                std::cout << Green << "[GUIUpdater] " << Blue << command << Green << " command received with data: " << Blue;
+                std::cerr << Green << "[GUIUpdater] " << Blue << command << Green << " command received with data: " << Blue;
                 for (auto &d : data)
-                    std::cout << d << " ";
-                std::cout << Reset << std::endl;
+                    std::cerr << d << " ";
+                std::cerr << Reset << std::endl;
                 iterator.second(data);
             }
         }
     } catch (const std::exception &error) {
-        std::cout << Red << "[GUIUpdater] command " << command << " failed: " << error.what() << " with data: " << Yellow;
+        std::cerr << Red << "[GUIUpdater] command " << command << " failed: " << error.what() << " with data: " << Yellow;
         for (auto &d : data)
-            std::cout << d << " ";
-        std::cout << Reset << std::endl;
+            std::cerr << d << " ";
+        std::cerr << Reset << std::endl;
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
 }
