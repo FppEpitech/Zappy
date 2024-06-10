@@ -165,3 +165,18 @@ void update_status(app_t *app, ia_t *ai);
  * @param ai AI who have launch the incantation.
  */
 void level_up(app_t *app, ia_t *ai);
+
+/**
+ * @brief Add a command to the list
+ *
+ * @param ai Ai who do the command
+ * @param line Command.
+ */
+void add_command_to_list(ia_t *ai, char *line);
+
+/**
+ * @brief Treat command of all ai.
+ *
+ * @param app Application with necessary information.
+ */
+void treat_command(app_t *app);

@@ -7,8 +7,6 @@
 
 #pragma once
 
-#include <sys/time.h>
-
 #include "map/map.h"
 
 typedef struct s_game {
@@ -16,6 +14,7 @@ typedef struct s_game {
     size_t width;
     tile_t **map;
     struct timeval start;
+    int freq;
 } game_t;
 
 /**
@@ -23,14 +22,7 @@ typedef struct s_game {
  *
  * @param height Height of the map.
  * @param width Width of the map.
+ * @param freq Frequency of game.
  * @return game_t* Game initialized.
  */
-game_t *create_game(int height, int width);
-
-/**
- * @brief Calcul time elapsed whereas time parameter.
- *
- * @param time Time of depart.
- * @return double Time.
- */
-double time_elapsed(struct timeval time);
+game_t *create_game(int height, int width, int freq);

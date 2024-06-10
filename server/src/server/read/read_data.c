@@ -74,7 +74,7 @@ void handle_request(app_t *app, size_t fd, char *line)
     if (ai != NULL) {
         if (ai->list_messages->len >= 10)
             return;
-        add_command_to_list(ai, line);
+        add_command_to_list(ai, strdup(line));
         return;
     }
 }
@@ -110,6 +110,7 @@ bool server_data_handler(app_t *app, size_t fd)
                 printf("\n\n");
                 temp = temp->next;
             }
+            return true;
         }
 
         if (strcmp("gui", line) == 0) {
@@ -122,6 +123,7 @@ bool server_data_handler(app_t *app, size_t fd)
                 temp = temp->next;
             }
             printf("\n\n");
+            return true;
         }
 
         if (strcmp("client", line) == 0) {
@@ -134,12 +136,14 @@ bool server_data_handler(app_t *app, size_t fd)
                 temp = temp->next;
             }
             printf("\n\n");
+            return true;
         }
 
         if (strcmp("pos", line) == 0) {
             ia_t *ai = find_ia(app, fd);
             printf("AI POS X: [%d]\n", ai->position->x);
             printf("AI POS Y: [%d]\n", ai->position->y);
+            return true;
         }
 
         if (strcmp("orientation", line) == 0) {
@@ -152,26 +156,40 @@ bool server_data_handler(app_t *app, size_t fd)
                 printf("AI Direction: [EAST]\n");
             if (ai->direction == WEST)
                 printf("AI Direction: [WEST]\n");
+            return true;
         }
 
         if (strcmp("level_up", line) == 0) {
             ia_t *ai = find_ia(app, fd);
             ai->level++;
+            return true;
         }
 
         if (strcmp("egg", line) == 0) {
             display_egg_position(app);
+            return true;
         }
         if (strcmp("map", line) == 0) {
             display_map(app->game->map, app->game->height, app->game->width);
+            return true;
         }
 
         if (strcmp("level", line) == 0) {
             ia_t *ai = find_ia(app, fd);
             printf("\nLevel: [%ld]\n", ai->level);
+            return true;
+        }
+        if (strcmp("stuck", line) == 0) {
+            ia_t *ai = find_ia(app, fd);
+            if (ai->time->stuck)
+                printf("\nstuck time: [%f] | [%f] : total to reach\n", time_elapsed(ai->time->start_stuck), ai->time->total_stuck);
+            else
+                printf("Not stuck\n");
+            return true;
         }
         if (strcmp("time", line) == 0) {
             printf("\nTime: [%f]\n", time_elapsed(app->game->start));
+            return true;
         }
         handle_request(app, fd, line);
         free(line);

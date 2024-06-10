@@ -34,3 +34,34 @@ void command_ai_handler(app_t *app, ia_t *ai, char *line)
         return;
     add_message(ai->list_messages, bad_command);
 }
+
+static void check_ai_stuck(ia_t *ai, app_t *app)
+{
+    char *command = NULL;
+
+    if (ai->list_command->first != NULL)
+        command = ai->list_command->first->data.command;
+    else
+        return;
+    if (ai->time->stuck == false) {
+        command_ai_handler(app, ai, command);
+        list_remove_front(ai->list_command);
+    }
+}
+
+void treat_command(app_t *app)
+{
+    list_node_t *temp_team = app->teams_list->first;
+    team_t *team = NULL;
+    list_node_t *ia_temp = NULL;
+
+    while (temp_team) {
+        team = temp_team->data.team;
+        ia_temp = team->list_ai->first;
+        while (ia_temp) {
+            check_ai_stuck(ia_temp->data.ai, app);
+            ia_temp = ia_temp->next;
+        }
+        temp_team = temp_team->next;
+    }
+}

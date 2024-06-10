@@ -16,6 +16,7 @@ SRC			=	src/list/list.c \
 				\
 				src/ai/ai.c \
 				src/ai/team.c \
+				src/ai/stuck.c \
 				src/ai/cmd/handler.c \
 				src/ai/cmd/move.c \
 				src/ai/cmd/look/look_handler.c \

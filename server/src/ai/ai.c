@@ -68,6 +68,7 @@ static time_info_t *create_time(void)
     if (new_time == NULL)
         return NULL;
     new_time->stuck = false;
+    new_time->total_stuck = 0.0;
     return new_time;
 }
 

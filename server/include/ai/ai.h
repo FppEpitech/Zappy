@@ -35,7 +35,7 @@ typedef struct s_inventory {
 typedef struct s_time_info {
     bool stuck;
     struct timeval start_stuck;
-    struct timeval total_stuck;
+    double total_stuck;
 } time_info_t;
 
 typedef struct s_incantation_info {
@@ -82,11 +82,3 @@ void add_ia(app_t *app, size_t fd, char *line);
  * @return ia_t* AI find or NULL if not find.
  */
 ia_t *find_ia(app_t *app, size_t fd);
-
-/**
- * @brief Add a command to the list
- *
- * @param ai Ai who do the command
- * @param line Command.
- */
-void add_command_to_list(ia_t *ai, char *line);

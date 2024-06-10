@@ -20,7 +20,8 @@ app_t *create_app(parsing_t *parsing)
     if (new_app == NULL)
         return NULL;
     new_app->server = create_server(parsing->port);
-    new_app->game = create_game(parsing->height, parsing->width);
+    new_app->game = create_game(parsing->height,
+    parsing->width, parsing->freq);
     if (new_app->server == NULL || new_app->game == NULL)
         return NULL;
     new_app->gui_list = malloc(sizeof(list_t));
