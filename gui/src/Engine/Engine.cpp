@@ -59,7 +59,6 @@ void Gui::Engine::sendMessageUpdate(void)
     _gameData->restartLastTick();
 
     _network.sendMessageServer("sgt\n");
-    _network.sendMessageServer("msz\n");
     _network.sendMessageServer("mct\n");
-    _network.sendMessageServer("tna\n");
+    _network.sendMessageServer("ppo\n");
 }
