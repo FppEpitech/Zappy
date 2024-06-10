@@ -9,7 +9,7 @@
 #include "Error/Error.hpp"
 #include "GUIUpdater/GUIUpdater.hpp"
 
-Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData) : _gameData(gameData) {}
+Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData, std::shared_ptr<Network> network) : _gameData(gameData), _network(network) {}
 
 void Gui::GUIUpdater::update(const std::string &command, const std::vector<std::string> &data)
 {
@@ -206,9 +206,8 @@ void Gui::GUIUpdater::updatePlayerExpulsion(const std::vector<std::string> &data
     }
     for (auto &team : _gameData->getTeams()) {
         for (size_t i = 0; i < team.getPlayers().size(); i++) {
-            if (team.getPlayers()[i].getId() == id) {
-                return; // TODO: Implement the player state
-            }
+            if (team.getPlayers()[i].getId() == id)
+                team.getPlayer(id).get()->setState(Gui::Player::PlayerState::EJECT);
         }
     }
 }
@@ -229,7 +228,8 @@ void Gui::GUIUpdater::updatePlayerBroadcast(const std::vector<std::string> &data
     for (auto &team : _gameData->getTeams()) {
         for (size_t i = 0; i < team.getPlayers().size(); i++) {
             if (team.getPlayers()[i].getId() == id) {
-                return; // TODO: Implement the player state
+                team.getPlayer(id).get()->setState(Gui::Player::PlayerState::BROADCAST);
+                team.getPlayer(id).get()->setBroadcast(data[1]);
             }
         }
     }
@@ -254,9 +254,8 @@ void Gui::GUIUpdater::updatePlayerStartIncantation(const std::vector<std::string
         throw Gui::Errors::GuiUpdaterException("Invalid player start incantation");
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            if (player.getId() == args[0]) {
-                return; // TODO: Implement the player state
-            }
+            if (player.getId() == args[0])
+                player.setState(Gui::Player::PlayerState::INCANTATION);
         }
     }
 }
@@ -281,7 +280,11 @@ void Gui::GUIUpdater::updatePlayerEndIncantation(const std::vector<std::string> 
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
-                return; // TODO: Implement the player state
+                player.setState(Gui::Player::PlayerState::IDLE);
+                for (size_t i = 0; i < team.getPlayers().size(); i++) {
+                    if (team.getPlayers()[i].getPosition().first == player.getPosition().first && team.getPlayers()[i].getPosition().second == player.getPosition().second)
+                        _network->sendMessageServer("plv " + std::to_string(player.getId()) + "\n");
+                }
             }
         }
     }
@@ -302,9 +305,8 @@ void Gui::GUIUpdater::updatePlayerEggLaying(const std::vector<std::string> &data
     }
     for (auto &team : _gameData->getTeams()) {
         for (size_t i = 0; i < team.getPlayers().size(); i++) {
-            if (team.getPlayers()[i].getId() == id) {
-                return; // TODO: Implement the player state and egg class
-            }
+            if (team.getPlayers()[i].getId() == id)
+                team.getPlayer(id).get()->setState(Gui::Player::PlayerState::LAY_EGG);
         }
     }
 }
@@ -328,9 +330,8 @@ void Gui::GUIUpdater::updatePlayerRessourceDropping(const std::vector<std::strin
         throw Gui::Errors::GuiUpdaterException("Invalid ressource dropping");
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            if (player.getId() == args[0]) {
-                return; // TODO: Implement the player state
-            }
+            if (player.getId() == args[0])
+                player.setState(Gui::Player::PlayerState::DROP);
         }
     }
 }
@@ -355,7 +356,8 @@ void Gui::GUIUpdater::updatePlayerRessourceCollecting(const std::vector<std::str
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
-                return; // TODO: Implement the player state
+                player.setState(Gui::Player::PlayerState::COLLECT);
+                _network->sendMessageServer("pin " + std::to_string(player.getId()) + "\n");
             }
         }
     }
@@ -376,9 +378,8 @@ void Gui::GUIUpdater::updatePlayerDeath(const std::vector<std::string> &data)
     }
     for (auto &team : _gameData->getTeams()) {
         for (size_t i = 0; i < team.getPlayers().size(); i++) {
-            if (team.getPlayers()[i].getId() == id) {
-                return; // TODO: Implement the player state
-            }
+            if (team.getPlayers()[i].getId() == id)
+                team.getPlayer(id).get()->setState(Gui::Player::PlayerState::DEAD);
         }
     }
 }
@@ -412,9 +413,8 @@ void Gui::GUIUpdater::updateEggLaidByPlayer(const std::vector<std::string> &data
             std::cout << "Egg laid by player" << std::endl;
         }
         for (auto &player : team.getPlayers()) {
-            if (player.getId() == args[1]) {
+            if (player.getId() == args[1])
                 team.addEgg(Gui::Egg(args[0], team.getName(), std::make_pair(args[2], args[3])));
-            }
         }
     }
 }
@@ -434,9 +434,8 @@ void Gui::GUIUpdater::updatePlayerBorn(const std::vector<std::string> &data)
     }
     for (auto &team : _gameData->getTeams()) {
         for (size_t i = 0; i < team.getPlayers().size(); i++) {
-            if (team.getPlayers()[i].getId() == id) {
-                return; // TODO: Implement the player state and egg class
-            }
+            if (team.getPlayers()[i].getId() == id)
+                team.getPlayer(id).get()->setState(Gui::Player::PlayerState::BORN);
         }
     }
 }
@@ -455,10 +454,9 @@ void Gui::GUIUpdater::updateEggDeath(const std::vector<std::string> &data)
         throw Gui::Errors::GuiUpdaterException("Invalid egg death");
     }
     for (auto &team : _gameData->getTeams()) {
-        for (size_t i = 0; i < team.getPlayers().size(); i++) {
-            if (team.getPlayers()[i].getId() == id) {
-                return; // TODO: Implement the egg class
-            }
+        for (auto &egg : team.getEggs()) {
+            if (egg.getId() == id)
+                egg.setState(Gui::Egg::EggState::DEAD);
         }
     }
 }
@@ -492,8 +490,7 @@ void Gui::GUIUpdater::updateTimeUnitModification(const std::vector<std::string> 
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException("Invalid time unit modification");
     }
-    (void)timeUnit;
-    return; // TODO: Implement the time unit modification
+    _gameData->setServerTick(timeUnit);
 }
 
 void Gui::GUIUpdater::updateEndOfGame(const std::vector<std::string> &data)
@@ -504,8 +501,7 @@ void Gui::GUIUpdater::updateEndOfGame(const std::vector<std::string> &data)
 
 void Gui::GUIUpdater::updateMessageFromServer(const std::vector<std::string> &data)
 {
-    (void)data;
-    return; // TODO: Implement the message from server
+    _gameData.get()->setLastError(data[0]);
 }
 
 void Gui::GUIUpdater::updateUnknownMessage(const std::vector<std::string> &data)

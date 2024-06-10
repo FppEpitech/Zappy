@@ -183,3 +183,12 @@ Test(GameData, restartLastTick, .timeout = 5)
     gameData.restartLastTick();
     cr_assert_neq(gameData.getLastTick(), 0);
 }
+
+
+Test(GameData, getLastError, .timeout = 5)
+{
+    Gui::GameData gameData;
+
+    gameData.setLastError("test");
+    cr_assert_str_eq(gameData.getLastError().c_str(), "test");
+}
