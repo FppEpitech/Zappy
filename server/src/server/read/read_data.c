@@ -77,7 +77,7 @@ bool server_data_handler(app_t *app, size_t fd)
         return true;
     }
     if (its_client(app, fd)) {
-        if (strcmp(line, "GRAPHIC\r") == 0)
+        if (strcmp(line, "GRAPHIC") == 0)
             add_gui(app, fd);
         else
             add_ia(app, fd, line);
