@@ -88,6 +88,15 @@ class Gui::Event {
         };
 
         /**
+         * @brief Map for events by pressing mouse.
+         *
+         */
+        std::unordered_map<MouseButton, std::function<void()>> _eventsMousePressed =
+        {
+            {MOUSE_BUTTON_LEFT, [this](){selectPlayer();}}
+        };
+
+        /**
          * @brief Move up the camera.
          *
          */
@@ -116,4 +125,10 @@ class Gui::Event {
          *
          */
         void switchPovRight();
+
+        /**
+         * @brief Select the player pov;
+         *
+         */
+        void selectPlayer();
 };

@@ -22,6 +22,10 @@ void Gui::Event::listen()
         if (IsKeyPressed(event.first))
             event.second();
     }
+    for (auto &event : _eventsMousePressed) {
+        if (IsMouseButtonPressed(event.first))
+            event.second();
+    }
 }
 
 void Gui::Event::setRender(std::shared_ptr<Render> render)
@@ -67,4 +71,8 @@ void Gui::Event::switchPovRight()
 {
     _render->setCameraType(Gui::UserCamera::POV_PLAYER);
     UpdateCamera(_render->getCamera().get(), CAMERA_THIRD_PERSON);
+}
+
+void Gui::Event::selectPlayer()
+{
 }
