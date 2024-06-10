@@ -175,6 +175,20 @@ class Gui::GameData {
          */
         bool getIsEndGame() const;
 
+        /**
+         * @brief Set the Last Error object.
+         *
+         * @param error Error message.
+         */
+        void setLastError(const std::string &error);
+
+        /**
+         * @brief Get the Last Error object.
+         *
+         * @return std::string - Last error message.
+         */
+        std::string getLastError() const;
+
     private:
 
         std::vector<Gui::Team>      _teams;         // Teams of the game.
@@ -182,4 +196,5 @@ class Gui::GameData {
         std::size_t                 _serverTick;    // Tick value of the server.
         clock_t                     _lastTick;      // Last tick of the GameData (based on the server tick).
         bool                        _isEndGame;     // Is true if the game is finished.
+        std::string                _lastError;     // Last error message.
 };
