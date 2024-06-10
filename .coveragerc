@@ -1,0 +1,4 @@
+[report]
+omit =
+    */tests/*
+    zappy_ai_tests

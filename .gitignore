@@ -10,6 +10,8 @@ zappy_gui
 
 # Python
 __pycache__/
+.coverage
+zappy_ai_tests
 
 # Tests
 *.gcda
