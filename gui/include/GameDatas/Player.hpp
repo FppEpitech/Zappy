@@ -33,7 +33,8 @@ class Gui::Player {
             FINISHED_INCANTATION,
             LAY_EGG,
             DROP,
-            COLLECT
+            COLLECT,
+            DEAD,
         };
 
         /**
