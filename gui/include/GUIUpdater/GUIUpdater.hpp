@@ -8,6 +8,7 @@
 #pragma once
 
 #include "GameDatas/GameData.hpp"
+#include "Network/Network.hpp"
 
 #include <string>
 #include <functional>
@@ -31,8 +32,9 @@ class Gui::GUIUpdater {
          * @brief Construct a new GUIUpdater object.
          *
          * @param gameData The GUI GameData to update.
+         * @param network The network to send commands to the server.
         */
-        GUIUpdater(std::shared_ptr<GameData> gameData);
+        GUIUpdater(std::shared_ptr<GameData> gameData, std::shared_ptr<Network> network);
 
         /**
          * @brief Destroy the GUIUpdater object.
@@ -50,6 +52,7 @@ class Gui::GUIUpdater {
     private:
 
         std::shared_ptr<GameData> _gameData; // The GUI GameData to update.
+        std::shared_ptr<Network> _network; // The network to send commands to the server.
 
         std::unordered_map<std::string, std::function<void(std::vector<std::string>)>> _updateMap =
         {

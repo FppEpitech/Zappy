@@ -12,7 +12,7 @@
 #include <iostream>
 #include <sstream>
 
-Gui::Engine::Engine(Network network) : _network(network), _gameData(std::make_shared<GameData>()), _guiUpdater(_gameData)
+Gui::Engine::Engine(std::shared_ptr<Network> network) : _network(network), _gameData(std::make_shared<GameData>()), _guiUpdater(_gameData, _network)
 {
     _render = std::make_shared<Render>(_gameData);
     _event.setRender(_render);
@@ -31,7 +31,7 @@ void Gui::Engine::run(void)
 
 void Gui::Engine::listenServer(void)
 {
-    std::string command = _network.listenServer();
+    std::string command = _network.get()->listenServer();
 
     if (command == "")
         return;
@@ -58,7 +58,7 @@ void Gui::Engine::sendMessageUpdate(void)
         return;
     _gameData->restartLastTick();
 
-    _network.sendMessageServer("sgt\n");
-    _network.sendMessageServer("mct\n");
-    _network.sendMessageServer("ppo\n");
+    _network.get()->sendMessageServer("sgt\n");
+    _network.get()->sendMessageServer("mct\n");
+    _network.get()->sendMessageServer("ppo\n");
 }

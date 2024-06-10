@@ -9,7 +9,7 @@
 #include "Error/Error.hpp"
 #include "GUIUpdater/GUIUpdater.hpp"
 
-Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData) : _gameData(gameData) {}
+Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData, std::shared_ptr<Network> network) : _gameData(gameData), _network(network) {}
 
 void Gui::GUIUpdater::update(const std::string &command, const std::vector<std::string> &data)
 {
