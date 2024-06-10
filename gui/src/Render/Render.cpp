@@ -44,9 +44,7 @@ bool Gui::Render::isOpen()
 
 void Gui::Render::draw()
 {
-    if (_camera.getType() == Gui::UserCamera::POV_PLAYER)
-        UpdateCamera(_camera.getCamera().get(), CAMERA_THIRD_PERSON);
-    else
+    if (_camera.getType() != Gui::UserCamera::POV_PLAYER)
         UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
 
     BeginDrawing();
