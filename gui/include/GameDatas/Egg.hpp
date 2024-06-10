@@ -23,6 +23,13 @@ class Gui::Egg {
 
     public:
 
+        enum EggState {
+            IDLE,
+            DEAD,
+            BORN,
+            HATCHING,
+        };
+
         /**
          * @brief Construct a new Egg object.
          *
@@ -84,9 +91,24 @@ class Gui::Egg {
          */
         void setPosition(std::pair<std::size_t, std::size_t> position);
 
+        /**
+         * @brief Set the state object.
+         *
+         * @param state State of the egg.
+         */
+        void setState(EggState state);
+
+        /**
+         * @brief Get the state object.
+         *
+         * @return EggState State of the egg.
+         */
+        EggState getState() const;
+
     private:
 
         std::size_t _id; // Id of the egg.
         std::string _team; // Team name of the egg.
         std::pair<std::size_t, std::size_t> _position; // Position of the egg.
+        EggState _state; // State of the egg.
 };

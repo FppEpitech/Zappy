@@ -10,6 +10,7 @@
 Gui::Egg::Egg(size_t id, const std::string &team, std::pair<std::size_t, std::size_t> position)
     : _id{id}, _team{team}, _position{position}
 {
+    _state = EggState::IDLE;
     // TODO: Implement egg animation.
 }
 
@@ -46,4 +47,14 @@ void Gui::Egg::setTeam(const std::string &team)
 void Gui::Egg::setId(std::size_t id)
 {
     _id = id;
+}
+
+void Gui::Egg::setState(EggState state)
+{
+    _state = state;
+}
+
+Gui::Egg::EggState Gui::Egg::getState() const
+{
+    return _state;
 }
