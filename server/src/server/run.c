@@ -89,9 +89,9 @@ bool server_run(app_t *app)
             handle_client_read(app, fd);
             handle_client_write(app, fd);
         }
-        spawn_ressources(app);
         treat_command(app);
         treat_stuck(app);
+        check_die(app);
     }
     return true;
 }

@@ -61,7 +61,7 @@ static incantation_info_t *create_incantation(void)
     return new_incantation;
 }
 
-static time_info_t *create_time(void)
+static time_info_t *create_time(app_t *app)
 {
     time_info_t *new_time = malloc(sizeof(time_info_t));
 
@@ -69,6 +69,8 @@ static time_info_t *create_time(void)
         return NULL;
     new_time->stuck = false;
     new_time->total_stuck = 0.0;
+    gettimeofday(&new_time->start_life, NULL);
+    new_time->total_life = 1260.0 / app->game->freq;
     return new_time;
 }
 
@@ -89,7 +91,7 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     new_ia->list_messages = list_new();
     new_ia->inventory = create_inventory();
     new_ia->incantation = create_incantation();
-    new_ia->time = create_time();
+    new_ia->time = create_time(app);
     add_message_to_ia(app, team, new_ia);
     return new_ia;
 }

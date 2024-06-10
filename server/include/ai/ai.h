@@ -36,6 +36,8 @@ typedef struct s_time_info {
     bool stuck;
     struct timeval start_stuck;
     double total_stuck;
+    struct timeval start_life;
+    double total_life;
 } time_info_t;
 
 typedef struct s_incantation_info {
@@ -82,3 +84,10 @@ void add_ia(app_t *app, size_t fd, char *line);
  * @return ia_t* AI find or NULL if not find.
  */
 ia_t *find_ia(app_t *app, size_t fd);
+
+/**
+ * @brief Check if an AI die.
+ *
+ * @param app Application with list of AI.
+ */
+void check_die(app_t *app);
