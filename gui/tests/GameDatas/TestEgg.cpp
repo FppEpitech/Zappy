@@ -65,3 +65,10 @@ Test(Egg, setId, .timeout = 5)
     egg.setId(2);
     cr_assert_eq(egg.getId(), 2);
 }
+
+Test(Egg, getState, .timeout = 5)
+{
+    Gui::Egg egg(1, "team", {0, 0});
+
+    cr_assert_eq(egg.getState(), Gui::Egg::EggState::IDLE);
+}
