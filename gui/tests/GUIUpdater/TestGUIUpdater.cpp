@@ -156,7 +156,7 @@ Test(GUIUpdater, updateTeamMember, .timeout = 5)
 
     gameData->addTeam("TEAM1", "not_tested", "not_tested");
 
-    guiUpdater.update("pnw", {"TEAM1", "1", "1", "1", "1", "1"});
+    guiUpdater.update("pnw", {"1", "1", "1", "1", "1", "TEAM1"});
     cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getTeam(), "TEAM1");
     cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getId(), 1);
     cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getLevel(), 1);
@@ -171,9 +171,9 @@ Test(GUIUpdater, updateTeamMemberErrorValue, .timeout = 5)
     std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
-    cr_assert_throw(guiUpdater.update("pnw", {"TEAM1", "-1", "1", "1", "1", "1"}), Gui::Errors::GuiUpdaterException);
-    cr_assert_throw(guiUpdater.update("pnw", {"TEAM1", "1", "1", "50", "1", "1"}), Gui::Errors::GuiUpdaterException);
-    cr_assert_throw(guiUpdater.update("pnw", {"TEAM1", "1", "1", "1", "50", "1"}), Gui::Errors::GuiUpdaterException);
+    cr_assert_throw(guiUpdater.update("pnw", {"1", "-1", "1", "1", "1", "TEAM1"}), Gui::Errors::GuiUpdaterException);
+    cr_assert_throw(guiUpdater.update("pnw", {"1", "1", "1", "50", "1", "TEAM1"}), Gui::Errors::GuiUpdaterException);
+    cr_assert_throw(guiUpdater.update("pnw", {"1", "1", "1", "1", "50", "TEAM1"}), Gui::Errors::GuiUpdaterException);
 }
 
 Test(GUIUpdater, updateTeamMemberError, .timeout = 5)
@@ -190,7 +190,7 @@ Test(GUIUpdater, updateTeamMemberInvalidNumberOfArguments, .timeout = 5)
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
-    cr_assert_throw(guiUpdater.update("pnw", {}), Gui::Errors::GuiUpdaterException);
+    cr_assert_throw(guiUpdater.update("pnw", {"1", "1", "1", "1", "1", "TEAM", "1"}), Gui::Errors::GuiUpdaterException);
 }
 
 Test(GUIUpdater, updateTeamMemberErrorValue2, .timeout = 5)
