@@ -44,7 +44,11 @@ bool Gui::Render::isOpen()
 
 void Gui::Render::draw()
 {
-    UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
+    if (_camera.getType() == Gui::UserCamera::POV_PLAYER)
+        UpdateCamera(_camera.getCamera().get(), CAMERA_THIRD_PERSON);
+    else
+        UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
+
     BeginDrawing();
 
     ClearBackground(SKYBLUE);
@@ -205,4 +209,14 @@ void Gui::Render::displayDeraumere(Tile tile) const
         Vector3 posDeraumere = POS_DERAUMERE;
         DrawModelEx(_deraumereModel, (Vector3){posTile.x + posDeraumere.x, posTile.y + posDeraumere.y, posTile.z + posDeraumere.z}, ROTATION_AXIS_DERAUMERE, ROTATION_ANGLE_DERAUMERE, SCALE_DERAUMERE, WHITE);
     }
+}
+
+void Gui::Render::setCameraType(Gui::UserCamera::CameraType type)
+{
+    _camera.setType(type);
+}
+
+Gui::UserCamera::CameraType Gui::Render::getCameraType() const
+{
+    return _camera.getType();
 }

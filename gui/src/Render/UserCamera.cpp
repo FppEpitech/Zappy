@@ -15,6 +15,7 @@ Gui::UserCamera::UserCamera()
     _camera->up = (Vector3){ 0.0f, 1.0f, 0.0f };
     _camera->fovy = 70.0f;
     _camera->projection = CAMERA_PERSPECTIVE;
+    _type = FREE;
 }
 
 void Gui::UserCamera::setPosition(Vector3 position)
@@ -35,6 +36,11 @@ void Gui::UserCamera::setUp(Vector3 up)
 void Gui::UserCamera::setFovy(float fovy)
 {
     _camera->fovy = fovy;
+}
+
+void Gui::UserCamera::setType(CameraType type)
+{
+    _type = type;
 }
 
 Vector3 Gui::UserCamera::getPosition(void) const
@@ -60,4 +66,9 @@ float Gui::UserCamera::getFovy(void) const
 std::shared_ptr<Camera> Gui::UserCamera::getCamera()
 {
     return _camera;
+}
+
+Gui::UserCamera::CameraType Gui::UserCamera::getType() const
+{
+    return _type;
 }

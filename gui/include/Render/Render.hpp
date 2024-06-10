@@ -79,6 +79,20 @@ class Gui::Render {
          */
         bool getIsDebug(void);
 
+        /**
+         * @brief Set the Type object.
+         *
+         * @param type Type to set.
+         */
+        void setCameraType(Gui::UserCamera::CameraType type);
+
+        /**
+         * @brief Get the Type object.
+         *
+         * @return CameraType - Camera type.
+         */
+        Gui::UserCamera::CameraType getCameraType() const;
+
     private:
 
         UserCamera                  _camera;            // Camera of the scene.

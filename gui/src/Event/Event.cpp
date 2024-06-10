@@ -56,10 +56,10 @@ void Gui::Event::switchDisplayDebug()
 
 void Gui::Event::switchPovLeft()
 {
-
+    _render->setCameraType(Gui::UserCamera::FREE);
 }
 
 void Gui::Event::switchPovRight()
 {
-
+    _render->setCameraType(Gui::UserCamera::POV_PLAYER);
 }
