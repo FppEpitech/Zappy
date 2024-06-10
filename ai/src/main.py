@@ -18,6 +18,7 @@ PORT_MAX = 65535
 # Localhost
 LOCALHOST = "127.0.0.1"
 
+
 def writeHelp(exitCode : int = 0):
     """
     Print the help message
@@ -34,7 +35,15 @@ def writeHelp(exitCode : int = 0):
     print("")
     sys.exit(exitCode)
 
+
 def getArgs(av=sys.argv):
+    """
+    Get the arguments
+
+    Parameters:
+        av : list
+            the arguments passed to the program
+    """
     if len(av) == 2 and av[1] == "--help":
         writeHelp(0)
     host = LOCALHOST
@@ -56,6 +65,9 @@ def getArgs(av=sys.argv):
     return host, port, name
 
 def main():
+        """
+        Main function
+        """
         host, port, teamName = getArgs()
         api = API(host, port)
         api.connect()
