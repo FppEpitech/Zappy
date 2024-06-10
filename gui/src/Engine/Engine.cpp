@@ -60,5 +60,9 @@ void Gui::Engine::sendMessageUpdate(void)
 
     _network.get()->sendMessageServer("sgt\n");
     _network.get()->sendMessageServer("mct\n");
-    _network.get()->sendMessageServer("ppo\n");
+    for (auto &team : _gameData.get()->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            _network.get()->sendMessageServer("ppo " + std::to_string(player.getId()) + "\n");
+        }
+    }
 }
