@@ -41,9 +41,11 @@ SRC			=	src/list/list.c \
 				src/parsing/parse_frequency.c		\
 				\
 				src/map/map.c						\
+				\
+				src/gui/communication/loop.c		\
 
 TEST_FILES	=	list/list_test.c \
-				communication/communication_test.c \
+				communication/communication_test.c 	\
 				parsing/help_test.c					\
 				parsing/parse_positive_int_tests.c	\
 				parsing/parse_client_tests.c		\

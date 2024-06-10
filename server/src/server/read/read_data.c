@@ -10,6 +10,7 @@
 #include "ai/ai.h"
 #include "app/app.h"
 #include "server/client.h"
+#include "gui/communication.h"
 
 char *append_char(char *line, char current_char)
 {
@@ -55,7 +56,7 @@ void handle_request(app_t *app, size_t fd, char *line)
     if (gui != NULL) {
         if (gui->list_messages->len >= 10)
             return;
-        (void) line;
+        handle_command_gui(gui, app, line);
         return;
     }
     if (ai != NULL) {
