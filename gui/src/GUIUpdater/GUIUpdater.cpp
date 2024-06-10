@@ -86,6 +86,8 @@ void Gui::GUIUpdater::updateTeamNames(const std::vector<std::string> &data)
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "tna: " + Red + error.what());
     }
+    if (_gameData->getTeams().empty())
+        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "tna:" + Red + "No team found");
 }
 
 void Gui::GUIUpdater::updateTeamMember(const std::vector<std::string> &data)
@@ -94,7 +96,9 @@ void Gui::GUIUpdater::updateTeamMember(const std::vector<std::string> &data)
     size_t tmp = 0;
 
     try {
-        for (size_t i = 0; i < data.size() - 1; i++) {
+        for (size_t i = 0; i < data.size(); i++) {
+            if (i == 5)
+                continue;
             int temp = std::stoi(data[i], &tmp);
             if (temp < 0 || tmp != data[i].size())
                 throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pnw:" + Red + "Invalid team member parameters");
