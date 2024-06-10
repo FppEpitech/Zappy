@@ -34,7 +34,7 @@ static const char *command_label[CL_LEN + 1] = {
 };
 
 static void (*command_func[CL_LEN + 1])(gui_t *gui, app_t *app) = {
-    [CL_MSZ] = NULL,
+    [CL_MSZ] = &msz_response,
     [CL_BCT] = NULL,
     [CL_MCT] = NULL,
     [CL_TNA] = NULL,
