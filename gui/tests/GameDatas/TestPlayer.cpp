@@ -78,3 +78,11 @@ Test(Player, state, .timeout = 5)
     player.setState(Gui::Player::EJECT);
     cr_assert_eq(player.getState(), Gui::Player::EJECT);
 }
+
+Test(Player, getBroadcast, .timeout = 5)
+{
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
+
+    player.setBroadcast("Hello");
+    cr_assert_str_eq(player.getBroadcast().c_str(), "Hello");
+}
