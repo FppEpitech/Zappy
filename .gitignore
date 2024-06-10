@@ -18,3 +18,8 @@ zappy_ai_tests
 *.gcno
 *.gcov
 *unit_tests
+
+#generated doc
+doc/doxygen/html
+doc/doxygen/latex
+website-doc
