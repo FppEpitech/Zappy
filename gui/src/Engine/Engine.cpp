@@ -8,6 +8,7 @@
 #include "Event/Event.hpp"
 #include "Engine/Engine.hpp"
 #include "GUIUpdater/GUIUpdater.hpp"
+#include "Colors.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -44,7 +45,7 @@ void Gui::Engine::listenServer(void)
         _guiUpdater.update(keyCommand, arguments);
     }
     catch (const std::exception &error) {
-        std::cout << error.what() << std::endl;
+        std::cout << Red << error.what() << Reset << std::endl;
     }
 }
 
