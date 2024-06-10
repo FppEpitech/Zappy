@@ -22,7 +22,7 @@ typedef struct s_app app_t;
  * @param time Time of depart.
  * @return double Time.
  */
-double time_elapsed(struct timeval time);
+double time_elapsed(struct timeval *time);
 
 /**
  * @brief Set the time stuck object.

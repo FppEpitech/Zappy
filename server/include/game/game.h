@@ -14,6 +14,7 @@ typedef struct s_game {
     size_t width;
     tile_t **map;
     struct timeval start;
+    struct timeval start_food;
     int freq;
 } game_t;
 
@@ -26,3 +27,10 @@ typedef struct s_game {
  * @return game_t* Game initialized.
  */
 game_t *create_game(int height, int width, int freq);
+
+/**
+ * @brief Spawn ressources
+ *
+ * @param app Application with ressources data.
+ */
+void spawn_ressources(app_t *app);

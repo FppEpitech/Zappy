@@ -9,7 +9,7 @@
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
 
-static void inventory_cmd(app_t *app, ia_t *ai)
+static void inventory_cmd(ia_t *ai)
 {
     char *reply = format_string(
         "[%s %d, %s %d, %s %d, %s %d, %s %d, %s %d, %s %d]\n",
@@ -28,6 +28,7 @@ static void inventory_cmd(app_t *app, ia_t *ai)
         "thystame",
         ai->inventory->thystame
     );
+
     add_message(ai->list_messages, reply);
 }
 
@@ -39,7 +40,7 @@ bool object_info_command(app_t *app, ia_t *ai, char *line)
         return true;
     }
     if (strcmp("Inventory", line) == 0) {
-        inventory_cmd(app, ai);
+        inventory_cmd(ai);
         set_time_stuck(ai, 1 / app->game->freq);
         return true;
     }

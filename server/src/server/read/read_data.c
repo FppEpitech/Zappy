@@ -88,109 +88,12 @@ bool server_data_handler(app_t *app, size_t fd)
         printf("QUIT\n");
         return true;
     }
-    line[strlen(line) - 1] = '\0';
     if (its_client(app, fd)) {
         if (strcmp(line, "GRAPHIC") == 0)
             add_gui(app, fd);
         else
             add_ia(app, fd, line);
     } else {
-        if (strcmp("team", line) == 0) {
-            list_node_t *temp = app->teams_list->first;
-            team_t *team = NULL;
-
-            while (temp) {
-                team = temp->data.team;
-                list_node_t *ia_temp = team->list_ai->first;
-                printf("Name of the team: [%s]\n", team->name);
-                while (ia_temp) {
-                    printf("fd: [%ld]\n", ia_temp->data.ai->fd);
-                    ia_temp = ia_temp->next;
-                }
-                printf("\n\n");
-                temp = temp->next;
-            }
-            return true;
-        }
-
-        if (strcmp("gui", line) == 0) {
-            list_node_t *temp = app->gui_list->first;
-            gui_t *gui = NULL;
-
-            while (temp) {
-                gui = temp->data.gui;
-                printf("FD GUI: [%ld]\n", gui->fd);
-                temp = temp->next;
-            }
-            printf("\n\n");
-            return true;
-        }
-
-        if (strcmp("client", line) == 0) {
-            list_node_t *temp = app->clients_list->first;
-            client_t *client = NULL;
-
-            while (temp) {
-                client = temp->data.client;
-                printf("FD client: [%ld]\n", client->fd);
-                temp = temp->next;
-            }
-            printf("\n\n");
-            return true;
-        }
-
-        if (strcmp("pos", line) == 0) {
-            ia_t *ai = find_ia(app, fd);
-            printf("AI POS X: [%d]\n", ai->position->x);
-            printf("AI POS Y: [%d]\n", ai->position->y);
-            return true;
-        }
-
-        if (strcmp("orientation", line) == 0) {
-            ia_t *ai = find_ia(app, fd);
-            if (ai->direction == NORTH)
-                printf("AI Direction: [NORTH]\n");
-            if (ai->direction == SOUTH)
-                printf("AI Direction: [SOUTH]\n");
-            if (ai->direction == EAST)
-                printf("AI Direction: [EAST]\n");
-            if (ai->direction == WEST)
-                printf("AI Direction: [WEST]\n");
-            return true;
-        }
-
-        if (strcmp("level_up", line) == 0) {
-            ia_t *ai = find_ia(app, fd);
-            ai->level++;
-            return true;
-        }
-
-        if (strcmp("egg", line) == 0) {
-            display_egg_position(app);
-            return true;
-        }
-        if (strcmp("map", line) == 0) {
-            display_map(app->game->map, app->game->height, app->game->width);
-            return true;
-        }
-
-        if (strcmp("level", line) == 0) {
-            ia_t *ai = find_ia(app, fd);
-            printf("\nLevel: [%ld]\n", ai->level);
-            return true;
-        }
-        if (strcmp("stuck", line) == 0) {
-            ia_t *ai = find_ia(app, fd);
-            if (ai->time->stuck)
-                printf("\nstuck time: [%f] | [%f] : total to reach\n", time_elapsed(ai->time->start_stuck), ai->time->total_stuck);
-            else
-                printf("Not stuck\n");
-            return true;
-        }
-        if (strcmp("time", line) == 0) {
-            printf("\nTime: [%f]\n", time_elapsed(app->game->start));
-            return true;
-        }
         handle_request(app, fd, line);
         free(line);
     }

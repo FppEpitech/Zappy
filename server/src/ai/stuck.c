@@ -15,15 +15,15 @@ void set_time_stuck(ia_t *ai, double total_stuck)
     ai->time->total_stuck = total_stuck;
 }
 
-double time_elapsed(struct timeval time)
+double time_elapsed(struct timeval *time)
 {
     struct timeval end;
     double seconds = 0.0;
     double microseconds = 0.0;
 
     gettimeofday(&end, NULL);
-    seconds = (end.tv_sec - time.tv_sec);
-    microseconds = (end.tv_usec - time.tv_usec) / 1000000.0;
+    seconds = (end.tv_sec - time->tv_sec);
+    microseconds = (end.tv_usec - time->tv_usec) / 1000000.0;
     return seconds + microseconds;
 }
 
@@ -31,7 +31,7 @@ static void check_statut_stuck(ia_t *ai)
 {
     if (ai->time->stuck == false)
         return;
-    if (time_elapsed(ai->time->start_stuck) >= ai->time->total_stuck) {
+    if (time_elapsed(&ai->time->start_stuck) >= ai->time->total_stuck) {
         ai->time->stuck = false;
         ai->time->total_stuck = 0.0;
     }
