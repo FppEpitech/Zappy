@@ -85,24 +85,25 @@ void Gui::GUIUpdater::updateTeamMember(const std::vector<std::string> &data)
     size_t tmp = 0;
 
     try {
-        for (size_t i = 1; i < data.size(); i++) {
+        for (size_t i = 0; i < data.size() - 1; i++) {
+            std::cout << data[i] << std::endl;
             int temp = std::stoi(data[i], &tmp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException("Invalid team member");
+                throw Gui::Errors::GuiUpdaterException("Invalid team member1");
             args.push_back(temp);
         }
     } catch (const std::exception &error) {
-        throw Gui::Errors::GuiUpdaterException("Invalid team member");
+        throw Gui::Errors::GuiUpdaterException("Invalid team member2");
     }
     if (args.size() != 5)
-        throw Gui::Errors::GuiUpdaterException("Invalid team member");
-    if (args[2] < 1 || args[2] > 4)
+        throw Gui::Errors::GuiUpdaterException("Invalid team member3");
+    if (args[3] < 1 || args[3] > 4)
         throw Gui::Errors::GuiUpdaterException("Invalid player orientation");
-    if (args[3] < 1 || args[3] > 8)
+    if (args[4] < 1 || args[4] > 8)
         throw Gui::Errors::GuiUpdaterException("Invalid player level");
     for (auto &team : _gameData->getTeams()) {
         if (team.getName() == data[0]) {
-            team.addPlayer(Gui::Player(args[0], data[0], std::make_pair(args[1], args[2]), args[3], args[4]));
+            team.addPlayer(Gui::Player(args[0], data[5], std::make_pair(args[1], args[2]), args[3], args[4]));
         }
     }
 }
