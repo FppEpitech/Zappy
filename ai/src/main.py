@@ -8,7 +8,7 @@
 
 import sys
 
-from ai.src.Network.API import API
+from ai.src.AI import AI
 from ai.src.Errors.ArgsException import ArgsException
 
 # Port min
@@ -64,16 +64,14 @@ def getArgs(av=sys.argv):
         writeHelp(84)
     return host, port, name
 
+
 def main():
         """
         Main function
         """
         host, port, teamName = getArgs()
-        api = API(host, port)
-        api.connect()
-        api.initConnection(teamName)
-        while True:
-            api.receiveData()
+        ai = AI(host, port, teamName)
+        ai.run()
 
 
 if __name__ == "__main__":
