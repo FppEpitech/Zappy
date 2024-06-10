@@ -5,6 +5,7 @@
 ** Network
 */
 
+#include "Colors.hpp"
 #include "Network/Network.hpp"
 
 #include <unistd.h>
@@ -98,6 +99,8 @@ const std::string Gui::Network::readInfoServer()
 
 void Gui::Network::sendMessageServer(const std::string& message)
 {
-    if (FD_ISSET(_serverFd, &_writeFd))
+    if (FD_ISSET(_serverFd, &_writeFd)) {
         write(_serverFd, message.c_str(), message.length());
+        std::cerr << Violet << "Send: " << Cyan << message << Reset << std::endl;
+    }
 }
