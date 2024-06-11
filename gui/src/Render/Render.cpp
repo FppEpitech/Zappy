@@ -106,7 +106,7 @@ void Gui::Render::displayMap(void) const
 {
     for (auto &line : _gameData->getMap()) {
         for (auto &tile : line) {
-            DrawModel(_tileModel, tile.getPositionIn3DSpace(), 0.001f, WHITE);
+            DrawModel(_tileModel, tile.getPositionIn3DSpace(), 1.0f, WHITE);
             displayFood(tile);
             displayResources(tile);
             displayEggs(tile);

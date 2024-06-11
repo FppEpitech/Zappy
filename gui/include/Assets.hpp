@@ -20,7 +20,7 @@
 #define MODEL_PLAYER                PATH_ASSETS "player.glb"
 #define MODEL_EGG                   PATH_ASSETS "egg.glb"
 
-#define SIZE_TILE                   6
+#define SIZE_TILE                   4.7
 
 #define SCALE_FOOD                  (Vector3){2, 2, 2}
 #define SCALE_LINEMATE              (Vector3){0.05, 0.05, 0.05}
