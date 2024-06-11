@@ -47,7 +47,7 @@ void Gui::Render::draw()
     UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
     BeginDrawing();
 
-    ClearBackground(SKYBLUE);
+    ClearBackground(ORANGE);
 
     BeginMode3D(*_camera.getCamera());
     displayMap();
