@@ -19,3 +19,8 @@ typedef struct s_parsing {
     int freq;
     char **names;
 } parsing_t;
+
+typedef struct s_vector2i {
+    int x;
+    int y;
+} vector2i_t;
