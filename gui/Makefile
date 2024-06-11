@@ -51,7 +51,7 @@ MAIN_OBJ	=	$(MAIN:.cpp=.o)
 NAME		= 	zappy_gui
 
 # Flags
-INCLUDE		= 	-I./include -I./tests
+INCLUDE		= 	-I./include -I../tests/gui/tests
 CXXFLAGS 	= 	-std=c++20 -Wall -Wextra -Werror -lraylib
 
 # Colors
