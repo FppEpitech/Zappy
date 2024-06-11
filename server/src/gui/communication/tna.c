@@ -12,17 +12,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TEAM_NAME data.team->name
-
 void tna_response(gui_t *gui, app_t *app, char *line)
 {
-    (void)line;
     char *response = NULL;
     list_node_t *node = app->teams_list->first;
 
     while (node) {
-        response = format_string("tna %s\n", node->TEAM_NAME);
+        response = format_string("tna %s\n", node->data.team->name);
         add_message(gui->list_messages, response);
         node = node->next;
     }
+    (void)line;
 }

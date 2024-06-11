@@ -20,13 +20,13 @@ static void print_tile(gui_t *gui, app_t *app, vector2i_t pos)
         app->game->map[pos.y][pos.x].mendiane,
         app->game->map[pos.y][pos.x].phiras,
         app->game->map[pos.y][pos.x].thystame);
+
     add_message(gui->list_messages, response);
 }
 
 // TODO error handling
 void mct_response(gui_t *gui, app_t *app, char *line)
 {
-    (void) line;
     vector2i_t pos = {0, 0};
 
     while ((size_t)pos.y < app->game->height) {
@@ -37,4 +37,5 @@ void mct_response(gui_t *gui, app_t *app, char *line)
         }
         pos.y++;
     }
+    (void) line;
 }

@@ -13,10 +13,10 @@
 
 void sgt_response(gui_t *gui, app_t *app, char *line)
 {
-    (void)line;
     char *response = NULL;
     int freq = app->game->freq;
 
     response = format_string("sgt %d\n", freq);
     add_message(gui->list_messages, response);
+    (void)line;
 }

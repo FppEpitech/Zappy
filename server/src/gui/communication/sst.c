@@ -16,7 +16,9 @@
 static bool is_str_number(char *str)
 {
     for (int i = 0; str[i]; i++) {
-        if (str[i] == '\n')
+        if (str[i] == '\r')
+            continue;
+        if (str[i] == '\n' && str[i - 1] == '\r')
             return true;
         if (str[i] < '0' || str[i] > '9')
             return false;
@@ -24,16 +26,17 @@ static bool is_str_number(char *str)
     return true;
 }
 
+// TODO error
 void sst_response(gui_t *gui, app_t *app, char *line)
 {
     char *response = NULL;
     int freq = 0;
 
     if (line[3] != ' ')
-        return; // TODO Error
+        return;
     line += 4;
     if (!is_str_number(line))
-        return; // TODO Error
+        return;
     freq = atoi(line);
     app->game->freq = freq;
     response = format_string("sst %d\n", freq);

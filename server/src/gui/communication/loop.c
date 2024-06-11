@@ -49,7 +49,8 @@ static void (*command_func[CL_LEN + 1])(gui_t *gui, app_t *app, char *line) = {
 void handle_command_gui(gui_t *gui, app_t *app, char *line)
 {
     for (int i = 0; i < CL_LEN; i++) {
-        if (strncmp(line, command_label[i], 3) == 0 && command_func[i] != NULL) {
+        if (strncmp(line, command_label[i], 3) == 0
+            && command_func[i] != NULL) {
             command_func[i](gui, app, line);
             return;
         }
