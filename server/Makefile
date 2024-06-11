@@ -71,7 +71,7 @@ GREEN 		= /bin/echo -e "\x1b[32m $1\x1b[0m"
 
 # Tests
 TEST_NAME 	= unit_tests
-TEST_DIR 	= tests/
+TEST_DIR 	= ../tests/server/tests/
 TEST 		= $(addprefix $(TEST_DIR), $(TEST_FILES))
 TEST_OBJ 	= $(TEST:.c=.o)
 TEST_GCNO 	= $(SRC:.c=.gcno)
