@@ -22,6 +22,7 @@ SRC			=	src/Error/Error.cpp \
 				src/GameDatas/Tile.cpp \
 				src/GameDatas/Team.cpp \
 				src/GameDatas/GameData.cpp \
+				src/GameDatas/Egg.cpp \
 				\
 				src/Render/Render.cpp \
 				src/Render/UserCamera.cpp \
@@ -37,6 +38,8 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				GameDatas/TestPlayer.cpp \
 				GameDatas/TestTile.cpp \
 				GameDatas/TestGameData.cpp \
+				GameDatas/TestEgg.cpp \
+				GameDatas/TestTeam.cpp \
 				Render/TestCamera.cpp \
 				GUIUpdater/TestGUIUpdater.cpp \
 				Event/TestEvent.cpp \
@@ -72,14 +75,14 @@ $(NAME): $(OBJ) $(MAIN_OBJ)
 	@$(CC) $(MAIN_OBJ) $(OBJ) -o $(NAME) $(CXXFLAGS) $(INCLUDE) && \
 	$(call YELLOW,"✅ $@") || \
 	$(call YELLOW,"❌ $@")
-	cp $(NAME) ../
+	mv $(NAME) ../
 
 clean:
 	rm -f $(MAIN_OBJ) $(OBJ)
 	@$(call GREEN,"✅ [$@] done !")
 
 fclean: clean tests_clean
-	@rm -f $(NAME) $(TEST_NAME)
+	@rm -f $(TEST_NAME)
 	@rm -f ../$(NAME)
 	@$(call GREEN,"✅ [$@] done !")
 

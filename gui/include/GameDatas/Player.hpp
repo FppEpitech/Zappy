@@ -22,6 +22,21 @@ class Gui::Player {
 
     public:
 
+        enum PlayerState {
+            IDLE,
+            BORN,
+            BROADCAST,
+            EJECT,
+            BEING_EJECTED,
+            WALK,
+            INCANTATION,
+            FINISHED_INCANTATION,
+            LAY_EGG,
+            DROP,
+            COLLECT,
+            DEAD,
+        };
+
         /**
          * @brief Construct a new Player object.
          *
@@ -108,6 +123,34 @@ class Gui::Player {
         std::string getTeam(void) const;
 
         /**
+         * @brief Set the State object.
+         *
+         * @param state New player state.
+         */
+        void setState(PlayerState state);
+
+        /**
+         * @brief Get the State object.
+         *
+         * @return PlayerState - Player state.
+         */
+        PlayerState getState(void) const;
+
+        /**
+         * @brief Set the Broadcast object.
+         *
+         * @param broadcast New broadcast message.
+         */
+        void setBroadcast(const std::string &broadcast);
+
+        /**
+         * @brief Get the Broadcast object.
+         *
+         * @return std::string - Broadcast message.
+         */
+        std::string getBroadcast(void) const;
+
+        /**
          * @brief Inventory of the player.
          *
          */
@@ -115,9 +158,11 @@ class Gui::Player {
 
     private:
 
-        std::size_t                             _id;        // Id of the player.
-        std::string                             _team;      // Team name.
-        std::pair<std::size_t, std::size_t>     _position;  // Position x y.
-        std::size_t                             _orientation; // Orientation of the player.
-        std::size_t                             _level;     // Level between 1 - 8.
+        std::size_t                             _id;            // Id of the player.
+        std::string                             _team;          // Team name.
+        std::pair<std::size_t, std::size_t>     _position;      // Position x y.
+        std::size_t                             _orientation;   // Orientation of the player.
+        std::size_t                             _level;         // Level between 1 - 8.
+        PlayerState                             _state;         // Player state.
+        std::string                             _broadcast;     // Broadcast message.
 };

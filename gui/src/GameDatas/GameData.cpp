@@ -11,6 +11,9 @@ Gui::GameData::GameData()
 {
     _teams = std::vector<Gui::Team>();
     _map = Map<Gui::Tile>();
+    _serverTick = NO_TICK;
+    _lastTick = clock();
+    _isEndGame = false;
 }
 
 std::vector<Gui::Team> &Gui::GameData::getTeams()
@@ -36,13 +39,13 @@ void Gui::GameData::addTeam(const Gui::Team &team)
     _teams.push_back(team);
 }
 
-void Gui::GameData::addTeam(const std::string &name, const std::string &playerModelPath)
+void Gui::GameData::addTeam(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath)
 {
-    for (auto &team : _teams) {
-        if (team.getName() == name)
+    for (auto &regsiteredTeam : _teams) {
+        if (regsiteredTeam.getName() == name)
             throw Gui::Errors::GuiGameDataException("Team already exists");
     }
-    _teams.push_back(Gui::Team(name, playerModelPath));
+    _teams.push_back(Gui::Team(name, playerModelPath, eggModelPath));
 }
 
 void Gui::GameData::addPlayerToTeam(const std::string &teamName, const Gui::Player &player)
@@ -104,4 +107,44 @@ void Gui::GameData::setTile(const Gui::Tile &tile)
     if (tile.getPosition().first >= _map.size() || tile.getPosition().second >= _map[tile.getPosition().first].size())
         throw Gui::Errors::GuiGameDataException("Tile not found");
     _map[tile.getPosition().first][tile.getPosition().second] = tile;
+}
+
+void Gui::GameData::restartLastTick()
+{
+    _lastTick = clock();
+}
+
+void Gui::GameData::setServerTick(std::size_t tick)
+{
+    _serverTick = tick;
+}
+
+clock_t Gui::GameData::getLastTick() const
+{
+    return _lastTick;
+}
+
+std::size_t Gui::GameData::getServerTick() const
+{
+    return _serverTick;
+}
+
+void Gui::GameData::setIsEndGame(bool isEndGame)
+{
+    _isEndGame = isEndGame;
+}
+
+bool Gui::GameData::getIsEndGame() const
+{
+    return _isEndGame;
+}
+
+void Gui::GameData::setLastError(const std::string &error)
+{
+    _lastError = error;
+}
+
+std::string Gui::GameData::getLastError() const
+{
+    return _lastError;
 }

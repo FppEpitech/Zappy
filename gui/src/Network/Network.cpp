@@ -5,6 +5,7 @@
 ** Network
 */
 
+#include "Colors.hpp"
 #include "Network/Network.hpp"
 
 #include <unistd.h>
@@ -70,6 +71,10 @@ const std::string Gui::Network::listenServer()
     std::string data = readInfoServer();
     if (!_isConnected && data == "WELCOME") {
         sendMessageServer("GRAPHIC\n");
+        sendMessageServer("sgt\n");
+        sendMessageServer("msz\n");
+        sendMessageServer("mct\n");
+        sendMessageServer("tna\n");
         _isConnected = true;
         return "";
     }
@@ -94,6 +99,8 @@ const std::string Gui::Network::readInfoServer()
 
 void Gui::Network::sendMessageServer(const std::string& message)
 {
-    if (FD_ISSET(_serverFd, &_writeFd))
+    if (FD_ISSET(_serverFd, &_writeFd)) {
         write(_serverFd, message.c_str(), message.length());
+        std::cerr << STR_VIOLET << "Send: " << STR_CYAN << message << STR_RESET << std::endl;
+    }
 }

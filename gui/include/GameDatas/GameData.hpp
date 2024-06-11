@@ -11,6 +11,8 @@
 #include "GameDatas/Team.hpp"
 #include "GameDatas/Tile.hpp"
 
+#define NO_TICK int(-1)
+
 /**
  * @brief Map type.
  *
@@ -71,8 +73,9 @@ class Gui::GameData {
          *
          * @param name Name of the team.
          * @param playerModelPath Path to the asset of the team for players.
+         * @param eggModelPath Path to the asset of the team for eggs.
          */
-        void addTeam(const std::string &name, const std::string &playerModelPath);
+        void addTeam(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath);
 
         /**
          * @brief Add a player to a team.
@@ -130,8 +133,68 @@ class Gui::GameData {
          */
         void setTile(const Gui::Tile &tile);
 
+        /**
+         * @brief Restart the last tick clock.
+         *
+         */
+        void restartLastTick(void);
+
+        /**
+         * @brief Set the Server Tick object.
+         *
+         * @param tick Tick of the server.
+         */
+        void setServerTick(std::size_t tick);
+
+        /**
+         * @brief Get the Last Tick object.
+         *
+         * @return clock_t - Last Tick.
+         */
+        clock_t getLastTick() const;
+
+        /**
+         * @brief Get the Server Tick object.
+         *
+         * @return std::size_t - Server Tick.
+         */
+        std::size_t getServerTick() const;
+
+        /**
+         * @brief Set the IsEnd Game object.
+         *
+         * @param isEndGame EndGame state.
+         */
+        void setIsEndGame(bool isEndGame);
+
+        /**
+         * @brief Get the IsEnd Game object.
+         *
+         * @return true - The game is finished.
+         * @return false - The game continue.
+         */
+        bool getIsEndGame() const;
+
+        /**
+         * @brief Set the Last Error object.
+         *
+         * @param error Error message.
+         */
+        void setLastError(const std::string &error);
+
+        /**
+         * @brief Get the Last Error object.
+         *
+         * @return std::string - Last error message.
+         */
+        std::string getLastError() const;
+
     private:
 
-        std::vector<Gui::Team> _teams; // Teams of the game.
-        Map<Gui::Tile> _map; // Map of the game.
+        std::vector<Gui::Team>      _teams;         // Teams of the game.
+        Map<Gui::Tile>              _map;           // Map of the game.
+        std::size_t                 _serverTick;    // Tick value of the server.
+        clock_t                     _lastTick;      // Last tick of the GameData (based on the server tick).
+        bool                        _isEndGame;     // Is true if the game is finished.
+        std::string                 _lastError;     // Last error message.
 };

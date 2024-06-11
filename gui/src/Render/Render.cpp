@@ -95,9 +95,9 @@ void Gui::Render::displayPlayers(void) const
 {
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            Vector3 posPlayer = (Vector3){(float)(player.getPosition().first), 0, (float)(player.getPosition().second)};
             Vector3 posAssetPlayer = POS_PLAYER;
-            DrawModelEx(team.getPlayerModel(), (Vector3){posPlayer.x + posAssetPlayer.x, posPlayer.y + posAssetPlayer.y, posPlayer.z + posAssetPlayer.z}, ROTATION_AXIS_PLAYER, ROTATION_ANGLE_PLAYER, SCALE_PLAYER, WHITE);
+            Vector3 posTile = _gameData->getMap()[player.getPosition().first][player.getPosition().second].getPositionIn3DSpace();
+            DrawModelEx(team.getPlayerModel(), (Vector3){posTile.x + posAssetPlayer.x, posTile.y + posAssetPlayer.y, posTile.z + posAssetPlayer.z}, ROTATION_AXIS_PLAYER, ROTATION_ANGLE_PLAYER, SCALE_PLAYER, WHITE);
         }
     }
 }
@@ -109,6 +109,20 @@ void Gui::Render::displayMap(void) const
             DrawModel(_tileModel, tile.getPositionIn3DSpace(), 0.001f, WHITE);
             displayFood(tile);
             displayResources(tile);
+            displayEggs(tile);
+        }
+    }
+}
+
+void Gui::Render::displayEggs(Tile tile) const
+{
+    for (auto &team : _gameData->getTeams()) {
+        for (auto &egg: team.getEggs()) {
+            if (egg.getPosition().first != tile.getPosition().first || egg.getPosition().second != tile.getPosition().second)
+                continue;
+            Vector3 posEggModel = POS_EGG;
+            Vector3 posTile = tile.getPositionIn3DSpace();
+            DrawModelEx(team.getEggModel(), (Vector3){posTile.x + posEggModel.x, posTile.y + posEggModel.y, posTile.z + posEggModel.z}, ROTATION_AXIS_EGG, ROTATION_ANGLE_EGG, SCALE_EGG, WHITE);
         }
     }
 }

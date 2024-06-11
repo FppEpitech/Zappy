@@ -75,3 +75,8 @@ zappy_server_tests_run:
 
 zappy_ai_tests_run:
 	@make tests_run -C ai
+
+doc:
+	@make -C ./doc
+
+.PHONY: doc
