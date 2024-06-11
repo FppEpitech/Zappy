@@ -21,14 +21,14 @@ enum e_command_label {
 };
 
 static const char *command_label[CL_LEN + 1] = {
-    [CL_MSZ] = "msz\r",
-    [CL_BCT] = "bct\r",
+    [CL_MSZ] = "msz",
+    [CL_BCT] = "bct",
     [CL_MCT] = "mct",
-    [CL_TNA] = "tna\r",
+    [CL_TNA] = "tna",
     [CL_PPO] = "ppo",
     [CL_PLV] = "plv",
     [CL_PIN] = "pin",
-    [CL_SGT] = "sgt\r",
+    [CL_SGT] = "sgt",
     [CL_SST] = "sst",
     [CL_LEN] = NULL
 };
