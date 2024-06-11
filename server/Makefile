@@ -70,6 +70,7 @@ SRC			=	src/list/list.c \
 				src/gui/communication/loop.c		\
 				src/gui/communication/msz.c			\
 				src/gui/communication/tna.c			\
+				src/gui/communication/sgt.c			\
 
 TEST_FILES	=	list/list_test.c \
 				communication/communication_test.c 	\

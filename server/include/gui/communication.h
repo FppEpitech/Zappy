@@ -34,3 +34,11 @@ void msz_response(gui_t *gui, app_t *app);
  * @param app The app structure.
  */
 void tna_response(gui_t *gui, app_t *app);
+
+/**
+ * @brief Response to the sgt command.
+ *
+ * @param gui The gui structure of client requested.
+ * @param app The app structure.
+ */
+void sgt_response(gui_t *gui, app_t *app);
