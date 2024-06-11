@@ -135,3 +135,10 @@ int parse_width(char **arg, int *pos, parsing_t *parsing);
  * 0 if the arg is valid.
  */
 int parse_names(char **arg, int *pos, parsing_t *parsing);
+
+/**
+ * @brief Destroy the parsing struct.
+ *
+ * @param parsing Parsing struct to destroy.
+ */
+void destroy_parsing(parsing_t *parsing);

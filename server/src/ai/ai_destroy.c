@@ -7,7 +7,7 @@
 
 #include "server/client.h"
 
-static void destroy_command_list(list_t *command_list)
+void destroy_command_list(list_t *command_list)
 {
     list_node_t *temp = command_list->first;
 
@@ -30,12 +30,14 @@ static void destroy_egg(list_t *egg_list)
 static void destroy_ai(ia_t *ai)
 {
     close(ai->fd);
-    destroy_message_list(ai->list_command);
+    destroy_message_list(ai->list_messages);
     destroy_command_list(ai->list_command);
     free(ai->position);
     free(ai->inventory);
     free(ai->incantation);
     free(ai->time);
+    list_free(ai->list_command);
+    list_free(ai->list_messages);
     free(ai);
 }
 
@@ -56,6 +58,7 @@ void destroy_team(list_t *teams_list)
         destroy_egg(team->egg_position);
         list_free(team->egg_position);
         free(team->name);
+        free(team);
         temp = temp->next;
     }
     list_free(teams_list);

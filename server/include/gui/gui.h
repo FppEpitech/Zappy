@@ -30,8 +30,9 @@ gui_t *create_gui(int fd);
  *
  * @param app Application with list of gui.
  * @param fd File descriptor of GUI.
+ * @param line GRAPHIC team.
  */
-void add_gui(app_t *app, size_t fd);
+void add_gui(app_t *app, size_t fd, char *line);
 
 /**
  * @brief Find a gui throw a file descriptor.

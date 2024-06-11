@@ -64,6 +64,7 @@ SRC			=	src/list/list.c \
 				src/parsing/arguments.c				\
 				src/parsing/parse_names.c			\
 				src/parsing/parse_frequency.c		\
+				src/parsing/destroy_parsing.c 		\
 				\
 				src/map/map.c						\
 
@@ -89,7 +90,7 @@ NAME		= 	zappy_server
 
 # Flags
 INCLUDE		= -I./include
-CXXFLAGS 	= -Wall -Wextra -Werror
+CXXFLAGS 	= -Wall -Wextra -Werror -g
 
 # Colors
 YELLOW 		= /bin/echo -e "\x1b[33m $1\x1b[0m"

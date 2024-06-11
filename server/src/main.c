@@ -28,5 +28,6 @@ int main(int ac, char **av)
         return 84;
     server_run(app);
     destroy_app(app);
+    destroy_parsing(parsing);
     return 0;
 }

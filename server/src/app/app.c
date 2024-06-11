@@ -9,7 +9,7 @@
 
 static void create_teams(parsing_t *parsing, app_t *app)
 {
-    for (size_t index = 0; parsing->names[index]; index++)
+    for (size_t index = 0; parsing->names[index] != NULL; index++)
         add_team(app, parsing->names[index], parsing->clientsNb);
 }
 
@@ -24,9 +24,9 @@ app_t *create_app(parsing_t *parsing)
     parsing->width, parsing->freq);
     if (new_app->server == NULL || new_app->game == NULL)
         return NULL;
-    new_app->gui_list = malloc(sizeof(list_t));
-    new_app->clients_list = malloc(sizeof(list_t));
-    new_app->teams_list = malloc(sizeof(list_t));
+    new_app->gui_list = list_new();
+    new_app->clients_list = list_new();
+    new_app->teams_list = list_new();
     create_teams(parsing, new_app);
     if (new_app->gui_list == NULL || new_app->clients_list == NULL
     || new_app->teams_list == NULL)
@@ -51,4 +51,5 @@ void destroy_app(app_t *app)
     destroy_client(app->clients_list);
     destroy_team(app->teams_list);
     destroy_game(app->game);
+    free(app);
 }

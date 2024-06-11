@@ -62,4 +62,5 @@ void look_north(app_t *app, ia_t *ai, int index_line, char **reply)
         if (index_line != (int) ai->level || index_tile != index_line)
             concatenate_strings(reply, ",");
     }
+    free(pos);
 }
