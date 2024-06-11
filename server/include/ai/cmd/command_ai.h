@@ -9,8 +9,8 @@
 
 #include "ai/ai.h"
 
-#define BEGIN 1
-#define END 2
+#define BEGIN_STATUS 1
+#define END_STATUS 2
 
 /**
  * @brief Handler of AI command.
@@ -22,7 +22,7 @@
 void command_ai_handler(app_t *app, ia_t *ai, char *line);
 
 /**
- * @brief Handler of command who move player(Forward, Right, Left).
+ * @brief Handler of command who move player (Forward, Right, Left).
  *
  * @param app Application with necessary information.
  * @param ai AI who have done a command.
@@ -144,7 +144,8 @@ bool incantation_command(app_t *app, ia_t *ai, char *line);
  *
  * @param app Application with necessary information.
  * @param ai AI who have launch the incantation.
- * @param status BEGIN or END (to know if I have to verify status incantation).
+ * @param status BEGIN_STATUS or END_STATUS
+ * (to know if I have to verify status incantation).
  * @return true If condition is good.
  * @return false If condition isn't good.
  */

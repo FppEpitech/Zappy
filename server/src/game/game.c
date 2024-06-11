@@ -98,9 +98,8 @@ game_t *create_game(int height, int width, int freq)
 
 void destroy_game(game_t *game)
 {
-    for (size_t index_y = 0; index_y < game->height; index_y++) {
+    for (size_t index_y = 0; index_y < game->height; index_y++)
         free(game->map[index_y]);
-    }
     free(game->map);
     free(game);
 }

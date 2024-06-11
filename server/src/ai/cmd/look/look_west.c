@@ -21,30 +21,30 @@ static int get_x_line(app_t *app, ia_t *ai, int index_line)
     return depart_x;
 }
 
-static int decremente_value(app_t *app, int depart_y, int decompte)
+static int decremente_value(app_t *app, int depart_y, int count)
 {
-    if (depart_y + decompte < 0)
+    if (depart_y + count < 0)
         return ((int) app->game->height - 1);
-    else if (depart_y + decompte == (int) app->game->height)
+    else if (depart_y + count == (int) app->game->height)
         return 0;
     else
-        return depart_y + decompte;
+        return depart_y + count;
 }
 
 static int get_y_line(app_t *app, ia_t *ai, int index_tile)
 {
     int depart_y = ai->position->y;
     int goal = index_tile;
-    int decompte = 0;
+    int count = 0;
 
     if (index_tile == 0)
         return depart_y;
     if (index_tile < 0)
-        decompte = -1;
+        count = -1;
     else
-        decompte = 1;
-    for (int index = 0; index != goal; index += decompte)
-        depart_y = decremente_value(app, depart_y, decompte);
+        count = 1;
+    for (int index = 0; index != goal; index += count)
+        depart_y = decremente_value(app, depart_y, count);
     return depart_y;
 }
 

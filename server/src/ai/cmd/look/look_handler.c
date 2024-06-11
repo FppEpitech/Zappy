@@ -84,6 +84,8 @@ void look_cmd(app_t *app, ia_t *ai)
 {
     char *reply = strdup("[player");
 
+    if (reply == NULL)
+        return;
     for (size_t index_line = 0; index_line <= ai->level; index_line++) {
         if (ai->direction == NORTH)
             look_north(app, ai, index_line, &reply);

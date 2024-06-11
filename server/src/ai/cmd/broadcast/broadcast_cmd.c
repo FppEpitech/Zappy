@@ -40,7 +40,7 @@ bool broadcast_command(app_t *app, ia_t *ai, char *line)
 {
     char *reply = NULL;
 
-    if (strncmp("Broadcast", line, 9) == 0) {
+    if (strncmp("Broadcast ", line, 10) == 0) {
         reply = format_string("ok\n");
         browse_ia(app, ai, line + 10);
         add_message(ai->list_messages, reply);
