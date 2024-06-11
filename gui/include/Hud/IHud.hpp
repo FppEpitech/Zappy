@@ -24,14 +24,39 @@ class Gui::IHud {
 
     public:
 
+        /**
+         * @brief Hud enum for the different scenes.
+         *
+         */
         enum TypeScene {
             GAME,
             POV_PLAYER,
             END_GAME
         };
 
+        /**
+         * @brief Destroy the IHud object.
+         *
+         */
         virtual ~IHud() = default;
+
+        /**
+         * @brief Display the Hud.
+         *
+         */
         virtual void display() = 0;
+
+        /**
+         * @brief Set the Player object.
+         *
+         * @param player Player to display infos.
+         */
         virtual void setPlayer(std::shared_ptr<Player> player) = 0;
+
+        /**
+         * @brief Get the Type object.
+         *
+         * @return TypeScene - Type of the scene.
+         */
         virtual TypeScene getType() = 0;
 };

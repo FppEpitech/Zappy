@@ -27,12 +27,27 @@ class Gui::HudPlayer : public Gui::AHud {
 
     public:
 
+        /**
+         * @brief Construct a new Hud Player object.
+         *
+         * @param gameData GameData class.
+         */
         HudPlayer(std::shared_ptr<GameData> gameData);
+
+        /**
+         * @brief Destroy the Hud Player object.
+         *
+         */
         ~HudPlayer() = default;
+
+        /**
+         * @brief Display Player Hud.
+         *
+         */
         void display();
 
     private:
 
-        Texture2D   _texture;
-        Font        _font;
+        Texture2D   _texture;       // Texture for Hud Background.
+        Font        _font;          // Font for Hud's texts.
 };
