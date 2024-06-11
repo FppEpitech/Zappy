@@ -15,10 +15,34 @@ SRC			=	src/list/list.c \
 				src/app/app.c \
 				\
 				src/ai/ai.c \
+				src/ai/team.c \
+				src/ai/stuck.c \
+				src/ai/ai_destroy.c \
+				src/ai/die.c \
+				src/ai/cmd/handler.c \
+				src/ai/cmd/move.c \
+				src/ai/cmd/look/look_handler.c \
+				src/ai/cmd/look/look_north.c \
+				src/ai/cmd/look/look_east.c \
+				src/ai/cmd/look/look_south.c \
+				src/ai/cmd/look/look_west.c \
+				src/ai/cmd/other/other_handler.c \
+				src/ai/cmd/other/take_cmd.c \
+				src/ai/cmd/other/set_cmd.c \
+				src/ai/cmd/other/fork_cmd.c \
+				src/ai/cmd/other/dead_cmd.c \
+				src/ai/cmd/other/connect_nbr_cmd.c \
+				src/ai/cmd/eject/eject_handler.c \
+				src/ai/cmd/eject/eject_player.c \
+				src/ai/cmd/eject/eject_egg.c \
+				src/ai/cmd/broadcast/broadcast_cmd.c \
+				src/ai/cmd/incantation/incantation_handler.c \
+				src/ai/cmd/incantation/check_incantation.c \
+				src/ai/cmd/object_info.c \
+				src/ai/cmd/incantation/update_status.c \
+				src/ai/cmd/incantation/level_up.c \
 				\
 				src/gui/gui.c \
-				\
-				src/ai/team.c \
 				\
 				src/server/run.c \
 				src/server/quit.c \
@@ -29,6 +53,7 @@ SRC			=	src/list/list.c \
 				src/server/write/write_data.c \
 				\
 				src/game/game.c \
+				src/game/win.c \
 				\
 				src/parsing/help.c					\
 				src/parsing/parse_positive_int.c	\
@@ -54,6 +79,7 @@ TEST_FILES	=	list/list_test.c \
 				parsing/parse_arguments_tests.c		\
 				parsing/parse_names_tests.c			\
 				map/map_test.c \
+				ai/move_command.c \
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
