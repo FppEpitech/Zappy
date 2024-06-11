@@ -14,7 +14,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     : _gameData(gameData)
 {
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
-    // DisableCursor();
+    DisableCursor();
     SetTargetFPS(140);
     _isDebug = false;
     this->LoadModels();
