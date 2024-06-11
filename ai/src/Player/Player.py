@@ -73,8 +73,6 @@ class Player:
             Start the incantation
         none()
             Do nothing
-        printVision()
-            Print the vision of the player
         updateVision(vision : str)
             Update the vision of the player
         updateInventory(inventory : str)
@@ -121,7 +119,7 @@ class Player:
         """
         Print the player
         """
-        return f"Level {self.level}, Inventory {self.inventory}, Current action {self.currentAction}, Current command {self.currentCommand}, Vision {self.vision}, Broadcast received {self.broadcastReceived}"
+        return f"Level: {self.level}, Inventory: [{self.inventory}], Current action: {self.currentAction}, Current command: {self.currentCommand}, Vision: {self.vision}, Broadcast received: {self.broadcastReceived}, Ejection received: {self.ejectionReceived}"
 
 
     def moveForward(self):
@@ -173,7 +171,7 @@ class Player:
                 the message to broadcast
         """
         self.currentAction = Action.BROADCAST
-        self.currentCommand = f"Broadcast {message}"
+        self.currentCommand = f"Broadcast \"{message}\""
 
 
     def connectNbr(self):
@@ -282,7 +280,10 @@ class Player:
         """
         message = message[8:]
         direction = int(message.split(", ")[0])
-        message = message.split(", ")[1]
+        if message.find('\"') != -1:
+            message = message[message.find('\"') + 1: message.rfind('\"')]
+        else:
+            message = message.split(", ")[1]
         self.broadcastReceived.append((direction, message))
 
 
