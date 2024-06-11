@@ -17,9 +17,8 @@ void concatenate_strings(char **str1, char *str2)
     size_t len2 = strlen(str2);
     char *result = realloc(*str1, len1 + len2 + 1);
 
-    if (result == NULL) {
+    if (result == NULL)
         return;
-    }
     *str1 = result;
     strcat(*str1, str2);
 }
