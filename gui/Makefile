@@ -107,3 +107,9 @@ tests_run: fclean
 	@$(CC) -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(TEST_FLAGS) $(INCLUDE)
 	./$(TEST_NAME)
 	gcovr --exclude tests/
+
+install:
+	sudo dnf install alsa-lib-devel mesa-libGL-devel \
+		libX11-devel libXrandr-devel libXi-devel \
+		libXcursor-devel libXinerama-devel libatomic
+	sudo dnf install raylib-devel
