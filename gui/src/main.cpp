@@ -17,10 +17,10 @@ int main(int argc, char **argv)
         Gui::ParseCommandLine parseLine(argc, argv);
         Gui::Network net(parseLine.getPort(), parseLine.getHostName());
         net.connectToServer();
-        Gui::Engine engine(net);
+        Gui::Engine engine(std::make_shared<Gui::Network>(net));
         engine.run();
     } catch (const std::exception &error) {
-        std::cout << error.what() << std::endl;
+        std::cerr << error.what() << std::endl;
         return 84;
     }
     return 0;

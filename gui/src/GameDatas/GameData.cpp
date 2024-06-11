@@ -109,7 +109,7 @@ void Gui::GameData::setTile(const Gui::Tile &tile)
     _map[tile.getPosition().first][tile.getPosition().second] = tile;
 }
 
-void Gui::GameData::restartLastTick(void)
+void Gui::GameData::restartLastTick()
 {
     _lastTick = clock();
 }
@@ -137,4 +137,14 @@ void Gui::GameData::setIsEndGame(bool isEndGame)
 bool Gui::GameData::getIsEndGame() const
 {
     return _isEndGame;
+}
+
+void Gui::GameData::setLastError(const std::string &error)
+{
+    _lastError = error;
+}
+
+std::string Gui::GameData::getLastError() const
+{
+    return _lastError;
 }

@@ -79,7 +79,7 @@ std::shared_ptr<Gui::Player> Gui::Team::getPlayer(std::size_t id)
     return nullptr;
 }
 
-Model Gui::Team::getPlayerModel(void) const
+Model Gui::Team::getPlayerModel() const
 {
     return _playerModel;
 }
