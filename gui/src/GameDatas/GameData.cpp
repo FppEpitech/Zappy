@@ -138,3 +138,13 @@ bool Gui::GameData::getIsEndGame() const
 {
     return _isEndGame;
 }
+
+void Gui::GameData::setLastError(const std::string &error)
+{
+    _lastError = error;
+}
+
+std::string Gui::GameData::getLastError() const
+{
+    return _lastError;
+}

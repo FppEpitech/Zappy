@@ -33,7 +33,8 @@ class Gui::Player {
             FINISHED_INCANTATION,
             LAY_EGG,
             DROP,
-            COLLECT
+            COLLECT,
+            DEAD,
         };
 
         /**
@@ -136,6 +137,20 @@ class Gui::Player {
         PlayerState getState(void) const;
 
         /**
+         * @brief Set the Broadcast object.
+         *
+         * @param broadcast New broadcast message.
+         */
+        void setBroadcast(const std::string &broadcast);
+
+        /**
+         * @brief Get the Broadcast object.
+         *
+         * @return std::string - Broadcast message.
+         */
+        std::string getBroadcast(void) const;
+
+        /**
          * @brief Inventory of the player.
          *
          */
@@ -149,4 +164,5 @@ class Gui::Player {
         std::size_t                             _orientation;   // Orientation of the player.
         std::size_t                             _level;         // Level between 1 - 8.
         PlayerState                             _state;         // Player state.
+        std::string                             _broadcast;     // Broadcast message.
 };

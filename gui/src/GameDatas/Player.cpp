@@ -70,3 +70,13 @@ Gui::Player::PlayerState Gui::Player::getState(void) const
 {
     return _state;
 }
+
+void Gui::Player::setBroadcast(const std::string &broadcast)
+{
+    _broadcast = broadcast;
+}
+
+std::string Gui::Player::getBroadcast(void) const
+{
+    return _broadcast;
+}
