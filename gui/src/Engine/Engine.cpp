@@ -28,8 +28,8 @@ void Gui::Engine::run(void)
 
     while (_render->isOpen() && !_gameData->getIsEndGame()) {
         listenServer();
-        _event.listen();
         _render->draw();
+        _event.listen();
         sendMessageUpdate();
     }
 }
