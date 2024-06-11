@@ -9,6 +9,8 @@
 
 #include <stddef.h>
 
+#include "types.h"
+
 typedef struct s_ia ia_t;
 typedef struct s_gui gui_t;
 typedef struct s_team team_t;
