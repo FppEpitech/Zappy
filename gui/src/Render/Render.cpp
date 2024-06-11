@@ -15,6 +15,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
 {
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
     DisableCursor();
+    ToggleFullscreen();
     SetTargetFPS(140);
     _isDebug = false;
     this->LoadModels();
