@@ -35,7 +35,7 @@
 
 #define ROTATION_ANGLE_FOOD         270
 #define ROTATION_ANGLE_LINEMATE     270
-#define ROTATION_ANGLE_MENDIANE     270
+#define ROTATION_ANGLE_MENDIANE     0
 #define ROTATION_ANGLE_PHIRAS       180
 #define ROTATION_ANGLE_SIBUR        270
 #define ROTATION_ANGLE_THYSTAME     270
@@ -55,7 +55,7 @@
 
 #define POS_FOOD                    (Vector3){0.5, 0.1, 1.5}
 #define POS_LINEMATE                (Vector3){1, 0.1, -0.5}
-#define POS_MENDIANE                (Vector3){2, 0.25, -0.5}
+#define POS_MENDIANE                (Vector3){2, -0.25, -0.5}
 #define POS_PHIRAS                  (Vector3){0.5, 0.5, -1.5}
 #define POS_SIBUR                   (Vector3){1.5, 0.1, -1.5}
 #define POS_THYSTAME                (Vector3){1, -0.2, -2}
