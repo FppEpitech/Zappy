@@ -23,6 +23,7 @@ fclean: clean
 	rm -f $(NAME)
 	rm -f ../$(NAME)
 	rm -f $(TEST_NAME)
+	rm -f ../$(TEST_NAME)
 
 re: fclean all
 

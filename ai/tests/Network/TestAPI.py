@@ -5,8 +5,6 @@
 ## API
 ##
 
-import sys
-
 from ai.src.Network.API import API
 from ai.src.Network.APIException import APIException
 
