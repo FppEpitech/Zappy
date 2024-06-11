@@ -26,7 +26,7 @@
 #define SCALE_FOOD                  (Vector3){2, 2, 2}
 #define SCALE_LINEMATE              (Vector3){0.1, 0.1, 0.1}
 #define SCALE_MENDIANE              (Vector3){0.1, 0.1, 0.1}
-#define SCALE_PHIRAS                (Vector3){0.2, 0.2, 0.2}
+#define SCALE_PHIRAS                (Vector3){0.001, 0.001, 0.005}
 #define SCALE_SIBUR                 (Vector3){0.01, 0.01, 0.01}
 #define SCALE_THYSTAME              (Vector3){2, 2, 2}
 #define SCALE_DERAUMERE             (Vector3){0.5, 0.5, 0.5}
@@ -36,7 +36,7 @@
 #define ROTATION_ANGLE_FOOD         270
 #define ROTATION_ANGLE_LINEMATE     270
 #define ROTATION_ANGLE_MENDIANE     0
-#define ROTATION_ANGLE_PHIRAS       180
+#define ROTATION_ANGLE_PHIRAS       270
 #define ROTATION_ANGLE_SIBUR        270
 #define ROTATION_ANGLE_THYSTAME     270
 #define ROTATION_ANGLE_DERAUMERE    0
@@ -56,7 +56,7 @@
 #define POS_FOOD                    (Vector3){0.5, 0.1, 1.5}
 #define POS_LINEMATE                (Vector3){1, -0.3, -0.5}
 #define POS_MENDIANE                (Vector3){2, -0.25, -0.5}
-#define POS_PHIRAS                  (Vector3){0.5, 0.5, -1.5}
+#define POS_PHIRAS                  (Vector3){0.5, -0.3, -1.5}
 #define POS_SIBUR                   (Vector3){1.5, -0.3, -1.5}
 #define POS_THYSTAME                (Vector3){1, -0.2, -2}
 #define POS_DERAUMERE               (Vector3){2, 0.1, -2}
