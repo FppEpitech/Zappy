@@ -38,3 +38,16 @@ gui_t *find_gui(app_t *app, size_t fd)
     }
     return NULL;
 }
+
+void destroy_gui(list_t *gui_list)
+{
+    list_node_t *temp = gui_list->first;
+
+    while (temp) {
+        close(temp->data.gui->fd);
+        destroy_message_list(temp->data.gui->list_messages);
+        free(temp->data.gui);
+        temp = temp->next;
+    }
+    list_free(gui_list);
+}

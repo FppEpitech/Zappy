@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "GameDatas/GameData.hpp"
 #include "Network/Network.hpp"
+#include "GameDatas/GameData.hpp"
 
 #include <string>
 #include <functional>

@@ -75,7 +75,7 @@ bool server_data_handler(app_t *app, size_t fd);
 /**
  * @brief Read a line from a file descriptor.
  *
- * @param fd File descriptor where read the line
+ * @param fd File descriptor where read the line.
  * @return char* The line readed.
  */
 char *read_line(int fd);
@@ -155,3 +155,27 @@ void handle_client_read(app_t *app, int fd);
  * @param fd File descriptor to read.
  */
 void handle_client_write(app_t *app, int fd);
+
+/**
+ * @brief Create new vector2i object.
+ *
+ * @param x Coord x of new vector.
+ * @param y Coord y of new vector.
+ * @return vector2i_t* New vector.
+ */
+vector2i_t *create_vector2i(int x, int y);
+
+/**
+ * @brief Concat two string.
+ *
+ * @param str1 First strings.
+ * @param str2 Second string to concat to the first.
+ */
+void concatenate_strings(char **str1, char *str2);
+
+/**
+ * @brief Destroy list of messages.
+ *
+ * @param message_list List of message to destroy.
+ */
+void destroy_message_list(list_t *message_list);

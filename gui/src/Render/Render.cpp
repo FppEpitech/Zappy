@@ -95,9 +95,9 @@ void Gui::Render::displayPlayers(void) const
 {
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            Vector3 posPlayer = (Vector3){(float)(player.getPosition().first), 0, (float)(player.getPosition().second)};
             Vector3 posAssetPlayer = POS_PLAYER;
-            DrawModelEx(team.getPlayerModel(), (Vector3){posPlayer.x + posAssetPlayer.x, posPlayer.y + posAssetPlayer.y, posPlayer.z + posAssetPlayer.z}, ROTATION_AXIS_PLAYER, ROTATION_ANGLE_PLAYER, SCALE_PLAYER, WHITE);
+            Vector3 posTile = _gameData->getMap()[player.getPosition().first][player.getPosition().second].getPositionIn3DSpace();
+            DrawModelEx(team.getPlayerModel(), (Vector3){posTile.x + posAssetPlayer.x, posTile.y + posAssetPlayer.y, posTile.z + posAssetPlayer.z}, ROTATION_AXIS_PLAYER, ROTATION_ANGLE_PLAYER, SCALE_PLAYER, WHITE);
         }
     }
 }
