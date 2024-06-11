@@ -63,3 +63,12 @@ void sst_response(gui_t *gui, app_t *app, char *line);
  * @param line The command to handle.
  */
 void bct_response(gui_t *gui, app_t *app, char *line);
+
+/**
+ * @brief Response to the bct command.
+ *
+ * @param gui The gui structure of client requested.
+ * @param app The app structure.
+ * @param line Unused.
+ */
+void mct_response(gui_t *gui, app_t *app, char *line);
