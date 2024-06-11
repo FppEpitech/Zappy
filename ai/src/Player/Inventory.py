@@ -67,6 +67,23 @@ class Inventory:
         return f"food {self.food}, linemate {self.linemate}, deraumere {self.deraumere}, sibur {self.sibur}, mendiane {self.mendiane}, phiras {self.phiras}, thystame {self.thystame}, player {self.player}"
 
 
+    def __eq__(self, inventory):
+        """
+        Compare two inventories
+
+        Parameters :
+            inventory : Inventory
+                the inventory to compare with
+
+        Returns :
+            bool
+                True if the inventories are the same, False otherwise
+        """
+        if self.food == inventory.food and self.linemate == inventory.linemate and self.deraumere == inventory.deraumere and self.sibur == inventory.sibur and self.mendiane == inventory.mendiane and self.phiras == inventory.phiras and self.thystame == inventory.thystame and self.player == inventory.player:
+            return True
+        return False
+
+
     def updateInventory(self, data : str):
         """
         Update the inventory with the data from the inventory command
