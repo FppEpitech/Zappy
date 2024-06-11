@@ -11,8 +11,9 @@
 #include <stddef.h>
 
 
-void sgt_response(gui_t *gui, app_t *app)
+void sgt_response(gui_t *gui, app_t *app, char *line)
 {
+    (void)line;
     char *response = NULL;
     int freq = app->game->freq;
 

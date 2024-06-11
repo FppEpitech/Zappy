@@ -14,8 +14,9 @@
 
 #define TEAM_NAME data.team->name
 
-void tna_response(gui_t *gui, app_t *app)
+void tna_response(gui_t *gui, app_t *app, char *line)
 {
+    (void)line;
     char *response = NULL;
     list_node_t *node = app->teams_list->first;
 

@@ -33,7 +33,7 @@ static const char *command_label[CL_LEN + 1] = {
     [CL_LEN] = NULL
 };
 
-static void (*command_func[CL_LEN + 1])(gui_t *gui, app_t *app) = {
+static void (*command_func[CL_LEN + 1])(gui_t *gui, app_t *app, char *line) = {
     [CL_MSZ] = &msz_response,
     [CL_BCT] = NULL,
     [CL_MCT] = NULL,
@@ -49,8 +49,8 @@ static void (*command_func[CL_LEN + 1])(gui_t *gui, app_t *app) = {
 void handle_command_gui(gui_t *gui, app_t *app, char *line)
 {
     for (int i = 0; i < CL_LEN; i++) {
-        if (strcmp(line, command_label[i]) == 0 && command_func[i] != NULL) {
-            command_func[i](gui, app);
+        if (strncmp(line, command_label[i], 3) == 0 && command_func[i] != NULL) {
+            command_func[i](gui, app, line);
             return;
         }
     }

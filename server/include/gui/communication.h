@@ -24,21 +24,24 @@ void handle_command_gui(gui_t *gui, app_t *app, char *line);
  *
  * @param gui The gui structure of client requested.
  * @param app The app structure.
+ * @param line Unused.
  */
-void msz_response(gui_t *gui, app_t *app);
+void msz_response(gui_t *gui, app_t *app, char *line);
 
 /**
  * @brief Response to the tna command.
  *
  * @param gui The gui structure of client requested.
  * @param app The app structure.
+ * @param line Unused.
  */
-void tna_response(gui_t *gui, app_t *app);
+void tna_response(gui_t *gui, app_t *app, char *line);
 
 /**
  * @brief Response to the sgt command.
  *
  * @param gui The gui structure of client requested.
  * @param app The app structure.
+ * @param line Unused.
  */
-void sgt_response(gui_t *gui, app_t *app);
+void sgt_response(gui_t *gui, app_t *app, char *line);
