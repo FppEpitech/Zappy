@@ -26,3 +26,11 @@ void handle_command_gui(gui_t *gui, app_t *app, char *line);
  * @param app The app structure.
  */
 void msz_response(gui_t *gui, app_t *app);
+
+/**
+ * @brief Response to the tna command.
+ *
+ * @param gui The gui structure of client requested.
+ * @param app The app structure.
+ */
+void tna_response(gui_t *gui, app_t *app);
