@@ -27,7 +27,7 @@ double time_elapsed(struct timeval *time);
 /**
  * @brief Set the time stuck object.
  *
- * @param ai Ai to stuck;
+ * @param ai Ai to stuck.
  * @param total_stuck The total time stuck.
  */
 void set_time_stuck(ia_t *ai, double total_stuck);

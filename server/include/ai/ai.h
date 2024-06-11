@@ -68,7 +68,7 @@ typedef struct s_ia {
 ia_t *create_ia(app_t *app, int fd, team_t *team);
 
 /**
- * @brief Add ai to the corresponding team
+ * @brief Add ai to the corresponding team.
  *
  * @param app Application with list of team.
  * @param fd File descriptor of AI.

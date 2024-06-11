@@ -22,7 +22,7 @@
 void command_ai_handler(app_t *app, ia_t *ai, char *line);
 
 /**
- * @brief Handler of command who move player(Forward, Right, Left)
+ * @brief Handler of command who move player(Forward, Right, Left).
  *
  * @param app Application with necessary information.
  * @param ai AI who have done a command.
@@ -33,7 +33,7 @@ void command_ai_handler(app_t *app, ia_t *ai, char *line);
 bool move_command(app_t *app, ia_t *ai, char *line);
 
 /**
- * @brief Handler of command who send object info (Look, Inventory)
+ * @brief Handler of command who send object info (Look, Inventory).
  *
  * @param app Application with necessary information.
  * @param ai AI who have done a command.
@@ -44,7 +44,7 @@ bool move_command(app_t *app, ia_t *ai, char *line);
 bool object_info_command(app_t *app, ia_t *ai, char *line);
 
 /**
- * @brief Handler of other command (Connect_nbr)
+ * @brief Handler of other command (Connect_nbr).
  *
  * @param app Application with necessary information.
  * @param ai AI who have done a command.

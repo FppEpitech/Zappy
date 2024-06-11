@@ -18,7 +18,7 @@ typedef struct s_gui {
 } gui_t;
 
 /**
- * @brief Create a gui object
+ * @brief Create a gui object.
  *
  * @param fd File Descriptor of GUI.
  * @return gui_t* Gui created.
@@ -26,7 +26,7 @@ typedef struct s_gui {
 gui_t *create_gui(int fd);
 
 /**
- * @brief Add gui to the list
+ * @brief Add gui to the list.
  *
  * @param app Application with list of gui.
  * @param fd File descriptor of GUI.

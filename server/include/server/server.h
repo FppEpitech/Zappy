@@ -75,7 +75,7 @@ bool server_data_handler(app_t *app, size_t fd);
 /**
  * @brief Read a line from a file descriptor.
  *
- * @param fd File descriptor where read the line
+ * @param fd File descriptor where read the line.
  * @return char* The line readed.
  */
 char *read_line(int fd);
@@ -168,7 +168,7 @@ vector2i_t *create_vector2i(int x, int y);
 /**
  * @brief Concat two string.
  *
- * @param str1 First strings
+ * @param str1 First strings.
  * @param str2 Second string to concat to the first.
  */
 void concatenate_strings(char **str1, char *str2);

@@ -32,7 +32,7 @@ void look_cmd(app_t *app, ia_t *ai);
  *
  * @param pos Pos to check.
  * @param app Application with necessary information.
- * @param reply Reply where add player
+ * @param reply Reply where add player.
  * @param ai AI who have done a command.
  */
 void check_player(vector2i_t *pos, app_t *app, char **reply, ia_t *ai);
@@ -42,7 +42,7 @@ void check_player(vector2i_t *pos, app_t *app, char **reply, ia_t *ai);
  *
  * @param pos Pos to check.
  * @param app Application with necessary information.
- * @param reply Reply where add player
+ * @param reply Reply where add player.
  */
 void check_egg(vector2i_t *pos, app_t *app, char **reply);
 
@@ -51,7 +51,7 @@ void check_egg(vector2i_t *pos, app_t *app, char **reply);
  *
  * @param pos Pos to check.
  * @param app Application with necessary information.
- * @param reply Reply where add player
+ * @param reply Reply where add player.
  */
 void check_resources(vector2i_t *pos, app_t *app, char **reply);
 
