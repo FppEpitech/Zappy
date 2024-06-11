@@ -42,7 +42,7 @@ static void (*command_func[CL_LEN + 1])(gui_t *gui, app_t *app, char *line) = {
     [CL_PLV] = NULL,
     [CL_PIN] = NULL,
     [CL_SGT] = &sgt_response,
-    [CL_SST] = NULL,
+    [CL_SST] = &sst_response,
     [CL_LEN] = NULL
 };
 
