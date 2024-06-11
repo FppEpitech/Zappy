@@ -41,32 +41,32 @@ void Gui::Player::setState(PlayerState state)
     _state = state;
 }
 
-std::pair<std::size_t, std::size_t> Gui::Player::getPosition(void) const
+std::pair<std::size_t, std::size_t> Gui::Player::getPosition() const
 {
     return _position;
 }
 
-std::size_t Gui::Player::getId(void) const
+std::size_t Gui::Player::getId() const
 {
     return _id;
 }
 
-std::size_t Gui::Player::getLevel(void) const
+std::size_t Gui::Player::getLevel() const
 {
     return _level;
 }
 
-std::size_t Gui::Player::getOrientation(void) const
+std::size_t Gui::Player::getOrientation() const
 {
     return _orientation;
 }
 
-std::string Gui::Player::getTeam(void) const
+std::string Gui::Player::getTeam() const
 {
     return _team;
 }
 
-Gui::Player::PlayerState Gui::Player::getState(void) const
+Gui::Player::PlayerState Gui::Player::getState() const
 {
     return _state;
 }
@@ -76,7 +76,7 @@ void Gui::Player::setBroadcast(const std::string &broadcast)
     _broadcast = broadcast;
 }
 
-std::string Gui::Player::getBroadcast(void) const
+std::string Gui::Player::getBroadcast() const
 {
     return _broadcast;
 }
