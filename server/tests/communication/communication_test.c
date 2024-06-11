@@ -13,7 +13,7 @@
 Test(communication, create_app, .timeout = 5)
 {
     parsing_t *parsing = malloc(sizeof(parsing_t));
-    parsing->port = 4444;
+    parsing->port = 4443;
     parsing->height = 10;
     parsing->width = 15;
     parsing->clientsNb = 3;

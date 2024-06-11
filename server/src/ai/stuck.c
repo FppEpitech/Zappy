@@ -32,7 +32,7 @@ static void handle_incantation_verification(ia_t *ai, app_t *app)
 {
     if (ai->incantation->status_incantation == false)
         return;
-    if (check_incantation(app, ai, END_STATUS) == false) {
+    if (check_incantation(app, ai, END_INCANTATION) == false) {
         printf("FAILD at end verification\n");
         update_status(app, ai, END_INCANTATION);
         return;

@@ -13,7 +13,7 @@ bool incantation_command(app_t *app, ia_t *ai, char *line)
 {
     if (strcmp("Incantation", line) == 0) {
         printf("Check incantation begin\n");
-        if (check_incantation(app, ai, BEGIN_STATUS) == false) {
+        if (check_incantation(app, ai, BEGIN_INCANTATION) == false) {
             printf("FAILD at begin verification\n");
             return false;
         }
