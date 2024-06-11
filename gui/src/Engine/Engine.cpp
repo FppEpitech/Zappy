@@ -8,6 +8,7 @@
 #include "Event/Event.hpp"
 #include "Engine/Engine.hpp"
 #include "GUIUpdater/GUIUpdater.hpp"
+#include "Colors.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -20,7 +21,6 @@ Gui::Engine::Engine(std::shared_ptr<Network> network) : _network(network), _game
 
 void Gui::Engine::run(void)
 {
-
     while (_render->isOpen() && !_gameData->getIsEndGame()) {
         listenServer();
         _event.listen();
@@ -44,7 +44,7 @@ void Gui::Engine::listenServer(void)
         _guiUpdater.update(keyCommand, arguments);
     }
     catch (const std::exception &error) {
-        std::cout << error.what() << std::endl;
+        std::cerr << STR_RED << error.what() << STR_RESET << std::endl;
     }
 }
 
@@ -60,5 +60,9 @@ void Gui::Engine::sendMessageUpdate(void)
 
     _network.get()->sendMessageServer("sgt\n");
     _network.get()->sendMessageServer("mct\n");
-    _network.get()->sendMessageServer("ppo\n");
+    for (auto &team : _gameData.get()->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            _network.get()->sendMessageServer("ppo " + std::to_string(player.getId()) + "\n");
+        }
+    }
 }

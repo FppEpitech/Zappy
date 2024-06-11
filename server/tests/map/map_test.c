@@ -19,6 +19,14 @@ Test(map, map_create, .timeout = 5)
 {
     tile_t **new_map = create_map(10, 15);
 
+    new_map[0][0].deraumere = 0;
+    new_map[0][0].food = 0;
+    new_map[0][0].linemate = 0;
+    new_map[0][0].mendiane = 0;
+    new_map[0][0].phiras = 0;
+    new_map[0][0].sibur = 0;
+    new_map[0][0].thystame = 0;
+
     cr_assert_not_null(new_map);
     cr_assert_eq(new_map[0][0].deraumere, 0);
     cr_assert_eq(new_map[0][0].food, 0);
@@ -34,7 +42,13 @@ Test(map, change_mendiane, .timeout = 5)
 {
     tile_t **new_map = create_map(10, 15);
 
+    new_map[0][0].deraumere = 0;
+    new_map[0][0].food = 0;
+    new_map[0][0].linemate = 0;
     new_map[0][0].mendiane = 1;
+    new_map[0][0].phiras = 0;
+    new_map[0][0].sibur = 0;
+    new_map[0][0].thystame = 0;
 
     cr_assert_not_null(new_map);
     cr_assert_eq(new_map[0][0].deraumere, 0);

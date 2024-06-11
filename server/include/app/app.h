@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -16,6 +17,7 @@
 #include "ai/team.h"
 #include "gui/gui.h"
 #include "parsing.h"
+#include "ai/stuck.h"
 #include "list/list.h"
 #include "game/game.h"
 #include "server/server.h"

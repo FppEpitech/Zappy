@@ -5,8 +5,8 @@
 ** run
 */
 
-#include "app/app.h"
 #include "server/client.h"
+#include "ai/cmd/command_ai.h"
 
 static void reset_ai(app_t *app)
 {
@@ -89,6 +89,11 @@ bool server_run(app_t *app)
             handle_client_read(app, fd);
             handle_client_write(app, fd);
         }
+        treat_command(app);
+        treat_stuck(app);
+        check_die(app);
+        if (check_win(app))
+            break;
     }
     return true;
 }
