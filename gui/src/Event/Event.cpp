@@ -75,41 +75,22 @@ void Gui::Event::switchPovRight()
 
 void Gui::Event::selectPlayer()
 {
-    // Ray ray;
-    // RayCollision collision;
-    // collision.distance = FLOAT_MAX;
-    // collision.hit = false;
+    BeginDrawing();
+    BeginMode3D(*_render.get()->getCamera().get());
+    for (auto &team : _gameData->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            if (_render.get()->getIsDebug()) {
+                std::vector<BoundingBox> bboxes = team.getPlayerBoundingBoxes();
+                std::vector<RayCollision> hitbox = team.getPlayerModelHitbox(player.getId(), *_render.get()->getCamera().get());
 
-    // BoundingBox towerBBox = GetMeshBoundingBox(_gameData->getTeams()[0].getPlayerModel().meshes[0]);
-
-
-    // RayCollision boxHitInfo = GetRayCollisionBox(ray, towerBBox);
-    // DrawBoundingBox(towerBBox, LIME);
-
-    // if ((boxHitInfo.hit) && (boxHitInfo.distance < collision.distance))
-    //     {
-    //     std::cout << "hit" << std::endl;
-    //         collision = boxHitInfo;
-
-    //         RayCollision meshHitInfo;
-    //         for (int m = 0; m < _gameData->getTeam("NAROUT").getPlayerModel().meshCount; m++)
-    //         {
-    //             // NOTE: We consider the model.transform for the collision check but
-    //             // it can be checked against any transform Matrix, used when checking against same
-    //             // model drawn multiple times with multiple transforms
-    //             meshHitInfo = GetRayCollisionMesh(ray, _gameData->getTeam("NAROUT").getPlayerModel().meshes[m], _gameData->getTeam("NAROUT").getPlayerModel().transform);
-    //             if (meshHitInfo.hit)
-    //             {
-    //                 // Save the closest hit mesh
-    //                 if ((!collision.hit) || (collision.distance > meshHitInfo.distance)) collision = meshHitInfo;
-
-    //                 break;  // Stop once one mesh collision is detected, the colliding mesh is m
-    //             }
-    //         }
-
-    //         if (meshHitInfo.hit)
-    //         {
-    //             collision = meshHitInfo;
-    //         }
-    //     }
+                for (size_t i = 0; i < bboxes.size(); i++) {
+                    if (hitbox[i].hit) {
+                        DrawBoundingBox(bboxes[i], RED);
+                    }
+                }
+            }
+        }
+    }
+    EndMode3D();
+    EndDrawing();
 }
