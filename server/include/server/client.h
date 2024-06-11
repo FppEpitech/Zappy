@@ -43,3 +43,10 @@ bool its_client(app_t *app, size_t fd);
  * @return list_node_t* Node of client.
  */
 list_node_t *find_client(list_t *clients_list, size_t fd);
+
+/**
+ * @brief Destroy list of client.
+ *
+ * @param client_list List of client to destroy.
+ */
+void destroy_client(list_t *client_list);

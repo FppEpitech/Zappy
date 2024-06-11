@@ -9,6 +9,7 @@
 
 #include "app/app.h"
 #include "server/client.h"
+#include "ai/cmd/command_ai.h"
 
 static bool server_quit_gui(list_t *gui_list, size_t fd)
 {
@@ -42,31 +43,30 @@ static bool server_quit_client(list_t *clients_list, size_t fd)
     return false;
 }
 
-static bool check_ia(team_t *team, size_t fd)
+static void check_ia(app_t *app, team_t *team, list_node_t *ia_temp)
 {
+    list_delete(team->list_ai, ia_temp);
+    if (team->max_place > team->egg_position->len) {
+        add_egg(team->egg_position, rand() % app->game->height,
+        rand() % app->game->width);
+    }
+}
+
+static bool server_quit_ia(app_t *app, size_t fd)
+{
+    team_t *team = find_team(app, fd);
     list_node_t *ia_temp = NULL;
 
+    if (team == NULL)
+        return false;
     ia_temp = team->list_ai->first;
     while (ia_temp) {
         if (ia_temp->data.ai->fd == fd) {
-            list_delete(team->list_ai, ia_temp);
+            check_ia(app, team, ia_temp);
+            dead_response(app);
             return true;
         }
         ia_temp = ia_temp->next;
-    }
-    return false;
-}
-
-static bool server_quit_ia(list_t *teams_list, size_t fd)
-{
-    list_node_t *temp = teams_list->first;
-    team_t *team = NULL;
-
-    while (temp) {
-        team = temp->data.team;
-        if (check_ia(team, fd) == true)
-            return true;
-        temp = temp->next;
     }
     return false;
 }
@@ -77,6 +77,6 @@ void server_quit_handler(app_t *app, size_t fd)
         return;
     if (server_quit_client(app->clients_list, fd))
         return;
-    if (server_quit_ia(app->teams_list, fd))
+    if (server_quit_ia(app, fd))
         return;
 }

@@ -7,9 +7,21 @@
 
 #include <string.h>
 
-#include "ai/ai.h"
 #include "app/app.h"
 #include "server/client.h"
+#include "ai/cmd/command_ai.h"
+
+void concatenate_strings(char **str1, char *str2)
+{
+    size_t len1 = strlen(*str1);
+    size_t len2 = strlen(str2);
+    char *result = realloc(*str1, len1 + len2 + 1);
+
+    if (result == NULL)
+        return;
+    *str1 = result;
+    strcat(*str1, str2);
+}
 
 char *append_char(char *line, char current_char)
 {
@@ -61,7 +73,7 @@ void handle_request(app_t *app, size_t fd, char *line)
     if (ai != NULL) {
         if (ai->list_messages->len >= 10)
             return;
-        (void) line;
+        add_command_to_list(ai, strdup(line));
         return;
     }
 }
@@ -76,7 +88,7 @@ bool server_data_handler(app_t *app, size_t fd)
         return true;
     }
     if (its_client(app, fd)) {
-        if (strcmp(line, "GRAPHIC\r") == 0)
+        if (strcmp(line, "GRAPHIC") == 0)
             add_gui(app, fd);
         else
             add_ia(app, fd, line);

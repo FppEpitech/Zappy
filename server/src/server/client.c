@@ -44,3 +44,15 @@ list_node_t *find_client(list_t *clients_list, size_t fd)
     }
     return NULL;
 }
+
+void destroy_client(list_t *client_list)
+{
+    list_node_t *temp = client_list->first;
+
+    while (temp) {
+        close(temp->data.client->fd);
+        free(temp->data.client);
+        temp = temp->next;
+    }
+    list_free(client_list);
+}
