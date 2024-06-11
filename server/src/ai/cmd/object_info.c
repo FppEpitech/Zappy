@@ -13,20 +13,13 @@ static void inventory_cmd(ia_t *ai)
 {
     char *reply = format_string(
         "[%s %d, %s %d, %s %d, %s %d, %s %d, %s %d, %s %d]\n",
-        "food",
-        ai->inventory->food,
-        "linemate",
-        ai->inventory->linemate,
-        "deraumere",
-        ai->inventory->deraumere,
-        "sibur",
-        ai->inventory->sibur,
-        "mendiane",
-        ai->inventory->mendiane,
-        "phiras",
-        ai->inventory->phiras,
-        "thystame",
-        ai->inventory->thystame
+        "food", ai->inventory->food,
+        "linemate", ai->inventory->linemate,
+        "deraumere", ai->inventory->deraumere,
+        "sibur", ai->inventory->sibur,
+        "mendiane", ai->inventory->mendiane,
+        "phiras", ai->inventory->phiras,
+        "thystame", ai->inventory->thystame
     );
 
     add_message(ai->list_messages, reply);
