@@ -92,6 +92,8 @@ bool server_run(app_t *app)
         treat_command(app);
         treat_stuck(app);
         check_die(app);
+        if (check_win(app))
+            break;
     }
     return true;
 }

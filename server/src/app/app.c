@@ -5,7 +5,7 @@
 ** app
 */
 
-#include "app/app.h"
+#include "server/client.h"
 
 static void create_teams(parsing_t *parsing, app_t *app)
 {
@@ -34,10 +34,21 @@ app_t *create_app(parsing_t *parsing)
     return new_app;
 }
 
+void destroy_message_list(list_t *message_list)
+{
+    list_node_t *temp = message_list->first;
+
+    while (temp) {
+        free(temp->data.message);
+        temp = temp->next;
+    }
+}
+
 void destroy_app(app_t *app)
 {
     destroy_server(app->server);
-    list_free(app->gui_list);
-    list_free(app->clients_list);
-    list_free(app->teams_list);
+    destroy_gui(app->gui_list);
+    destroy_client(app->clients_list);
+    destroy_team(app->teams_list);
+    destroy_game(app->game);
 }

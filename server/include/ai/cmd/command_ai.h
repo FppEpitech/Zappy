@@ -129,7 +129,7 @@ void set_cmd(app_t *app, ia_t *ai);
 bool broadcast_command(app_t *app, ia_t *ai, char *line);
 
 /**
- * @brief
+ * @brief Incantation of command.
  *
  * @param app Application with necessary information.
  * @param ai AI who have done a command.
@@ -140,13 +140,13 @@ bool broadcast_command(app_t *app, ia_t *ai, char *line);
 bool incantation_command(app_t *app, ia_t *ai, char *line);
 
 /**
- * @brief Check condition of incantation
+ * @brief Check condition of incantation.
  *
  * @param app Application with necessary information.
  * @param ai AI who have launch the incantation.
- * @param status BEGIN or END (to know if I have to verify status incantation)
- * @return true If condition is good
- * @return false If condition isn't good
+ * @param status BEGIN or END (to know if I have to verify status incantation).
+ * @return true If condition is good.
+ * @return false If condition isn't good.
  */
 bool check_incantation(app_t *app, ia_t *ai, int status);
 
@@ -167,10 +167,10 @@ void update_status(app_t *app, ia_t *ai);
 void level_up(app_t *app, ia_t *ai);
 
 /**
- * @brief Add a command to the list
+ * @brief Add a command to the list.
  *
- * @param ai Ai who do the command
- * @param line Command.
+ * @param ai Ai who do the command.
+ * @param line The command to add.
  */
 void add_command_to_list(ia_t *ai, char *line);
 

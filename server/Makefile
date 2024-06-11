@@ -17,6 +17,7 @@ SRC			=	src/list/list.c \
 				src/ai/ai.c \
 				src/ai/team.c \
 				src/ai/stuck.c \
+				src/ai/ai_destroy.c \
 				src/ai/die.c \
 				src/ai/cmd/handler.c \
 				src/ai/cmd/move.c \
@@ -52,6 +53,7 @@ SRC			=	src/list/list.c \
 				src/server/write/write_data.c \
 				\
 				src/game/game.c \
+				src/game/win.c \
 				\
 				src/parsing/help.c					\
 				src/parsing/parse_positive_int.c	\

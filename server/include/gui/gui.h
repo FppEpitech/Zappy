@@ -41,3 +41,10 @@ void add_gui(app_t *app, size_t fd);
  * @return gui_t* GUi find or NULL.
  */
 gui_t *find_gui(app_t *app, size_t fd);
+
+/**
+ * @brief Destroy gui list.
+ *
+ * @param gui_list List of gui.
+ */
+void destroy_gui(list_t *gui_list);

@@ -65,3 +65,10 @@ void add_egg(list_t *eggs, int random_x, int random_y);
  * @return team_t* Team finded.
  */
 team_t *find_team(app_t *app, size_t fd);
+
+/**
+ * @brief Destroy the teams.
+ *
+ * @param teams_list Teams list.
+ */
+void destroy_team(list_t *teams_list);

@@ -172,3 +172,10 @@ vector2i_t *create_vector2i(int x, int y);
  * @param str2 Second string to concat to the first.
  */
 void concatenate_strings(char **str1, char *str2);
+
+/**
+ * @brief Destroy list of messages.
+ *
+ * @param message_list List of message to destroy.
+ */
+void destroy_message_list(list_t *message_list);

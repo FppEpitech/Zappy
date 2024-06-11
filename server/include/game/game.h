@@ -29,8 +29,24 @@ typedef struct s_game {
 game_t *create_game(int height, int width, int freq);
 
 /**
- * @brief Spawn ressources
+ * @brief Spawn ressources.
  *
  * @param app Application with ressources data.
  */
 void spawn_ressources(app_t *app);
+
+/**
+ * @brief Check if a team have won.
+ *
+ * @param app Application with list of team.
+ * @return true if a team have won.
+ * @return false if there is no team's win.
+ */
+bool check_win(app_t *app);
+
+/**
+ * @brief Destroy the game struct.
+ *
+ * @param game Game struct to destroy.
+ */
+void destroy_game(game_t *game);
