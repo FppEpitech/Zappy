@@ -108,6 +108,9 @@ tests_run: fclean
 	./$(TEST_NAME)
 	gcovr --exclude tests/
 
+install-ci:
+	sudo dnf install raylib-devel -y
+
 install:
 	sudo dnf update
 	sudo dnf install alsa-lib-devel mesa-libGL-devel \
