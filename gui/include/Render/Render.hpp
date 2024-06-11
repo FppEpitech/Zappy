@@ -13,6 +13,7 @@
 
 #include "raylib.h"
 #include "Hud/HudPlayer.hpp"
+#include "Hud/HudGame.hpp"
 #include "Render/UserCamera.hpp"
 #include "GameDatas/GameData.hpp"
 

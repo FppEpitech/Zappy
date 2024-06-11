@@ -18,6 +18,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     SetTargetFPS(140);
     _isDebug = false;
     _hudList.push_back(std::make_shared<HudPlayer>(HudPlayer(gameData)));
+    _hudList.push_back(std::make_shared<HudGame>(HudGame(gameData)));
     this->LoadModels();
 }
 
@@ -216,5 +217,7 @@ void Gui::Render::displayHUD(void)
             // TODO : set to hud the player with the pov (hud->setPlayer(player))
             hud->display();
         }
+        if (hud->getType() == Gui::HudGame::GAME /**TODO : && The hud to display is the game*/)
+            hud->display();
     }
 }
