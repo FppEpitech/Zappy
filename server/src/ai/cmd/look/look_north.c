@@ -43,9 +43,8 @@ static int get_x_line(app_t *app, ia_t *ai, int index_tile)
         decompte = -1;
     else
         decompte = 1;
-    for (int index = 0; index != goal; index += decompte) {
+    for (int index = 0; index != goal; index += decompte)
         depart_x = decremente_value(app, depart_x, decompte);
-    }
     return depart_x;
 }
 
