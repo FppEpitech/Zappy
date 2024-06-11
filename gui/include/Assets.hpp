@@ -20,6 +20,10 @@
 #define MODEL_PLAYER                PATH_ASSETS "player.glb"
 #define MODEL_EGG                   PATH_ASSETS "egg.glb"
 
+#define PNG_HUD                     PATH_ASSETS "hud.png"
+
+#define FONT_HUD                    PATH_ASSETS "SimplyMono-Bold.ttf"
+
 #define SIZE_TILE                   6
 
 #define SCALE_FOOD                  (Vector3){2, 2, 2}

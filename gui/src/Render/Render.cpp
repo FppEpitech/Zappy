@@ -17,6 +17,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     DisableCursor();
     SetTargetFPS(140);
     _isDebug = false;
+    _hudList.push_back(std::make_shared<HudPlayer>(HudPlayer(gameData)));
     this->LoadModels();
 }
 
@@ -54,6 +55,7 @@ void Gui::Render::draw()
     displayPlayers();
     EndMode3D();
 
+    displayHUD();
     displayDebug();
 
     EndDrawing();
@@ -204,5 +206,15 @@ void Gui::Render::displayDeraumere(Tile tile) const
     if (tile.inventory.getDeraumere() != 0) {
         Vector3 posDeraumere = POS_DERAUMERE;
         DrawModelEx(_deraumereModel, (Vector3){posTile.x + posDeraumere.x, posTile.y + posDeraumere.y, posTile.z + posDeraumere.z}, ROTATION_AXIS_DERAUMERE, ROTATION_ANGLE_DERAUMERE, SCALE_DERAUMERE, WHITE);
+    }
+}
+
+void Gui::Render::displayHUD(void)
+{
+    for (auto &hud : _hudList) {
+        if (hud->getType() == Gui::HudPlayer::POV_PLAYER /**TODO : && The hud to display is the player pov*/) {
+            // TODO : set to hud the player with the pov (hud->setPlayer(player))
+            hud->display();
+        }
     }
 }

@@ -12,6 +12,7 @@
 #define WINDOW_TITLE "Zappy GUI"
 
 #include "raylib.h"
+#include "Hud/HudPlayer.hpp"
 #include "Render/UserCamera.hpp"
 #include "GameDatas/GameData.hpp"
 
@@ -94,11 +95,19 @@ class Gui::Render {
         Model                       _thystameModel;     // Model to display thystames.
         Model                       _deraumereModel;    // Model to display deraumeres.
 
+        std::vector<std::shared_ptr<Gui::IHud>>      _hudList;           // List of huds.
+
         /**
          * @brief Load the models to draw.
          *
          */
         void LoadModels(void);
+
+        /**
+         * @brief Display HUD infos related to player's pov.
+         *
+         */
+        void displayHUD(void);
 
         /**
          * @brief Display the debug interface.
