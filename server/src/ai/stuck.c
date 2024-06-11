@@ -7,6 +7,7 @@
 
 #include "app/app.h"
 #include "server/client.h"
+#include "ai/cmd/command_ai.h"
 
 void set_time_stuck(ia_t *ai, double total_stuck)
 {
@@ -27,13 +28,28 @@ double time_elapsed(struct timeval *time)
     return seconds + microseconds;
 }
 
-static void check_statut_stuck(ia_t *ai)
+static void handle_incantation_verification(ia_t *ai, app_t *app)
+{
+    if (ai->incantation->status_incantation == false)
+        return;
+    if (check_incantation(app, ai, END_STATUS) == false) {
+        printf("FAILD at end verification\n");
+        update_status(app, ai, END_INCANTATION);
+        return;
+    }
+    printf("SUCCESS at end verification\n");
+    level_up(app, ai);
+    printf("Level up succefully\n");
+}
+
+static void check_statut_stuck(ia_t *ai, app_t *app)
 {
     if (ai->time->stuck == false)
         return;
     if (time_elapsed(&ai->time->start_stuck) >= ai->time->total_stuck) {
         ai->time->stuck = false;
         ai->time->total_stuck = 0.0;
+        handle_incantation_verification(ai, app);
     }
 }
 
@@ -47,7 +63,7 @@ void treat_stuck(app_t *app)
         team = temp_team->data.team;
         ia_temp = team->list_ai->first;
         while (ia_temp) {
-            check_statut_stuck(ia_temp->data.ai);
+            check_statut_stuck(ia_temp->data.ai, app);
             ia_temp = ia_temp->next;
         }
         temp_team = temp_team->next;

@@ -18,14 +18,7 @@ bool incantation_command(app_t *app, ia_t *ai, char *line)
             return false;
         }
         printf("SUCCESS at begin verification\n");
-        update_status(app, ai);
-        if (check_incantation(app, ai, END_STATUS) == false) {
-            printf("FAILD at end verification\n");
-            return false;
-        }
-        printf("SUCCESS at end verification\n");
-        level_up(app, ai);
-        printf("Level up succefully\n");
+        update_status(app, ai, BEGIN_INCANTATION);
         return true;
     }
     return false;
