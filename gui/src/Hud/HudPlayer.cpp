@@ -22,6 +22,7 @@ void Gui::HudPlayer::display()
 {
     Vector2 hudPos = HUD_PLAYER_POS;
     DrawTexture(_texture, hudPos.x, hudPos.y, WHITE);
+    DrawTextEx(_font, "Statistics", HUD_PLAYER_TEXT_TITLE_POS, 20, 0, (Color){170, 121, 89, 255});
     if (_player != nullptr) {
         Vector2 hudTextPos = HUD_PLAYER_TEXT_POS;
         DrawTextEx(_font, ("Food: " + std::to_string(_player->inventory.getFood())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 0}, 20, 0, WHITE);
@@ -33,5 +34,6 @@ void Gui::HudPlayer::display()
         DrawTextEx(_font, ("Thystame: " + std::to_string(_player->inventory.getThystame())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 6}, 20, 0, WHITE);
         DrawTextEx(_font, ("Level: " + std::to_string(_player->getLevel())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 7}, 20, 0, WHITE);
         DrawTextEx(_font, ("Id: " + std::to_string(_player->getId())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 8}, 20, 0, WHITE);
+        DrawTextEx(_font, ("Team: " + _player->getTeam()).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 9}, 20, 0, WHITE);
     }
 }

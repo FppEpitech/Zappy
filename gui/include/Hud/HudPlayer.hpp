@@ -11,6 +11,7 @@
 
 #define HUD_PLAYER_POS Vector2{0, 340}
 #define HUD_PLAYER_TEXT_POS Vector2{25, 420}
+#define HUD_PLAYER_TEXT_TITLE_POS Vector2{50, 380}
 #define HUD_PLAYER_TEXT_MARGING 30
 
 namespace Gui {
