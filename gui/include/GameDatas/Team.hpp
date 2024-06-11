@@ -9,6 +9,7 @@
 
 #include "raylib.h"
 #include "GameDatas/Egg.hpp"
+#include "GameDatas/Tile.hpp"
 #include "GameDatas/Player.hpp"
 
 #include <vector>
@@ -145,6 +146,39 @@ class Gui::Team {
          * @param eggSkinPath Path to the eggs Model of the team.
          */
         void setEggModelPath(const std::string &eggModelPath);
+
+        /**
+         * @brief Get the Player Boundig Boxes object.
+         *
+         * @return std::vector<BoundingBox> Bounding boxes of the player.
+        */
+        std::vector<BoundingBox> getPlayerBoundingBoxes();;
+
+        /**
+         * @brief Get the Player position in 3D space.
+         *
+         * @param id Id of the player.
+         * @param map Map of the game.
+        */
+        Vector3 getPlayerPositionIn3DSpace(size_t id, std::vector<std::vector<Gui::Tile>> map);
+
+        /**
+         * @brief Get the Player Model hitbox.
+         *
+         * @param id Id of the player.
+         * @param camera Camera of the game.
+         * @return std::vector<RayCollision> Hitbox of the player.
+        */
+        std::vector<RayCollision> getPlayerModelHitbox(size_t id, Camera camera);
+
+        /**
+         * @brief Check if the player is hit.
+         *
+         * @param id Id of the player.
+         * @param camera Camera of the game.
+         * @return true If the player is hit.
+        */
+        bool isPlayerHit(size_t id, Camera camera);
 
     private:
 
