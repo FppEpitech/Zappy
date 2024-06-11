@@ -109,7 +109,8 @@ tests_run: fclean
 	gcovr --exclude tests/
 
 install:
+	sudo dnf update
 	sudo dnf install alsa-lib-devel mesa-libGL-devel \
 		libX11-devel libXrandr-devel libXi-devel \
-		libXcursor-devel libXinerama-devel libatomic
-	sudo dnf install raylib-devel
+		libXcursor-devel libXinerama-devel libatomic -y
+	sudo dnf install raylib-devel -y
