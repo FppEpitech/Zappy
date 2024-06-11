@@ -101,6 +101,6 @@ void Gui::Network::sendMessageServer(const std::string& message)
 {
     if (FD_ISSET(_serverFd, &_writeFd)) {
         write(_serverFd, message.c_str(), message.length());
-        std::cerr << Violet << "Send: " << Cyan << message << Reset << std::endl;
+        std::cerr << STR_VIOLET << "Send: " << STR_CYAN << message << STR_RESET << std::endl;
     }
 }

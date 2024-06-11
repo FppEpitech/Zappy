@@ -44,7 +44,7 @@ void Gui::Engine::listenServer(void)
         _guiUpdater.update(keyCommand, arguments);
     }
     catch (const std::exception &error) {
-        std::cerr << Red << error.what() << Reset << std::endl;
+        std::cerr << STR_RED << error.what() << STR_RESET << std::endl;
     }
 }
 

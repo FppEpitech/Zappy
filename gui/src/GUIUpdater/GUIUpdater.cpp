@@ -17,18 +17,18 @@ void Gui::GUIUpdater::update(const std::string &command, const std::vector<std::
     try {
         for (auto &iterator : _updateMap) {
             if (iterator.first == command) {
-                std::cerr << Green << "[GUIUpdater] " << Blue << command << Green << " command received with data: " << Blue;
+                std::cerr << STR_GREEN << "[GUIUpdater] " << STR_BLUE << command << STR_GREEN << " command received with data: " << STR_BLUE;
                 for (auto &d : data)
                     std::cerr << d << " ";
-                std::cerr << Reset << std::endl;
+                std::cerr << STR_RESET << std::endl;
                 iterator.second(data);
             }
         }
     } catch (const std::exception &error) {
-        std::cerr << Red << "[GUIUpdater] command " << command << " failed: " << error.what() << " with data: " << Yellow;
+        std::cerr << STR_RED << "[GUIUpdater] command " << command << " failed: " << error.what() << " with data: " << STR_YELLOW;
         for (auto &d : data)
             std::cerr << d << " ";
-        std::cerr << Reset << std::endl;
+        std::cerr << STR_RESET << std::endl;
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
 }
@@ -42,14 +42,14 @@ void Gui::GUIUpdater::updateMapSize(const std::vector<std::string> &data)
         for (size_t i = 0; i < data.size(); i++) {
             int temp = std::stoi(data[i], &tmp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "msz:" + Red + "Invalid map size");
+                throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "msz:" + STR_RED + "Invalid map size");
             args.push_back(temp);
         }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     if (args.size() != 2)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "msz:" + Red + "Invalid argument number");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "msz:" + STR_RED + "Invalid argument number");
     _gameData->setMapSize(args[0], args[1]);
 }
 
@@ -62,18 +62,18 @@ void Gui::GUIUpdater::updateMapContent(const std::vector<std::string> &data)
         for (size_t i = 0; i < data.size(); i++) {
             int temp = std::stoi(data[i], &tmp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "bct:" + Red + "Invalid map content");
+                throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "bct:" + STR_RED + "Invalid map content");
             args.push_back(temp);
         }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     if (args.size() != 9)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "bct:" + Red + "Invalid argument number");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "bct:" + STR_RED + "Invalid argument number");
     try {
         _gameData.get()->setTile(Gui::Tile(std::make_pair(args[0], args[1]), Gui::Inventory(args[2], args[3], args[4], args[5], args[6], args[7], args[8])));
     } catch (const std::exception &error) {
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "bct:" + Red + "Invalid tile");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "bct:" + STR_RED + "Invalid tile");
     }
 }
 
@@ -84,10 +84,10 @@ void Gui::GUIUpdater::updateTeamNames(const std::vector<std::string> &data)
             _gameData->addTeam(data[i], MODEL_PLAYER, MODEL_EGG);
         // TODO: Implement a system that allows to set different models for each team.
     } catch (const std::exception &error) {
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "tna: " + Red + error.what());
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "tna: " + STR_RED + error.what());
     }
     if (_gameData->getTeams().empty())
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "tna:" + Red + "No team found");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "tna:" + STR_RED + "No team found");
 }
 
 void Gui::GUIUpdater::updateTeamMember(const std::vector<std::string> &data)
@@ -101,18 +101,18 @@ void Gui::GUIUpdater::updateTeamMember(const std::vector<std::string> &data)
                 continue;
             int temp = std::stoi(data[i], &tmp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pnw:" + Red + "Invalid team member parameters");
+                throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pnw:" + STR_RED + "Invalid team member parameters");
             args.push_back(temp);
         }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     if (args.size() != 5)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pnw:" + Red + "Invalid argument number");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pnw:" + STR_RED + "Invalid argument number");
     if (args[3] < 1 || args[3] > 4)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pnw:" + Red + "Invalid player orientation");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pnw:" + STR_RED + "Invalid player orientation");
     if (args[4] < 1 || args[4] > 8)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pnw:" + Red + "Invalid player level");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pnw:" + STR_RED + "Invalid player level");
     for (auto &team : _gameData->getTeams()) {
         if (team.getName() == data[5]) {
             team.addPlayer(Gui::Player(args[0], data[5], std::make_pair(args[1], args[2]), args[3], args[4]));
@@ -130,15 +130,15 @@ void Gui::GUIUpdater::updatePlayerPosition(const std::vector<std::string> &data)
             int temp = std::stoi(data[i], &tmp);
             args.push_back(temp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "ppo:" + Red + "Invalid player position parameters");
+                throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "ppo:" + STR_RED + "Invalid player position parameters");
         }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     if (args.size() != 4)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "ppo:" + Red + "Invalid argument number");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "ppo:" + STR_RED + "Invalid argument number");
     if (args[3] < 1 || args[3] > 4)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "ppo:" + Red + "Invalid player orientation");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "ppo:" + STR_RED + "Invalid player orientation");
     for (auto &team : _gameData.get()->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
@@ -159,15 +159,15 @@ void Gui::GUIUpdater::updatePlayerLevel(const std::vector<std::string> &data)
             int temp = std::stoi(data[i], &tmp);
             args.push_back(temp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "plv:" + Red + "Invalid player level parameters");
+                throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "plv:" + STR_RED + "Invalid player level parameters");
         }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     if (args.size() != 2)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "plv:" + Red + "Invalid argument number");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "plv:" + STR_RED + "Invalid argument number");
     if (args[1] < 1 || args[1] > 8)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "plv:" + Red + "Invalid player level");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "plv:" + STR_RED + "Invalid player level");
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
@@ -187,13 +187,13 @@ void Gui::GUIUpdater::updatePlayerInventory(const std::vector<std::string> &data
             int temp = std::stoi(data[i], &tmp);
             args.push_back(temp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pin:" + Red + "Invalid player inventory parameters");
+                throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pin:" + STR_RED + "Invalid player inventory parameters");
         }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     if (args.size() != 10)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pin:" + Red + "Invalid argument number");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pin:" + STR_RED + "Invalid argument number");
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
@@ -212,7 +212,7 @@ void Gui::GUIUpdater::updatePlayerExpulsion(const std::vector<std::string> &data
     try {
         int temp = std::stoi(data[0], &tmp);
         if (temp < 0 || tmp != data[0].size())
-            throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pex:" + Red + "Invalid player expulsion parameters");
+            throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pex:" + STR_RED + "Invalid player expulsion parameters");
         id = temp;
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
@@ -233,7 +233,7 @@ void Gui::GUIUpdater::updatePlayerBroadcast(const std::vector<std::string> &data
     try {
         int temp = std::stoi(data[0], &tmp);
         if (temp < 0 || tmp != data[0].size())
-            throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pbc:" + Red + "Invalid player broadcast parameters");
+            throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pbc:" + STR_RED + "Invalid player broadcast parameters");
         id = temp;
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
@@ -258,13 +258,13 @@ void Gui::GUIUpdater::updatePlayerStartIncantation(const std::vector<std::string
             int temp = std::stoi(data[i], &tmp);
             args.push_back(temp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pic:" + Red + "Invalid player start incantation parameters");
+                throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pic:" + STR_RED + "Invalid player start incantation parameters");
         }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     if (args.size() < 4)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pic:" + Red + "Invalid argument number");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pic:" + STR_RED + "Invalid argument number");
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0])
@@ -283,13 +283,13 @@ void Gui::GUIUpdater::updatePlayerEndIncantation(const std::vector<std::string> 
             int temp = std::stoi(data[i], &tmp);
             args.push_back(temp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pie:" + Red + "Invalid player end incantation parameters");
+                throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pie:" + STR_RED + "Invalid player end incantation parameters");
         }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     if (args.size() != 3)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pie:" + Red + "Invalid argument number");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pie:" + STR_RED + "Invalid argument number");
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
@@ -311,7 +311,7 @@ void Gui::GUIUpdater::updatePlayerEggLaying(const std::vector<std::string> &data
     try {
         int temp = std::stoi(data[0], &tmp);
         if (temp < 0 || tmp != data[0].size())
-            throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pfk:" + Red + "Invalid egg laying parameters");
+            throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pfk:" + STR_RED + "Invalid egg laying parameters");
         id = temp;
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
@@ -334,13 +334,13 @@ void Gui::GUIUpdater::updatePlayerRessourceDropping(const std::vector<std::strin
             int temp = std::stoi(data[i], &tmp);
             args.push_back(temp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pdr:" + Red + "Invalid ressource dropping parameters");
+                throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pdr:" + STR_RED + "Invalid ressource dropping parameters");
         }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     if (args.size() != 2)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pdr:" + Red + "Invalid argument number");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pdr:" + STR_RED + "Invalid argument number");
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0])
@@ -359,13 +359,13 @@ void Gui::GUIUpdater::updatePlayerRessourceCollecting(const std::vector<std::str
             int temp = std::stoi(data[i], &tmp);
             args.push_back(temp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pgt:" + Red + "Invalid ressource collecting parameters");
+                throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pgt:" + STR_RED + "Invalid ressource collecting parameters");
         }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     if (args.size() != 2)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pgt:" + Red + "Invalid argument number");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pgt:" + STR_RED + "Invalid argument number");
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
@@ -384,7 +384,7 @@ void Gui::GUIUpdater::updatePlayerDeath(const std::vector<std::string> &data)
     try {
         int temp = std::stoi(data[0], &tmp);
         if (temp < 0 || tmp != data[0].size())
-            throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "pdi:" + Red + "Invalid player death parameters");
+            throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pdi:" + STR_RED + "Invalid player death parameters");
         id = temp;
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
@@ -413,13 +413,13 @@ void Gui::GUIUpdater::updateEggLaidByPlayer(const std::vector<std::string> &data
             }
             args.push_back(temp);
             if (temp < 0 || tmp != data[i].size())
-                throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "enw:" + Red + "Invalid egg laid by player parameters");
+                throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "enw:" + STR_RED + "Invalid egg laid by player parameters");
         }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     if (args.size() != 4)
-        throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "enw:" + Red + "Invalid argument number");
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "enw:" + STR_RED + "Invalid argument number");
     for (auto &team : _gameData->getTeams()) {
         if (serverId != 0) {
             team.addEgg(Gui::Egg(args[0], team.getName(), std::make_pair(args[2], args[3])));
@@ -439,7 +439,7 @@ void Gui::GUIUpdater::updatePlayerBorn(const std::vector<std::string> &data)
     try {
         int temp = std::stoi(data[0], &tmp);
         if (temp < 0 || tmp != data[0].size())
-            throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "ebo:" + Red + "Invalid player born parameters");
+            throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "ebo:" + STR_RED + "Invalid player born parameters");
         id = temp;
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
@@ -460,7 +460,7 @@ void Gui::GUIUpdater::updateEggDeath(const std::vector<std::string> &data)
     try {
         int temp = std::stoi(data[0], &tmp);
         if (temp < 0 || tmp != data[0].size())
-            throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "edi:" + Red + "Invalid egg death parameters");
+            throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "edi:" + STR_RED + "Invalid egg death parameters");
         id = temp;
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
@@ -481,7 +481,7 @@ void Gui::GUIUpdater::updateTimeUnitRequest(const std::vector<std::string> &data
     try {
         int temp = std::stoi(data[0], &tmp);
         if (temp < 0 || tmp != data[0].size())
-            throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "sgt:" + Red + "Invalid time unit request parameters");
+            throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "sgt:" + STR_RED + "Invalid time unit request parameters");
         timeUnit = temp;
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
@@ -497,7 +497,7 @@ void Gui::GUIUpdater::updateTimeUnitModification(const std::vector<std::string> 
     try {
         int temp = std::stoi(data[0], &tmp);
         if (temp < 0 || tmp != data[0].size())
-            throw Gui::Errors::GuiUpdaterException(std::string(Yellow) + "sst:" + Red + "Invalid time unit modification parameters");
+            throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "sst:" + STR_RED + "Invalid time unit modification parameters");
         timeUnit = temp;
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
