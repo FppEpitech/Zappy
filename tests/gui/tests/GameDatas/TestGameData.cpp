@@ -83,6 +83,26 @@ Test(GameData, addPlayerToTeamNotFound, .timeout = 5)
     cr_assert_throw(gameData.addPlayerToTeam("TEAM1", Gui::Player(3, "TEAM1", std::make_pair(1, 2), 1)), Gui::Errors::GuiGameDataException);
 }
 
+Test(GameData, getPlayer, .timeout = 5)
+{
+    Gui::GameData gameData;
+
+    gameData.addTeam("TEAM1", "not_tested", "not_tested");
+    gameData.addPlayerToTeam("TEAM1", Gui::Player(3, "TEAM1", std::make_pair(1, 2), 1));
+
+    cr_assert_eq(gameData.getPlayer(3).getId(), 3);
+    cr_assert_eq(gameData.getPlayer(3).getTeam(), "TEAM1");
+    cr_assert_eq(gameData.getPlayer(3).getPosition().first, 1);
+    cr_assert_eq(gameData.getPlayer(3).getPosition().second, 2);
+}
+
+Test(GameData, getPlayerFailed, .timeout = 5)
+{
+    Gui::GameData gameData;
+
+    cr_assert_throw(gameData.getPlayer(3), Gui::Errors::GuiGameDataException);
+}
+
 Test(GameData, SetMap, .timeout = 5)
 {
     Gui::GameData gameData;
@@ -191,4 +211,21 @@ Test(GameData, getLastError, .timeout = 5)
 
     gameData.setLastError("test");
     cr_assert_str_eq(gameData.getLastError().c_str(), "test");
+}
+
+Test(GameData, getTeamById, .timeout = 5)
+{
+    Gui::GameData gameData;
+
+    gameData.addTeam("TEAM1", "not_tested", "not_tested");
+    gameData.addPlayerToTeam("TEAM1", Gui::Player(0, "TEAM1", std::make_pair(1, 2), 1));
+
+    cr_assert_eq(gameData.getTeamById(0).getName(), "TEAM1");
+}
+
+Test(GameData, getTeamByIdFailed, .timeout = 5)
+{
+    Gui::GameData gameData;
+
+    cr_assert_throw(gameData.getTeamById(0), Gui::Errors::GuiGameDataException);
 }
