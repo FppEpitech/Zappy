@@ -15,7 +15,6 @@ Gui::Decoration::Decoration()
 
 Map<bool> Gui::Decoration::getGenerationItem(std::size_t ratio)
 {
-    (void) ratio;
     Map<bool> map;
 
     for (size_t i = 0; i < _mapSize.first; i++) {
