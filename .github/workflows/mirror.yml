@@ -18,9 +18,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: install_raylib
+      - name: install_gui_dependencies
         run: |
-            sudo dnf install raylib-devel -y
+            make install-deps-ci -C gui
       - name: check_presence_of_pushed_executables
         run: |
           if [ -z "$EXECUTABLES" ]; then
@@ -105,9 +105,9 @@ jobs:
     container: epitechcontent/epitest-docker
     steps:
       - uses: actions/checkout@v4
-      - name: install_raylib
+      - name: install_gui_dependencies
         run: |
-            sudo dnf install raylib-devel -y
+            make install-deps-ci -C gui
       - name: run_tests
         run: make tests_run
         timeout-minutes: 5
