@@ -191,5 +191,14 @@ class Gui::Team {
         std::vector<Gui::Egg>       _eggs;      // Eggs of the team.
         Model                       _eggModel;  // Eggs Model of the team.
 
+        /**
+         * @brief Rotate a bounding box by orientation.
+         *
+         * @param bbox Bounding box to rotate.
+         * @param orientation Orientation of the player.
+         * @param pos Position of the player.
+         * @param center Center of the player.
+         * @return BoundingBox Rotated bounding box.
+        */
         BoundingBox rotateBoundingBoxByOrientation(BoundingBox bbox, size_t orientation, std::pair<size_t, size_t> pos, Vector3 center);
 };
