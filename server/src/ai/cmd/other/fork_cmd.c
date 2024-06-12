@@ -8,6 +8,7 @@
 #include "ai/cmd/look.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
+#include "gui/communication.h"
 
 void fork_cmd(app_t *app, ia_t *ai)
 {
@@ -16,5 +17,6 @@ void fork_cmd(app_t *app, ia_t *ai)
 
     add_egg(team->egg_position, rand() % app->game->height,
     rand() % app->game->width);
+    pfk_command(app, ai->fd);
     add_message(ai->list_messages, reply);
 }

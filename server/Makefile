@@ -80,6 +80,7 @@ SRC			=	src/list/list.c \
 				src/gui/communication/pnw.c			\
 				src/gui/communication/pex.c			\
 				src/gui/communication/pbc.c			\
+				src/gui/communication/pfk.c			\
 
 TEST_FILES	=	list/list_test.c \
 				communication/communication_test.c 	\

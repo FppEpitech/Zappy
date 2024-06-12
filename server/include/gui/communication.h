@@ -124,3 +124,11 @@ void pex_command(app_t *app, int player_id);
  * @param message The message send.
  */
 void pbc_command(app_t *app, int player_id, char *message);
+
+/**
+ * @brief Perform the pfk command.
+ *
+ * @param app The app structure with all the gui fds.
+ * @param player_id The player id who call the command.
+ */
+void pfk_command(app_t *app, int player_id);
