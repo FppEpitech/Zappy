@@ -107,3 +107,11 @@ void pin_response(gui_t *gui, app_t *app, char *line);
  * @param ai The ia structure of client requested.
  */
 void pnw_command(app_t *app, ia_t *ai);
+
+/**
+ * @brief Perform the pex command.
+ *
+ * @param app The app structure with all the gui fds.
+ * @param player_id The player id expulsed.
+ */
+void pex_command(app_t *app, int player_id);
