@@ -92,3 +92,21 @@ Test(UserCamera, get_cam, .timeout = 5)
 
     cr_assert_eq(cam.getCamera()->fovy, 70.0f);
 }
+
+Test(UserCamera, setType, .timeout = 5)
+{
+    Gui::UserCamera cam;
+
+    cam.setType(Gui::UserCamera::FREE);
+
+    cr_assert_eq(cam.getType(), Gui::UserCamera::FREE);
+}
+
+Test(UserCamera, setPlayerId, .timeout = 5)
+{
+    Gui::UserCamera cam;
+
+    cam.setPlayerId(1);
+
+    cr_assert_eq(cam.getPlayerId(), 1);
+}
