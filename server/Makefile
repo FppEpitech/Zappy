@@ -74,6 +74,7 @@ SRC			=	src/list/list.c \
 				src/gui/communication/sst.c			\
 				src/gui/communication/bct.c			\
 				src/gui/communication/mct.c			\
+				src/gui/communication/ppo.c			\
 
 TEST_FILES	=	list/list_test.c \
 				communication/communication_test.c 	\
