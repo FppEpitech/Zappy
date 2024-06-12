@@ -242,3 +242,8 @@ std::size_t Gui::Render::getCameraPlayerPov() const
 {
     return _camera.getPlayerId();
 }
+
+Model Gui::Render::getTileModel() const
+{
+    return _tileModel;
+}
