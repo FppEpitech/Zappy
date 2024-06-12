@@ -29,13 +29,18 @@ Raylib requires certain libraries to function properly. Install them with the fo
 sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel libXi-devel libXcursor-devel libXinerama-devel libatomic
 ```
 
-#### 3. Download and Install Raylib
-
 Fedora offers Raylib directly in its repositories. You can install it using dnf:
 
 ```bash
 sudo dnf install raylib-devel
 ```
-#### 4. Verify the Installation
+
+
+**To make it easier, you can install everything in one command:**
+
+```bash
+make install-deps
+```
+#### 3. Verify the Installation
 To ensure Raylib is installed correctly, you can compile and run a simple example. Create a file main.c with the include **raylib.h**.
 To run the program, don't forget to use the flag **-lraylib**.
