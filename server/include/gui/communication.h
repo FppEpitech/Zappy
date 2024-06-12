@@ -81,3 +81,12 @@ void mct_response(gui_t *gui, app_t *app, char *line);
  * @param line The command to handle.
  */
 void ppo_response(gui_t *gui, app_t *app, char *line);
+
+/**
+ * @brief Response to the plv command.
+ *
+ * @param gui The gui structure of client requested.
+ * @param app The app structure.
+ * @param line The command to handle.
+ */
+void plv_response(gui_t *gui, app_t *app, char *line);
