@@ -104,9 +104,8 @@ void Gui::Event::selectPlayer()
                 std::vector<RayCollision> hitbox = team.getPlayerModelHitbox(player.getId(), *_render.get()->getCamera().get());
 
                 for (size_t i = 0; i < bboxes.size(); i++) {
-                    if (hitbox[i].hit) {
+                    if (hitbox[i].hit)
                         DrawBoundingBox(bboxes[i], RED);
-                    }
                 }
             }
             if (team.isPlayerHit(player.getId(), *_render.get()->getCamera().get()))
