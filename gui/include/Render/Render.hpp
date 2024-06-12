@@ -80,6 +80,34 @@ class Gui::Render {
          */
         bool getIsDebug(void);
 
+        /**
+         * @brief Set the Type object.
+         *
+         * @param type Type to set.
+         */
+        void setCameraType(Gui::UserCamera::CameraType type);
+
+        /**
+         * @brief Get the Type object.
+         *
+         * @return CameraType - Camera type.
+         */
+        Gui::UserCamera::CameraType getCameraType() const;
+
+        /**
+         * @brief Set the Camera player pov id.
+         *
+         * @param id Id of the player.
+         */
+        void setCameraPlayerPov(std::size_t id);
+
+        /**
+         * @brief Get the Camera player pov id.
+         *
+         * @return std::size_t - Id of the player.
+         */
+        std::size_t getCameraPlayerPov() const;
+
     private:
 
         UserCamera                  _camera;            // Camera of the scene.
@@ -112,7 +140,7 @@ class Gui::Render {
          * @brief Display players.
          *
          */
-        void displayPlayers(void) const;
+        void displayPlayers(void);
 
         /**
          * @brief Display the map.

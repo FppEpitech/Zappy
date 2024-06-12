@@ -79,6 +79,13 @@ class Gui::GameData {
         void addPlayerToTeam(const std::string &teamName, const Gui::Player &player);
 
         /**
+         * @brief Get a player object.
+         *
+         * @param id Id of the player.
+        */
+        Gui::Player &getPlayer(size_t id);
+
+        /**
          * @brief Get the Map object.
          *
          * @return Map<Gui::Tile>& Map of the game.
@@ -181,6 +188,14 @@ class Gui::GameData {
          * @return std::string - Last error message.
          */
         std::string getLastError() const;
+
+        /**
+         * @brief Get the Team From Player object.
+         *
+         * @param id Id of the player.
+         * @return Gui::Team& Team of the player.
+        */
+        Team &getTeamById(std::size_t id);
 
     private:
 
