@@ -73,12 +73,12 @@ void Gui::Render::setIsDebug(bool isDebug)
     _isDebug = isDebug;
 }
 
-bool Gui::Render::getIsDebug(void)
+bool Gui::Render::getIsDebug()
 {
     return _isDebug;
 }
 
-void Gui::Render::displayDebug(void)
+void Gui::Render::displayDebug()
 {
     if (_isDebug) {
         DrawFPS(10, 10);
@@ -95,7 +95,7 @@ void Gui::Render::displayDebug(void)
     }
 }
 
-void Gui::Render::displayPlayers(void)
+void Gui::Render::displayPlayers()
 {
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
@@ -117,7 +117,7 @@ void Gui::Render::displayPlayers(void)
     }
 }
 
-void Gui::Render::displayMap(void)
+void Gui::Render::displayMap()
 {
     for (auto &line : _gameData->getMap()) {
         for (auto &tile : line) {

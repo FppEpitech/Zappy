@@ -56,14 +56,14 @@ class Gui::Tile {
          *
          * @return std::pair<std::size_t, std::size_t> - position x y
          */
-        std::pair<std::size_t, std::size_t> getPosition(void) const;
+        std::pair<std::size_t, std::size_t> getPosition() const;
 
         /**
          * @brief Get the Position In Space object.
          *
          * @return Vector3 - Position in space.
          */
-        Vector3 getPositionIn3DSpace(void);
+        Vector3 getPositionIn3DSpace();
 
         /**
          * @brief Inventory of the tile.
