@@ -105,9 +105,10 @@ jobs:
     container: epitechcontent/epitest-docker
     steps:
       - uses: actions/checkout@v4
-      - name: install_gui_dependencies
+      - name: install_dependencies
         run: |
             make install-deps-ci -C gui
+            make install-deps -C ai
       - name: run_tests
         run: make tests_run
         timeout-minutes: 5
