@@ -115,3 +115,12 @@ void pnw_command(app_t *app, ia_t *ai);
  * @param player_id The player id expulsed.
  */
 void pex_command(app_t *app, int player_id);
+
+/**
+ * @brief Perform the pbc command.
+ *
+ * @param app The app structure with all the gui fds.
+ * @param player_id The player id expulsed.
+ * @param message The message send.
+ */
+void pbc_command(app_t *app, int player_id, char *message);
