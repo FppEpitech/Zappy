@@ -116,7 +116,7 @@ std::vector<BoundingBox> Gui::Team::getPlayerBoundingBoxes(std::pair<size_t, siz
     std::vector<BoundingBox> bboxes;
     Model model = this->getPlayerModel();
 
-    for (int i = 0; i < model.meshCount; i++) {;
+    for (int i = 0; i < model.meshCount; i++) {
         BoundingBox bbox = GetMeshBoundingBox(model.meshes[i]);
 
         // Set the rotation of the bounding box
