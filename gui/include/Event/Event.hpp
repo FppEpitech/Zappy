@@ -137,6 +137,11 @@ class Gui::Event {
         void selectPlayer();
 
         /**
+         * @brief Select the tile.
+        */
+        void selectTile();
+
+        /**
          * @brief Change the player.
          *
          * @param turn Turn to select the player.
