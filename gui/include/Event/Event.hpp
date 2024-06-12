@@ -131,7 +131,7 @@ class Gui::Event {
         void handleRightClick();
 
         /**
-         * @brief Select the player pov;
+         * @brief Select the player pov.
          *
          */
         void selectPlayer();
