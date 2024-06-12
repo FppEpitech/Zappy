@@ -7,6 +7,7 @@
 
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
+#include "gui/communication.h"
 
 static void change_ai(app_t *app, ia_t *ai)
 {
@@ -51,6 +52,7 @@ static void ia_die(app_t *app, ia_t *ai)
     free(ai->time);
     change_ai(app, ai);
     dead_response(app);
+    pdi_command(app, ai->fd);
 }
 
 static void check_statut_life(app_t *app, ia_t *ai)
