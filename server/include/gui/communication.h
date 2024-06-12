@@ -90,3 +90,12 @@ void ppo_response(gui_t *gui, app_t *app, char *line);
  * @param line The command to handle.
  */
 void plv_response(gui_t *gui, app_t *app, char *line);
+
+/**
+ * @brief Response to the pin command.
+ *
+ * @param gui The gui structure of client requested.
+ * @param app The app structure.
+ * @param line The command to handle.
+ */
+void pin_response(gui_t *gui, app_t *app, char *line);
