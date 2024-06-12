@@ -8,7 +8,7 @@
 
 import sys
 
-from ai.src.Network.API import API
+from ai.src.AI import AI
 from ai.src.Errors.ArgsException import ArgsException
 
 # Port min
@@ -17,6 +17,7 @@ PORT_MIN = 0
 PORT_MAX = 65535
 # Localhost
 LOCALHOST = "127.0.0.1"
+
 
 def writeHelp(exitCode : int = 0):
     """
@@ -34,7 +35,15 @@ def writeHelp(exitCode : int = 0):
     print("")
     sys.exit(exitCode)
 
+
 def getArgs(av=sys.argv):
+    """
+    Get the arguments
+
+    Parameters:
+        av : list
+            the arguments passed to the program
+    """
     if len(av) == 2 and av[1] == "--help":
         writeHelp(0)
     host = LOCALHOST
@@ -55,13 +64,14 @@ def getArgs(av=sys.argv):
         writeHelp(84)
     return host, port, name
 
+
 def main():
+        """
+        Main function
+        """
         host, port, teamName = getArgs()
-        api = API(host, port)
-        api.connect()
-        api.initConnection(teamName)
-        while True:
-            api.receiveData()
+        ai = AI(host, port, teamName)
+        ai.run()
 
 
 if __name__ == "__main__":
