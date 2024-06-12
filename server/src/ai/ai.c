@@ -7,6 +7,7 @@
 
 #include "app/app.h"
 #include "server/client.h"
+#include "gui/communication.h"
 
 static orientation_t choose_direction(void)
 {
@@ -92,6 +93,7 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     new_ia->inventory = create_inventory();
     new_ia->incantation = create_incantation();
     new_ia->time = create_time(app);
+    new_ia->team_name = team->name;
     add_message_to_ia(app, team, new_ia);
     return new_ia;
 }
