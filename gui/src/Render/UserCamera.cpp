@@ -72,3 +72,13 @@ Gui::UserCamera::CameraType Gui::UserCamera::getType() const
 {
     return _type;
 }
+
+void Gui::UserCamera::setPlayerId(size_t id)
+{
+    _playerId = id;
+}
+
+size_t Gui::UserCamera::getPlayerId() const
+{
+    return _playerId;
+}

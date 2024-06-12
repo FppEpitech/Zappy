@@ -118,9 +118,24 @@ class Gui::UserCamera {
          */
         CameraType getType() const;
 
+        /**
+         * @brief Set the Player Id object.
+         *
+         * @param playerId Player id to set.
+        */
+        void setPlayerId(size_t playerId);
+
+        /**
+         * @brief Get the Player Id object.
+         *
+         * @return size_t - Player id.
+         */
+        size_t getPlayerId() const;
+
     private:
 
         std::shared_ptr<Camera>     _camera;        // Camera raylib instance.
         CameraType                  _type;          // Type of camera.
+        size_t                      _playerId;      // Player id.
 
 };
