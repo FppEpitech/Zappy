@@ -46,7 +46,7 @@ Test(Tile, positionIn3DSpace, .timeout = 5)
 {
     Gui::Tile tile(std::pair<std::size_t, std::size_t>(1, 2));
 
-    cr_assert_eq(tile.getPositionIn3DSpace().x, 1 * SIZE_TILE);
+    cr_assert_eq((float)tile.getPositionIn3DSpace().x, (float)(1 * SIZE_TILE));
     cr_assert_eq(tile.getPositionIn3DSpace().y, 0.0f);
-    cr_assert_eq(tile.getPositionIn3DSpace().z, 2 * SIZE_TILE);
+    cr_assert_eq((float)tile.getPositionIn3DSpace().z, (float)(2 * SIZE_TILE));
 }
