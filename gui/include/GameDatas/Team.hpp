@@ -150,9 +150,11 @@ class Gui::Team {
         /**
          * @brief Get the Player Boundig Boxes object.
          *
+         * @param pos Position of the player.
+         * @param orientation Orientation of the player.
          * @return std::vector<BoundingBox> Bounding boxes of the player.
         */
-        std::vector<BoundingBox> getPlayerBoundingBoxes();;
+        std::vector<BoundingBox> getPlayerBoundingBoxes(std::pair<size_t, size_t> pos, size_t orientation, Vector3 center);
 
         /**
          * @brief Get the Player position in 3D space.
@@ -187,4 +189,6 @@ class Gui::Team {
         Model                       _playerModel;     // Model player asset of the team.
         std::vector<Gui::Egg>       _eggs;      // Eggs of the team.
         Model                       _eggModel;  // Eggs Model of the team.
+
+        BoundingBox rotateBoundingBoxByOrientation(BoundingBox bbox, size_t orientation, std::pair<size_t, size_t> pos, Vector3 center);
 };
