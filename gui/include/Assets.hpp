@@ -29,6 +29,8 @@
 
 #define SIZE_TILE                   4.7
 
+#define PLAYER_HEIGHT               2
+
 #define SCALE_FOOD                  (Vector3){1, 0.5, 1}
 #define SCALE_LINEMATE              (Vector3){0.1, 0.1, 0.1}
 #define SCALE_MENDIANE              (Vector3){0.1, 0.1, 0.1}
