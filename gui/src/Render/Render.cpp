@@ -230,3 +230,13 @@ Gui::UserCamera::CameraType Gui::Render::getCameraType() const
 {
     return _camera.getType();
 }
+
+void Gui::Render::setCameraPlayerPov(std::size_t id)
+{
+    _camera.setPlayerId(id);
+}
+
+std::size_t Gui::Render::getCameraPlayerPov() const
+{
+    return _camera.getPlayerId();
+}
