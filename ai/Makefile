@@ -32,6 +32,7 @@ tests_run:
 	chmod 775 $(TEST_NAME)
 	cp $(TEST_NAME) ../
 	pipx run coverage run ../$(TEST_NAME)
+	coverage report
 
 install-deps:
 	sudo dnf install pipx -y
