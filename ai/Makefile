@@ -28,7 +28,7 @@ fclean: clean
 re: fclean all
 
 tests_run:
-	cp tests/MainTest.py $(TEST_NAME)
+	cp ../tests/ai/tests/MainTest.py $(TEST_NAME)
 	chmod 775 $(TEST_NAME)
 	cp $(TEST_NAME) ../
 # TODO #11 (https://github.com/FppEpitech/Zappy/issues/11)
