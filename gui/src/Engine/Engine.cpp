@@ -23,9 +23,6 @@ Gui::Engine::Engine(std::shared_ptr<Network> network) : _network(network), _game
 
 void Gui::Engine::run(void)
 {
-    _gameData->addTeam("NAROUT", MODEL_PLAYER, MODEL_EGG);
-    _gameData->getTeam("NAROUT").addPlayer(Player(1, "NAROUT", std::make_pair(0,0), 2, 1));
-
     while (_render->isOpen() && !_gameData->getIsEndGame()) {
         listenServer();
         _render->draw();
