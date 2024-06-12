@@ -98,8 +98,10 @@ void Gui::Event::selectPlayer()
                         DrawBoundingBox(bboxes[i], RED);
                 }
             }
-            if (team.isPlayerHit(player.getId(), *_render.get()->getCamera().get()))
+            if (team.isPlayerHit(player.getId(), *_render.get()->getCamera().get())) {
+                // TODO: Display the player HUD
                 this->changeCameraToPlayer(player.getId());
+            }
         }
     }
     EndMode3D();
