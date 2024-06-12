@@ -31,4 +31,4 @@ tests_run:
 	cp ../tests/ai/tests/MainTest.py $(TEST_NAME)
 	chmod 775 $(TEST_NAME)
 	cp $(TEST_NAME) ../
-# TODO #11 (https://github.com/FppEpitech/Zappy/issues/11)
+	pipx run coverage run ../$(TEST_NAME)
