@@ -145,7 +145,7 @@ std::vector<BoundingBox> Gui::Team::getPlayerBoundingBoxes(std::pair<size_t, siz
     return bboxes;
 }
 
-Vector3 Gui::Team::getPlayerPositionIn3DSpace(std::size_t id, std::vector<std::vector<Gui::Tile>> map)
+Vector3 Gui::Team::getPlayerPositionIn3DSpace(std::size_t id, Map<Gui::Tile> map)
 {
     Vector3 result;
     for (auto &row : map) {

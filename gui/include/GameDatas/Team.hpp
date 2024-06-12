@@ -8,6 +8,7 @@
 #pragma once
 
 #include "raylib.h"
+#include "Types.hpp"
 #include "GameDatas/Egg.hpp"
 #include "GameDatas/Tile.hpp"
 #include "GameDatas/Player.hpp"
@@ -162,7 +163,7 @@ class Gui::Team {
          * @param id Id of the player.
          * @param map Map of the game.
         */
-        Vector3 getPlayerPositionIn3DSpace(size_t id, std::vector<std::vector<Gui::Tile>> map);
+        Vector3 getPlayerPositionIn3DSpace(size_t id, Map<Tile> map);
 
         /**
          * @brief Get the Player Model hitbox.
