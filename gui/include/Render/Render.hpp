@@ -12,6 +12,7 @@
 #define WINDOW_TITLE "Zappy GUI"
 
 #include "raylib.h"
+#include "Render/Decoration.hpp"
 #include "Render/UserCamera.hpp"
 #include "GameDatas/GameData.hpp"
 
@@ -84,6 +85,7 @@ class Gui::Render {
         UserCamera                  _camera;            // Camera of the scene.
         bool                        _isDebug;           // Display or not the debug informations.
         std::shared_ptr<GameData>   _gameData;          // GameData class to store the game's data.
+        std::shared_ptr<Decoration> _decoration;        // Decoration to display;
 
         Model                       _tileModel;         // Model to display tiles.
         Model                       _foodModel;         // Model to display foods.
@@ -116,7 +118,7 @@ class Gui::Render {
          * @brief Display the map.
          *
          */
-        void displayMap(void) const;
+        void displayMap(void);
 
         /**
          * @brief Display the eggs.

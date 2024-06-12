@@ -17,6 +17,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     DisableCursor();
     SetTargetFPS(140);
     _isDebug = false;
+    _decoration = std::make_shared<Decoration>(Decoration());
     this->LoadModels();
 }
 
@@ -102,7 +103,7 @@ void Gui::Render::displayPlayers(void) const
     }
 }
 
-void Gui::Render::displayMap(void) const
+void Gui::Render::displayMap(void)
 {
     for (auto &line : _gameData->getMap()) {
         for (auto &tile : line) {
@@ -110,6 +111,7 @@ void Gui::Render::displayMap(void) const
             displayFood(tile);
             displayResources(tile);
             displayEggs(tile);
+            _decoration->display(_gameData->getMapSize());
         }
     }
 }

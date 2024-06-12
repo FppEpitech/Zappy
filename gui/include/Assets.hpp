@@ -8,9 +8,13 @@
 #pragma once
 
 #define PATH_ASSETS                 "gui/assets/"
-#define PATH_RESOURCES              "resources/"
 
-#define MODEL_TILE                  PATH_ASSETS "tile.glb"
+#define PATH_RESOURCES              "resources/"
+#define PATH_PLAYER                 "player/"
+#define PATH_TILE                   "tile/"
+#define PATH_DECORATION             "decoration/"
+
+#define MODEL_TILE                  PATH_ASSETS PATH_TILE "tile.glb"
 #define MODEL_FOOD                  PATH_ASSETS PATH_RESOURCES "food.glb"
 #define MODEL_LINEMATE              PATH_ASSETS PATH_RESOURCES "linemate.glb"
 #define MODEL_MENDIANE              PATH_ASSETS PATH_RESOURCES "mendiane.glb"
@@ -18,8 +22,9 @@
 #define MODEL_SIBUR                 PATH_ASSETS PATH_RESOURCES "sibur.glb"
 #define MODEL_THYSTAME              PATH_ASSETS PATH_RESOURCES "thystame.glb"
 #define MODEL_DERAUMERE             PATH_ASSETS PATH_RESOURCES "deraumere.glb"
-#define MODEL_PLAYER                PATH_ASSETS "player.glb"
-#define MODEL_EGG                   PATH_ASSETS "egg.glb"
+#define MODEL_PLAYER                PATH_ASSETS PATH_PLAYER "player.glb"
+#define MODEL_EGG                   PATH_ASSETS PATH_PLAYER "egg.glb"
+#define MODEL_TREE                  PATH_ASSETS PATH_DECORATION "tree.glb"
 
 #define SIZE_TILE                   4.7
 
@@ -32,6 +37,7 @@
 #define SCALE_DERAUMERE             (Vector3){0.5, 0.5, 0.5}
 #define SCALE_PLAYER                (Vector3){0.5, 0.5, 0.5}
 #define SCALE_EGG                   (Vector3){0.5, 0.5, 0.5}
+#define SCALE_TREE                  (Vector3){1, 1, 1}
 
 #define ROTATION_ANGLE_FOOD         45
 #define ROTATION_ANGLE_LINEMATE     270
@@ -42,6 +48,7 @@
 #define ROTATION_ANGLE_DERAUMERE    90
 #define ROTATION_ANGLE_PLAYER       0
 #define ROTATION_ANGLE_EGG          270
+#define ROTATION_ANGLE_TREE         0
 
 #define ROTATION_AXIS_FOOD          (Vector3){0, 1, 0}
 #define ROTATION_AXIS_LINEMATE      (Vector3){1, 0, 0}
@@ -52,6 +59,7 @@
 #define ROTATION_AXIS_DERAUMERE     (Vector3){1, 0, 0}
 #define ROTATION_AXIS_PLAYER        (Vector3){0, 0, 0}
 #define ROTATION_AXIS_EGG           (Vector3){1, 0, 0}
+#define ROTATION_AXIS_TREE          (Vector3){1, 0, 0}
 
 #define POS_FOOD                    (Vector3){0.5, -0.1, 1.5}
 #define POS_LINEMATE                (Vector3){1, -0.3, -0.5}
@@ -62,3 +70,4 @@
 #define POS_DERAUMERE               (Vector3){2, -0.3, -2}
 #define POS_PLAYER                  (Vector3){0, 0.1, 0}
 #define POS_EGG                     (Vector3){0.5, 0, 0.5}
+#define POS_TREE                    (Vector3){2, -0.3, 2}
