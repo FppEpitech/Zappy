@@ -45,7 +45,11 @@ class Gui::Decoration {
 
         Model                                   _treeModel;
         Map<bool>                               _mapTree;
+        Model                                   _lanternModel;
+        Map<bool>                               _mapLantern;
+
         std::pair<std::size_t, std::size_t>     _mapSize;
 
-        void displayTree(void);
+        void displayTree(size_t i, size_t j, Vector3 posTile);
+        void displayLantern(size_t i, size_t j, Vector3 posTile);
 };

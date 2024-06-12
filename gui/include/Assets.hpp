@@ -25,6 +25,7 @@
 #define MODEL_PLAYER                PATH_ASSETS PATH_PLAYER "player.glb"
 #define MODEL_EGG                   PATH_ASSETS PATH_PLAYER "egg.glb"
 #define MODEL_TREE                  PATH_ASSETS PATH_DECORATION "tree.glb"
+#define MODEL_LANTERN               PATH_ASSETS PATH_DECORATION "lantern.glb"
 
 #define SIZE_TILE                   4.7
 
@@ -38,6 +39,7 @@
 #define SCALE_PLAYER                (Vector3){0.5, 0.5, 0.5}
 #define SCALE_EGG                   (Vector3){0.5, 0.5, 0.5}
 #define SCALE_TREE                  (Vector3){1, 1, 1}
+#define SCALE_LANTERN               (Vector3){1, 1, 1}
 
 #define ROTATION_ANGLE_FOOD         45
 #define ROTATION_ANGLE_LINEMATE     270
@@ -49,6 +51,7 @@
 #define ROTATION_ANGLE_PLAYER       0
 #define ROTATION_ANGLE_EGG          270
 #define ROTATION_ANGLE_TREE         0
+#define ROTATION_ANGLE_LANTERN      0
 
 #define ROTATION_AXIS_FOOD          (Vector3){0, 1, 0}
 #define ROTATION_AXIS_LINEMATE      (Vector3){1, 0, 0}
@@ -60,6 +63,7 @@
 #define ROTATION_AXIS_PLAYER        (Vector3){0, 0, 0}
 #define ROTATION_AXIS_EGG           (Vector3){1, 0, 0}
 #define ROTATION_AXIS_TREE          (Vector3){1, 0, 0}
+#define ROTATION_AXIS_LANTERN       (Vector3){1, 0, 0}
 
 #define POS_FOOD                    (Vector3){0.5, -0.1, 1.5}
 #define POS_LINEMATE                (Vector3){1, -0.3, -0.5}
@@ -71,3 +75,4 @@
 #define POS_PLAYER                  (Vector3){0, 0.1, 0}
 #define POS_EGG                     (Vector3){0.5, 0, 0.5}
 #define POS_TREE                    (Vector3){2, -0.3, 2}
+#define POS_LANTERN                 (Vector3){1, -0.3, 2}
