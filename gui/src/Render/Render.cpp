@@ -18,6 +18,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     ToggleFullscreen();
     SetTargetFPS(140);
     _isDebug = false;
+    _decoration = std::make_shared<Decoration>(Decoration());
     this->LoadModels();
 }
 
@@ -50,7 +51,7 @@ void Gui::Render::draw()
 
     BeginDrawing();
 
-    ClearBackground(SKYBLUE);
+    ClearBackground(ORANGE);
 
     BeginMode3D(*_camera.getCamera());
     displayMap();
@@ -114,14 +115,15 @@ void Gui::Render::displayPlayers(void)
     }
 }
 
-void Gui::Render::displayMap(void) const
+void Gui::Render::displayMap(void)
 {
     for (auto &line : _gameData->getMap()) {
         for (auto &tile : line) {
-            DrawModel(_tileModel, tile.getPositionIn3DSpace(), 0.001f, WHITE);
+            DrawModel(_tileModel, tile.getPositionIn3DSpace(), 1.0f, WHITE);
             displayFood(tile);
             displayResources(tile);
             displayEggs(tile);
+            _decoration->display(_gameData->getMapSize());
         }
     }
 }
