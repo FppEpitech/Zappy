@@ -109,6 +109,7 @@ void add_ia(app_t *app, size_t fd, char *line)
             data.ai = create_ia(app, fd, team);
             list_add_back(team->list_ai, data);
             list_delete(app->clients_list, find_client(app->clients_list, fd));
+            pnw_command(app, data.ai);
             return;
         }
         temp = temp->next;
