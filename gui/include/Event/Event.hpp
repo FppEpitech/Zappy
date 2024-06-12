@@ -84,7 +84,8 @@ class Gui::Event {
             {KEY_THREE, [this](){switchDisplayDebug();}},
             {KEY_F3, [this](){switchDisplayDebug();}},
             {KEY_ONE, [this](){switchPovLeft();}},
-            {KEY_TWO, [this](){switchPovRight();}}
+            {KEY_TWO, [this](){switchPovRight();}},
+            {KEY_SPACE, [this](){setFreeCam();}},
         };
 
         /**
@@ -93,7 +94,8 @@ class Gui::Event {
          */
         std::unordered_map<MouseButton, std::function<void()>> _eventsMousePressed =
         {
-            {MOUSE_BUTTON_LEFT, [this](){selectPlayer();}}
+            {MOUSE_BUTTON_LEFT, [this](){handleLeftClick();}},
+            {MOUSE_BUTTON_RIGHT, [this](){handleRightClick();}}
         };
 
         /**
@@ -127,8 +129,38 @@ class Gui::Event {
         void switchPovRight();
 
         /**
+         * @brief Set the free camera.
+        */
+        void setFreeCam();
+
+        /**
+         * @brief Handle the left click.
+         *
+        */
+        void handleLeftClick();
+
+        /**
+         * @brief Handle the right click.
+        */
+        void handleRightClick();
+
+        /**
          * @brief Select the player pov;
          *
          */
         void selectPlayer();
+
+        /**
+         * @brief Change the player.
+         *
+         * @param turn Turn to select the player.
+         */
+        void changePlayer(bool turn);
+
+        /**
+         * @brief Change the camera to the player.
+         *
+         * @param player Player to select.
+         */
+        void changeCameraToPlayer(size_t id);
 };
