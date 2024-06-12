@@ -121,12 +121,22 @@ void Gui::Render::displayMap()
 {
     for (auto &line : _gameData->getMap()) {
         for (auto &tile : line) {
-            DrawModel(_tileModel, tile.getPositionIn3DSpace(), 1.0f, WHITE);
+            displayTile(tile);
             displayFood(tile);
             displayResources(tile);
             displayEggs(tile);
             _decoration->display(_gameData->getMapSize());
         }
+    }
+}
+
+void Gui::Render::displayTile(Tile tile)
+{
+    DrawModel(_tileModel, tile.getPositionIn3DSpace(), 1.0f, WHITE);
+    if (_isDebug) {
+        std::vector<BoundingBox> bboxes = tile.getTileBoundingBoxes(tile, _tileModel);
+        for (size_t i = 0; i < bboxes.size(); i++)
+            DrawBoundingBox(bboxes[i], GREEN);
     }
 }
 

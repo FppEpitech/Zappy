@@ -155,6 +155,12 @@ class Gui::Render {
         void displayMap(void);
 
         /**
+         * @brief Display a Tile.
+         *
+        */
+        void displayTile(Tile tile);
+
+        /**
          * @brief Display the eggs.
          *
          * @param tile Tile with eggs.
