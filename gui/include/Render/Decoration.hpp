@@ -8,18 +8,11 @@
 #pragma once
 
 #include "raylib.h"
+#include "Types.hpp"
 #include "Assets.hpp"
 
 #include <vector>
 #include <iostream>
-
-/**
- * @brief Map type.
- *
- * @tparam T Type of the map.
-*/
-template<typename T>
-using Map = std::vector<std::vector<T>>;
 
 namespace Gui {
 

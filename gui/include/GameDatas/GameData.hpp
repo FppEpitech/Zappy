@@ -7,19 +7,12 @@
 
 #pragma once
 
+#include "Types.hpp"
 #include "Error/Error.hpp"
 #include "GameDatas/Team.hpp"
 #include "GameDatas/Tile.hpp"
 
 #define NO_TICK int(-1)
-
-/**
- * @brief Map type.
- *
- * @tparam T Type of the map.
-*/
-template<typename T>
-using Map = std::vector<std::vector<T>>;
 
 namespace Gui {
 
