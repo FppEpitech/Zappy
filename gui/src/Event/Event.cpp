@@ -63,17 +63,6 @@ void Gui::Event::switchDisplayDebug()
         _render->setIsDebug(true);
 }
 
-void Gui::Event::switchPovLeft()
-{
-    _render->setCameraType(Gui::UserCamera::FREE);
-}
-
-void Gui::Event::switchPovRight()
-{
-    _render->setCameraType(Gui::UserCamera::POV_PLAYER);
-    UpdateCamera(_render->getCamera().get(), CAMERA_THIRD_PERSON);
-}
-
 void Gui::Event::setFreeCam()
 {
     _render->setCameraType(Gui::UserCamera::FREE);

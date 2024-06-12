@@ -83,8 +83,6 @@ class Gui::Event {
         {
             {KEY_THREE, [this](){switchDisplayDebug();}},
             {KEY_F3, [this](){switchDisplayDebug();}},
-            {KEY_ONE, [this](){switchPovLeft();}},
-            {KEY_TWO, [this](){switchPovRight();}},
             {KEY_SPACE, [this](){setFreeCam();}},
         };
 
