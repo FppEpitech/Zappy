@@ -23,7 +23,7 @@
 
 #define SIZE_TILE                   4.7
 
-#define SCALE_FOOD                  (Vector3){2, 2, 2}
+#define SCALE_FOOD                  (Vector3){1, 0.5, 1}
 #define SCALE_LINEMATE              (Vector3){0.1, 0.1, 0.1}
 #define SCALE_MENDIANE              (Vector3){0.1, 0.1, 0.1}
 #define SCALE_PHIRAS                (Vector3){0.001, 0.001, 0.005}
@@ -31,34 +31,34 @@
 #define SCALE_THYSTAME              (Vector3){2, 2, 2}
 #define SCALE_DERAUMERE             (Vector3){0.5, 0.5, 0.5}
 #define SCALE_PLAYER                (Vector3){0.5, 0.5, 0.5}
-#define SCALE_EGG                   (Vector3){0.75, 0.75, 0.75}
+#define SCALE_EGG                   (Vector3){0.5, 0.5, 0.5}
 
-#define ROTATION_ANGLE_FOOD         270
+#define ROTATION_ANGLE_FOOD         45
 #define ROTATION_ANGLE_LINEMATE     270
 #define ROTATION_ANGLE_MENDIANE     0
 #define ROTATION_ANGLE_PHIRAS       270
 #define ROTATION_ANGLE_SIBUR        270
 #define ROTATION_ANGLE_THYSTAME     270
-#define ROTATION_ANGLE_DERAUMERE    0
+#define ROTATION_ANGLE_DERAUMERE    90
 #define ROTATION_ANGLE_PLAYER       0
 #define ROTATION_ANGLE_EGG          270
 
-#define ROTATION_AXIS_FOOD          (Vector3){1, 0, 0}
+#define ROTATION_AXIS_FOOD          (Vector3){0, 1, 0}
 #define ROTATION_AXIS_LINEMATE      (Vector3){1, 0, 0}
 #define ROTATION_AXIS_MENDIANE      (Vector3){1, 0, 0}
 #define ROTATION_AXIS_PHIRAS        (Vector3){1, 0, 0}
 #define ROTATION_AXIS_SIBUR         (Vector3){1, 0, 0}
 #define ROTATION_AXIS_THYSTAME      (Vector3){1, 0, 0}
-#define ROTATION_AXIS_DERAUMERE     (Vector3){0, 0, 0}
+#define ROTATION_AXIS_DERAUMERE     (Vector3){1, 0, 0}
 #define ROTATION_AXIS_PLAYER        (Vector3){0, 0, 0}
 #define ROTATION_AXIS_EGG           (Vector3){1, 0, 0}
 
-#define POS_FOOD                    (Vector3){0.5, 0.1, 1.5}
+#define POS_FOOD                    (Vector3){0.5, -0.1, 1.5}
 #define POS_LINEMATE                (Vector3){1, -0.3, -0.5}
 #define POS_MENDIANE                (Vector3){2, -0.25, -0.5}
 #define POS_PHIRAS                  (Vector3){0.5, -0.3, -1.5}
 #define POS_SIBUR                   (Vector3){1.5, -0.3, -1.5}
 #define POS_THYSTAME                (Vector3){1, -0.2, -2}
-#define POS_DERAUMERE               (Vector3){2, 0.1, -2}
+#define POS_DERAUMERE               (Vector3){2, -0.3, -2}
 #define POS_PLAYER                  (Vector3){0, 0.1, 0}
-#define POS_EGG                     (Vector3){0.5, 0.5, 0.5}
+#define POS_EGG                     (Vector3){0.5, 0, 0.5}
