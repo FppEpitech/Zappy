@@ -51,7 +51,7 @@ MAIN_OBJ	=	$(MAIN:.cpp=.o)
 NAME		= 	zappy_gui
 
 # Flags
-INCLUDE		= 	-I./include -I./tests
+INCLUDE		= 	-I./include -I../tests/gui/tests
 CXXFLAGS 	= 	-std=c++20 -Wall -Wextra -Werror -lraylib
 
 # Colors
@@ -60,7 +60,7 @@ GREEN 		= 	/bin/echo -e "\x1b[32m $1\x1b[0m"
 
 # Tests
 TEST_NAME 	= 	unit_tests
-TEST_DIR 	= 	tests/
+TEST_DIR 	= 	../tests/gui/tests/
 TEST 		= 	$(addprefix $(TEST_DIR), $(TEST_FILES))
 TEST_OBJ 	= 	$(TEST:.cpp=.o)
 TEST_GCNO 	= 	$(SRC:.cpp=.gcno)
