@@ -115,18 +115,6 @@ class Gui::Event {
         void switchDisplayDebug();
 
         /**
-         * @brief Switch of pov by left.
-         *
-         */
-        void switchPovLeft();
-
-        /**
-         * @brief Switch of pov by right.
-         *
-         */
-        void switchPovRight();
-
-        /**
          * @brief Set the free camera.
         */
         void setFreeCam();
