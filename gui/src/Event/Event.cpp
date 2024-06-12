@@ -80,7 +80,7 @@ void Gui::Event::selectPlayer()
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (_render.get()->getIsDebug()) {
-                std::vector<BoundingBox> bboxes = team.getPlayerBoundingBoxes();
+                std::vector<BoundingBox> bboxes = team.getPlayerBoundingBoxes(player.getPosition(), player.getOrientation(), player.getCenterPosition());
                 std::vector<RayCollision> hitbox = team.getPlayerModelHitbox(player.getId(), *_render.get()->getCamera().get());
 
                 for (size_t i = 0; i < bboxes.size(); i++) {
