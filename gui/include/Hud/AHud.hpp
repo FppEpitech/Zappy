@@ -54,7 +54,7 @@ class Gui::AHud : public Gui::IHud {
          *
          * @return TypeScene - Type of the scene.
          */
-        TypeScene getType();
+        TypeScene getType() const;
 
     protected:
 

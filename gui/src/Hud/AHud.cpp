@@ -17,7 +17,7 @@ void Gui::AHud::setTile(std::shared_ptr<Tile> tile)
     _tile = tile;
 }
 
-Gui::AHud::TypeScene Gui::AHud::getType()
+Gui::AHud::TypeScene Gui::AHud::getType() const
 {
     return _typeScene;
 }
