@@ -26,6 +26,7 @@ SRC			=	src/Error/Error.cpp \
 				\
 				src/Render/Render.cpp \
 				src/Render/UserCamera.cpp \
+				src/Render/Decoration.cpp \
 				\
 				src/Event/Event.cpp \
 				\
@@ -40,7 +41,8 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				GameDatas/TestGameData.cpp \
 				GameDatas/TestEgg.cpp \
 				GameDatas/TestTeam.cpp \
-				Render/TestCamera.cpp \
+				Render/TestUserCamera.cpp \
+				Render/TestDecoration.cpp \
 				GUIUpdater/TestGUIUpdater.cpp \
 				Event/TestEvent.cpp \
 
@@ -51,7 +53,7 @@ MAIN_OBJ	=	$(MAIN:.cpp=.o)
 NAME		= 	zappy_gui
 
 # Flags
-INCLUDE		= 	-I./include -I./tests
+INCLUDE		= 	-I./include -I../tests/gui/tests
 CXXFLAGS 	= 	-std=c++20 -Wall -Wextra -Werror -lraylib
 
 # Colors
@@ -60,7 +62,7 @@ GREEN 		= 	/bin/echo -e "\x1b[32m $1\x1b[0m"
 
 # Tests
 TEST_NAME 	= 	unit_tests
-TEST_DIR 	= 	tests/
+TEST_DIR 	= 	../tests/gui/tests/
 TEST 		= 	$(addprefix $(TEST_DIR), $(TEST_FILES))
 TEST_OBJ 	= 	$(TEST:.cpp=.o)
 TEST_GCNO 	= 	$(SRC:.cpp=.gcno)
@@ -107,3 +109,16 @@ tests_run: fclean
 	@$(CC) -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(TEST_FLAGS) $(INCLUDE)
 	./$(TEST_NAME)
 	gcovr --exclude tests/
+
+install-deps-ci:
+	sudo dnf install alsa-lib-devel mesa-libGL-devel \
+		libX11-devel libXrandr-devel libXi-devel \
+		libXcursor-devel libXinerama-devel libatomic -y
+	sudo dnf install raylib-devel -y
+
+install-deps:
+	sudo dnf update -y
+	sudo dnf install alsa-lib-devel mesa-libGL-devel \
+		libX11-devel libXrandr-devel libXi-devel \
+		libXcursor-devel libXinerama-devel libatomic -y
+	sudo dnf install raylib-devel -y

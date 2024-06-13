@@ -59,6 +59,17 @@ void Gui::GameData::addPlayerToTeam(const std::string &teamName, const Gui::Play
     throw Gui::Errors::GuiGameDataException("Team not found");
 }
 
+Gui::Player &Gui::GameData::getPlayer(size_t id)
+{
+    for (auto &team : _teams) {
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == id)
+                return player;
+        }
+    }
+    throw Gui::Errors::GuiGameDataException("Player not found");
+}
+
 Map<Gui::Tile> &Gui::GameData::getMap()
 {
     return _map;
@@ -147,4 +158,15 @@ void Gui::GameData::setLastError(const std::string &error)
 std::string Gui::GameData::getLastError() const
 {
     return _lastError;
+}
+
+Gui::Team &Gui::GameData::getTeamById(size_t id)
+{
+    for (auto &team : _teams) {
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == id)
+                return team;
+        }
+    }
+    throw Gui::Errors::GuiGameDataException("Team not found");
 }

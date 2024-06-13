@@ -53,9 +53,17 @@ class Gui::Event {
          */
         void setRender(std::shared_ptr<Render> render);
 
+        /**
+         * @brief Set the GameData object.
+         *
+         * @param gameData GameData class.
+         */
+        void setGameData(std::shared_ptr<GameData> gameData);
+
     private:
 
-        std::shared_ptr<Render>       _render;  // Render class to draw scene.
+        std::shared_ptr<Render>         _render;    // Render class to draw scene.
+        std::shared_ptr<GameData>       _gameData;  // GameData class to contain scene.
 
         /**
          * @brief Map for events by down key.
@@ -74,7 +82,18 @@ class Gui::Event {
         std::unordered_map<KeyboardKey, std::function<void()>> _eventsKeyPressed =
         {
             {KEY_THREE, [this](){switchDisplayDebug();}},
-            {KEY_F3, [this](){switchDisplayDebug();}}
+            {KEY_F3, [this](){switchDisplayDebug();}},
+            {KEY_SPACE, [this](){setFreeCam();}},
+        };
+
+        /**
+         * @brief Map for events by pressing mouse.
+         *
+         */
+        std::unordered_map<MouseButton, std::function<void()>> _eventsMousePressed =
+        {
+            {MOUSE_BUTTON_LEFT, [this](){handleLeftClick();}},
+            {MOUSE_BUTTON_RIGHT, [this](){handleRightClick();}}
         };
 
         /**
@@ -94,4 +113,45 @@ class Gui::Event {
          *
          */
         void switchDisplayDebug();
+
+        /**
+         * @brief Set the free camera.
+        */
+        void setFreeCam();
+
+        /**
+         * @brief Handle the left click.
+         *
+        */
+        void handleLeftClick();
+
+        /**
+         * @brief Handle the right click.
+        */
+        void handleRightClick();
+
+        /**
+         * @brief Select the player pov.
+         *
+         */
+        void selectPlayer();
+
+        /**
+         * @brief Select the tile.
+        */
+        void selectTile();
+
+        /**
+         * @brief Change the player.
+         *
+         * @param turn Turn to select the player.
+         */
+        void changePlayer(bool turn);
+
+        /**
+         * @brief Change the camera to the player.
+         *
+         * @param player Player to select.
+         */
+        void changeCameraToPlayer(size_t id);
 };

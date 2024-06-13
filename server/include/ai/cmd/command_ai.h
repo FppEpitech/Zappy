@@ -9,8 +9,8 @@
 
 #include "ai/ai.h"
 
-#define BEGIN_STATUS 1
-#define END_STATUS 2
+#define BEGIN_INCANTATION 1
+#define END_INCANTATION 2
 
 /**
  * @brief Handler of AI command.
@@ -144,7 +144,7 @@ bool incantation_command(app_t *app, ia_t *ai, char *line);
  *
  * @param app Application with necessary information.
  * @param ai AI who have launch the incantation.
- * @param status BEGIN_STATUS or END_STATUS
+ * @param status BEGIN_INCANTATION or END_INCANTATION
  * (to know if I have to verify status incantation).
  * @return true If condition is good.
  * @return false If condition isn't good.
@@ -156,8 +156,9 @@ bool check_incantation(app_t *app, ia_t *ai, int status);
  *
  * @param app Application with necessary information.
  * @param ai AI who have launch the incantation.
+ * @param update_status Status of the update.
  */
-void update_status(app_t *app, ia_t *ai);
+void update_status(app_t *app, ia_t *ai, int update_status);
 
 /**
  * @brief Level up all player of incantation and delete all ressources.

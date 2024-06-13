@@ -15,10 +15,10 @@ static int check_position(vector2i_t *pos, ia_t *ai_check,
     if (ai_check->position->x == pos->x
     && ai_check->position->y == pos->y
     && ai_check->level == level) {
-        if (status == END_STATUS &&
+        if (status == END_INCANTATION &&
         ai_check->incantation->status_incantation == true)
             return 1;
-        if (status == BEGIN_STATUS)
+        if (status == BEGIN_INCANTATION)
             return 1;
     }
     return 0;
