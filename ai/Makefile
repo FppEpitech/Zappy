@@ -27,12 +27,14 @@ fclean: clean
 
 re: fclean all
 
+install-deps:
+	sudo dnf install python3-virtualenv -y
+	virtualenv zappy_ai
+	./zappy_ai/bin/pip install -r requirements.txt
+
 tests_run:
 	cp ../tests/ai/tests/MainTest.py $(TEST_NAME)
 	chmod 775 $(TEST_NAME)
 	cp $(TEST_NAME) ../
-	pipx run coverage run ../$(TEST_NAME)
-	pipx run coverage report
-
-install-deps:
-	sudo dnf install pipx -y
+	./zappy_ai/bin/coverage run ../$(TEST_NAME)
+	./zappy_ai/bin/coverage report
