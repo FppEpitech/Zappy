@@ -10,8 +10,7 @@
 
 #include "app/app.h"
 
-int main(int ac, char **av)
-{
+int main(int ac, char **av){
     parsing_t *parsing = parse_arg(ac, av);
     app_t *app = NULL;
 
