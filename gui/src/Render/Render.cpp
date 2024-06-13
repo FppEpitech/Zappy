@@ -15,10 +15,12 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
 {
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
     DisableCursor();
+    ToggleFullscreen();
     SetTargetFPS(140);
     _isDebug = false;
     _hudList.push_back(std::make_shared<HudPlayer>(HudPlayer(gameData)));
     _hudList.push_back(std::make_shared<HudGame>(HudGame(gameData)));
+    _decoration = std::make_shared<Decoration>(Decoration());
     this->LoadModels();
 }
 
@@ -46,10 +48,12 @@ bool Gui::Render::isOpen()
 
 void Gui::Render::draw()
 {
-    UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
+    if (_camera.getType() != Gui::UserCamera::POV_PLAYER)
+        UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
+
     BeginDrawing();
 
-    ClearBackground(SKYBLUE);
+    ClearBackground(ORANGE);
 
     BeginMode3D(*_camera.getCamera());
     displayMap();
@@ -72,12 +76,12 @@ void Gui::Render::setIsDebug(bool isDebug)
     _isDebug = isDebug;
 }
 
-bool Gui::Render::getIsDebug(void)
+bool Gui::Render::getIsDebug()
 {
     return _isDebug;
 }
 
-void Gui::Render::displayDebug(void)
+void Gui::Render::displayDebug()
 {
     if (_isDebug) {
         DrawFPS(10, 10);
@@ -94,26 +98,48 @@ void Gui::Render::displayDebug(void)
     }
 }
 
-void Gui::Render::displayPlayers(void) const
+void Gui::Render::displayPlayers()
 {
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            Vector3 posPlayer = (Vector3){(float)(player.getPosition().first), 0, (float)(player.getPosition().second)};
-            Vector3 posAssetPlayer = POS_PLAYER;
-            DrawModelEx(team.getPlayerModel(), (Vector3){posPlayer.x + posAssetPlayer.x, posPlayer.y + posAssetPlayer.y, posPlayer.z + posAssetPlayer.z}, ROTATION_AXIS_PLAYER, ROTATION_ANGLE_PLAYER, SCALE_PLAYER, WHITE);
+            if (_gameData.get()->getMap().size() == 0 || _gameData.get()->getMap()[player.getPosition().first].size() == 0)
+                return;
+
+            float rotation = player.getRotationFromOrientation();
+
+            DrawModelEx(team.getPlayerModel(), team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, WHITE);
+
+            if (_isDebug) {
+                std::vector<BoundingBox> bboxes = team.getPlayerBoundingBoxes(player.getPosition(), player.getOrientation(), player.getCenterPosition());
+                std::vector<RayCollision> hitbox = team.getPlayerModelHitbox(player.getId(), *_camera.getCamera().get());
+
+                for (size_t i = 0; i < bboxes.size(); i++)
+                    DrawBoundingBox(bboxes[i], GREEN);
+            }
         }
     }
 }
 
-void Gui::Render::displayMap(void) const
+void Gui::Render::displayMap()
 {
     for (auto &line : _gameData->getMap()) {
         for (auto &tile : line) {
-            DrawModel(_tileModel, tile.getPositionIn3DSpace(), 0.001f, WHITE);
+            displayTile(tile);
             displayFood(tile);
             displayResources(tile);
             displayEggs(tile);
+            _decoration->display(_gameData->getMapSize());
         }
+    }
+}
+
+void Gui::Render::displayTile(Tile tile)
+{
+    DrawModel(_tileModel, tile.getPositionIn3DSpace(), 1.0f, WHITE);
+    if (_isDebug) {
+        std::vector<BoundingBox> bboxes = tile.getTileBoundingBoxes(tile, _tileModel);
+        for (size_t i = 0; i < bboxes.size(); i++)
+            DrawBoundingBox(bboxes[i], GREEN);
     }
 }
 
@@ -220,4 +246,29 @@ void Gui::Render::displayHUD(void)
         if (hud->getType() == Gui::HudGame::GAME /**TODO : && The hud to display is the game*/)
             hud->display();
     }
+}
+
+void Gui::Render::setCameraType(Gui::UserCamera::CameraType type)
+{
+    _camera.setType(type);
+}
+
+Gui::UserCamera::CameraType Gui::Render::getCameraType() const
+{
+    return _camera.getType();
+}
+
+void Gui::Render::setCameraPlayerPov(std::size_t id)
+{
+    _camera.setPlayerId(id);
+}
+
+std::size_t Gui::Render::getCameraPlayerPov() const
+{
+    return _camera.getPlayerId();
+}
+
+Model Gui::Render::getTileModel() const
+{
+    return _tileModel;
 }

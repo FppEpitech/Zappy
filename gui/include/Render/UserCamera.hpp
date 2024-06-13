@@ -24,6 +24,11 @@ class Gui::UserCamera {
 
     public:
 
+        enum CameraType {
+            FREE,
+            POV_PLAYER
+        };
+
         /**
          * @brief Construct a new User Camera object.
          *
@@ -99,7 +104,38 @@ class Gui::UserCamera {
          */
         std::shared_ptr<Camera> getCamera();
 
+        /**
+         * @brief Set the Type object.
+         *
+         * @param type Type to set.
+         */
+        void setType(CameraType type);
+
+        /**
+         * @brief Get the Type object.
+         *
+         * @return CameraType - Camera type.
+         */
+        CameraType getType() const;
+
+        /**
+         * @brief Set the Player Id object.
+         *
+         * @param playerId Player id to set.
+        */
+        void setPlayerId(size_t playerId);
+
+        /**
+         * @brief Get the Player Id object.
+         *
+         * @return size_t - Player id.
+         */
+        size_t getPlayerId() const;
+
     private:
 
-        std::shared_ptr<Camera>     _camera;
+        std::shared_ptr<Camera>     _camera;        // Camera raylib instance.
+        CameraType                  _type;          // Type of camera.
+        size_t                      _playerId;      // Player id.
+
 };

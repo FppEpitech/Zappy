@@ -7,19 +7,12 @@
 
 #pragma once
 
+#include "Types.hpp"
 #include "Error/Error.hpp"
 #include "GameDatas/Team.hpp"
 #include "GameDatas/Tile.hpp"
 
 #define NO_TICK int(-1)
-
-/**
- * @brief Map type.
- *
- * @tparam T Type of the map.
-*/
-template<typename T>
-using Map = std::vector<std::vector<T>>;
 
 namespace Gui {
 
@@ -84,6 +77,13 @@ class Gui::GameData {
          * @param player Player to add.
          */
         void addPlayerToTeam(const std::string &teamName, const Gui::Player &player);
+
+        /**
+         * @brief Get a player object.
+         *
+         * @param id Id of the player.
+        */
+        Gui::Player &getPlayer(size_t id);
 
         /**
          * @brief Get the Map object.
@@ -188,6 +188,14 @@ class Gui::GameData {
          * @return std::string - Last error message.
          */
         std::string getLastError() const;
+
+        /**
+         * @brief Get the Team From Player object.
+         *
+         * @param id Id of the player.
+         * @return Gui::Team& Team of the player.
+        */
+        Team &getTeamById(std::size_t id);
 
     private:
 

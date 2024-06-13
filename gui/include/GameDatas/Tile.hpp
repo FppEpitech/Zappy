@@ -10,6 +10,8 @@
 #include "raylib.h"
 #include "GameDatas/Inventory.hpp"
 
+#include <vector>
+
 namespace Gui {
 
     /**
@@ -56,14 +58,41 @@ class Gui::Tile {
          *
          * @return std::pair<std::size_t, std::size_t> - position x y
          */
-        std::pair<std::size_t, std::size_t> getPosition(void) const;
+        std::pair<std::size_t, std::size_t> getPosition() const;
 
         /**
          * @brief Get the Position In Space object.
          *
          * @return Vector3 - Position in space.
          */
-        Vector3 getPositionIn3DSpace(void);
+        Vector3 getPositionIn3DSpace();
+
+        /**
+         * @brief Get the Tile Bounding Boxes object.
+         *
+         * @param tile Tile to get the bounding boxes.
+         * @return std::vector<BoundingBox> - Bounding boxes of the tile.
+        */
+        std::vector<BoundingBox> getTileBoundingBoxes(Tile tile, Model tileModel);
+
+        /**
+         * @brief Get the Tile Model Hitbox object.
+         *
+         * @param tile Tile to get the hitbox.
+         * @param camera Camera to get the hitbox.
+         * @return std::vector<RayCollision> - Hitbox of the tile.
+         */
+        std::vector<RayCollision> getTileModelHitbox(Tile tile, Camera camera, Model tileModel);
+
+        /**
+         * @brief Check if the tile is hit.
+         *
+         * @param camera Camera to check if the tile is hit.
+         * @param _tileModel Model of the tile.
+         * @return true - The tile is hit.
+         * @return false - The tile is not hit.
+         */
+        bool isTileHit(Camera camera, Model _tileModel);
 
         /**
          * @brief Inventory of the tile.

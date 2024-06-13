@@ -15,10 +15,46 @@
 
 typedef struct s_app app_t;
 
+typedef enum {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST,
+} orientation_t;
+
+typedef struct s_inventory {
+    size_t food;
+    size_t linemate;
+    size_t deraumere;
+    size_t sibur;
+    size_t mendiane;
+    size_t phiras;
+    size_t thystame;
+} inventory_t;
+
+typedef struct s_time_info {
+    bool stuck;
+    struct timeval start_stuck;
+    double total_stuck;
+    struct timeval start_life;
+    double total_life;
+} time_info_t;
+
+typedef struct s_incantation_info {
+    bool status_incantation;
+    size_t target_level;
+} incantation_info_t;
+
 typedef struct s_ia {
     size_t fd;
+    list_t *list_command;
     list_t *list_messages;
+    vector2i_t *position;
+    orientation_t direction;
+    inventory_t *inventory;
+    incantation_info_t *incantation;
     size_t level;
+    time_info_t *time;
 } ia_t;
 
 /**
@@ -32,7 +68,7 @@ typedef struct s_ia {
 ia_t *create_ia(app_t *app, int fd, team_t *team);
 
 /**
- * @brief Add ai to the corresponding team
+ * @brief Add ai to the corresponding team.
  *
  * @param app Application with list of team.
  * @param fd File descriptor of AI.
@@ -48,3 +84,10 @@ void add_ia(app_t *app, size_t fd, char *line);
  * @return ia_t* AI find or NULL if not find.
  */
 ia_t *find_ia(app_t *app, size_t fd);
+
+/**
+ * @brief Check if an AI die.
+ *
+ * @param app Application with list of AI.
+ */
+void check_die(app_t *app);

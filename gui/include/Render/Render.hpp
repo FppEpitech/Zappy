@@ -14,6 +14,7 @@
 #include "raylib.h"
 #include "Hud/HudPlayer.hpp"
 #include "Hud/HudGame.hpp"
+#include "Render/Decoration.hpp"
 #include "Render/UserCamera.hpp"
 #include "GameDatas/GameData.hpp"
 
@@ -81,11 +82,46 @@ class Gui::Render {
          */
         bool getIsDebug(void);
 
+        /**
+         * @brief Set the Type object.
+         *
+         * @param type Type to set.
+         */
+        void setCameraType(Gui::UserCamera::CameraType type);
+
+        /**
+         * @brief Get the Type object.
+         *
+         * @return CameraType - Camera type.
+         */
+        Gui::UserCamera::CameraType getCameraType() const;
+
+        /**
+         * @brief Set the Camera player pov id.
+         *
+         * @param id Id of the player.
+         */
+        void setCameraPlayerPov(std::size_t id);
+
+        /**
+         * @brief Get the Camera player pov id.
+         *
+         * @return std::size_t - Id of the player.
+         */
+        std::size_t getCameraPlayerPov() const;
+
+        /**
+         * @brief Get the Tile model.
+         *
+        */
+        Model getTileModel() const;
+
     private:
 
         UserCamera                  _camera;            // Camera of the scene.
         bool                        _isDebug;           // Display or not the debug informations.
         std::shared_ptr<GameData>   _gameData;          // GameData class to store the game's data.
+        std::shared_ptr<Decoration> _decoration;        // Decoration to display;
 
         Model                       _tileModel;         // Model to display tiles.
         Model                       _foodModel;         // Model to display foods.
@@ -120,13 +156,19 @@ class Gui::Render {
          * @brief Display players.
          *
          */
-        void displayPlayers(void) const;
+        void displayPlayers(void);
 
         /**
          * @brief Display the map.
          *
          */
-        void displayMap(void) const;
+        void displayMap(void);
+
+        /**
+         * @brief Display a Tile.
+         *
+        */
+        void displayTile(Tile tile);
 
         /**
          * @brief Display the eggs.

@@ -8,6 +8,17 @@
 #include <stdlib.h>
 #include "list/type.h"
 
+vector2i_t *create_vector2i(int x, int y)
+{
+    vector2i_t *new_coord = malloc(sizeof(vector2i_t));
+
+    if (new_coord == NULL)
+        return NULL;
+    new_coord->x = x;
+    new_coord->y = y;
+    return new_coord;
+}
+
 list_t *list_new(void)
 {
     list_t *list = malloc(sizeof(list_t));
