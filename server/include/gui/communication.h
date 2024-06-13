@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** communication
+** Header file for the communication functions between the GUI and the server.
 */
 
 #pragma once
@@ -20,7 +20,7 @@
 void handle_command_gui(gui_t *gui, app_t *app, char *line);
 
 /**
- * @brief Response to the msz command.
+ * @brief Response to the msz command. For get the size of the map.
  *
  * @param gui The gui structure of client requested.
  * @param app The app structure.
@@ -29,7 +29,7 @@ void handle_command_gui(gui_t *gui, app_t *app, char *line);
 void msz_response(gui_t *gui, app_t *app, char *line);
 
 /**
- * @brief Response to the tna command.
+ * @brief Response to the tna command. For get the names of all the teams.
  *
  * @param gui The gui structure of client requested.
  * @param app The app structure.
@@ -38,7 +38,7 @@ void msz_response(gui_t *gui, app_t *app, char *line);
 void tna_response(gui_t *gui, app_t *app, char *line);
 
 /**
- * @brief Response to the sgt command.
+ * @brief Response to the sgt command. For get the time unit of the server.
  *
  * @param gui The gui structure of client requested.
  * @param app The app structure.
@@ -47,7 +47,7 @@ void tna_response(gui_t *gui, app_t *app, char *line);
 void sgt_response(gui_t *gui, app_t *app, char *line);
 
 /**
- * @brief Response to the sst command.
+ * @brief Response to the sst command. For set the time unit of the server.
  *
  * @param gui The gui structure of client requested.
  * @param app The app structure.
@@ -56,7 +56,7 @@ void sgt_response(gui_t *gui, app_t *app, char *line);
 void sst_response(gui_t *gui, app_t *app, char *line);
 
 /**
- * @brief Response to the bct command.
+ * @brief Response to the bct command. For get the content of a tile.
  *
  * @param gui The gui structure of client requested.
  * @param app The app structure.
@@ -65,7 +65,7 @@ void sst_response(gui_t *gui, app_t *app, char *line);
 void bct_response(gui_t *gui, app_t *app, char *line);
 
 /**
- * @brief Response to the mct command.
+ * @brief Response to the mct command. For get the content of all the tiles.
  *
  * @param gui The gui structure of client requested.
  * @param app The app structure.
@@ -74,7 +74,7 @@ void bct_response(gui_t *gui, app_t *app, char *line);
 void mct_response(gui_t *gui, app_t *app, char *line);
 
 /**
- * @brief Response to the ppo command.
+ * @brief Response to the ppo command. For get the position of a player.
  *
  * @param gui The gui structure of client requested.
  * @param app The app structure.
@@ -83,7 +83,7 @@ void mct_response(gui_t *gui, app_t *app, char *line);
 void ppo_response(gui_t *gui, app_t *app, char *line);
 
 /**
- * @brief Response to the plv command.
+ * @brief Response to the plv command. For get the level of a player.
  *
  * @param gui The gui structure of client requested.
  * @param app The app structure.
@@ -92,7 +92,7 @@ void ppo_response(gui_t *gui, app_t *app, char *line);
 void plv_response(gui_t *gui, app_t *app, char *line);
 
 /**
- * @brief Response to the pin command.
+ * @brief Response to the pin command. For get the inventory of a player.
  *
  * @param gui The gui structure of client requested.
  * @param app The app structure.
@@ -101,7 +101,7 @@ void plv_response(gui_t *gui, app_t *app, char *line);
 void pin_response(gui_t *gui, app_t *app, char *line);
 
 /**
- * @brief Response to the pnw command.
+ * @brief Response to the pnw command. For inform the GUI of a new player.
  *
  * @param app The app structure with all the gui fds.
  * @param ai The ia structure of client requested.
@@ -109,7 +109,7 @@ void pin_response(gui_t *gui, app_t *app, char *line);
 void pnw_command(app_t *app, ia_t *ai);
 
 /**
- * @brief Perform the pex command.
+ * @brief Perform the pex command. For inform the GUI when a player expulse.
  *
  * @param app The app structure with all the gui fds.
  * @param player_id The player id expulsed.
@@ -117,7 +117,7 @@ void pnw_command(app_t *app, ia_t *ai);
 void pex_command(app_t *app, int player_id);
 
 /**
- * @brief Perform the pbc command.
+ * @brief Perform the pbc command. For inform the GUI when a player broadcast.
  *
  * @param app The app structure with all the gui fds.
  * @param player_id The player id expulsed.
@@ -126,7 +126,7 @@ void pex_command(app_t *app, int player_id);
 void pbc_command(app_t *app, int player_id, char *message);
 
 /**
- * @brief Perform the pfk command.
+ * @brief Perform the pfk command. For inform the GUI when a player fork.
  *
  * @param app The app structure with all the gui fds.
  * @param player_id The player id who call the command.
@@ -134,7 +134,7 @@ void pbc_command(app_t *app, int player_id, char *message);
 void pfk_command(app_t *app, int player_id);
 
 /**
- * @brief Perform the pdr command.
+ * @brief Perform the pdr command. For inform the GUI when a player drop an object.
  *
  * @param app The app structure with all the gui fds.
  * @param player_id The player id who call the command.
@@ -142,7 +142,7 @@ void pfk_command(app_t *app, int player_id);
 void pdr_command(app_t *app, int player_id);
 
 /**
- * @brief Perform the pgt command.
+ * @brief Perform the pgt command. For inform the GUI when a player take an object.
  *
  * @param app The app structure with all the gui fds.
  * @param player_id The player id who call the command.
@@ -150,7 +150,7 @@ void pdr_command(app_t *app, int player_id);
 void pgt_command(app_t *app, int player_id);
 
 /**
- * @brief Perform the pdi command.
+ * @brief Perform the pdi command. For inform the GUI when a player die.
  *
  * @param app The app structure with all the gui fds.
  * @param player_id The player id who call the command.
@@ -158,7 +158,7 @@ void pgt_command(app_t *app, int player_id);
 void pdi_command(app_t *app, int player_id);
 
 /**
- * @brief Perform the enw command.
+ * @brief Perform the enw command. For inform the GUI when an egg is laid.
  *
  * @param app The app structure with all the gui fds.
  * @param team The winner team name.
@@ -174,14 +174,14 @@ void seg_command(app_t *app, char *team);
 void smg_command(app_t *app, char *message);
 
 /**
- * @brief Perform the suc command.
+ * @brief Response to a command when the command is unknown.
  *
  * @param gui The gui structure of client requested.
  */
 void suc_command(gui_t *gui);
 
 /**
- * @brief Perform the sbp command.
+ * @brief Response to a command when a command.s parameter.s is invalid.
  *
  * @param gui The gui structure of client requested.
  */
