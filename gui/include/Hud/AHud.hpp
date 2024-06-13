@@ -52,6 +52,6 @@ class Gui::AHud : public Gui::IHud {
     protected:
 
         TypeScene                       _typeScene;     // Type of the scene.
-        std::shared_ptr<GameData>       _gameData;      // GameData class
+        std::shared_ptr<GameData>       _gameData;      // GameData class.
         std::shared_ptr<Player>         _player;        // Player to display hud.
 };
