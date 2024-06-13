@@ -24,57 +24,77 @@ static int check_position(vector2i_t *pos, ia_t *ai_check,
     return 0;
 }
 
-static bool nb_player_level(list_t *teams, ia_t *ai,
-    size_t number_ai, int status)
+static void update_list_ai(int result_chk_pos, list_t *list_ai,
+    list_node_t *ia_temp)
 {
-    size_t nb_ai_find = 0;
+    node_data_t data = {0};
+
+    if (result_chk_pos == 1) {
+        data.ai = ia_temp->data.ai;
+        list_add_back(list_ai, data);
+    }
+}
+
+static list_t *get_ai_in_incantation(list_t *teams, ia_t *ai, int status)
+{
+    list_t *list_ai = list_new();
     list_node_t *temp_team = teams->first;
     list_node_t *ia_temp;
-    team_t *team = NULL;
+    size_t result_chk_pos = 0;
 
+    if (list_ai == NULL)
+        return NULL;
     while (temp_team) {
-        team = temp_team->data.team;
-        ia_temp = team->list_ai->first;
+        ia_temp = temp_team->data.team->list_ai->first;
         while (ia_temp) {
-            nb_ai_find += check_position(ai->position,
+            result_chk_pos = check_position(ai->position,
             ia_temp->data.ai, ai->level, status);
+            update_list_ai(result_chk_pos, list_ai, ia_temp);
             ia_temp = ia_temp->next;
         }
         temp_team = temp_team->next;
     }
-    if (nb_ai_find >= number_ai)
-        return true;
-    return false;
+    return list_ai;
 }
 
-static bool verif_data(app_t *app, ia_t *ai, size_t *data, int status)
+static list_t *nb_player_level(list_t *teams, ia_t *ai,
+    size_t number_ai, int status)
+{
+    list_t *list_ai = get_ai_in_incantation(teams, ai, status);
+
+    if (list_ai == NULL)
+        return NULL;
+    if (list_ai->len >= number_ai)
+        return list_ai;
+    return NULL;
+}
+
+static list_t *verif_data(app_t *app, ia_t *ai, size_t *data, int status)
 {
     int x = ai->position->x;
     int y = ai->position->y;
 
     if (app->game->map[y][x].linemate < data[1])
-        return false;
+        return NULL;
     if (app->game->map[y][x].deraumere < data[2])
-        return false;
+        return NULL;
     if (app->game->map[y][x].sibur < data[3])
-        return false;
+        return NULL;
     if (app->game->map[y][x].mendiane < data[4])
-        return false;
+        return NULL;
     if (app->game->map[y][x].phiras < data[5])
-        return false;
+        return NULL;
     if (app->game->map[y][x].thystame < data[6])
-        return false;
-    if (nb_player_level(app->teams_list, ai, data[0], status) == false)
-        return false;
-    return true;
+        return NULL;
+    return nb_player_level(app->teams_list, ai, data[0], status);
 }
 
-bool check_incantation(app_t *app, ia_t *ai, int status)
+list_t *check_incantation(app_t *app, ia_t *ai, int status)
 {
-    bool result = false;
+    list_t *result = NULL;
 
     if (ai->level == 1)
-        result = verif_data(app, ai, (size_t[]) {1, 1, 0, 0, 0, 0, 0}, status);
+        result = verif_data(app, ai, (size_t[]) {1, 0, 0, 0, 0, 0, 0}, status);
     if (ai->level == 2)
         result = verif_data(app, ai, (size_t[]) {2, 1, 1, 1, 0, 0, 0}, status);
     if (ai->level == 3)

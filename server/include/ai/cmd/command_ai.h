@@ -146,10 +146,9 @@ bool incantation_command(app_t *app, ia_t *ai, char *line);
  * @param ai AI who have launch the incantation.
  * @param status BEGIN_INCANTATION or END_INCANTATION
  * (to know if I have to verify status incantation).
- * @return true If condition is good.
- * @return false If condition isn't good.
+ * @return NULL if failed or list of ai in incantation.
  */
-bool check_incantation(app_t *app, ia_t *ai, int status);
+list_t *check_incantation(app_t *app, ia_t *ai, int status);
 
 /**
  * @brief Update status incantation of all participating people.

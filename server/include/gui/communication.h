@@ -188,3 +188,12 @@ void suc_command(gui_t *gui);
  * @param gui The gui structure of client requested.
  */
 void sbp_command(gui_t *gui);
+
+/**
+ * @brief The pic command. For send message to all the GUI,
+ *  when a incantation start.
+ *
+ * @param app The app structure.
+ * @param ai The list of all the ia in the incantation.
+ */
+void pic_command(app_t *app, list_t *ai);
