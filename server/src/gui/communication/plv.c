@@ -7,25 +7,13 @@
 
 #include "rules.h"
 #include "ai/ai.h"
+#include "utils.h"
 #include "app/app.h"
 #include "gui/gui.h"
 #include "parsing.h"
 
 #include <stddef.h>
 #include <stdbool.h>
-
-static bool is_str_number(char *str)
-{
-    for (int i = 0; str[i]; i++) {
-        if (str[i] == '\r')
-            continue;
-        if (str[i] == '\n' && str[i - 1] == '\r')
-            return true;
-        if (str[i] < '0' || str[i] > '9')
-            return false;
-    }
-    return true;
-}
 
 // TODO error
 void plv_response(gui_t *gui, app_t *app, char *line)
@@ -37,7 +25,8 @@ void plv_response(gui_t *gui, app_t *app, char *line)
     if (line[3] != ' ')
         return;
     line += 4;
-    if (!is_str_number(line))
+    player_id = parse_positive_int_arg(line);
+    if (player_id == CODE_ERROR_INVALID_NUMBER)
         return;
     player_id = atoi(line);
     ia = find_ia(app, player_id);

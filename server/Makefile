@@ -55,8 +55,9 @@ SRC			=	src/list/list.c \
 				src/game/game.c \
 				src/game/win.c \
 				\
+				src/utils.c							\
+				\
 				src/parsing/help.c					\
-				src/parsing/parse_positive_int.c	\
 				src/parsing/parse_client.c			\
 				src/parsing/parse_port.c			\
 				src/parsing/parse_height.c			\
