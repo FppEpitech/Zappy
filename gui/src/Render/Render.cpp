@@ -246,8 +246,10 @@ void Gui::Render::displayHUD(void)
         }
         if (hud->getType() == Gui::HudGame::GAME && _camera.getType() == Gui::UserCamera::FREE)
             hud->display();
-        if (hud->getType() == Gui::HudTile::TILE && _camera.getType() == Gui::UserCamera::FREE_TILE)
+        if (hud->getType() == Gui::HudTile::TILE && _camera.getType() == Gui::UserCamera::FREE_TILE) {
+            hud->setTile(std::make_shared<Tile>(_gameData->getTile(_camera.getTilePos().first, _camera.getTilePos().second)));
             hud->display();
+        }
     }
 }
 
@@ -269,6 +271,16 @@ void Gui::Render::setCameraPlayerPov(std::size_t id)
 std::size_t Gui::Render::getCameraPlayerPov() const
 {
     return _camera.getPlayerId();
+}
+
+void Gui::Render::setCameraTile(std::pair<std::size_t, std::size_t> pos)
+{
+    _camera.setTilePos(pos);
+}
+
+std::pair<std::size_t, std::size_t> Gui::Render::getCameraTile() const
+{
+    return _camera.getTilePos();
 }
 
 Model Gui::Render::getTileModel() const

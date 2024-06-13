@@ -43,6 +43,13 @@ class Gui::AHud : public Gui::IHud {
         void setPlayer(std::shared_ptr<Player> player);
 
         /**
+         * @brief Set the Tile object.
+         *
+         * @param tile Tile to display infos.
+         */
+        void setTile(std::shared_ptr<Tile> tile);
+
+        /**
          * @brief Get the Type object.
          *
          * @return TypeScene - Type of the scene.
@@ -54,4 +61,5 @@ class Gui::AHud : public Gui::IHud {
         TypeScene                       _typeScene;     // Type of the scene.
         std::shared_ptr<GameData>       _gameData;      // GameData class.
         std::shared_ptr<Player>         _player;        // Player to display hud.
+        std::shared_ptr<Tile>           _tile;          // Tile to display hud.
 };

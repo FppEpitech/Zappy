@@ -8,6 +8,7 @@
 #pragma once
 
 #include "GameDatas/Player.hpp"
+#include "GameDatas/Tile.hpp"
 
 #include <memory>
 
@@ -53,6 +54,13 @@ class Gui::IHud {
          * @param player Player to display infos.
          */
         virtual void setPlayer(std::shared_ptr<Player> player) = 0;
+
+        /**
+         * @brief Set the Tile object.
+         *
+         * @param tile Tile to display infos.
+         */
+        virtual void setTile(std::shared_ptr<Tile> tile) = 0;
 
         /**
          * @brief Get the Type object.

@@ -71,7 +71,7 @@ void Gui::Event::setFreeCam()
 
 void Gui::Event::handleLeftClick()
 {
-    if (_render->getCameraType() == Gui::UserCamera::CameraType::FREE) {
+    if (_render->getCameraType() == Gui::UserCamera::CameraType::FREE || _render->getCameraType() == Gui::UserCamera::CameraType::FREE_TILE) {
         selectPlayer();
         selectTile();
     } else
@@ -122,8 +122,10 @@ void Gui::Event::selectTile()
                         DrawBoundingBox(bboxes[i], RED);
                 }
             }
-            if (tile.isTileHit(*_render.get()->getCamera().get(), _render.get()->getTileModel()))
+            if (tile.isTileHit(*_render.get()->getCamera().get(), _render.get()->getTileModel())) {
                 _render.get()->setCameraType(Gui::UserCamera::FREE_TILE);
+                _render.get()->setCameraTile(tile.getPosition());
+            }
         }
     }
     EndMode3D();

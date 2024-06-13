@@ -12,6 +12,11 @@ void Gui::AHud::setPlayer(std::shared_ptr<Player> player)
     _player = player;
 }
 
+void Gui::AHud::setTile(std::shared_ptr<Tile> tile)
+{
+    _tile = tile;
+}
+
 Gui::AHud::TypeScene Gui::AHud::getType()
 {
     return _typeScene;

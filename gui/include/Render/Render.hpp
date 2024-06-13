@@ -112,6 +112,20 @@ class Gui::Render {
         std::size_t getCameraPlayerPov() const;
 
         /**
+         * @brief Set the Camera Tile object.
+         *
+         * @param pos Tile position.
+         */
+        void setCameraTile(std::pair<std::size_t, std::size_t> pos);
+
+        /**
+         * @brief Get the Camera Tile object.
+         *
+         * @return std::pair<std::size_t, std::size_t> - Tile position.
+         */
+        std::pair<std::size_t, std::size_t> getCameraTile() const;
+
+        /**
          * @brief Get the Tile model.
          *
         */
