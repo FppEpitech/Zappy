@@ -15,8 +15,10 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
 {
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
     DisableCursor();
+    ToggleFullscreen();
     SetTargetFPS(140);
     _isDebug = false;
+    _decoration = std::make_shared<Decoration>(Decoration());
     this->LoadModels();
 }
 
@@ -44,10 +46,12 @@ bool Gui::Render::isOpen()
 
 void Gui::Render::draw()
 {
-    UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
+    if (_camera.getType() != Gui::UserCamera::POV_PLAYER)
+        UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
+
     BeginDrawing();
 
-    ClearBackground(SKYBLUE);
+    ClearBackground(ORANGE);
 
     BeginMode3D(*_camera.getCamera());
     displayMap();
@@ -91,25 +95,37 @@ void Gui::Render::displayDebug(void)
     }
 }
 
-void Gui::Render::displayPlayers(void) const
+void Gui::Render::displayPlayers(void)
 {
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            Vector3 posAssetPlayer = POS_PLAYER;
-            Vector3 posTile = _gameData->getMap()[player.getPosition().first][player.getPosition().second].getPositionIn3DSpace();
-            DrawModelEx(team.getPlayerModel(), (Vector3){posTile.x + posAssetPlayer.x, posTile.y + posAssetPlayer.y, posTile.z + posAssetPlayer.z}, ROTATION_AXIS_PLAYER, ROTATION_ANGLE_PLAYER, SCALE_PLAYER, WHITE);
+            if (_gameData.get()->getMap().size() == 0 || _gameData.get()->getMap()[player.getPosition().first].size() == 0)
+                return;
+
+            float rotation = player.getRotationFromOrientation();
+
+            DrawModelEx(team.getPlayerModel(), team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, WHITE);
+
+            if (_isDebug) {
+                std::vector<BoundingBox> bboxes = team.getPlayerBoundingBoxes(player.getPosition(), player.getOrientation(), player.getCenterPosition());
+                std::vector<RayCollision> hitbox = team.getPlayerModelHitbox(player.getId(), *_camera.getCamera().get());
+
+                for (size_t i = 0; i < bboxes.size(); i++)
+                    DrawBoundingBox(bboxes[i], GREEN);
+            }
         }
     }
 }
 
-void Gui::Render::displayMap(void) const
+void Gui::Render::displayMap(void)
 {
     for (auto &line : _gameData->getMap()) {
         for (auto &tile : line) {
-            DrawModel(_tileModel, tile.getPositionIn3DSpace(), 0.001f, WHITE);
+            DrawModel(_tileModel, tile.getPositionIn3DSpace(), 1.0f, WHITE);
             displayFood(tile);
             displayResources(tile);
             displayEggs(tile);
+            _decoration->display(_gameData->getMapSize());
         }
     }
 }
@@ -205,4 +221,24 @@ void Gui::Render::displayDeraumere(Tile tile) const
         Vector3 posDeraumere = POS_DERAUMERE;
         DrawModelEx(_deraumereModel, (Vector3){posTile.x + posDeraumere.x, posTile.y + posDeraumere.y, posTile.z + posDeraumere.z}, ROTATION_AXIS_DERAUMERE, ROTATION_ANGLE_DERAUMERE, SCALE_DERAUMERE, WHITE);
     }
+}
+
+void Gui::Render::setCameraType(Gui::UserCamera::CameraType type)
+{
+    _camera.setType(type);
+}
+
+Gui::UserCamera::CameraType Gui::Render::getCameraType() const
+{
+    return _camera.getType();
+}
+
+void Gui::Render::setCameraPlayerPov(std::size_t id)
+{
+    _camera.setPlayerId(id);
+}
+
+std::size_t Gui::Render::getCameraPlayerPov() const
+{
+    return _camera.getPlayerId();
 }
