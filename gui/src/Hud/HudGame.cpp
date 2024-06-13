@@ -22,7 +22,7 @@ void Gui::HudGame::display()
 {
     Vector2 hudPos = HUD_GAME_POS;
     DrawTexture(_texture, hudPos.x, hudPos.y, WHITE);
-    DrawTextEx(_font, "Statistics", HUD_GAME_TEXT_TITLE_POS, 20, 0, (Color){170, 121, 89, 255});
+    DrawTextEx(_font, "   Game", HUD_GAME_TEXT_TITLE_POS, 20, 0, (Color){170, 121, 89, 255});
 
     Vector2 hudTextPos = HUD_GAME_TEXT_POS;
     DrawTextEx(_font, ("Tick: " + std::to_string(_gameData->getServerTick())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_GAME_TEXT_MARGING * 0}, 20, 0, WHITE);
