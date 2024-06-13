@@ -47,7 +47,7 @@ class AI:
         self.api = API(host, port)
         self.player = Player(True)
         self.teamName = teamName
-
+        self.child = ChildAi(self.player)
 
     def run(self):
         """
@@ -62,10 +62,36 @@ class AI:
         self.api.initConnection(self.teamName)
         while True:
             if self.player.currentAction == Action.NONE:
-                self.player.chooseAction()
+                if self.player.isLeader:
+                    self.child.computeAction()
                 self.api.sendData(self.player.currentCommand)
             responses = self.api.receiveData().split("\n")
             for response in responses:
                 if response == '':
                     continue
                 self.player.handleResponse(response)
+
+# child & utils [tmp]
+
+def numItemVision(vision : list, item : str):
+       count = 0
+       for elem in vision:
+           if elem == item:
+               count += 1
+       return count
+
+class ChildAi:
+    player : Player = None
+    food : int = 0
+    foodInSight : int = 0
+
+    def __init__(self, player):
+        self.player = player
+
+    def updateFood(self):
+        self.food = self.player.inventory.food
+        self.foodInSight = numItemVision(self.player.vision, "food")
+
+    def computeAction(self):
+        self.updateFood()
+        self.player.randomMoove()

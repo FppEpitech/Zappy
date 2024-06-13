@@ -185,6 +185,4 @@ class Inventory:
             self.phiras -= 1
         elif ressource == "thystame" and self.thystame > 0:
             self.thystame -= 1
-        else:
-            return False
-        return True
+

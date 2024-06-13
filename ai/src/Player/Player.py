@@ -382,10 +382,10 @@ class Player:
         self.callback = None
 
 
-    def chooseAction(self):
+    def randomMoove(self):
         """
         Choose the action of the player
         TODO: Implement the logic to choose the action of the player
         """
-        random.choice([self.moveForward, self.turnRight, self.turnLeft, self.look, self.cmdInventory, self.broadcast, self.connectNbr, self.take, self.set])()
+        random.choice([self.moveForward, self.turnRight, self.turnLeft])()
 
