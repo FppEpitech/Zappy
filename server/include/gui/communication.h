@@ -179,3 +179,10 @@ void smg_command(app_t *app, char *message);
  * @param gui The gui structure of client requested.
  */
 void suc_command(gui_t *gui);
+
+/**
+ * @brief Perform the sbp command.
+ *
+ * @param gui The gui structure of client requested.
+ */
+void sbp_command(gui_t *gui);

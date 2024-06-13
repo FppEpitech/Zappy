@@ -12,14 +12,11 @@
 
 #include <stddef.h>
 
-// TODO error
 void pnw_command(app_t *app, ia_t *ai)
 {
     char *response = NULL;
     list_node_t *gui_node = app->gui_list->first;
 
-    if (ai == NULL)
-        return;
     response = format_string("pnw %d %d %d %d %d %s\n",
         ai->fd, ai->position->x, ai->position->y, ai->direction,
         ai->level, ai->team_name);

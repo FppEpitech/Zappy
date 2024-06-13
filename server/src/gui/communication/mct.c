@@ -24,7 +24,6 @@ static void print_tile(gui_t *gui, app_t *app, vector2i_t pos)
     add_message(gui->list_messages, response);
 }
 
-// TODO error handling
 void mct_response(gui_t *gui, app_t *app, char *line)
 {
     vector2i_t pos = {0, 0};
