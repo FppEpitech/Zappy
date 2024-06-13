@@ -67,5 +67,5 @@ class Gui::IHud {
          *
          * @return TypeScene - Type of the scene.
          */
-        virtual TypeScene getType() = 0;
+        virtual TypeScene getType() const = 0;
 };
