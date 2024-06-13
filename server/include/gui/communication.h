@@ -134,7 +134,8 @@ void pbc_command(app_t *app, int player_id, char *message);
 void pfk_command(app_t *app, int player_id);
 
 /**
- * @brief Perform the pdr command. For inform the GUI when a player drop an object.
+ * @brief Perform the pdr command.
+ * For inform the GUI when a player drop an object.
  *
  * @param app The app structure with all the gui fds.
  * @param player_id The player id who call the command.
@@ -142,7 +143,8 @@ void pfk_command(app_t *app, int player_id);
 void pdr_command(app_t *app, int player_id);
 
 /**
- * @brief Perform the pgt command. For inform the GUI when a player take an object.
+ * @brief Perform the pgt command.
+ * For inform the GUI when a player take an object.
  *
  * @param app The app structure with all the gui fds.
  * @param player_id The player id who call the command.
