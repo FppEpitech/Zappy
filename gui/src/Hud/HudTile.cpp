@@ -8,8 +8,6 @@
 #include "Assets.hpp"
 #include "Hud/HudTile.hpp"
 
-#include <iostream>
-
 Gui::HudTile::HudTile(std::shared_ptr<GameData> gameData)
 {
     _typeScene = TILE;

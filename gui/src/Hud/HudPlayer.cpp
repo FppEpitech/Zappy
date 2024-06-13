@@ -8,8 +8,6 @@
 #include "Assets.hpp"
 #include "Hud/HudPlayer.hpp"
 
-#include <iostream>
-
 Gui::HudPlayer::HudPlayer(std::shared_ptr<GameData> gameData)
 {
     _typeScene = POV_PLAYER;

@@ -8,8 +8,6 @@
 #include "Assets.hpp"
 #include "Hud/HudGame.hpp"
 
-#include <iostream>
-
 Gui::HudGame::HudGame(std::shared_ptr<GameData> gameData)
 {
     _typeScene = GAME;
