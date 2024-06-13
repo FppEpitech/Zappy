@@ -156,3 +156,11 @@ void pgt_command(app_t *app, int player_id);
  * @param player_id The player id who call the command.
  */
 void pdi_command(app_t *app, int player_id);
+
+/**
+ * @brief Perform the enw command.
+ *
+ * @param app The app structure with all the gui fds.
+ * @param team The winner team name.
+ */
+void seg_command(app_t *app, char *team);
