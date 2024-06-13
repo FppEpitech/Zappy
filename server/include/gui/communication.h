@@ -197,3 +197,11 @@ void sbp_command(gui_t *gui);
  * @param ai The list of all the ia in the incantation.
  */
 void pic_command(app_t *app, list_t *ai);
+
+/**
+ * @brief The pie command. For send message to all the GUI,
+ * when a incantation end.
+ * @param app The app structure.
+ * @param ai The list of all the ia in the incantation.
+ */
+void pie_command(app_t *app, list_t *ai);

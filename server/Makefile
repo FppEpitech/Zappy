@@ -90,6 +90,7 @@ SRC			=	src/list/list.c \
 				src/gui/communication/suc.c			\
 				src/gui/communication/sbp.c			\
 				src/gui/communication/pic.c			\
+				src/gui/communication/pie.c			\
 
 TEST_FILES	=	list/list_test.c \
 				communication/communication_test.c 	\

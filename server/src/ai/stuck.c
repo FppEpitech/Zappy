@@ -8,6 +8,7 @@
 #include "app/app.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
+#include "gui/communication.h"
 
 void set_time_stuck(ia_t *ai, double total_stuck)
 {
@@ -30,13 +31,17 @@ double time_elapsed(struct timeval *time)
 
 static void handle_incantation_verification(ia_t *ai, app_t *app)
 {
+    list_t *list_ai = NULL;
+
     if (ai->incantation->status_incantation == false)
         return;
-    if (check_incantation(app, ai, END_INCANTATION) == false) {
+    list_ai = check_incantation(app, ai, BEGIN_INCANTATION);
+    if (list_ai == NULL) {
         printf("FAILD at end verification\n");
         update_status(app, ai, END_INCANTATION);
         return;
     }
+    pie_command(app, list_ai);
     printf("SUCCESS at end verification\n");
     level_up(app, ai);
     printf("Level up succefully\n");
