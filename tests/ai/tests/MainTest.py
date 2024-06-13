@@ -5,12 +5,12 @@
 ## mainTest
 ##
 
-from ai.tests.TestAI import testAI
-from ai.tests.Network.TestAPI import testAPI
-from ai.tests.Utils.TestUtils import testUtils
-from ai.tests.Player.TestPlayer import testPlayer
-from ai.tests.Player.TestInventory import testInventory
-from ai.tests.Errors.TestErrors import testErrorsAndExceptions
+from tests.ai.tests.TestAI import testAI
+from tests.ai.tests.Network.TestAPI import testAPI
+from tests.ai.tests.Utils.TestUtils import testUtils
+from tests.ai.tests.Player.TestPlayer import testPlayer
+from tests.ai.tests.Player.TestInventory import testInventory
+from tests.ai.tests.Errors.TestErrors import testErrorsAndExceptions
 
 def mainTest():
     try:
