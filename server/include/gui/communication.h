@@ -172,3 +172,10 @@ void seg_command(app_t *app, char *team);
  * @param message The message to send.
  */
 void smg_command(app_t *app, char *message);
+
+/**
+ * @brief Perform the suc command.
+ *
+ * @param gui The gui structure of client requested.
+ */
+void suc_command(gui_t *gui);

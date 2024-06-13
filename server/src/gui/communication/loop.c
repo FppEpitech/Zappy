@@ -25,11 +25,11 @@ static const char *command_label[CL_LEN + 1] = {
     [CL_BCT] = "bct\r",
     [CL_MCT] = "mct\r",
     [CL_TNA] = "tna\r",
-    [CL_PPO] = "ppo",
-    [CL_PLV] = "plv",
-    [CL_PIN] = "pin",
+    [CL_PPO] = "ppo\r",
+    [CL_PLV] = "plv\r",
+    [CL_PIN] = "pin\r",
     [CL_SGT] = "sgt\r",
-    [CL_SST] = "sst",
+    [CL_SST] = "sst\r",
     [CL_LEN] = NULL
 };
 
@@ -55,4 +55,5 @@ void handle_command_gui(gui_t *gui, app_t *app, char *line)
             return;
         }
     }
+    suc_command(gui);
 }
