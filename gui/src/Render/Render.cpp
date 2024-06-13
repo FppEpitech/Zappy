@@ -239,11 +239,11 @@ void Gui::Render::displayDeraumere(Tile tile) const
 void Gui::Render::displayHUD(void)
 {
     for (auto &hud : _hudList) {
-        if (hud->getType() == Gui::HudPlayer::POV_PLAYER /**TODO : && The hud to display is the player pov*/) {
-            // TODO : set to hud the player with the pov (hud->setPlayer(player))
+        if (hud->getType() == Gui::HudPlayer::POV_PLAYER && _camera.getType() == Gui::UserCamera::POV_PLAYER) {
+            hud->setPlayer(std::make_shared<Player>(_gameData->getPlayer(_camera.getPlayerId())));
             hud->display();
         }
-        if (hud->getType() == Gui::HudGame::GAME /**TODO : && The hud to display is the game*/)
+        if (hud->getType() == Gui::HudGame::GAME && _camera.getType() == Gui::UserCamera::FREE)
             hud->display();
     }
 }
