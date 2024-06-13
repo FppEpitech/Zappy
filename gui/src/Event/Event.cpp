@@ -70,9 +70,10 @@ void Gui::Event::setFreeCam()
 
 void Gui::Event::handleLeftClick()
 {
-    if (_render->getCameraType() == Gui::UserCamera::CameraType::FREE)
+    if (_render->getCameraType() == Gui::UserCamera::CameraType::FREE) {
         selectPlayer();
-    else
+        selectTile();
+    } else
         changePlayer(true);
 }
 
@@ -97,8 +98,34 @@ void Gui::Event::selectPlayer()
                         DrawBoundingBox(bboxes[i], RED);
                 }
             }
-            if (team.isPlayerHit(player.getId(), *_render.get()->getCamera().get()))
+            if (team.isPlayerHit(player.getId(), *_render.get()->getCamera().get())) {
+                // TODO: Display the player HUD
                 this->changeCameraToPlayer(player.getId());
+            }
+        }
+    }
+    EndMode3D();
+    EndDrawing();
+}
+
+void Gui::Event::selectTile()
+{
+    BeginDrawing();
+    BeginMode3D(*_render.get()->getCamera().get());
+    for (auto &line : _gameData.get()->getMap()) {
+        for (auto &tile : line) {
+            if (_render.get()->getIsDebug()) {
+                std::vector<BoundingBox> bboxes = tile.getTileBoundingBoxes(tile, _render.get()->getTileModel());
+                std::vector<RayCollision> hitbox = tile.getTileModelHitbox(tile, *_render.get()->getCamera().get(), _render.get()->getTileModel());
+
+                for (size_t i = 0; i < bboxes.size(); i++) {
+                    if (hitbox[i].hit)
+                        DrawBoundingBox(bboxes[i], RED);
+                }
+            }
+            if (tile.isTileHit(*_render.get()->getCamera().get(), _render.get()->getTileModel()))
+                // TODO: Display the HUD of the tile
+                std::cout << "Tile hit" << std::endl;
         }
     }
     EndMode3D();

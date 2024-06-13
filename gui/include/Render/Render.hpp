@@ -108,6 +108,12 @@ class Gui::Render {
          */
         std::size_t getCameraPlayerPov() const;
 
+        /**
+         * @brief Get the Tile model.
+         *
+        */
+        Model getTileModel() const;
+
     private:
 
         UserCamera                  _camera;            // Camera of the scene.
@@ -147,6 +153,12 @@ class Gui::Render {
          *
          */
         void displayMap(void);
+
+        /**
+         * @brief Display a Tile.
+         *
+        */
+        void displayTile(Tile tile);
 
         /**
          * @brief Display the eggs.

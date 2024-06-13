@@ -73,12 +73,12 @@ void Gui::Render::setIsDebug(bool isDebug)
     _isDebug = isDebug;
 }
 
-bool Gui::Render::getIsDebug(void)
+bool Gui::Render::getIsDebug()
 {
     return _isDebug;
 }
 
-void Gui::Render::displayDebug(void)
+void Gui::Render::displayDebug()
 {
     if (_isDebug) {
         DrawFPS(10, 10);
@@ -95,7 +95,7 @@ void Gui::Render::displayDebug(void)
     }
 }
 
-void Gui::Render::displayPlayers(void)
+void Gui::Render::displayPlayers()
 {
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
@@ -117,16 +117,26 @@ void Gui::Render::displayPlayers(void)
     }
 }
 
-void Gui::Render::displayMap(void)
+void Gui::Render::displayMap()
 {
     for (auto &line : _gameData->getMap()) {
         for (auto &tile : line) {
-            DrawModel(_tileModel, tile.getPositionIn3DSpace(), 1.0f, WHITE);
+            displayTile(tile);
             displayFood(tile);
             displayResources(tile);
             displayEggs(tile);
             _decoration->display(_gameData->getMapSize());
         }
+    }
+}
+
+void Gui::Render::displayTile(Tile tile)
+{
+    DrawModel(_tileModel, tile.getPositionIn3DSpace(), 1.0f, WHITE);
+    if (_isDebug) {
+        std::vector<BoundingBox> bboxes = tile.getTileBoundingBoxes(tile, _tileModel);
+        for (size_t i = 0; i < bboxes.size(); i++)
+            DrawBoundingBox(bboxes[i], GREEN);
     }
 }
 
@@ -241,4 +251,9 @@ void Gui::Render::setCameraPlayerPov(std::size_t id)
 std::size_t Gui::Render::getCameraPlayerPov() const
 {
     return _camera.getPlayerId();
+}
+
+Model Gui::Render::getTileModel() const
+{
+    return _tileModel;
 }
