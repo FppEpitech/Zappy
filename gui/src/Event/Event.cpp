@@ -41,7 +41,7 @@ void Gui::Event::setGameData(std::shared_ptr<GameData> gameData)
 
 void Gui::Event::moveUpCamera()
 {
-    if (_render->getCameraType() != Gui::UserCamera::FREE)
+    if (_render->getCameraType() != Gui::UserCamera::FREE && _render->getCameraType() != Gui::UserCamera::FREE_TILE)
         return;
     _render->getCamera()->position.y += HIGH_CAMERA_INCREASE;
     _render->getCamera()->target.y += HIGH_CAMERA_INCREASE;
@@ -49,7 +49,7 @@ void Gui::Event::moveUpCamera()
 
 void Gui::Event::moveDownCamera()
 {
-    if (_render->getCameraType() != Gui::UserCamera::FREE)
+    if (_render->getCameraType() != Gui::UserCamera::FREE && _render->getCameraType() != Gui::UserCamera::FREE_TILE)
         return;
     _render->getCamera()->position.y -= LOW_CAMERA_INCREASE;
     _render->getCamera()->target.y -= LOW_CAMERA_INCREASE;
@@ -65,7 +65,8 @@ void Gui::Event::switchDisplayDebug()
 
 void Gui::Event::setFreeCam()
 {
-    _render->setCameraType(Gui::UserCamera::FREE);
+    if (_render->getCameraType() == Gui::UserCamera::POV_PLAYER)
+        _render->setCameraType(Gui::UserCamera::FREE);
 }
 
 void Gui::Event::handleLeftClick()
@@ -98,10 +99,8 @@ void Gui::Event::selectPlayer()
                         DrawBoundingBox(bboxes[i], RED);
                 }
             }
-            if (team.isPlayerHit(player.getId(), *_render.get()->getCamera().get())) {
-                // TODO: Display the player HUD
+            if (team.isPlayerHit(player.getId(), *_render.get()->getCamera().get()))
                 this->changeCameraToPlayer(player.getId());
-            }
         }
     }
     EndMode3D();
@@ -124,8 +123,7 @@ void Gui::Event::selectTile()
                 }
             }
             if (tile.isTileHit(*_render.get()->getCamera().get(), _render.get()->getTileModel()))
-                // TODO: Display the HUD of the tile
-                std::cout << "Tile hit" << std::endl;
+                _render.get()->setCameraType(Gui::UserCamera::FREE_TILE);
         }
     }
     EndMode3D();
@@ -196,3 +194,8 @@ void Gui::Event::changeCameraToPlayer(size_t playerId)
     _render.get()->setCameraPlayerPov(playerId);
 }
 
+void Gui::Event::switchTileHudToGame()
+{
+    if (_render.get()->getCameraType() == Gui::UserCamera::FREE_TILE)
+        _render.get()->setCameraType(Gui::UserCamera::FREE);
+}

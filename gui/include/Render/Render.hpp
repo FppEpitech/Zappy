@@ -12,8 +12,9 @@
 #define WINDOW_TITLE "Zappy GUI"
 
 #include "raylib.h"
-#include "Hud/HudPlayer.hpp"
 #include "Hud/HudGame.hpp"
+#include "Hud/HudTile.hpp"
+#include "Hud/HudPlayer.hpp"
 #include "Render/Decoration.hpp"
 #include "Render/UserCamera.hpp"
 #include "GameDatas/GameData.hpp"

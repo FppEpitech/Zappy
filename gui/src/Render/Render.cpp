@@ -20,6 +20,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     _isDebug = false;
     _hudList.push_back(std::make_shared<HudPlayer>(HudPlayer(gameData)));
     _hudList.push_back(std::make_shared<HudGame>(HudGame(gameData)));
+    _hudList.push_back(std::make_shared<HudTile>(HudTile(gameData)));
     _decoration = std::make_shared<Decoration>(Decoration());
     this->LoadModels();
 }
@@ -244,6 +245,8 @@ void Gui::Render::displayHUD(void)
             hud->display();
         }
         if (hud->getType() == Gui::HudGame::GAME && _camera.getType() == Gui::UserCamera::FREE)
+            hud->display();
+        if (hud->getType() == Gui::HudTile::TILE && _camera.getType() == Gui::UserCamera::FREE_TILE)
             hud->display();
     }
 }

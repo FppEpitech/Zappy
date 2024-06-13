@@ -26,7 +26,8 @@ class Gui::UserCamera {
 
         enum CameraType {
             FREE,
-            POV_PLAYER
+            POV_PLAYER,
+            FREE_TILE
         };
 
         /**

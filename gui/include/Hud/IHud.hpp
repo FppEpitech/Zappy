@@ -31,7 +31,8 @@ class Gui::IHud {
         enum TypeScene {
             GAME,
             POV_PLAYER,
-            END_GAME
+            END_GAME,
+            TILE
         };
 
         /**
