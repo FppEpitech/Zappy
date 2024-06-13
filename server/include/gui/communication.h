@@ -164,3 +164,11 @@ void pdi_command(app_t *app, int player_id);
  * @param team The winner team name.
  */
 void seg_command(app_t *app, char *team);
+
+/**
+ * @brief Perform the smg command. For send a message to all the GUI.
+ *
+ * @param app The app structure with all the gui fds.
+ * @param message The message to send.
+ */
+void smg_command(app_t *app, char *message);
