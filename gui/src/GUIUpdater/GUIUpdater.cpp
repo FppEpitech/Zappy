@@ -142,6 +142,10 @@ void Gui::GUIUpdater::updatePlayerPosition(const std::vector<std::string> &data)
     for (auto &team : _gameData.get()->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
+                if (player.getPosition() != std::make_pair(args[1], args[2]))
+                    player.setState(Gui::Player::WALK);
+                else
+                    player.setState(Gui::Player::IDLE);
                 player.setPosition(std::make_pair(args[1], args[2]));
                 player.setOrientation(args[3]);
             }
