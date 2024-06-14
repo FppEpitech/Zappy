@@ -258,7 +258,8 @@ void Gui::Render::displayHUD(void)
 
 void Gui::Render::displayCursor()
 {
-    DrawTexture(_cursorTexture, GetScreenWidth() / 2 - _cursorTexture.width / 2, GetScreenHeight() / 2 - _cursorTexture.height / 2, BLACK);
+    if (_camera.getType() != Gui::UserCamera::POV_PLAYER)
+        DrawTexture(_cursorTexture, GetScreenWidth() / 2 - _cursorTexture.width / 2, GetScreenHeight() / 2 - _cursorTexture.height / 2, BLACK);
 }
 
 void Gui::Render::setCameraType(Gui::UserCamera::CameraType type)
