@@ -12,6 +12,8 @@ def getMovesTowardTile(index):
     fwdRow = 1
     middleTileIndex = 2
     
+    if index == 0:
+        return (0, 0)
     if index <= maxRowNum:
         return (getXmovement(middleTileIndex, maxRowNum, crowWidth, index), 1)
     for i in range(7):
@@ -53,7 +55,7 @@ class ChildAi:
     def goTowardTile(self, index, itemSeek : Item):
         (x, y) = getMovesTowardTile(index)
 
-        for i in x:
+        for i in range(x):
             self.player.moveForward()
             self.queueCmd()
         if y > 0:
@@ -62,10 +64,10 @@ class ChildAi:
         if y < 0:
             self.player.turnLeft()
             self.queueCmd()
-        for i in y:
+        for i in range(y):
             self.player.moveForward()
             self.queueCmd()
-        self.player.take(str(itemSeek))
+        self.player.take(itemSeek.value)
         self.queueCmd()
 
     def computeAction(self):
@@ -73,6 +75,8 @@ class ChildAi:
         self.player.randomMoove()
         self.queueCmd()
         self.askDataUpdate()
+        self.goTowardTile(0, Item.FOOD)
+        
 
     def queueCmd(self):
         self.player.queue.append((self.player.currentCommand, self.player.currentAction))
