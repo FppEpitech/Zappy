@@ -18,6 +18,9 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     ToggleFullscreen();
     SetTargetFPS(140);
     _isDebug = false;
+    _hudList.push_back(std::make_shared<HudPlayer>(HudPlayer(gameData)));
+    _hudList.push_back(std::make_shared<HudGame>(HudGame(gameData)));
+    _hudList.push_back(std::make_shared<HudTile>(HudTile(gameData)));
     _decoration = std::make_shared<Decoration>(Decoration());
     this->LoadModels();
 }
@@ -58,6 +61,7 @@ void Gui::Render::draw()
     displayPlayers();
     EndMode3D();
 
+    displayHUD();
     displayDebug();
 
     EndDrawing();
@@ -233,6 +237,22 @@ void Gui::Render::displayDeraumere(Tile tile) const
     }
 }
 
+void Gui::Render::displayHUD(void)
+{
+    for (auto &hud : _hudList) {
+        if (hud->getType() == Gui::HudPlayer::POV_PLAYER && _camera.getType() == Gui::UserCamera::POV_PLAYER) {
+            hud->setPlayer(std::make_shared<Player>(_gameData->getPlayer(_camera.getPlayerId())));
+            hud->display();
+        }
+        if (hud->getType() == Gui::HudGame::GAME && _camera.getType() == Gui::UserCamera::FREE)
+            hud->display();
+        if (hud->getType() == Gui::HudTile::TILE && _camera.getType() == Gui::UserCamera::FREE_TILE) {
+            hud->setTile(std::make_shared<Tile>(_gameData->getTile(_camera.getTilePos().first, _camera.getTilePos().second)));
+            hud->display();
+        }
+    }
+}
+
 void Gui::Render::setCameraType(Gui::UserCamera::CameraType type)
 {
     _camera.setType(type);
@@ -251,6 +271,16 @@ void Gui::Render::setCameraPlayerPov(std::size_t id)
 std::size_t Gui::Render::getCameraPlayerPov() const
 {
     return _camera.getPlayerId();
+}
+
+void Gui::Render::setCameraTile(std::pair<std::size_t, std::size_t> pos)
+{
+    _camera.setTilePos(pos);
+}
+
+std::pair<std::size_t, std::size_t> Gui::Render::getCameraTile() const
+{
+    return _camera.getTilePos();
 }
 
 Model Gui::Render::getTileModel() const

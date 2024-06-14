@@ -84,6 +84,7 @@ class Gui::Event {
             {KEY_THREE, [this](){switchDisplayDebug();}},
             {KEY_F3, [this](){switchDisplayDebug();}},
             {KEY_SPACE, [this](){setFreeCam();}},
+            {KEY_R, [this](){switchTileHudToGame();}}
         };
 
         /**
@@ -154,4 +155,10 @@ class Gui::Event {
          * @param player Player to select.
          */
         void changeCameraToPlayer(size_t id);
+
+        /**
+         * @brief Change the Hud of Tile to Game.
+         *
+         */
+        void switchTileHudToGame();
 };

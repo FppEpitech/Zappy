@@ -31,6 +31,11 @@ SRC			=	src/Error/Error.cpp \
 				src/Event/Event.cpp \
 				\
 				src/GUIUpdater/GUIUpdater.cpp \
+				\
+				src/Hud/AHud.cpp \
+				src/Hud/HudPlayer.cpp \
+				src/Hud/HudGame.cpp \
+				src/Hud/HudTile.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 				Parsing/TestParser.cpp \

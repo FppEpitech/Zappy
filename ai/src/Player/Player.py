@@ -9,7 +9,7 @@ import random
 
 from ai.src.Enum.Action import Action
 from ai.src.Player.Inventory import Inventory
-from ai.src.Player.PlayerException import PlayerException
+from ai.src.Player.PlayerException import PlayerDeathException
 
 class Player:
     """
@@ -341,7 +341,7 @@ class Player:
                 the response from the server
         """
         if response == "dead":
-            raise PlayerException("Player is dead")
+            raise PlayerDeathException("Player is dead")
         elif response.startswith("message"):
             self.updateBroadcastReceived(response)
             return True
@@ -388,4 +388,3 @@ class Player:
         TODO: Implement the logic to choose the action of the player
         """
         random.choice([self.moveForward, self.turnRight, self.turnLeft, self.look, self.cmdInventory, self.broadcast, self.connectNbr, self.take, self.set])()
-

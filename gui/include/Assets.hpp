@@ -13,6 +13,10 @@
 #define PATH_PLAYER                 "player/"
 #define PATH_TILE                   "tile/"
 #define PATH_DECORATION             "decoration/"
+#define PATH_HUD                    "hud/"
+
+#define PNG_HUD                     PATH_ASSETS PATH_HUD "hud.png"
+#define FONT_HUD                    PATH_ASSETS PATH_HUD "SimplyMono-Bold.ttf"
 
 #define MODEL_TILE                  PATH_ASSETS PATH_TILE "tile.glb"
 #define MODEL_FOOD                  PATH_ASSETS PATH_RESOURCES "food.glb"

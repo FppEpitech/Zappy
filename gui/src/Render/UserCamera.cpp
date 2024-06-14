@@ -82,3 +82,13 @@ size_t Gui::UserCamera::getPlayerId() const
 {
     return _playerId;
 }
+
+void Gui::UserCamera::setTilePos(std::pair<std::size_t, std::size_t> pos)
+{
+    _tilePos = pos;
+}
+
+std::pair<std::size_t, std::size_t> Gui::UserCamera::getTilePos() const
+{
+    return _tilePos;
+}

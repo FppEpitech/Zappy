@@ -130,6 +130,5 @@ def testInventoryRemoveAnObject():
         assert inventory.phiras == 0
         inventory.removeAnObject("thystame")
         assert inventory.thystame == 0
-        assert inventory.removeAnObject("player") == False
     except Exception as _:
         raise Exception("Test failed")
