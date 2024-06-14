@@ -106,6 +106,7 @@ class Player:
         self.level = 1
         self.currentAction = Action.NONE
         self.currentCommand = ""
+        self.queue = []
         self.callback = None
         self.vision = []
         self.broadcastReceived = []
@@ -113,7 +114,6 @@ class Player:
         self.isLeader = isLeader
         self.unusedSlots = 0
         self.currentlyElevating = False
-
 
     def __str__(self):
         """
@@ -299,7 +299,6 @@ class Player:
         direction = int(message)
         self.ejectionReceived.append(direction)
 
-
     def updateLevel(self, level : int):
         """
         Update the level of the player
@@ -381,11 +380,9 @@ class Player:
         self.currentCommand = ""
         self.callback = None
 
-
     def randomMoove(self):
         """
         Choose the action of the player
         TODO: Implement the logic to choose the action of the player
         """
-        random.choice([self.moveForward, self.turnRight, self.turnLeft])()
-
+        random.choice([self.moveForward, self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
