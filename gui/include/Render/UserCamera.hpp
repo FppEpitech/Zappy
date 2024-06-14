@@ -24,6 +24,12 @@ class Gui::UserCamera {
 
     public:
 
+        enum CameraType {
+            FREE,
+            POV_PLAYER,
+            FREE_TILE
+        };
+
         /**
          * @brief Construct a new User Camera object.
          *
@@ -99,7 +105,52 @@ class Gui::UserCamera {
          */
         std::shared_ptr<Camera> getCamera();
 
+        /**
+         * @brief Set the Type object.
+         *
+         * @param type Type to set.
+         */
+        void setType(CameraType type);
+
+        /**
+         * @brief Get the Type object.
+         *
+         * @return CameraType - Camera type.
+         */
+        CameraType getType() const;
+
+        /**
+         * @brief Set the Player Id object.
+         *
+         * @param playerId Player id to set.
+        */
+        void setPlayerId(size_t playerId);
+
+        /**
+         * @brief Get the Player Id object.
+         *
+         * @return size_t - Player id.
+         */
+        size_t getPlayerId() const;
+
+        /**
+         * @brief Set the Tile Pos object.
+         *
+         * @param pos Position of the tile.
+         */
+        void setTilePos(std::pair<std::size_t, std::size_t> pos);
+
+        /**
+         * @brief Get the Tile position object.
+         *
+         * @return std::pair<std::size_t, std::size_t> - Position of the tile.
+         */
+        std::pair<std::size_t, std::size_t> getTilePos() const;
+
     private:
 
-        std::shared_ptr<Camera>     _camera;
+        std::shared_ptr<Camera>                 _camera;        // Camera raylib instance.
+        CameraType                              _type;          // Type of camera.
+        size_t                                  _playerId;      // Player id.
+        std::pair<std::size_t, std::size_t>     _tilePos;       // Tile position.
 };

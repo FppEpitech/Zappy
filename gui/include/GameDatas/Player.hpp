@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "raylib.h"
 #include "GameDatas/Inventory.hpp"
 
 namespace Gui {
@@ -148,7 +149,21 @@ class Gui::Player {
          *
          * @return std::string - Broadcast message.
          */
-        std::string getBroadcast(void) const;
+        std::string getBroadcast() const;
+
+        /**
+         * @brief Get the Vector From Orientation object.
+         *
+         * @return Vector3 - Vector3 from orientation.
+         */
+        float getRotationFromOrientation() const;
+
+        /**
+         * @brief Get the Center Position object.
+         *
+         * @return Vector3 - Center position.
+         */
+        Vector3 getCenterPosition();
 
         /**
          * @brief Set the Current Frame object.

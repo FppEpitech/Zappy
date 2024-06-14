@@ -5,6 +5,9 @@
 ## AI
 ##
 
+import os
+import sys
+
 from ai.src.Network.API import API
 from ai.src.Player.Player import Player, Action
 
@@ -31,7 +34,7 @@ class AI:
     """
 
 
-    def __init__(self, host, port, teamName):
+    def __init__(self, host, port, teamName, isLeader=False):
         """
         Constructor of the AI class
         Assign the API, the player and the team name
@@ -45,7 +48,7 @@ class AI:
                 the name of the team
         """
         self.api = API(host, port)
-        self.player = Player(True)
+        self.player = Player(isLeader)
         self.teamName = teamName
 
 
@@ -60,6 +63,7 @@ class AI:
         """
         self.api.connect()
         self.api.initConnection(self.teamName)
+        forkAI()
         while True:
             if self.player.currentAction == Action.NONE:
                 self.player.chooseAction()
@@ -69,3 +73,15 @@ class AI:
                 if response == '':
                     continue
                 self.player.handleResponse(response)
+
+
+def forkAI():
+    """
+    Fork the AI
+    """
+    pid = os.fork()
+    if pid == 0:
+        from ai.src.main import main
+        main()
+        sys.exit(0)
+    return pid

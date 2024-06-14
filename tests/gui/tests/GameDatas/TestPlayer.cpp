@@ -5,6 +5,7 @@
 ** test player
 */
 
+#include "Assets.hpp"
 #include "GameDatas/Player.hpp"
 #include "CriterionHeaders.hpp"
 #include "Error/Error.hpp"
@@ -85,4 +86,33 @@ Test(Player, getBroadcast, .timeout = 5)
 
     player.setBroadcast("Hello");
     cr_assert_str_eq(player.getBroadcast().c_str(), "Hello");
+}
+
+Test(Player, getRotationFromOrientation, .timeout = 5)
+{
+    Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
+
+    player.setOrientation(1);
+    cr_assert_eq(player.getRotationFromOrientation(), 180);
+
+    player.setOrientation(2);
+    cr_assert_eq(player.getRotationFromOrientation(), 90);
+
+    player.setOrientation(3);
+    cr_assert_eq(player.getRotationFromOrientation(), 0);
+
+    player.setOrientation(4);
+    cr_assert_eq(player.getRotationFromOrientation(), 270);
+
+    player.setOrientation(5);
+    cr_assert_eq(player.getRotationFromOrientation(), 180);
+}
+
+Test(Player, getCenterPosition, .timeout = 5)
+{
+    Gui::Player player(0, "TEAM1", std::pair<std::size_t, std::size_t>(0, 0), 1);
+
+    cr_assert_eq(player.getCenterPosition().x, (float)(SIZE_TILE / 2));
+    cr_assert_eq(player.getCenterPosition().y, 0);
+    cr_assert_eq(player.getCenterPosition().z, (float)(SIZE_TILE / 2));
 }

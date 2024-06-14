@@ -7,6 +7,7 @@
 
 #include "Assets.hpp"
 #include "GameDatas/Team.hpp"
+#include "raymath.h"
 
 Gui::Team::Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath) : _name(name)
 {
@@ -115,4 +116,122 @@ Model Gui::Team::getEggModel() const
 void Gui::Team::setEggModelPath(const std::string &eggModelPath)
 {
     _eggModel = LoadModel(eggModelPath.c_str());
+}
+
+std::vector<BoundingBox> Gui::Team::getPlayerBoundingBoxes(std::pair<size_t, size_t> pos, size_t orientation, Vector3 center)
+{
+    std::vector<BoundingBox> bboxes;
+    Model model = this->getPlayerModel();
+
+    for (int i = 0; i < model.meshCount; i++) {
+        BoundingBox bbox = GetMeshBoundingBox(model.meshes[i]);
+
+        // Set the rotation of the bounding box
+        bbox = rotateBoundingBoxByOrientation(bbox, orientation, pos, center);
+
+        // Scale the bounding box to the player scale
+        bbox.min.x = bbox.min.x * SCALE_PLAYER.x;
+        bbox.min.y = bbox.min.y * SCALE_PLAYER.y;
+        bbox.min.z = bbox.min.z * SCALE_PLAYER.z;
+
+        bbox.max.x = bbox.max.x * SCALE_PLAYER.x;
+        bbox.max.y = bbox.max.y * SCALE_PLAYER.y;
+        bbox.max.z = bbox.max.z * SCALE_PLAYER.z;
+
+        // Translate the bounding box to the player position
+        bbox.min.x = bbox.min.x + (pos.first * SIZE_TILE);
+        bbox.min.y = bbox.min.y + POS_PLAYER.y;
+        bbox.min.z = bbox.min.z + (pos.second * SIZE_TILE);
+
+        bbox.max.x = bbox.max.x + (pos.first * SIZE_TILE);
+        bbox.max.y = bbox.max.y + POS_PLAYER.y;
+        bbox.max.z = bbox.max.z + (pos.second * SIZE_TILE);
+
+        bboxes.push_back(bbox);
+    }
+    return bboxes;
+}
+
+Vector3 Gui::Team::getPlayerPositionIn3DSpace(std::size_t id, Map<Gui::Tile> map)
+{
+    Vector3 result;
+    for (auto &row : map) {
+        for (auto &tile : row) {
+            if (tile.getPosition().first == this->getPlayer(id).get()->getPosition().first && tile.getPosition().second == this->getPlayer(id).get()->getPosition().second) {
+                Vector3 posTile = tile.getPositionIn3DSpace();
+                result.x = posTile.x + POS_PLAYER.x;
+                result.y = posTile.y + POS_PLAYER.y;
+                result.z = posTile.z + POS_PLAYER.z;
+            }
+        }
+    }
+    return result;
+}
+
+std::vector<RayCollision> Gui::Team::getPlayerModelHitbox(size_t id, Camera camera)
+{
+    std::vector<BoundingBox> towerBBox;
+
+    for (auto &player : this->getPlayers()) {
+        if (player.getId() == id)
+            towerBBox = this->getPlayerBoundingBoxes(player.getPosition(), player.getOrientation(), player.getCenterPosition());
+    }
+    std::vector<RayCollision> boxHitInfo;
+
+    Ray ray = GetMouseRay((Vector2){(float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2}, camera);
+
+    for (int i = 0; i < this->getPlayerModel().meshCount; i++)
+        boxHitInfo.push_back(GetRayCollisionBox(ray, towerBBox[i]));
+    return boxHitInfo;
+}
+
+bool Gui::Team::isPlayerHit(size_t id, Camera camera)
+{
+    std::vector<BoundingBox> towerBBox;
+    std::vector<RayCollision> boxHitInfo = this->getPlayerModelHitbox(id, camera);
+
+    for (auto &player : this->getPlayers()) {
+        if (player.getId() == id)
+            towerBBox = this->getPlayerBoundingBoxes(player.getPosition(), player.getOrientation(), player.getCenterPosition());
+    }
+    for (size_t i = 0; i < towerBBox.size(); i++) {
+        if (boxHitInfo[i].hit)
+            return true;
+    }
+    return false;
+}
+
+BoundingBox Gui::Team::rotateBoundingBoxByOrientation(BoundingBox bbox, size_t orientation, std::pair<size_t, size_t> pos, Vector3 centerPos)
+{
+    BoundingBox result = bbox;
+
+    switch (orientation) {
+    case 1:
+        result.min.x = centerPos.x - bbox.max.x - (pos.first * SIZE_TILE + SIZE_TILE / 2);
+        result.min.z = centerPos.z - bbox.max.z - (pos.second * SIZE_TILE + SIZE_TILE / 2);
+        result.max.x = centerPos.x - bbox.min.x - (pos.first * SIZE_TILE + SIZE_TILE / 2);
+        result.max.z = centerPos.z - bbox.min.z - (pos.second * SIZE_TILE + SIZE_TILE / 2);
+        break;
+    case 2:
+        result.min.x = bbox.min.z - centerPos.z + (pos.second * SIZE_TILE + SIZE_TILE / 2);
+        result.min.z = bbox.min.x - centerPos.x + (pos.first * SIZE_TILE + SIZE_TILE / 2);
+        result.max.x = bbox.max.z - centerPos.z + (pos.second * SIZE_TILE + SIZE_TILE / 2);
+        result.max.z = bbox.max.x - centerPos.x + (pos.first * SIZE_TILE + SIZE_TILE / 2);
+        break;
+    case 3:
+        result.min.x = bbox.min.x - centerPos.x + (pos.first * SIZE_TILE + SIZE_TILE / 2);
+        result.min.z = bbox.min.z - centerPos.z + (pos.second * SIZE_TILE + SIZE_TILE / 2);
+        result.max.x = bbox.max.x - centerPos.x + (pos.first * SIZE_TILE + SIZE_TILE / 2);
+        result.max.z = bbox.max.z - centerPos.z + (pos.second * SIZE_TILE + SIZE_TILE / 2);
+        break;
+    case 4:
+        result.min.x = centerPos.z - bbox.max.z - (pos.second * SIZE_TILE + SIZE_TILE / 2);
+        result.min.z = centerPos.x - bbox.max.x - (pos.first * SIZE_TILE + SIZE_TILE / 2);
+        result.max.x = centerPos.z - bbox.min.z - (pos.second * SIZE_TILE + SIZE_TILE / 2);
+        result.max.z = centerPos.x - bbox.min.x - (pos.first * SIZE_TILE + SIZE_TILE / 2);
+        break;
+    default:
+        break;
+    }
+    return result;
 }

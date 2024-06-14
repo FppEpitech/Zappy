@@ -31,6 +31,11 @@ SRC			=	src/Error/Error.cpp \
 				src/Event/Event.cpp \
 				\
 				src/GUIUpdater/GUIUpdater.cpp \
+				\
+				src/Hud/AHud.cpp \
+				src/Hud/HudPlayer.cpp \
+				src/Hud/HudGame.cpp \
+				src/Hud/HudTile.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 				Parsing/TestParser.cpp \
@@ -41,7 +46,8 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				GameDatas/TestGameData.cpp \
 				GameDatas/TestEgg.cpp \
 				GameDatas/TestTeam.cpp \
-				Render/TestCamera.cpp \
+				Render/TestUserCamera.cpp \
+				Render/TestDecoration.cpp \
 				GUIUpdater/TestGUIUpdater.cpp \
 				Event/TestEvent.cpp \
 

@@ -59,43 +59,28 @@ jobs:
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
     env:
-      FAILED: 0
+      FAILLED: 0
     timeout-minutes: 2
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: "Create coding-style-reports.log for ai"
-        run: check.sh $(pwd)/ai $(pwd)/ai > ai_coding-style-reports.log
-
-      - name: "Create coding-style-reports.log for gui"
-        run: check.sh $(pwd)/gui $(pwd)/gui > gui_coding-style-reports.log
-
-      - name: "Create coding-style-reports.log for server"
-        run: check.sh $(pwd)/server $(pwd)/server > server_coding-style-reports.log
-
-      - name: "Combine coding-style-reports.log"
-        run: |
-          cat ai_coding-style-reports.log > coding-style-reports.log
-          cat gui_coding-style-reports.log >> coding-style-reports.log
-          cat server_coding-style-reports.log >> coding-style-reports.log
-
+      - name: "Create coding-style-reports.log"
+        run: check.sh $(pwd) $(pwd)
       - name: "Parsing coding-style-reports.log"
         id: error_norm
         run: |
           while read line; do
-          echo "FAILED=1" >> $GITHUB_ENV;
+          echo "FAILLED=1" >> $GITHUB_ENV;
           ENV_TITLE=$(echo "$line" | cut -d : -f 3);
           ENV_FILE=$(echo "$line" | cut -d : -f 1);
           ENV_LINE=$(echo "$line" | cut -d : -f 2);
           ENV_CONTENT=$(echo "$line" | cut -d : -f 4);
-          echo "::error title=\"$ENV_TITLE coding style error\",file=$ENV_FILE,line=$ENV_LINE,col=5,endColumn=7::$ENV_CONTENT";
+          echo "::error title="$ENV_TITLE coding style error",file=$ENV_FILE,line=$ENV_LINE,col=5,endColumn=7::$ENV_CONTENT";
           done < coding-style-reports.log
           cat coding-style-reports.log >> $GITHUB_OUTPUT
-
-      - name: "Check if coding style failed"
-        if: ${{ env.FAILED == '1' }}
+      - name: Check if coding style failed
+        if: ${{ env.FAILLED == '1' }}
         run: exit 1
 
 
@@ -105,9 +90,10 @@ jobs:
     container: epitechcontent/epitest-docker
     steps:
       - uses: actions/checkout@v4
-      - name: install_gui_dependencies
+      - name: install_dependencies
         run: |
             make install-deps-ci -C gui
+            make install-deps -C ai
       - name: run_tests
         run: make tests_run
         timeout-minutes: 5
