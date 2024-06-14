@@ -98,6 +98,10 @@ void Gui::Render::displayPlayers(void) const
         for (auto &player : team.getPlayers()) {
             Vector3 posAssetPlayer = POS_PLAYER;
             Vector3 posTile = _gameData->getMap()[player.getPosition().first][player.getPosition().second].getPositionIn3DSpace();
+
+            ModelAnimation anim = team.getPlayerModelAnimation()[player.getState()];
+            player.setCurrentFrame((player.getCurrentFrame() + 1)%anim.frameCount);
+            UpdateModelAnimation(team.getPlayerModel(), anim, player.getCurrentFrame());
             DrawModelEx(team.getPlayerModel(), (Vector3){posTile.x + posAssetPlayer.x, posTile.y + posAssetPlayer.y, posTile.z + posAssetPlayer.z}, ROTATION_AXIS_PLAYER, ROTATION_ANGLE_PLAYER, SCALE_PLAYER, WHITE);
         }
     }

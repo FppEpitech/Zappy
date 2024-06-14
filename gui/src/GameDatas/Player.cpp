@@ -9,6 +9,8 @@
 
 Gui::Player::Player(std::size_t id, const std::string &team, std::pair<std::size_t, std::size_t> position, std::size_t orientation, std::size_t level) : _id(id), _team(team), _position(position), _orientation(orientation), _level(level), _state(Gui::Player::IDLE)
 {
+    _currentFrame = 0;
+    _state = IDLE;
 }
 
 void Gui::Player::setPosition(std::pair<std::size_t, std::size_t> position)
@@ -79,4 +81,14 @@ void Gui::Player::setBroadcast(const std::string &broadcast)
 std::string Gui::Player::getBroadcast(void) const
 {
     return _broadcast;
+}
+
+void Gui::Player::setCurrentFrame(int currentFrame)
+{
+    _currentFrame = currentFrame;
+}
+
+int Gui::Player::getCurrentFrame()
+{
+    return _currentFrame;
 }

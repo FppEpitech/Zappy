@@ -23,18 +23,18 @@ class Gui::Player {
     public:
 
         enum PlayerState {
-            IDLE,
-            BORN,
-            BROADCAST,
-            EJECT,
-            BEING_EJECTED,
-            WALK,
+            IDLE = 2,
+            BORN = 8,
+            BROADCAST = 12,
+            EJECT = 5,
+            BEING_EJECTED = 7,
+            WALK = 6, // or 10
             INCANTATION,
             FINISHED_INCANTATION,
             LAY_EGG,
             DROP,
             COLLECT,
-            DEAD,
+            DEAD = 1,
         };
 
         /**
@@ -151,6 +151,20 @@ class Gui::Player {
         std::string getBroadcast(void) const;
 
         /**
+         * @brief Set the Current Frame object.
+         *
+         * @param currentFrame Current Frame to set.
+         */
+        void setCurrentFrame(int currentFrame);
+
+        /**
+         * @brief Get the Current Frame object.
+         *
+         * @return int - Current frame.
+         */
+        int getCurrentFrame();
+
+        /**
          * @brief Inventory of the player.
          *
          */
@@ -165,4 +179,5 @@ class Gui::Player {
         std::size_t                             _level;         // Level between 1 - 8.
         PlayerState                             _state;         // Player state.
         std::string                             _broadcast;     // Broadcast message.
+        int                                     _currentFrame;  // Current frame animation.
 };
