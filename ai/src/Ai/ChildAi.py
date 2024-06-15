@@ -11,7 +11,7 @@ def getMovesTowardTile(index):
     crowWidth = 3
     fwdRow = 1
     middleTileIndex = 2
-    
+
     if index == 0:
         return (0, 0)
     if index <= maxRowNum:
@@ -25,7 +25,7 @@ def getMovesTowardTile(index):
             return (getXmovement(middleTileIndex, maxRowNum, crowWidth, index), fwdRow)
     return -1
 
-def numXItemVision(vision : list, item : Item):
+def foodInVision(vision : list):
     total : int = 0
 
     for elem in vision:
@@ -44,7 +44,7 @@ class ChildAi:
 
     def updateFoodVars(self):
         self.food = self.player.inventory.food
-        self.foodInSight = numXItemVision(self.player.vision, "food")
+        self.foodInSight = foodInVision(self.player.vision)
 
     def askDataUpdate(self):
         self.player.cmdInventory()
