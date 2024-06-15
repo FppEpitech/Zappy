@@ -30,7 +30,7 @@ class Gui::Player {
             EJECT = 5,
             BEING_EJECTED = 7,
             WALK = 6, // or 10
-            INCANTATION,
+            INCANTATION = 0,
             FINISHED_INCANTATION,
             LAY_EGG,
             DROP,

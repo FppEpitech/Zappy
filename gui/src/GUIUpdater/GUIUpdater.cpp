@@ -269,10 +269,15 @@ void Gui::GUIUpdater::updatePlayerStartIncantation(const std::vector<std::string
     }
     if (args.size() < 4)
         throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pic:" + STR_RED + "Invalid argument number");
+    std::size_t index = 3;
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            if (player.getId() == args[0])
+            if (index >= args.size())
+                return;
+            if (player.getId() == args[index]) {
                 player.setState(Gui::Player::PlayerState::INCANTATION);
+                index++;
+            }
         }
     }
 }
@@ -294,9 +299,10 @@ void Gui::GUIUpdater::updatePlayerEndIncantation(const std::vector<std::string> 
     }
     if (args.size() != 3)
         throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pie:" + STR_RED + "Invalid argument number");
+    std::pair<std::size_t, std::size_t> tilePos(args[0], args[1]);
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            if (player.getId() == args[0]) {
+            if (player.getPosition() == tilePos) {
                 player.setState(Gui::Player::PlayerState::IDLE);
                 for (size_t i = 0; i < team.getPlayers().size(); i++) {
                     if (team.getPlayers()[i].getPosition().first == player.getPosition().first && team.getPlayers()[i].getPosition().second == player.getPosition().second)
