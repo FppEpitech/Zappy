@@ -243,10 +243,10 @@ void Gui::GUIUpdater::updatePlayerBroadcast(const std::vector<std::string> &data
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     for (auto &team : _gameData->getTeams()) {
-        for (size_t i = 0; i < team.getPlayers().size(); i++) {
-            if (team.getPlayers()[i].getId() == id) {
-                team.getPlayer(id).get()->setState(Gui::Player::PlayerState::BROADCAST);
-                team.getPlayer(id).get()->setBroadcast(data[1]);
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == id) {
+                player.setState(Gui::Player::PlayerState::BROADCAST);
+                player.setBroadcast(data[1]);
             }
         }
     }
