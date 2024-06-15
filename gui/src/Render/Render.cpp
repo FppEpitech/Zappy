@@ -108,9 +108,7 @@ void Gui::Render::displayPlayers()
 
             float rotation = player.getRotationFromOrientation();
 
-            ModelAnimation anim = team.getPlayerModelAnimation()[player.getState()];
-            player.setCurrentFrame((player.getCurrentFrame() + 1)%anim.frameCount);
-            UpdateModelAnimation(team.getPlayerModel(), anim, player.getCurrentFrame());
+            displayAnimations(team, player);
             DrawModelEx(team.getPlayerModel(), team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, WHITE);
 
             if (_isDebug) {

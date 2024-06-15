@@ -246,4 +246,12 @@ class Gui::Render {
          * @param tile Tile with resources.
          */
         void displayDeraumere(Tile tile) const;
+
+        /**
+         * @brief Display animations.
+         *
+         * @param team Team for model.
+         * @param player Player to draw animation.
+         */
+        void displayAnimations(Team &team, Player &player);
 };
