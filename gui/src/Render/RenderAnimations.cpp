@@ -11,7 +11,7 @@ void Gui::Render::displayAnimations(Team &team, Player &player)
 {
     ModelAnimation anim = team.getPlayerModelAnimation()[player.getState()];
 
-    if (player.getState() == Gui::Player::EJECT && player.getCurrentFrame() == anim.frameCount - 1) {
+    if (player.getState() != Gui::Player::WALK && player.getState() != Gui::Player::IDLE && player.getCurrentFrame() == anim.frameCount - 1) {
         player.setState(Gui::Player::IDLE);
         anim = team.getPlayerModelAnimation()[player.getState()];
     }
