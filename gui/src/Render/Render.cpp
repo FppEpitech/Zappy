@@ -15,7 +15,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
 {
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
     DisableCursor();
-    ToggleFullscreen();
+    // ToggleFullscreen();
     SetTargetFPS(140);
     _isDebug = false;
     _hudList.push_back(std::make_shared<HudPlayer>(HudPlayer(gameData)));

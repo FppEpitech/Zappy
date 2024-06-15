@@ -42,6 +42,7 @@ void Gui::Player::setTeam(const std::string &team)
 void Gui::Player::setState(PlayerState state)
 {
     _state = state;
+    _currentFrame = 0;
 }
 
 std::pair<std::size_t, std::size_t> Gui::Player::getPosition() const
