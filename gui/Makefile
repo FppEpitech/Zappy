@@ -27,6 +27,7 @@ SRC			=	src/Error/Error.cpp \
 				src/Render/Render.cpp \
 				src/Render/UserCamera.cpp \
 				src/Render/Decoration.cpp \
+				src/Render/Animations.cpp \
 				\
 				src/Event/Event.cpp \
 				\
