@@ -10,6 +10,7 @@ import sys
 
 from ai.src.AI import AI
 from ai.src.Errors.ArgsException import ArgsException
+from ai.src.Player.PlayerException import PlayerDeathException
 
 # Port min
 PORT_MIN = 0
@@ -65,18 +66,24 @@ def getArgs(av=sys.argv):
     return host, port, name
 
 
-def main():
+def main(isLeader=False):
         """
         Main function
         """
         host, port, teamName = getArgs()
-        ai = AI(host, port, teamName)
-        ai.run()
+        try:
+            ai = AI(host, port, teamName, isLeader)
+            ai.run()
+        except PlayerDeathException as e:
+            print(e, file=sys.stderr)
+            if isLeader:
+                print("The leader is dead, the AI will fork", file=sys.stderr)
+                main(True)
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except Exception as e:
-        print(e, file=sys.stderr)
-        sys.exit(84)
+    # try:
+        main(True)
+    # except Exception as e:
+    #     print(e, file=sys.stderr)
+    #     sys.exit(84)

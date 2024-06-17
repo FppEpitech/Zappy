@@ -26,7 +26,8 @@ class Gui::UserCamera {
 
         enum CameraType {
             FREE,
-            POV_PLAYER
+            POV_PLAYER,
+            FREE_TILE
         };
 
         /**
@@ -132,10 +133,24 @@ class Gui::UserCamera {
          */
         size_t getPlayerId() const;
 
+        /**
+         * @brief Set the Tile Pos object.
+         *
+         * @param pos Position of the tile.
+         */
+        void setTilePos(std::pair<std::size_t, std::size_t> pos);
+
+        /**
+         * @brief Get the Tile position object.
+         *
+         * @return std::pair<std::size_t, std::size_t> - Position of the tile.
+         */
+        std::pair<std::size_t, std::size_t> getTilePos() const;
+
     private:
 
-        std::shared_ptr<Camera>     _camera;        // Camera raylib instance.
-        CameraType                  _type;          // Type of camera.
-        size_t                      _playerId;      // Player id.
-
+        std::shared_ptr<Camera>                 _camera;        // Camera raylib instance.
+        CameraType                              _type;          // Type of camera.
+        size_t                                  _playerId;      // Player id.
+        std::pair<std::size_t, std::size_t>     _tilePos;       // Tile position.
 };

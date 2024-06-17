@@ -98,12 +98,12 @@ class API:
                 print("sent : ", stringifyData(data), flush=True, file=sys.stderr)
 
 
-    def receiveData(self, timeout : int = None):
+    def receiveData(self, timeout : float = None):
         """
         Receive data from the server
 
         Parameters :
-            timeout : int
+            timeout : float
                 the timeout to wait for the server to send data
                 (default is None which means no timeout)
         """

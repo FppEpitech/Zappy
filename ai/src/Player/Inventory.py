@@ -95,9 +95,9 @@ class Inventory:
         data = data[1:-1]
         data = data.split(", ")
         for elem in data:
-            if (elem[0] == " "):
-                elem = elem[1:]
             elem = elem.split(" ")
+            if (elem.count("") > 0):
+                elem.remove("")
             if elem[0] == "food":
                 self.food = int(elem[1])
             elif elem[0] == "linemate":
@@ -187,4 +187,3 @@ class Inventory:
             self.phiras -= 1
         elif ressource == "thystame" and self.thystame > 0:
             self.thystame -= 1
-

@@ -7,9 +7,22 @@
 
 import random
 
+from enum import Enum
+
 from ai.src.Enum.Action import Action
 from ai.src.Player.Inventory import Inventory
-from ai.src.Player.PlayerException import PlayerException
+from ai.src.Player.PlayerException import PlayerDeathException
+
+class Mode(Enum):
+    FOOD = 0
+    STONES = 1
+    FORKING = 2
+    BROADCASTING = 3
+    HANDLINGRESPONSE = 4
+    WAITING = 5
+    ELEVATING = 6
+    REGROUP = 7
+    NONE = 8
 
 class Player:
     """
@@ -52,7 +65,8 @@ class Player:
         turnRight()
             Turn the player right
         turnLeft()
-            Turn the player left
+            Turn
+        print("current food: ", self.inventory.food) the player left
         look()
             Look around the player
         cmdInventory()
@@ -65,7 +79,8 @@ class Player:
             Fork the player
         eject()
             Eject the player
-        take(resource : str = "food")
+        take(res
+        print("current food: ", self.inventory.food)ource : str = "food")
             Take a resource
         set(resource : str = "food")
             Set a resource
@@ -78,7 +93,8 @@ class Player:
         updateInventory(inventory : str)
             Update the inventory of the player
         updateBroadcastReceived(message : str)
-            Update the broadcast received by the player
+            Upda
+        print("current food: ", self.inventory.food)te the broadcast received by the player
         updateEjectionReceived(message : str)
             Update the ejection received by the player
         updateLevel(level : int)
@@ -104,16 +120,23 @@ class Player:
         """
         self.inventory = Inventory()
         self.level = 1
+        self.actions = []
         self.currentAction = Action.NONE
+        self.commands = []
         self.currentCommand = ""
-        self.queue = []
-        self.callback = None
+        self.callbacks = []
+        self.currentCallback = None
         self.vision = []
         self.broadcastReceived = []
         self.ejectionReceived = []
         self.isLeader = isLeader
         self.unusedSlots = 0
         self.currentlyElevating = False
+        self.currentMode = Mode.FOOD
+        self.currentFood = 0
+        self.nbSlaves = 0
+        self.waitingResponse = False
+        self.regroupDirection = 0
 
     def __str__(self):
         """
@@ -126,40 +149,45 @@ class Player:
         """
         Set the current action to forward
         """
-        self.currentAction = Action.FORWARD
-        self.currentCommand = "Forward"
+        self.actions.append(Action.FORWARD)
+        self.commands.append("Forward")
+        self.callbacks.append(None)
 
 
     def turnRight(self):
         """
         Set the current action to right
         """
-        self.currentAction = Action.RIGHT
-        self.currentCommand = "Right"
+        self.actions.append(Action.RIGHT)
+        self.commands.append("Right")
+        self.callbacks.append(None)
 
 
     def turnLeft(self):
         """
-        Set the current action to left
+        Set the current action tl moderation bot designed for mo left
         """
-        self.currentAction = Action.LEFT
-        self.currentCommand = "Left"
+        self.actions.append(Action.LEFT)
+        self.commands.append("Left")
+        self.callbacks.append(None)
 
 
     def look(self):
         """
         Set the current action to look
         """
-        self.currentAction = Action.LOOK
-        self.currentCommand = "Look"
+        self.actions.append(Action.LOOK)
+        self.commands.append("Look")
+        self.callbacks.append(None)
 
 
     def cmdInventory(self):
         """
         Set the current action to inventory
         """
-        self.currentAction = Action.INVENTORY
-        self.currentCommand = "Inventory"
+        self.actions.append(Action.INVENTORY)
+        self.commands.append("Inventory")
+        self.callbacks.append(None)
 
 
     def broadcast(self, message : str = "Hello"):
@@ -170,32 +198,36 @@ class Player:
             message : str
                 the message to broadcast
         """
-        self.currentAction = Action.BROADCAST
-        self.currentCommand = f"Broadcast \"{message}\""
+        self.actions.append(Action.BROADCAST)
+        self.commands.append(f"Broadcast \"{message}\"")
+        self.callbacks.append(None)
 
 
     def connectNbr(self):
         """
         Set the current action to connect_nbr
         """
-        self.currentAction = Action.CONNECT_NBR
-        self.currentCommand = "Connect_nbr"
+        self.actions.append(Action.CONNECT_NBR)
+        self.commands.append("Connect_nbr")
+        self.callbacks.append(None)
 
 
     def fork(self):
         """
         Set the current action to fork
         """
-        self.currentAction = Action.FORK
-        self.currentCommand = "Fork"
+        self.actions.append(Action.FORK)
+        self.commands.append("Fork")
+        self.callbacks.append(None)
 
 
     def eject(self):
         """
         Set the current action to eject
         """
-        self.currentAction = Action.EJECT
-        self.currentCommand = "Eject"
+        self.actions.append(Action.EJECT)
+        self.commands.append("Eject")
+        self.callbacks.append(None)
 
 
     def take(self, resource : str = "food"):
@@ -206,9 +238,9 @@ class Player:
             resource : str
                 the resource to take
         """
-        self.currentAction = Action.TAKE
-        self.currentCommand = f"Take {resource}"
-        self.callback = self.inventory.addAnObject(resource)
+        self.actions.append(Action.TAKE)
+        self.commands.append(f"Take {resource}")
+        self.callbacks.append(None)
 
 
     def set(self, resource : str = "food"):
@@ -219,26 +251,27 @@ class Player:
             resource : str
                 the resource to set
         """
-        self.currentAction = Action.SET
-        self.currentCommand = f"Set {resource}"
-        self.callback = self.inventory.removeAnObject(resource)
+        self.actions.append(Action.SET)
+        self.commands.append(f"Set {resource}")
+        self.callbacks.append(self.inventory.removeAnObject(resource))
 
 
     def incantation(self):
         """
         Set the current action to incantation
         """
-        self.currentAction = Action.INCANTATION
-        self.currentCommand = "Incantation"
+        self.actions.append(Action.INCANTATION)
+        self.commands.append("Incantation")
+        self.callbacks.append(None)
 
 
     def none(self):
         """
         Set the current action to none
         """
-        self.currentAction = Action.NONE
-        self.currentCommand = ""
-        self.callback = None
+        self.actions.append(Action.NONE)
+        self.commands.append("")
+        self.callbacks.append(None)
 
 
     def updateVision(self, vision : str):
@@ -256,6 +289,8 @@ class Player:
             inventory = Inventory(0, 0, 0, 0, 0, 0, 0, 0)
             inventory.updateCaseContent(case.split(" "))
             self.vision.append(inventory)
+        if self.currentCallback is not None:
+            self.currentCallback()
         return
 
 
@@ -340,7 +375,7 @@ class Player:
                 the response from the server
         """
         if response == "dead":
-            raise PlayerException("Player is dead")
+            raise PlayerDeathException("Player is dead")
         elif response.startswith("message"):
             self.updateBroadcastReceived(response)
             return True
@@ -365,8 +400,8 @@ class Player:
             self.currentCommand = ""
             return
         if response == "ok":
-            if self.callback is not None:
-                self.callback()
+            if self.currentCallback is not None:
+                self.currentCallback()
         elif self.currentAction == Action.LOOK:
             self.updateVision(response)
         elif self.currentAction == Action.INVENTORY:
@@ -380,9 +415,182 @@ class Player:
         self.currentCommand = ""
         self.callback = None
 
-    def randomMoove(self):
+    def updateModeSlave(self):
+        if self.inventory.food < 35:
+            self.currentMode = Mode.FOOD
+        elif self.inventory.food >= 45:
+            self.currentMode = Mode.STONES
+
+
+    def updateModeLeader(self):
+        if self.inventory.food < 35:
+            self.currentMode = Mode.FOOD
+        elif self.inventory.food >= 45 or self.currentMode != Mode.FOOD:
+            print(self.currentFood, self.inventory.food)
+            if self.currentFood != self.inventory.food and self.waitingResponse == True:
+                print("Handling response")
+                self.currentMode = Mode.HANDLINGRESPONSE
+            elif self.currentFood != self.inventory.food and self.waitingResponse == False:
+                print("Broadcasting")
+                self.currentMode = Mode.BROADCASTING
+                self.waitingResponse = True
+            elif self.nbSlaves < 5 and self.waitingResponse == False:
+                self.currentMode = Mode.FORKING
+            else:
+                self.currentMode = Mode.WAITING
+        self.currentFood = self.inventory.food
+
+
+    def updateMode(self):
+        if self.currentMode == Mode.REGROUP:
+            return
+        if self.isLeader:
+            self.updateModeLeader()
+        else:
+            self.updateModeSlave()
+
+
+    def lookingForFood(self):
+        index = -1
+        order = [0, 2, 1, 3]
+        for i in order:
+            if len(self.vision) > i and self.vision[i].food > 0:
+                index = i
+                break
+        if index == -1:
+            self.moveForward()
+            self.moveForward()
+            self.cmdInventory()
+            return
+        if index == 1:
+            self.moveForward()
+            self.turnLeft()
+            self.moveForward()
+        elif index == 2:
+            self.moveForward()
+        elif index == 3:
+            self.moveForward()
+            self.turnRight()
+            self.moveForward()
+        for i in range(0, self.vision[index].food):
+            if len(self.actions) < 9:
+                self.take("food")
+            else:
+                break
+        self.cmdInventory()
+
+
+    def askSlavesForInventory(self):
+        self.broadcast("Inventory")
+        self.nbSlaves = 0
+
+    def handleResponseBroadcast(self):
+        print(self.broadcastReceived, flush=True)
+        self.nbSlaves = len(self.broadcastReceived)
+        print("nb slaves: ", self.nbSlaves, flush=True)
+        if self.nbSlaves >= 5:
+            print("\n\nTHERE ARE ENOUGH SLAVES\n\n", flush=True)
+            self.currentMode = Mode.REGROUP
+        self.waitingResponse = False
+        self.broadcastReceived = []
+
+
+    def slavesReponses(self):
+        for broadcast in self.broadcastReceived:
+            if broadcast[1] == "Inventory":
+                response = self.inventory.__str__()
+                self.broadcast(response)
+            if broadcast[1] == "Regroup":
+                self.currentMode = Mode.REGROUP
+                self.regroupDirection = broadcast[0]
+                return
+
+
+    def waitingEveryone(self):
+        nbSlavesHere = len(self.broadcastReceived)
+        print("nb slaves here: ", nbSlavesHere, flush=True)
+        if nbSlavesHere >= 5:
+            # self.currentMode = Mode.ELEVATING
+            print("\n\n\nWE ARE READY TO ELEVATE\n\n\n", flush=True)
+        else:
+            self.broadcast("Regroup")
+
+
+    def regroupAction(self):
+        if self.isLeader:
+            self.waitingEveryone()
+        else:
+            isThereARegroup = False
+
+            for broadcast in self.broadcastReceived:
+                if broadcast[1] == "Regroup":
+                    isThereARegroup = True
+                    self.regroupDirection = broadcast[0]
+
+            self.broadcastReceived = []
+            if isThereARegroup == False:
+                return
+            if self.regroupDirection == 0:
+                self.broadcast("I'm here")
+            if self.regroupDirection == 3:
+                self.turnLeft()
+            if self.regroupDirection == 7:
+                self.turnRight()
+            if self.regroupDirection == 1:
+                self.moveForward()
+            if self.regroupDirection == 5:
+                self.turnRight()
+                self.turnRight()
+            if self.regroupDirection == 2 or self.regroupDirection == 8:
+                self.moveForward()
+            if self.regroupDirection == 4 or self.regroupDirection == 6:
+                self.turnRight()
+                self.turnRight()
+
+
+    def chooseAction(self):
         """
         Choose the action of the player
         TODO: Implement the logic to choose the action of the player
         """
-        random.choice([self.moveForward, self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
+        self.updateMode()
+        if self.currentMode == Mode.REGROUP:
+            self.regroupAction()
+            return
+        if self.isLeader == False:
+            if len(self.broadcastReceived) > 0:
+                self.slavesReponses()
+                self.broadcastReceived = []
+        if self.currentMode == Mode.FOOD:
+            self.look()
+            self.callbacks[len(self.callbacks) - 1] = self.lookingForFood
+        elif self.currentMode == Mode.STONES:
+            self.cmdInventory()
+            return
+        elif self.currentMode == Mode.FORKING:
+            print("Forking")
+            self.fork()
+            from ai.src.AI import forkAI
+            self.callbacks[len(self.callbacks) - 1] = forkAI
+            self.nbSlaves += 1
+            self.cmdInventory()
+            return
+        elif self.currentMode == Mode.BROADCASTING:
+            print("in broadcast")
+            self.askSlavesForInventory()
+            self.cmdInventory()
+            return
+        elif self.currentMode == Mode.HANDLINGRESPONSE:
+            self.handleResponseBroadcast()
+            self.cmdInventory()
+            return
+        elif self.currentMode == Mode.WAITING:
+            self.cmdInventory()
+            return
+        elif self.currentMode == Mode.ELEVATING:
+            self.cmdInventory()
+            return
+        elif self.currentMode == Mode.NONE:
+            self.cmdInventory()
+            return
+        return
