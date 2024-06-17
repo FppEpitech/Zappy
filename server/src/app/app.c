@@ -27,6 +27,7 @@ app_t *create_app(parsing_t *parsing)
     new_app->gui_list = malloc(sizeof(list_t));
     new_app->clients_list = malloc(sizeof(list_t));
     new_app->teams_list = malloc(sizeof(list_t));
+    new_app->eggs_list = malloc(sizeof(list_t));
     create_teams(parsing, new_app);
     if (new_app->gui_list == NULL || new_app->clients_list == NULL
     || new_app->teams_list == NULL)

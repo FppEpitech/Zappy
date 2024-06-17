@@ -25,6 +25,7 @@ typedef union s_node_data {
     char *message;
     char *command;
     vector2i_t *coord;
+    egg_t *egg;
 } node_data_t;
 
 typedef struct s_list_node {

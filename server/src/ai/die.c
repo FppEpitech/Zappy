@@ -25,9 +25,8 @@ static void change_ai(app_t *app, ia_t *ai)
         node = node->next;
     }
     list_delete(ai_team->list_ai, node);
-    if (ai_team->max_place > ai_team->egg_position->len) {
-        add_egg(ai_team->egg_position, rand() % app->game->height,
-        rand() % app->game->width);
+    if (ai_team->max_place > ai_team->eggs_list->len) {
+        add_egg(ai_team->eggs_list, -1, app);
     }
 }
 

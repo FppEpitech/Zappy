@@ -30,7 +30,7 @@ static void add_message_to_ia(app_t *app, team_t *team, ia_t *new_ia)
     char *nb_place = NULL;
     char *map_size = NULL;
 
-    nb_place = format_string("%ld\n", team->egg_position->len);
+    nb_place = format_string("%ld\n", team->eggs_list->len);
     map_size = format_string("%d %d\n", app->game->width, app->game->height);
     add_message(new_ia->list_messages, nb_place);
     add_message(new_ia->list_messages, map_size);
@@ -78,15 +78,15 @@ static time_info_t *create_time(app_t *app)
 ia_t *create_ia(app_t *app, int fd, team_t *team)
 {
     ia_t *new_ia = malloc(sizeof(ia_t));
-    int x = team->egg_position->first->data.coord->x;
-    int y = team->egg_position->first->data.coord->y;
+    int x = team->eggs_list->first->data.egg->pos->x;
+    int y = team->eggs_list->first->data.egg->pos->y;
 
     if (new_ia == NULL)
         return NULL;
     new_ia->fd = fd;
     new_ia->level = 1;
     new_ia->direction = choose_direction();
-    list_remove_front(team->egg_position);
+    list_remove_front(team->eggs_list);
     new_ia->position = create_vector2i(x, y);
     new_ia->list_command = list_new();
     new_ia->list_messages = list_new();
@@ -107,7 +107,7 @@ void add_ia(app_t *app, size_t fd, char *line)
     while (temp) {
         team = temp->data.team;
         if (strcmp(line, team->name) == 0 &&
-        team->egg_position->len > 0) {
+        team->eggs_list->len > 0) {
             data.ai = create_ia(app, fd, team);
             list_add_back(team->list_ai, data);
             list_delete(app->clients_list, find_client(app->clients_list, fd));

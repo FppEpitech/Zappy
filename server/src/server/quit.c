@@ -46,9 +46,8 @@ static bool server_quit_client(list_t *clients_list, size_t fd)
 static void check_ia(app_t *app, team_t *team, list_node_t *ia_temp)
 {
     list_delete(team->list_ai, ia_temp);
-    if (team->max_place > team->egg_position->len) {
-        add_egg(team->egg_position, rand() % app->game->height,
-        rand() % app->game->width);
+    if (team->max_place > team->eggs_list->len) {
+        add_egg(team->eggs_list, -1, app);
     }
 }
 

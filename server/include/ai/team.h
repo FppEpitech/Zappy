@@ -17,7 +17,7 @@ typedef struct s_app app_t;
 
 typedef struct s_team {
     list_t *list_ai;
-    list_t *egg_position;
+    list_t *eggs_list;
     char *name;
     size_t max_place;
 } team_t;
@@ -52,10 +52,10 @@ void display_egg_position(app_t *app);
  * @brief Add egg in the list.
  *
  * @param eggs List of egg.
- * @param random_x Position x of egg.
- * @param random_y Position y of egg.
+ * @param id_player_laid Id of the player who laid the egg.
+ * @param app Application with list of eggs.
  */
-void add_egg(list_t *eggs, int random_x, int random_y);
+void add_egg(list_t *eggs, int random_x, app_t *app);
 
 /**
  * @brief Find the team of fd given.
