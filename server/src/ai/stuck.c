@@ -47,6 +47,21 @@ static void handle_incantation_verification(ia_t *ai, app_t *app)
     printf("Level up succefully\n");
 }
 
+static void handle_fork_verification(ia_t *ai, app_t *app)
+{
+    list_node_t *egg_node = app->eggs_list->first;
+
+    while (egg_node) {
+        if (egg_node->data.egg->id_player_laid == ai->fd) {
+            printf("SUCCESS at end verification, player id : %ld\n", ai->fd);
+            printf("player_laid : %ld\n", egg_node->data.egg->id_player_laid);
+            enw_command(app, egg_node->data.egg);
+            return;
+        }
+        egg_node = egg_node->next;
+    }
+}
+
 static void check_statut_stuck(ia_t *ai, app_t *app)
 {
     if (ai->time->stuck == false)
@@ -55,6 +70,7 @@ static void check_statut_stuck(ia_t *ai, app_t *app)
         ai->time->stuck = false;
         ai->time->total_stuck = 0.0;
         handle_incantation_verification(ai, app);
+        handle_fork_verification(ai, app);
     }
 }
 

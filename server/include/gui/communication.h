@@ -205,3 +205,12 @@ void pic_command(app_t *app, list_t *ai);
  * @param ai The list of all the ia in the incantation.
  */
 void pie_command(app_t *app, list_t *ai);
+
+/**
+ * @brief The enw command. For send message to all the GUI,
+ *
+ * @param gui The gui structure of client requested.
+ * @param app The app structure.
+ * @param egg The egg structure.
+ */
+void enw_command(app_t *app, egg_t *egg);
