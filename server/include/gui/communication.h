@@ -11,7 +11,8 @@
 #include "gui.h"
 
 #define POS_SPACE 3
-#define LEN_COMMAND_AND_SPACE 4
+#define LEN_COMMAND 3
+#define LEN_COMMAND_AND_SPACE LEN_COMMAND + 1
 
 /**
  * @brief Handle all the commands of the GUI.

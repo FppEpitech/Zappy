@@ -5,9 +5,12 @@
 ** mct
 */
 
+#include "types.h"
 #include "app/app.h"
 #include "gui/gui.h"
-#include "types.h"
+#include "gui/communication.h"
+
+#include <string.h>
 
 static char *get_string(app_t *app, vector2i_t pos)
 {
@@ -30,6 +33,10 @@ void mct_response(gui_t *gui, app_t *app, char *line)
     char *response = NULL;
     char *final_response = "";
 
+    if (strlen(line) != LEN_COMMAND) {
+        sbp_command(gui);
+        return;
+    }
     while ((size_t)pos.y < app->game->height) {
         pos.x = 0;
         while ((size_t)pos.x < app->game->width) {
@@ -40,5 +47,4 @@ void mct_response(gui_t *gui, app_t *app, char *line)
         pos.y++;
     }
     add_message(gui->list_messages, final_response);
-    (void) line;
 }
