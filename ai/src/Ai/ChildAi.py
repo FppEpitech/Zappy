@@ -35,23 +35,17 @@ def foodInVision(vision : list):
 
 class ChildAi:
     player : Player = None
-    food : int = 0
-    foodInSight : int = 0
     isGoingToX : bool = False
 
     def __init__(self, player):
         self.player = player
-
-    def updateFoodVars(self):
-        self.food = self.player.inventory.food
-        self.foodInSight = foodInVision(self.player.vision)
 
     def askDataUpdate(self):
         self.player.cmdInventory()
         self.queueCmd()
         self.player.look()
         self.queueCmd()
-        
+
     def goTowardTile(self, index, itemSeek : Item):
         (x, y) = getMovesTowardTile(index)
 
@@ -71,12 +65,19 @@ class ChildAi:
         self.queueCmd()
 
     def computeAction(self):
-        self.updateFoodVars()
-        self.player.randomMoove()
-        self.queueCmd()
+        self.core()
         self.askDataUpdate()
-        self.goTowardTile(0, Item.FOOD)
+        self.informLeader()
+    
+    def informLeader(self):
+        #must write everything to inform the leader of current player's state.
+        pass
         
+    def core(self):
+        hungry = self.player.inventory.food < 5
+        seenFood = foodInVision(self.player.vision) > 0
+        print("i have food : ", self.player.inventory.food)
+
 
     def queueCmd(self):
         self.player.queue.append((self.player.currentCommand, self.player.currentAction))

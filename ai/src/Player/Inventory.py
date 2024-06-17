@@ -95,6 +95,8 @@ class Inventory:
         data = data[1:-1]
         data = data.split(", ")
         for elem in data:
+            if (elem[0] == " "):
+                elem = elem[1:]
             elem = elem.split(" ")
             if elem[0] == "food":
                 self.food = int(elem[1])
