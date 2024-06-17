@@ -33,6 +33,12 @@ def foodInVision(vision : list):
             total += elem.food
     return total
 
+def getClosestTileWithFood(vision : list):
+    for i in range(len(vision)):
+        if vision[i].food > 0:
+            return i
+    return -1
+
 class ChildAi:
     player : Player = None
     isGoingToX : bool = False
@@ -71,13 +77,19 @@ class ChildAi:
     
     def informLeader(self):
         #must write everything to inform the leader of current player's state.
+        #must also listen to leader for invocation OR required stones.
         pass
         
     def core(self):
         hungry = self.player.inventory.food < 5
         seenFood = foodInVision(self.player.vision) > 0
-        print("i have food : ", self.player.inventory.food)
-
+        if hungry and not seenFood:
+            self.player.randomMoove()
+            self.queueCmd()
+        if seenFood and hungry:
+            self.goTowardTile(getClosestTileWithFood(self.player.vision), Item.FOOD)
+        if not hungry:
+            #if needed stone in vision, take it, if very rare stone take it.
 
     def queueCmd(self):
         self.player.queue.append((self.player.currentCommand, self.player.currentAction))
