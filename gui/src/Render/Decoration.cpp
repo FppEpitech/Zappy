@@ -11,7 +11,6 @@
 Gui::Decoration::Decoration()
 {
     _treeModel = LoadModel(MODEL_TREE);
-    //TODO : Unlock when multithreading: _lanternModel = LoadModel(MODEL_LANTERN);
 }
 
 Map<bool> Gui::Decoration::getGenerationItem(std::size_t ratio)
@@ -34,14 +33,13 @@ void Gui::Decoration::display(std::pair<std::size_t, std::size_t> mapSize)
     if (mapSize != _mapSize) {
         _mapSize = mapSize;
         _mapTree = getGenerationItem(5);
-        //TODO : Unlock when multithreading: _mapLantern = getGenerationItem(3);
     }
 
     for (size_t i = 0; i < _mapSize.first; i++) {
         for (size_t j = 0; j < _mapSize.second; j++) {
             Vector3 posTile = {(float)(i * SIZE_TILE), 0.0f, (float)(j * SIZE_TILE)};
             displayTree(i, j, posTile);
-            //TODO : Unlock when multithreading: displayLantern(i, j, posTile);
+                displayTree(i, j, posTile);
         }
     }
 }
