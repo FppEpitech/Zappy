@@ -7,13 +7,11 @@
 
 #pragma once
 
+#include "Config.hpp"
 #include "Render/Render.hpp"
 
 #include <functional>
 #include <unordered_map>
-
-#define HIGH_CAMERA_INCREASE 0.1
-#define LOW_CAMERA_INCREASE 0.1
 
 namespace Gui {
 
