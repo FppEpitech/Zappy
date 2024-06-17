@@ -6,6 +6,7 @@
 */
 
 #include "app/app.h"
+#include "gui/communication.h"
 
 static size_t get_last_id(app_t *app)
 {
@@ -71,6 +72,7 @@ team_t *create_team(app_t *app, char *name, size_t max_place)
     new_team->eggs_list = list_new();
     for (size_t index_egg = 0; index_egg < new_team->max_place; index_egg++) {
         add_egg(new_team->eggs_list, -1, app);
+        pfk_command(app, -1);
     }
     if (new_team->list_ai == NULL)
         return NULL;

@@ -10,6 +10,7 @@
 #include "app/app.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
+#include "gui/communication.h"
 
 static bool server_quit_gui(list_t *gui_list, size_t fd)
 {
@@ -48,6 +49,7 @@ static void check_ia(app_t *app, team_t *team, list_node_t *ia_temp)
     list_delete(team->list_ai, ia_temp);
     if (team->max_place > team->eggs_list->len) {
         add_egg(team->eggs_list, -1, app);
+        pfk_command(app, -1);
     }
 }
 

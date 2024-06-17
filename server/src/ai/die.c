@@ -27,6 +27,7 @@ static void change_ai(app_t *app, ia_t *ai)
     list_delete(ai_team->list_ai, node);
     if (ai_team->max_place > ai_team->eggs_list->len) {
         add_egg(ai_team->eggs_list, -1, app);
+        pfk_command(app, -1);
     }
 }
 
