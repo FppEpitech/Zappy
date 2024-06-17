@@ -65,6 +65,7 @@ static bool server_quit_ia(app_t *app, size_t fd)
         if (ia_temp->data.ai->fd == fd) {
             check_ia(app, team, ia_temp);
             dead_response(app);
+            pdi_command(app, fd);
             return true;
         }
         ia_temp = ia_temp->next;
