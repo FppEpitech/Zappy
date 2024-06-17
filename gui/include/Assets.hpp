@@ -15,6 +15,7 @@
 #define PATH_DECORATION             "decoration/"
 #define PATH_HUD                    "hud/"
 
+#define PNG_CURSOR                  PATH_ASSETS PATH_HUD "cursor.png"
 #define PNG_HUD                     PATH_ASSETS PATH_HUD "hud.png"
 #define FONT_HUD                    PATH_ASSETS PATH_HUD "SimplyMono-Bold.ttf"
 

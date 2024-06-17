@@ -78,9 +78,25 @@ void handle_client_write(app_t *app, int fd)
         write_message(ai->list_messages, ai->fd);
 }
 
+static bool server_status(bool status)
+{
+    static bool server_status = true;
+
+    if (status == false)
+        server_status = status;
+    return server_status;
+}
+
+static void handle_control_c(int sig)
+{
+    if (sig == SIGINT)
+        server_status(false);
+}
+
 bool server_run(app_t *app)
 {
-    while (true) {
+    signal(SIGINT, handle_control_c);
+    while (server_status(true)) {
         server_reset_fd(app);
         if (select(FD_SETSIZE, &app->server->read_fds,
         &app->server->write_fds, NULL, NULL) < 0)

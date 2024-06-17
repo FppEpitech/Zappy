@@ -42,6 +42,7 @@ static inventory_t *create_inventory(void)
 
     if (new_inventory == NULL)
         return NULL;
+    new_inventory->food = 0;
     new_inventory->linemate = 0;
     new_inventory->deraumere = 0;
     new_inventory->sibur = 0;
@@ -103,6 +104,7 @@ void add_ia(app_t *app, size_t fd, char *line)
     list_node_t *temp = app->teams_list->first;
     team_t *team = NULL;
     node_data_t data;
+    list_node_t *client_node = find_client(app->clients_list, fd);
 
     while (temp) {
         team = temp->data.team;
@@ -110,12 +112,15 @@ void add_ia(app_t *app, size_t fd, char *line)
         team->eggs_list->len > 0) {
             data.ai = create_ia(app, fd, team);
             list_add_back(team->list_ai, data);
-            list_delete(app->clients_list, find_client(app->clients_list, fd));
+            free(client_node->data.client);
+            list_delete(app->clients_list, client_node);
+            free(line);
             pnw_command(app, data.ai);
             return;
         }
         temp = temp->next;
     }
+    free(line);
 }
 
 static ia_t *check_ia(team_t *team, size_t fd)

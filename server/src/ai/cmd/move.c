@@ -97,5 +97,6 @@ bool move_command(app_t *app, ia_t *ai, char *line)
         add_message(ai->list_messages, reply);
         return true;
     }
+    free(reply);
     return false;
 }

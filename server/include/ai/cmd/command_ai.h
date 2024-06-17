@@ -181,3 +181,10 @@ void add_command_to_list(ia_t *ai, char *line);
  * @param app Application with necessary information.
  */
 void treat_command(app_t *app);
+
+/**
+ * @brief Destroy the list of command.
+ *
+ * @param command_list List of command to destroy.
+ */
+void destroy_command_list(list_t *command_list);
