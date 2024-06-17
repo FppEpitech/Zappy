@@ -149,6 +149,7 @@ void Gui::Render::displayDebug()
             std::to_string(_camera.getCamera()->target.z)
             ).c_str(), 10, 50, 20, LIME);
         DrawText(("Render distance: " + std::to_string(_renderDistance) + " chunks.").c_str(), 10, 70, 20, LIME);
+        DrawText(("Camera Tile XZ: " + std::to_string(getCameraTile().first) + " / " + std::to_string(getCameraTile().second)).c_str(), 10, 90, 20, LIME);
     }
 }
 
