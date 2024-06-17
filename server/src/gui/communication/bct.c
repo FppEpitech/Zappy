@@ -39,11 +39,11 @@ void bct_response(gui_t *gui, app_t *app, char *line)
 {
     vector2i_t pos = {0, 0};
 
-    if (line[3] != ' ') {
+    if (line[POS_SPACE] != ' ') {
         suc_command(gui);
         return;
     }
-    line += 4;
+    line += LEN_COMMAND_AND_SPACE;
     pos = get_pos_requested(line);
     if (pos.x < 0 || (size_t)pos.x >= app->game->width ||
         pos.y < 0 || (size_t)pos.y >= app->game->height) {

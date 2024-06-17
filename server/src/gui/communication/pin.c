@@ -33,7 +33,7 @@ void pin_response(gui_t *gui, app_t *app, char *line)
     int player_id = 0;
     ia_t *ia = NULL;
 
-    if (line[3] != ' ') {
+    if (line[POS_SPACE] != ' ') {
         suc_command(gui);
         return;
     }

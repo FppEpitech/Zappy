@@ -17,3 +17,5 @@ enum RETURN_CODES {
     CODE_SUCCESS = 0,
     CODE_FAILLURE = 84
 };
+
+#define MAX_ITEMS 7

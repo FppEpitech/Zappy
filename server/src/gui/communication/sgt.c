@@ -10,7 +10,6 @@
 
 #include <stddef.h>
 
-
 void sgt_response(gui_t *gui, app_t *app, char *line)
 {
     char *response = NULL;

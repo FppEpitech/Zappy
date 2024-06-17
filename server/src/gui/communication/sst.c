@@ -22,11 +22,11 @@ void sst_response(gui_t *gui, app_t *app, char *line)
     char *response = NULL;
     int freq = 0;
 
-    if (line[3] != ' ') {
+    if (line[POS_SPACE] != ' ') {
         suc_command(gui);
         return;
     }
-    line += 4;
+    line += LEN_COMMAND_AND_SPACE;
     freq = parse_positive_int_arg(line);
     if (freq == CODE_ERROR_INVALID_NUMBER)
         return;
