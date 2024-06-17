@@ -35,6 +35,8 @@ void Gui::Render::LoadModels(void)
     _siburModel = LoadModel(MODEL_SIBUR);
     _thystameModel = LoadModel(MODEL_THYSTAME);
     _deraumereModel = LoadModel(MODEL_DERAUMERE);
+
+    _cursorTexture = LoadTexture(PNG_CURSOR);
 }
 
 Gui::Render::~Render()
@@ -63,6 +65,7 @@ void Gui::Render::draw()
 
     displayHUD();
     displayDebug();
+    displayCursor();
 
     EndDrawing();
 }
@@ -251,6 +254,12 @@ void Gui::Render::displayHUD(void)
             hud->display();
         }
     }
+}
+
+void Gui::Render::displayCursor()
+{
+    if (_camera.getType() != Gui::UserCamera::POV_PLAYER)
+        DrawTexture(_cursorTexture, GetScreenWidth() / 2 - _cursorTexture.width / 2, GetScreenHeight() / 2 - _cursorTexture.height / 2, BLACK);
 }
 
 void Gui::Render::setCameraType(Gui::UserCamera::CameraType type)

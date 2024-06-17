@@ -147,6 +147,7 @@ class Gui::Render {
         Model                                       _siburModel;        // Model to display siburs.
         Model                                       _thystameModel;     // Model to display thystames.
         Model                                       _deraumereModel;    // Model to display deraumeres.
+        Texture2D                                   _cursorTexture;     // Cursor texture.
 
         /**
          * @brief Load the models to draw.
@@ -246,4 +247,10 @@ class Gui::Render {
          * @param tile Tile with resources.
          */
         void displayDeraumere(Tile tile) const;
+
+        /**
+         * @brief Display the cursor.
+         *
+         */
+        void displayCursor();
 };
