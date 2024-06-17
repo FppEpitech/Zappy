@@ -267,4 +267,11 @@ class Gui::Render {
          *
          */
         void displayCursor();
+
+        /**
+         * @brief Get the closest tile from the camera.
+         *
+         * @return std::pair<std::size_t, std::size_t> - Tile position.
+        */
+        std::pair<std::size_t, std::size_t> getCameraTile();
 };

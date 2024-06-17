@@ -24,7 +24,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     _hudList.push_back(std::make_shared<HudTile>(HudTile(gameData)));
     _decoration = std::make_shared<Decoration>(Decoration());
     this->LoadModels();
-    _renderDistance = 5;
+    _renderDistance = DEFAULT_RENDER_DISTANCE;
 }
 
 void Gui::Render::LoadModels(void)
@@ -177,15 +177,19 @@ void Gui::Render::displayPlayers()
 
 void Gui::Render::displayMap()
 {
+    std::pair<size_t, size_t> camTile = getCameraTile();
+
     for (auto &line : _gameData->getMap()) {
         for (auto &tile : line) {
+            if (abs(camTile.first - tile.getPosition().first) > (_renderDistance - 1) || abs(camTile.second - tile.getPosition().second) > (_renderDistance - 1))
+                continue;
             displayTile(tile);
             displayFood(tile);
             displayResources(tile);
             displayEggs(tile);
-            _decoration->display(_gameData->getMapSize());
         }
     }
+    _decoration->display(_gameData->getMapSize(), _renderDistance, camTile);
 }
 
 void Gui::Render::displayTile(Tile tile)
@@ -311,4 +315,33 @@ void Gui::Render::displayCursor()
 {
     if (_camera.getType() != Gui::UserCamera::POV_PLAYER)
         DrawTexture(_cursorTexture, GetScreenWidth() / 2 - _cursorTexture.width / 2, GetScreenHeight() / 2 - _cursorTexture.height / 2, BLACK);
+}
+
+std::pair<size_t, size_t> Gui::Render::getCameraTile()
+{
+    std::pair<size_t, size_t> tilePos = {1, 1};
+    if (_gameData.get()->getMap().size() == 0 || _gameData.get()->getMap()[0].size() == 0)
+        return tilePos;
+    tilePos = _gameData.get()->getMap()[0][0].getPosition();
+    Tile tileTmp = _gameData.get()->getMap()[0][0];
+
+    for (auto &line: _gameData.get()->getMap()) {
+        for (auto &tile: line) {
+            Vector3 tmpPos = tile.getPositionIn3DSpace();
+            Vector3 camPos = _camera.getCamera()->position;
+            size_t xDiffNew = abs(tmpPos.x - camPos.x);
+            size_t zDiffNew = abs(tmpPos.z - camPos.z);
+            size_t xDiffOld = abs(tileTmp.getPositionIn3DSpace().x - camPos.x);
+            size_t zDiffOld = abs(tileTmp.getPositionIn3DSpace().z - camPos.z);
+            if (xDiffNew < xDiffOld) {
+                tileTmp = tile;
+                tilePos = tile.getPosition();
+            }
+            if (zDiffNew < zDiffOld) {
+                tileTmp = tile;
+                tilePos = tile.getPosition();
+            }
+        }
+    }
+    return tilePos;
 }
