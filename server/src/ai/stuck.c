@@ -30,15 +30,21 @@ double time_elapsed(struct timeval *time)
 
 static void handle_incantation_verification(ia_t *ai, app_t *app)
 {
+    char *result = NULL;
+
     if (ai->incantation->status_incantation == false)
         return;
     if (check_incantation(app, ai, END_INCANTATION) == false) {
         printf("FAILD at end verification\n");
         update_status(app, ai, END_INCANTATION);
+        result = format_string("ko\n");
+        add_message(ai->list_messages, result);
         return;
     }
     printf("SUCCESS at end verification\n");
     level_up(app, ai);
+    result = format_string("Current level: %d\n", ai->level);
+    add_message(ai->list_messages, result);
     printf("Level up succefully\n");
 }
 
