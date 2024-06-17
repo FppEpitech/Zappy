@@ -5,7 +5,7 @@
 ** Player
 */
 
-#include "Assets.hpp"
+#include "Config.hpp"
 #include "GameDatas/Player.hpp"
 
 Gui::Player::Player(std::size_t id, const std::string &team, std::pair<std::size_t, std::size_t> position, std::size_t orientation, std::size_t level) : _id(id), _team(team), _position(position), _orientation(orientation), _level(level), _state(Gui::Player::IDLE)
