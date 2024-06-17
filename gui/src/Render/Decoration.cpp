@@ -5,6 +5,7 @@
 ** Decoration
 */
 
+#include "Config.hpp"
 #include "Render/Decoration.hpp"
 
 Gui::Decoration::Decoration()

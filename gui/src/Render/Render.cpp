@@ -6,6 +6,7 @@
 */
 
 #include "Assets.hpp"
+#include "Config.hpp"
 #include "Render/Render.hpp"
 
 #include <string>

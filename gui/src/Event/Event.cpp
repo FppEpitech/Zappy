@@ -7,6 +7,7 @@
 
 #include "raylib.h"
 #include "Assets.hpp"
+#include "Config.hpp"
 #include "Event/Event.hpp"
 
 Gui::Event::Event()
