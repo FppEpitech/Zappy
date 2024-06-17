@@ -7,6 +7,7 @@
 
 #include "raylib.h"
 #include "Assets.hpp"
+#include "Config.hpp"
 #include "Event/Event.hpp"
 
 Gui::Event::Event()
@@ -200,4 +201,14 @@ void Gui::Event::switchTileHudToGame()
 {
     if (_render.get()->getCameraType() == Gui::UserCamera::FREE_TILE)
         _render.get()->setCameraType(Gui::UserCamera::FREE);
+}
+
+void Gui::Event::increaseRenderDistance()
+{
+    _render.get()->setRenderDistance(_render.get()->getRenderDistance() + 1);
+}
+
+void Gui::Event::decreaseRenderDistance()
+{
+    _render.get()->setRenderDistance(_render.get()->getRenderDistance() - 1);
 }
