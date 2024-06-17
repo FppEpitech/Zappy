@@ -513,55 +513,16 @@ class Player:
         self.goTowardTile(index, Item.FOOD)
         self.cmdInventory()
 
-    def lookForStones(self):
+    def lookingForStones(self):
         (found, index, enum) = stonesInVision(self.vision)
         if not found:
             return random.choice([self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
         self.goTowardTile(index, enum)
         self.cmdInventory()  
 
-    def lookingForStones(self):
-        index = -1
-        count = 0
-        order = [0, 2, 1, 3]
-        for i in order:
-            if len(self.vision) > i and self.vision[i].countStones() > count:
-                index = i
-                count = self.vision[i].countStones()
-        if index == -1:
-            self.moveForward()
-            self.moveForward()
-            self.cmdInventory()
-            return
-        if index == 1:
-            self.moveForward()
-            self.turnLeft()
-            self.moveForward()
-        elif index == 2:
-            self.moveForward()
-        elif index == 3:
-            self.moveForward()
-            self.turnRight()
-            self.moveForward()
-        if self.vision[index].linemate > 0:
-            self.take("linemate")
-        if self.vision[index].deraumere > 0:
-            self.take("deraumere")
-        if self.vision[index].sibur > 0:
-            self.take("sibur")
-        if self.vision[index].mendiane > 0:
-            self.take("mendiane")
-        if self.vision[index].phiras > 0:
-            self.take("phiras")
-        if self.vision[index].thystame > 0:
-            self.take("thystame")
-        self.cmdInventory()
-
-
     def askSlavesForInventory(self):
         self.broadcast("Inventory")
         self.nbSlaves = 0
-
 
     def checkIfEnoughFood(self, response : str):
         inv = Inventory(0, 0, 0, 0, 0, 0, 0, 0)
