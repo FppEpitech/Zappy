@@ -82,7 +82,9 @@ class Gui::Event {
             {KEY_THREE, [this](){switchDisplayDebug();}},
             {KEY_F3, [this](){switchDisplayDebug();}},
             {KEY_SPACE, [this](){setFreeCam();}},
-            {KEY_R, [this](){switchTileHudToGame();}}
+            {KEY_R, [this](){switchTileHudToGame();}},
+            {KEY_F5, [this](){changeActualPlayerPov();}},
+            {KEY_APOSTROPHE, [this](){changeActualPlayerPov();}},
         };
 
         /**
@@ -148,11 +150,46 @@ class Gui::Event {
         void changePlayer(bool turn);
 
         /**
+         * @brief Change the player point of view.
+         *
+         * @param playerId Player id to select.
+         * @note The player point of view is the first person, second person and third person.
+        */
+        void changePlayerPOV(size_t playerId);
+
+        /**
+         * @brief Sets the Pov of the player.
+         *
+         * @param playerId Player id to select.
+        */
+        void setPlayerPov(size_t playerId);
+
+        /**
+         * @brief Change the actual player point of view.
+         *
+        */
+        void changeActualPlayerPov();
+
+        /**
+         * @brief Change the camera to the player.
+         *
+         * @param player Player to select.
+        */
+        void changePOVToFirstPerson(size_t id);
+
+        /**
+         * @brief Change the camera to the player.
+         *
+         * @param player Player to select.
+        */
+        void changePOVToSecondPerson(size_t id);
+
+        /**
          * @brief Change the camera to the player.
          *
          * @param player Player to select.
          */
-        void changeCameraToPlayer(size_t id);
+        void changePOVToThirdPerson(size_t id);
 
         /**
          * @brief Change the Hud of Tile to Game.

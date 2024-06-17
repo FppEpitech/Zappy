@@ -65,7 +65,7 @@ void Gui::Event::switchDisplayDebug()
 
 void Gui::Event::setFreeCam()
 {
-    if (_render->getCameraType() == Gui::UserCamera::POV_PLAYER)
+    if (_render->getCameraType() != Gui::UserCamera::FREE && _render->getCameraType() != Gui::UserCamera::FREE_TILE)
         _render->setCameraType(Gui::UserCamera::FREE);
 }
 
@@ -80,7 +80,7 @@ void Gui::Event::handleLeftClick()
 
 void Gui::Event::handleRightClick()
 {
-    if (_render->getCameraType() == Gui::UserCamera::CameraType::POV_PLAYER)
+    if (_render.get()->isCameraInPlayerPov())
         changePlayer(false);
 }
 
@@ -100,7 +100,7 @@ void Gui::Event::selectPlayer()
                 }
             }
             if (team.isPlayerHit(player.getId(), *_render.get()->getCamera().get()))
-                this->changeCameraToPlayer(player.getId());
+                this->changePOVToFirstPerson(player.getId());
         }
     }
     EndMode3D();
@@ -166,10 +166,89 @@ void Gui::Event::changePlayer(bool turn)
             }
         }
     }
-    changeCameraToPlayer(playerId);
+    setPlayerPov(playerId);
 }
 
-void Gui::Event::changeCameraToPlayer(size_t playerId)
+void Gui::Event::changePlayerPOV(size_t playerId)
+{
+    if (_render.get()->getCameraType() == Gui::UserCamera::CameraType::FIRST_PERSON)
+        changePOVToThirdPerson(playerId);
+    else if (_render.get()->getCameraType() == Gui::UserCamera::CameraType::SECOND_PERSON)
+        changePOVToFirstPerson(playerId);
+    else if (_render.get()->getCameraType() == Gui::UserCamera::CameraType::THIRD_PERSON)
+        changePOVToSecondPerson(playerId);
+}
+
+void Gui::Event::setPlayerPov(size_t playerId)
+{
+    if (_render.get()->getCameraType() == Gui::UserCamera::CameraType::FIRST_PERSON)
+        changePOVToFirstPerson(playerId);
+    else if (_render.get()->getCameraType() == Gui::UserCamera::CameraType::SECOND_PERSON)
+        changePOVToSecondPerson(playerId);
+    else if (_render.get()->getCameraType() == Gui::UserCamera::CameraType::THIRD_PERSON)
+        changePOVToThirdPerson(playerId);
+}
+
+void Gui::Event::changeActualPlayerPov()
+{
+    changePlayerPOV(_render.get()->getCameraPlayerPov());
+}
+
+void Gui::Event::changePOVToFirstPerson(size_t playerId)
+{
+    Gui::Player player = _gameData->getPlayer(playerId);
+    Vector3 playerPos;
+
+    try {
+        playerPos = _gameData.get()->getTeamById(player.getId()).getPlayerPositionIn3DSpace(playerId, _gameData.get()->getMap());
+    } catch (const Gui::Errors::GuiGameDataException &e) {
+        return;
+    }
+    _render.get()->getCamera().get()->target = playerPos;
+
+    if (player.getOrientation() == 1)
+        _render.get()->getCamera().get()->target.z = playerPos.z - 2.0f;
+    else if (player.getOrientation() == 3)
+        _render.get()->getCamera().get()->target.z = playerPos.z + 2.0f;
+    else if (player.getOrientation() == 2)
+        _render.get()->getCamera().get()->target.x = playerPos.x + 2.0f;
+    else if (player.getOrientation() == 4)
+        _render.get()->getCamera().get()->target.x = playerPos.x - 2.0f;
+    _render.get()->getCamera().get()->target.y = playerPos.y + PLAYER_HEIGHT;
+    _render.get()->getCamera().get()->position = playerPos;
+    _render.get()->getCamera().get()->position.y += PLAYER_HEIGHT;
+    _render.get()->setCameraType(Gui::UserCamera::CameraType::FIRST_PERSON);
+    _render.get()->setCameraPlayerPov(playerId);
+}
+
+void Gui::Event::changePOVToSecondPerson(size_t playerId)
+{
+    Gui::Player player = _gameData->getPlayer(playerId);
+    Vector3 playerPos;
+
+    try {
+        playerPos = _gameData.get()->getTeamById(player.getId()).getPlayerPositionIn3DSpace(playerId, _gameData.get()->getMap());
+    } catch (const Gui::Errors::GuiGameDataException &e) {
+        return;
+    }
+    _render.get()->getCamera().get()->position = playerPos;
+
+    if (player.getOrientation() == 1)
+        _render.get()->getCamera().get()->position.z = playerPos.z - PLAYER_SECOND_PERSON_FOV;
+    else if (player.getOrientation() == 3)
+        _render.get()->getCamera().get()->position.z = playerPos.z + PLAYER_SECOND_PERSON_FOV;
+    else if (player.getOrientation() == 2)
+        _render.get()->getCamera().get()->position.x = playerPos.x + PLAYER_SECOND_PERSON_FOV;
+    else if (player.getOrientation() == 4)
+        _render.get()->getCamera().get()->position.x = playerPos.x - PLAYER_SECOND_PERSON_FOV;
+    _render.get()->getCamera().get()->position.y = playerPos.y + PLAYER_HEIGHT;
+    _render.get()->getCamera().get()->target = playerPos;
+    _render.get()->getCamera().get()->target.y += PLAYER_HEIGHT;
+    _render.get()->setCameraType(Gui::UserCamera::CameraType::SECOND_PERSON);
+    _render.get()->setCameraPlayerPov(playerId);
+}
+
+void Gui::Event::changePOVToThirdPerson(size_t playerId)
 {
     Gui::Player player = _gameData->getPlayer(playerId);
     Vector3 playerPos;
@@ -183,16 +262,16 @@ void Gui::Event::changeCameraToPlayer(size_t playerId)
     _render.get()->getCamera().get()->position.y = playerPos.y + 4.0f;
 
     if (player.getOrientation() == 1)
-        _render.get()->getCamera().get()->position.z = playerPos.z + 5.0f;
+        _render.get()->getCamera().get()->position.z = playerPos.z + PLAYER_THIRD_PERSON_FOV;
     else if (player.getOrientation() == 3)
-        _render.get()->getCamera().get()->position.z = playerPos.z - 5.0f;
+        _render.get()->getCamera().get()->position.z = playerPos.z - PLAYER_THIRD_PERSON_FOV;
     else if (player.getOrientation() == 2)
-        _render.get()->getCamera().get()->position.x = playerPos.x - 5.0f;
+        _render.get()->getCamera().get()->position.x = playerPos.x - PLAYER_THIRD_PERSON_FOV;
     else if (player.getOrientation() == 4)
-        _render.get()->getCamera().get()->position.x = playerPos.x + 5.0f;
+        _render.get()->getCamera().get()->position.x = playerPos.x + PLAYER_THIRD_PERSON_FOV;
     _render.get()->getCamera().get()->target = playerPos;
     _render.get()->getCamera().get()->target.y += PLAYER_HEIGHT;
-    _render.get()->setCameraType(Gui::UserCamera::POV_PLAYER);
+    _render.get()->setCameraType(Gui::UserCamera::CameraType::THIRD_PERSON);
     _render.get()->setCameraPlayerPov(playerId);
 }
 

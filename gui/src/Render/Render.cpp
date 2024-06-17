@@ -51,7 +51,7 @@ bool Gui::Render::isOpen()
 
 void Gui::Render::draw()
 {
-    if (_camera.getType() != Gui::UserCamera::POV_PLAYER)
+    if (!_camera.isPlayerPov())
         UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
 
     BeginDrawing();
@@ -85,6 +85,11 @@ bool Gui::Render::getIsDebug()
     return _isDebug;
 }
 
+bool Gui::Render::isCameraInPlayerPov() const
+{
+    return _camera.isPlayerPov();
+}
+
 void Gui::Render::displayDebug()
 {
     if (_isDebug) {
@@ -99,6 +104,7 @@ void Gui::Render::displayDebug()
             std::to_string(_camera.getCamera()->target.y) + " / " +
             std::to_string(_camera.getCamera()->target.z)
             ).c_str(), 10, 50, 20, LIME);
+        DrawText(("CAMERA TYPE: " + std::to_string(_camera.getType())).c_str(), 10, 70, 20, LIME);
     }
 }
 
@@ -108,6 +114,8 @@ void Gui::Render::displayPlayers()
         for (auto &player : team.getPlayers()) {
             if (_gameData.get()->getMap().size() == 0 || _gameData.get()->getMap()[player.getPosition().first].size() == 0)
                 return;
+            if (_camera.getPlayerId() == player.getId() && _camera.getType() == Gui::UserCamera::FIRST_PERSON)
+                continue;
 
             float rotation = player.getRotationFromOrientation();
 
@@ -243,7 +251,7 @@ void Gui::Render::displayDeraumere(Tile tile) const
 void Gui::Render::displayHUD(void)
 {
     for (auto &hud : _hudList) {
-        if (hud->getType() == Gui::HudPlayer::POV_PLAYER && _camera.getType() == Gui::UserCamera::POV_PLAYER) {
+        if (hud->getType() == Gui::HudPlayer::POV_PLAYER && _camera.isPlayerPov()) {
             hud->setPlayer(std::make_shared<Player>(_gameData->getPlayer(_camera.getPlayerId())));
             hud->display();
         }
@@ -258,7 +266,7 @@ void Gui::Render::displayHUD(void)
 
 void Gui::Render::displayCursor()
 {
-    if (_camera.getType() != Gui::UserCamera::POV_PLAYER)
+    if (_camera.getType() != Gui::UserCamera::CameraType::SECOND_PERSON && _camera.getType() != Gui::UserCamera::CameraType::THIRD_PERSON)
         DrawTexture(_cursorTexture, GetScreenWidth() / 2 - _cursorTexture.width / 2, GetScreenHeight() / 2 - _cursorTexture.height / 2, BLACK);
 }
 
