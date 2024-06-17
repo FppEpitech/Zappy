@@ -629,7 +629,7 @@ class Player:
             return
         return
 
-    def goTowardTile(self, index, itemSeek : Item):  #must handle the movements limit
+    def goTowardTile(self, index, itemSeek : Item):
         (x, y) = getMovesTowardTile(index)
         moves : int = 1 + x + y + (1 if x > 0 or x < 0 else 0)
         
