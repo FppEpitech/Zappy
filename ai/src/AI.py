@@ -7,9 +7,11 @@
 
 import os
 import sys
+import uuid
+from time import sleep
 
 from ai.src.Network.API import API
-from ai.src.Player.Player import Player, Action
+from ai.src.Player.Player import Player, Action, Mode
 
 class AI:
     """
@@ -64,16 +66,58 @@ class AI:
         self.api.connect()
         self.api.initConnection(self.teamName)
         forkAI()
+        if self.player.isLeader == False:
+            createLogs(self.player.isLeader)
         while True:
-            if self.player.currentAction == Action.NONE:
+            if len(self.player.actions) == 0:
+                print("Choose action", flush=True)
                 self.player.chooseAction()
-                self.api.sendData(self.player.currentCommand)
-            responses = self.api.receiveData().split("\n")
-            for response in responses:
-                if response == '':
-                    continue
-                self.player.handleResponse(response)
 
+            if self.player.currentMode == Mode.REGROUP and self.player.isLeader == False:
+                break
+
+            for _ in range(0, len(self.player.actions)):
+                self.player.currentAction = self.player.actions[0]
+                self.player.currentCommand = self.player.commands[0]
+                self.player.currentCallback = self.player.callbacks[0]
+                self.api.sendData(self.player.currentCommand)
+                while self.player.currentAction != Action.NONE:
+                    responses = self.api.receiveData().split("\n")
+                    for response in responses:
+                        if response == '':
+                            continue
+                        self.player.handleResponse(response)
+                self.player.actions.pop(0)
+                self.player.commands.pop(0)
+                self.player.callbacks.pop(0)
+        print("Regrouping Start", flush=True)
+        while True:
+            responses = self.api.receiveData(0.1)
+            if responses is not None :
+                responses = responses.split("\n")
+                for response in responses:
+                    if response == '':
+                        continue
+                    self.player.handleResponse(response)
+            self.player.regroupAction()
+            for _ in range(0, len(self.player.actions)):
+                self.player.currentAction = self.player.actions[0]
+                self.player.currentCommand = self.player.commands[0]
+                self.player.currentCallback = self.player.callbacks[0]
+                self.api.sendData(self.player.currentCommand)
+                if self.player.currentCommand.startswith("Broadcast"):
+                    print("regrouping end", flush=True)
+                    sleep(5)
+                    exit(0)
+                while self.player.currentAction != Action.NONE:
+                    responses = self.api.receiveData().split("\n")
+                    for response in responses:
+                        if response == '':
+                            continue
+                        self.player.handleResponse(response)
+                self.player.actions.pop(0)
+                self.player.commands.pop(0)
+                self.player.callbacks.pop(0)
 
 def forkAI():
     """
@@ -85,3 +129,19 @@ def forkAI():
         main()
         sys.exit(0)
     return pid
+
+
+def createLogs(isLeader):
+    """
+    Create the logs
+    """
+    myuuid = uuid.uuid4()
+    fileName = ""
+    if isLeader:
+        fileName = f"leader_{myuuid}.log"
+    else:
+        fileName = f"follower_{myuuid}.log"
+    if not os.path.exists("logs"):
+        os.makedirs("logs")
+    sys.stdout = open("logs/stdout_" + fileName, "w")
+    sys.stderr = open("logs/stderr_" + fileName, "w")
