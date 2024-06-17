@@ -155,10 +155,16 @@ void Gui::Render::displayDebug()
 
 void Gui::Render::displayPlayers()
 {
+    std::pair<size_t, size_t> camTile = getCameraTile();
+
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (_gameData.get()->getMap().size() == 0 || _gameData.get()->getMap()[player.getPosition().first].size() == 0)
                 return;
+            if (abs(player.getPosition().first - camTile.first) > (_renderDistance - 1) || abs(player.getPosition().second - camTile.second) > (_renderDistance - 1))
+                continue;
+            if (abs(player.getPosition().first - camTile.first) == (_renderDistance - 1) && abs(player.getPosition().second - camTile.second) == (_renderDistance - 1))
+                continue;
 
             float rotation = player.getRotationFromOrientation();
 
