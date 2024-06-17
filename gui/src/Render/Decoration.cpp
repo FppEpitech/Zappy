@@ -28,18 +28,19 @@ Map<bool> Gui::Decoration::getGenerationItem(std::size_t ratio)
     return map;
 }
 
-void Gui::Decoration::display(std::pair<std::size_t, std::size_t> mapSize)
+void Gui::Decoration::display(std::pair<std::size_t, std::size_t> mapSize, size_t renderDistance, std::pair<std::size_t, std::size_t> camPos)
 {
     if (mapSize != _mapSize) {
         _mapSize = mapSize;
         _mapTree = getGenerationItem(5);
     }
 
-    for (size_t i = 0; i < _mapSize.first; i++) {
-        for (size_t j = 0; j < _mapSize.second; j++) {
-            Vector3 posTile = {(float)(i * SIZE_TILE), 0.0f, (float)(j * SIZE_TILE)};
-            displayTree(i, j, posTile);
+    for (int i = 0; i < (int)_mapSize.first; i++) {
+        for (int j = 0; j < (int)_mapSize.second; j++) {
+            if (i > (int)(camPos.first - renderDistance) && i < (int)(camPos.first + renderDistance) && j > (int)(camPos.second - renderDistance) && j < (int)(camPos.second + renderDistance)) {
+                Vector3 posTile = {(float)(i * SIZE_TILE), 0.0f, (float)(j * SIZE_TILE)};
                 displayTree(i, j, posTile);
+            }
         }
     }
 }
