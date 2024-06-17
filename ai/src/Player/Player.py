@@ -6,6 +6,7 @@
 ##
 
 import random
+import sys
 
 from enum import Enum
 
@@ -72,7 +73,8 @@ class Mode(Enum):
     WAITING = 5
     ELEVATING = 6
     REGROUP = 7
-    NONE = 8
+    DROPPING = 8
+    NONE = 9
 
 class Player:
     """
@@ -187,6 +189,8 @@ class Player:
         self.nbSlaves = 0
         self.waitingResponse = False
         self.regroupDirection = 0
+        self.arrived = False
+        self.isTimed = False
 
     def __str__(self):
         """
@@ -477,8 +481,12 @@ class Player:
         elif self.inventory.food >= 45 or self.currentMode != Mode.FOOD:
             print(self.currentFood, self.inventory.food)
             if self.currentFood != self.inventory.food and self.waitingResponse == True:
-                print("Handling response")
-                self.currentMode = Mode.HANDLINGRESPONSE
+                if self.isTimed == True:
+                    print("Handling response")
+                    self.currentMode = Mode.HANDLINGRESPONSE
+                    self.isTimed = False
+                else:
+                    self.isTimed = True
             elif self.currentFood != self.inventory.food and self.waitingResponse == False:
                 print("Broadcasting")
                 self.currentMode = Mode.BROADCASTING
@@ -490,7 +498,7 @@ class Player:
         self.currentFood = self.inventory.food
 
     def updateMode(self):
-        if self.currentMode == Mode.REGROUP:
+        if self.currentMode == Mode.REGROUP or self.currentMode == Mode.DROPPING or self.currentMode == Mode.ELEVATING or self.currentMode == Mode.NONE:
             return
         if self.isLeader:
             self.updateModeLeader()
@@ -512,17 +520,77 @@ class Player:
         self.goTowardTile(index, enum)
         self.cmdInventory()  
 
+    def lookingForStones(self):
+        index = -1
+        count = 0
+        order = [0, 2, 1, 3]
+        for i in order:
+            if len(self.vision) > i and self.vision[i].countStones() > count:
+                index = i
+                count = self.vision[i].countStones()
+        if index == -1:
+            self.moveForward()
+            self.moveForward()
+            self.cmdInventory()
+            return
+        if index == 1:
+            self.moveForward()
+            self.turnLeft()
+            self.moveForward()
+        elif index == 2:
+            self.moveForward()
+        elif index == 3:
+            self.moveForward()
+            self.turnRight()
+            self.moveForward()
+        if self.vision[index].linemate > 0:
+            self.take("linemate")
+        if self.vision[index].deraumere > 0:
+            self.take("deraumere")
+        if self.vision[index].sibur > 0:
+            self.take("sibur")
+        if self.vision[index].mendiane > 0:
+            self.take("mendiane")
+        if self.vision[index].phiras > 0:
+            self.take("phiras")
+        if self.vision[index].thystame > 0:
+            self.take("thystame")
+        self.cmdInventory()
+
+
     def askSlavesForInventory(self):
         self.broadcast("Inventory")
         self.nbSlaves = 0
+
+
+    def checkIfEnoughFood(self, response : str):
+        inv = Inventory(0, 0, 0, 0, 0, 0, 0, 0)
+        inv.updateInventory(response)
+        if inv.food < 35:
+            return False
+        return True
+
 
     def handleResponseBroadcast(self):
         print(self.broadcastReceived, flush=True)
         self.nbSlaves = len(self.broadcastReceived)
         print("nb slaves: ", self.nbSlaves, flush=True)
+        globalInv = Inventory(0, 0, 0, 0, 0, 0, 0, 0)
+        minInv = Inventory(0, 8, 9, 10, 5, 6, 1, 0)
         if self.nbSlaves >= 5:
-            print("\n\nTHERE ARE ENOUGH SLAVES\n\n", flush=True)
-            self.currentMode = Mode.REGROUP
+            for response in self.broadcastReceived:
+                if self.checkIfEnoughFood(response[1]) == False:
+                    self.waitingResponse = False
+                    self.broadcastReceived = []
+                    return
+                inv = Inventory(0, 0, 0, 0, 0, 0, 0, 0)
+                inv.updateInventory(response[1])
+                globalInv = globalInv + inv
+            if globalInv.hasMoreStones(minInv):
+                self.currentMode = Mode.REGROUP
+            else:
+                print("Not enough stones", flush=True, file=sys.stdout)
+                print("Not enough stones", flush=True, file=sys.stderr)
         self.waitingResponse = False
         self.broadcastReceived = []
 
@@ -530,7 +598,7 @@ class Player:
     def slavesReponses(self):
         for broadcast in self.broadcastReceived:
             if broadcast[1] == "Inventory":
-                response = self.inventory.__str__()
+                response = self.inventory.toStr()
                 self.broadcast(response)
             if broadcast[1] == "Regroup":
                 self.currentMode = Mode.REGROUP
@@ -542,10 +610,44 @@ class Player:
         nbSlavesHere = len(self.broadcastReceived)
         print("nb slaves here: ", nbSlavesHere, flush=True)
         if nbSlavesHere >= 5:
-            # self.currentMode = Mode.ELEVATING
-            print("\n\n\nWE ARE READY TO ELEVATE\n\n\n", flush=True)
+            self.broadcast("Drop")
+            self.currentMode = Mode.DROPPING
+            self.broadcastReceived = []
         else:
             self.broadcast("Regroup")
+
+
+    def waitingDrop(self):
+        nbSlavesHere = len(self.broadcastReceived)
+        print("nb slaves who finished droping: ", nbSlavesHere, flush=True)
+        if nbSlavesHere >= 5:
+            self.currentMode = Mode.ELEVATING
+            self.broadcastReceived = []
+        else:
+            self.look()
+
+
+    def dropping(self):
+        if self.isLeader:
+            self.waitingDrop()
+        else:
+            print("Dropping", flush=True, file=sys.stderr)
+            if self.inventory.linemate > 0:
+                self.set("linemate")
+            elif self.inventory.deraumere > 0:
+                self.set("deraumere")
+            elif self.inventory.sibur > 0:
+                self.set("sibur")
+            elif self.inventory.mendiane > 0:
+                self.set("mendiane")
+            elif self.inventory.phiras > 0:
+                self.set("phiras")
+            elif self.inventory.thystame > 0:
+                self.set("thystame")
+            else:
+                self.broadcast("Finished dropping")
+                self.currentMode = Mode.NONE
+            self.cmdInventory()
 
 
     def regroupAction(self):
@@ -555,6 +657,11 @@ class Player:
             isThereARegroup = False
 
             for broadcast in self.broadcastReceived:
+                if broadcast[1] == "Drop":
+                    print("DROP MODE", flush=True, file=sys.stderr)
+                    self.currentMode = Mode.DROPPING
+                    self.broadcastReceived = []
+                    return
                 if broadcast[1] == "Regroup":
                     isThereARegroup = True
                     self.regroupDirection = broadcast[0]
@@ -562,8 +669,9 @@ class Player:
             self.broadcastReceived = []
             if isThereARegroup == False:
                 return
-            if self.regroupDirection == 0:
+            if self.regroupDirection == 0 and self.arrived == False:
                 self.broadcast("I'm here")
+                self.arrived = True
             if self.regroupDirection == 3:
                 self.turnLeft()
             if self.regroupDirection == 7:
@@ -589,6 +697,9 @@ class Player:
         if self.currentMode == Mode.REGROUP:
             self.regroupAction()
             return
+        if self.currentMode == Mode.DROPPING:
+            self.dropping()
+            return
         if self.isLeader == False:
             if len(self.broadcastReceived) > 0:
                 self.slavesReponses()
@@ -598,8 +709,7 @@ class Player:
             self.callbacks[len(self.callbacks) - 1] = self.lookingForFood
         elif self.currentMode == Mode.STONES:
             self.look()
-            self.callbacks[len(self.callbacks) - 1] = self.lookForStones
-            self.cmdInventory()
+            self.callbacks[len(self.callbacks) - 1] = self.lookingForStones
             return
         elif self.currentMode == Mode.FORKING:
             print("Forking")
@@ -622,7 +732,7 @@ class Player:
             self.cmdInventory()
             return
         elif self.currentMode == Mode.ELEVATING:
-            self.cmdInventory()
+            self.incantation()
             return
         elif self.currentMode == Mode.NONE:
             self.cmdInventory()
