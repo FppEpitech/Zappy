@@ -41,17 +41,27 @@ def getMovesTowardTile(index):
 def foodInVision(vision : list):
     total : int = 0
 
-    for elem in vision:
-        if elem.food > 0:
-            total += elem.food
-    return total
-
-def getClosestTileWithFood(vision : list):
     for i in range(len(vision)):
         if vision[i].food > 0:
-            print("GOING TO THE FUCKING : ", i)
-            return i
-    return -1
+            return (True, i)
+    return (False, -1)
+
+def stonesInVision(vision: list):
+    for i, v in enumerate(vision):
+        if v.linemate > 0:
+            return (True, i, Item.LINEMATE)
+        if v.deraumere > 0:
+            return (True, i, Item.DERAUMERE)
+        if v.sibur > 0:
+            return (True, i, Item.SIBUR)
+        if v.mendiane > 0:
+            return (True, i, Item.MENDIANE)
+        if v.phiras > 0:
+            return (True, i, Item.PHIRAS)
+        if v.thystame > 0:
+            return (True, i, Item.THYSTAME)
+    return (False, -1, None)
+
 
 class Mode(Enum):
     FOOD = 0
@@ -461,7 +471,6 @@ class Player:
         elif self.inventory.food >= 45:
             self.currentMode = Mode.STONES
 
-
     def updateModeLeader(self):
         if self.inventory.food < 35:
             self.currentMode = Mode.FOOD
@@ -490,11 +499,18 @@ class Player:
 
 
     def lookingForFood(self):
-        if foodInVision(self.vision) <= 0:
+        (found, index) = foodInVision(self.vision)
+        if not found:
             return random.choice([self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
-        self.goTowardTile(getClosestTileWithFood(self.vision), Item.FOOD)
+        self.goTowardTile(index, Item.FOOD)
         self.cmdInventory()
 
+    def lookForStones(self):
+        (found, index, enum) = stonesInVision(self.vision)
+        if not found:
+            return random.choice([self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
+        self.goTowardTile(index, enum)
+        self.cmdInventory()  
 
     def askSlavesForInventory(self):
         self.broadcast("Inventory")
@@ -581,6 +597,8 @@ class Player:
             self.look()
             self.callbacks[len(self.callbacks) - 1] = self.lookingForFood
         elif self.currentMode == Mode.STONES:
+            self.look()
+            self.callbacks[len(self.callbacks) - 1] = self.lookForStones
             self.cmdInventory()
             return
         elif self.currentMode == Mode.FORKING:
