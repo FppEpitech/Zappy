@@ -480,7 +480,6 @@ class Player:
                 self.currentMode = Mode.WAITING
         self.currentFood = self.inventory.food
 
-
     def updateMode(self):
         if self.currentMode == Mode.REGROUP:
             return
