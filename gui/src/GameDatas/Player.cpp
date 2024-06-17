@@ -16,7 +16,13 @@ Gui::Player::Player(std::size_t id, const std::string &team, std::pair<std::size
 
 void Gui::Player::setPosition(std::pair<std::size_t, std::size_t> position)
 {
+    _position3D = (Vector3){(float)(POS_PLAYER.x + _position.first * SIZE_TILE), POS_PLAYER.y, (float)(POS_PLAYER.z + _position.second * SIZE_TILE)};
     _position = position;
+}
+
+void Gui::Player::setPosition3D(Vector3 position3D)
+{
+    _position3D = position3D;
 }
 
 void Gui::Player::setId(std::size_t id)
@@ -43,11 +49,20 @@ void Gui::Player::setState(PlayerState state)
 {
     _state = state;
     _currentFrame = 0;
+    if (state == IDLE)
+        _position3D = (Vector3){(float)(POS_PLAYER.x + _position.first * SIZE_TILE), POS_PLAYER.y, (float)(POS_PLAYER.z + _position.second * SIZE_TILE)};
+    if (state == WALK)
+        restartAnimationTimeEllapsed();
 }
 
 std::pair<std::size_t, std::size_t> Gui::Player::getPosition() const
 {
     return _position;
+}
+
+Vector3 Gui::Player::getPosition3D() const
+{
+    return _position3D;
 }
 
 std::size_t Gui::Player::getId() const
@@ -114,4 +129,14 @@ float Gui::Player::getRotationFromOrientation() const
 Vector3 Gui::Player::getCenterPosition()
 {
     return {(float)((double)_position.first * SIZE_TILE + SIZE_TILE / 2), 0, (float)((double)_position.second * SIZE_TILE + SIZE_TILE / 2)};
+}
+
+void Gui::Player::restartAnimationTimeEllapsed()
+{
+    _animationTimeEllapsed = clock();
+}
+
+clock_t Gui::Player::getAnimationTimeEllapsed()
+{
+    return _animationTimeEllapsed;
 }

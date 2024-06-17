@@ -254,4 +254,14 @@ class Gui::Render {
          * @param player Player to draw animation.
          */
         bool displayAnimations(Team &team, Player &player);
+
+        /**
+         * @brief Display walk animation.
+         *
+         * @param team Team for model.
+         * @param player Player to draw animation.
+         * @param anim Animation Model.
+         * @return ModelAnimation - Animation.
+         */
+        ModelAnimation displayWalkAnimation(Team &team, Player &player, ModelAnimation anim);
 };
