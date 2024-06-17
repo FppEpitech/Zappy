@@ -10,8 +10,48 @@ import random
 from enum import Enum
 
 from ai.src.Enum.Action import Action
+from ai.src.Enum.Item import Item
 from ai.src.Player.Inventory import Inventory
 from ai.src.Player.PlayerException import PlayerDeathException
+
+def getXmovement(middle, max, width, target):
+    if middle == target:
+        return 0
+    return target - middle
+ 
+def getMovesTowardTile(index):
+    maxRowNum = 3
+    crowWidth = 3
+    fwdRow = 1
+    middleTileIndex = 2
+
+    if index == 0:
+        return (0, 0)
+    if index <= maxRowNum:
+        return (getXmovement(middleTileIndex, maxRowNum, crowWidth, index), 1)
+    for i in range(7):
+        fwdRow += 1
+        crowWidth += 2
+        middleTileIndex += fwdRow*2
+        maxRowNum += crowWidth
+        if index <= maxRowNum:
+            return (getXmovement(middleTileIndex, maxRowNum, crowWidth, index), fwdRow)
+    return -1
+
+def foodInVision(vision : list):
+    total : int = 0
+
+    for elem in vision:
+        if elem.food > 0:
+            total += elem.food
+    return total
+
+def getClosestTileWithFood(vision : list):
+    for i in range(len(vision)):
+        if vision[i].food > 0:
+            print("GOING TO THE FUCKING : ", i)
+            return i
+    return -1
 
 class Mode(Enum):
     FOOD = 0
@@ -451,32 +491,9 @@ class Player:
 
 
     def lookingForFood(self):
-        index = -1
-        order = [0, 2, 1, 3]
-        for i in order:
-            if len(self.vision) > i and self.vision[i].food > 0:
-                index = i
-                break
-        if index == -1:
-            self.moveForward()
-            self.moveForward()
-            self.cmdInventory()
-            return
-        if index == 1:
-            self.moveForward()
-            self.turnLeft()
-            self.moveForward()
-        elif index == 2:
-            self.moveForward()
-        elif index == 3:
-            self.moveForward()
-            self.turnRight()
-            self.moveForward()
-        for i in range(0, self.vision[index].food):
-            if len(self.actions) < 9:
-                self.take("food")
-            else:
-                break
+        if foodInVision(self.vision) <= 0:
+            return random.choice([self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
+        self.goTowardTile(getClosestTileWithFood(self.vision), Item.FOOD)
         self.cmdInventory()
 
 
@@ -594,3 +611,16 @@ class Player:
             self.cmdInventory()
             return
         return
+
+    def goTowardTile(self, index, itemSeek : Item):
+        (x, y) = getMovesTowardTile(index)
+
+        for i in range(y):
+            self.moveForward()
+        if x > 0:
+            self.turnRight()
+        if x < 0:
+            self.turnLeft()
+        for i in range(x):
+            self.moveForward()
+        self.take(itemSeek.value)

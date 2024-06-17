@@ -1,44 +1,6 @@
 from ai.src.Player.Player import Player
 from ai.src.Enum.Item import Item
 
-def getXmovement(middle, max, width, target):
-    if middle == target:
-        return 0
-    return target - middle
- 
-def getMovesTowardTile(index):
-    maxRowNum = 3
-    crowWidth = 3
-    fwdRow = 1
-    middleTileIndex = 2
-
-    if index == 0:
-        return (0, 0)
-    if index <= maxRowNum:
-        return (getXmovement(middleTileIndex, maxRowNum, crowWidth, index), 1)
-    for i in range(7):
-        fwdRow += 1
-        crowWidth += 2
-        middleTileIndex += fwdRow*2
-        maxRowNum += crowWidth
-        if index <= maxRowNum:
-            return (getXmovement(middleTileIndex, maxRowNum, crowWidth, index), fwdRow)
-    return -1
-
-def foodInVision(vision : list):
-    total : int = 0
-
-    for elem in vision:
-        if elem.food > 0:
-            total += elem.food
-    return total
-
-def getClosestTileWithFood(vision : list):
-    for i in range(len(vision)):
-        if vision[i].food > 0:
-            print("GOING TO THE FUCKING : ", i)
-            return i
-    return -1
 
 class ChildAi:
     player : Player = None
@@ -54,23 +16,7 @@ class ChildAi:
         self.player.look()
         self.queueCmd()
 
-    def goTowardTile(self, index, itemSeek : Item):
-        (x, y) = getMovesTowardTile(index)
 
-        for i in range(y):
-            self.player.moveForward()
-            self.queueCmd()
-        if x > 0:
-            self.player.turnRight()
-            self.queueCmd()
-        if x < 0:
-            self.player.turnLeft()
-            self.queueCmd()
-        for i in range(x):
-            self.player.moveForward()
-            self.queueCmd()
-        self.player.take(itemSeek.value)
-        self.queueCmd()
 
     def computeAction(self):
         self.core()
