@@ -94,6 +94,7 @@ SRC			=	src/list/list.c \
 				src/gui/communication/pic.c			\
 				src/gui/communication/pie.c			\
 				src/gui/communication/enw.c			\
+				src/gui/communication/edi.c			\
 
 TEST_FILES	=	list/list_test.c \
 				communication/communication_test.c 	\
