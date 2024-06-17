@@ -5,6 +5,7 @@
 ** Engine
 */
 
+#include "Assets.hpp"
 #include "Event/Event.hpp"
 #include "Engine/Engine.hpp"
 #include "GUIUpdater/GUIUpdater.hpp"
@@ -17,14 +18,15 @@ Gui::Engine::Engine(std::shared_ptr<Network> network) : _network(network), _game
 {
     _render = std::make_shared<Render>(_gameData);
     _event.setRender(_render);
+    _event.setGameData(_gameData);
 }
 
 void Gui::Engine::run(void)
 {
     while (_render->isOpen() && !_gameData->getIsEndGame()) {
         listenServer();
-        _event.listen();
         _render->draw();
+        _event.listen();
         sendMessageUpdate();
     }
 }

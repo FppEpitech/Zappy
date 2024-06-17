@@ -90,6 +90,8 @@ class API:
         """
         _, write, _ = select.select([], self.outputs, [], timeout)
 
+        if data[-1] != '\n':
+            data += '\n'
         for s in write:
             if s == self.sock:
                 s.send(data.encode())

@@ -12,6 +12,10 @@
 #define WINDOW_TITLE "Zappy GUI"
 
 #include "raylib.h"
+#include "Hud/HudGame.hpp"
+#include "Hud/HudTile.hpp"
+#include "Hud/HudPlayer.hpp"
+#include "Render/Decoration.hpp"
 #include "Render/UserCamera.hpp"
 #include "GameDatas/GameData.hpp"
 
@@ -79,26 +83,83 @@ class Gui::Render {
          */
         bool getIsDebug(void);
 
+        /**
+         * @brief Set the Type object.
+         *
+         * @param type Type to set.
+         */
+        void setCameraType(Gui::UserCamera::CameraType type);
+
+        /**
+         * @brief Get the Type object.
+         *
+         * @return CameraType - Camera type.
+         */
+        Gui::UserCamera::CameraType getCameraType() const;
+
+        /**
+         * @brief Set the Camera player pov id.
+         *
+         * @param id Id of the player.
+         */
+        void setCameraPlayerPov(std::size_t id);
+
+        /**
+         * @brief Get the Camera player pov id.
+         *
+         * @return std::size_t - Id of the player.
+         */
+        std::size_t getCameraPlayerPov() const;
+
+        /**
+         * @brief Set the Camera Tile object.
+         *
+         * @param pos Tile position.
+         */
+        void setCameraTile(std::pair<std::size_t, std::size_t> pos);
+
+        /**
+         * @brief Get the Camera Tile object.
+         *
+         * @return std::pair<std::size_t, std::size_t> - Tile position.
+         */
+        std::pair<std::size_t, std::size_t> getCameraTile() const;
+
+        /**
+         * @brief Get the Tile model.
+         *
+        */
+        Model getTileModel() const;
+
     private:
 
-        UserCamera                  _camera;            // Camera of the scene.
-        bool                        _isDebug;           // Display or not the debug informations.
-        std::shared_ptr<GameData>   _gameData;          // GameData class to store the game's data.
+        UserCamera                                  _camera;            // Camera of the scene.
+        bool                                        _isDebug;           // Display or not the debug informations.
+        std::shared_ptr<GameData>                   _gameData;          // GameData class to store the game's data.
+        std::shared_ptr<Decoration>                 _decoration;        // Decoration to display;
+        std::vector<std::shared_ptr<Gui::IHud>>     _hudList;           // List of huds.
 
-        Model                       _tileModel;         // Model to display tiles.
-        Model                       _foodModel;         // Model to display foods.
-        Model                       _linemateModel;     // Model to display linemates.
-        Model                       _mendianeModel;     // Model to display mendianes.
-        Model                       _phirasModel;       // Model to display phiras.
-        Model                       _siburModel;        // Model to display siburs.
-        Model                       _thystameModel;     // Model to display thystames.
-        Model                       _deraumereModel;    // Model to display deraumeres.
+        Model                                       _tileModel;         // Model to display tiles.
+        Model                                       _foodModel;         // Model to display foods.
+        Model                                       _linemateModel;     // Model to display linemates.
+        Model                                       _mendianeModel;     // Model to display mendianes.
+        Model                                       _phirasModel;       // Model to display phiras.
+        Model                                       _siburModel;        // Model to display siburs.
+        Model                                       _thystameModel;     // Model to display thystames.
+        Model                                       _deraumereModel;    // Model to display deraumeres.
+        Texture2D                                   _cursorTexture;     // Cursor texture.
 
         /**
          * @brief Load the models to draw.
          *
          */
         void LoadModels(void);
+
+        /**
+         * @brief Display HUD infos related to player's pov.
+         *
+         */
+        void displayHUD(void);
 
         /**
          * @brief Display the debug interface.
@@ -110,13 +171,19 @@ class Gui::Render {
          * @brief Display players.
          *
          */
-        void displayPlayers(void) const;
+        void displayPlayers(void);
 
         /**
          * @brief Display the map.
          *
          */
-        void displayMap(void) const;
+        void displayMap(void);
+
+        /**
+         * @brief Display a Tile.
+         *
+        */
+        void displayTile(Tile tile);
 
         /**
          * @brief Display the eggs.
@@ -180,4 +247,10 @@ class Gui::Render {
          * @param tile Tile with resources.
          */
         void displayDeraumere(Tile tile) const;
+
+        /**
+         * @brief Display the cursor.
+         *
+         */
+        void displayCursor();
 };

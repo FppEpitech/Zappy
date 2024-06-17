@@ -8,8 +8,9 @@
 
 import sys
 
-from ai.src.Network.API import API
+from ai.src.AI import AI
 from ai.src.Errors.ArgsException import ArgsException
+from ai.src.Player.PlayerException import PlayerDeathException
 
 # Port min
 PORT_MIN = 0
@@ -17,6 +18,7 @@ PORT_MIN = 0
 PORT_MAX = 65535
 # Localhost
 LOCALHOST = "127.0.0.1"
+
 
 def writeHelp(exitCode : int = 0):
     """
@@ -34,7 +36,15 @@ def writeHelp(exitCode : int = 0):
     print("")
     sys.exit(exitCode)
 
+
 def getArgs(av=sys.argv):
+    """
+    Get the arguments
+
+    Parameters:
+        av : list
+            the arguments passed to the program
+    """
     if len(av) == 2 and av[1] == "--help":
         writeHelp(0)
     host = LOCALHOST
@@ -55,18 +65,25 @@ def getArgs(av=sys.argv):
         writeHelp(84)
     return host, port, name
 
-def main():
+
+def main(isLeader=False):
+        """
+        Main function
+        """
         host, port, teamName = getArgs()
-        api = API(host, port)
-        api.connect()
-        api.initConnection(teamName)
-        while True:
-            api.receiveData()
+        try:
+            ai = AI(host, port, teamName, isLeader)
+            ai.run()
+        except PlayerDeathException as e:
+            print(e, file=sys.stderr)
+            if isLeader:
+                print("The leader is dead, the AI will fork", file=sys.stderr)
+                main(True)
 
 
 if __name__ == "__main__":
     try:
-        main()
+        main(True)
     except Exception as e:
         print(e, file=sys.stderr)
         sys.exit(84)
