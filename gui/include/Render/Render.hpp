@@ -253,5 +253,5 @@ class Gui::Render {
          * @param team Team for model.
          * @param player Player to draw animation.
          */
-        void displayAnimations(Team &team, Player &player);
+        bool displayAnimations(Team &team, Player &player);
 };

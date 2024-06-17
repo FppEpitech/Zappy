@@ -7,15 +7,20 @@
 
 #include "Render/Render.hpp"
 
-void Gui::Render::displayAnimations(Team &team, Player &player)
+bool Gui::Render::displayAnimations(Team &team, Player &player)
 {
     ModelAnimation anim = team.getPlayerModelAnimation()[player.getState()];
 
     if (player.getState() != Gui::Player::WALK && player.getState() != Gui::Player::IDLE && player.getCurrentFrame() == anim.frameCount - 1) {
+        if (player.getState() == Gui::Player::DEAD) {
+            team.removePlayer(player.getId());
+            return false;
+        }
         player.setState(Gui::Player::IDLE);
         anim = team.getPlayerModelAnimation()[player.getState()];
     }
 
     player.setCurrentFrame((player.getCurrentFrame() + 1)%anim.frameCount);
     UpdateModelAnimation(team.getPlayerModel(), anim, player.getCurrentFrame());
+    return true;
 }
