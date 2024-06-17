@@ -99,16 +99,12 @@ class AI:
                     if response == '':
                         continue
                     self.player.handleResponse(response)
-            self.player.regroupAction()
+            self.player.chooseAction()
             for _ in range(0, len(self.player.actions)):
                 self.player.currentAction = self.player.actions[0]
                 self.player.currentCommand = self.player.commands[0]
                 self.player.currentCallback = self.player.callbacks[0]
                 self.api.sendData(self.player.currentCommand)
-                if self.player.currentCommand.startswith("Broadcast"):
-                    print("regrouping end", flush=True)
-                    sleep(5)
-                    exit(0)
                 while self.player.currentAction != Action.NONE:
                     responses = self.api.receiveData().split("\n")
                     for response in responses:

@@ -67,6 +67,17 @@ class Inventory:
         return f"food {self.food}, linemate {self.linemate}, deraumere {self.deraumere}, sibur {self.sibur}, mendiane {self.mendiane}, phiras {self.phiras}, thystame {self.thystame}, player {self.player}"
 
 
+    def toStr(self):
+        """
+        Return the inventory as a string
+
+        Returns :
+            str
+                the inventory as a string
+        """
+        return f"[food {self.food}, linemate {self.linemate}, deraumere {self.deraumere}, sibur {self.sibur}, mendiane {self.mendiane}, phiras {self.phiras}, thystame {self.thystame}, player {self.player}]"
+
+
     def __eq__(self, inventory):
         """
         Compare two inventories
@@ -80,6 +91,38 @@ class Inventory:
                 True if the inventories are the same, False otherwise
         """
         if self.food == inventory.food and self.linemate == inventory.linemate and self.deraumere == inventory.deraumere and self.sibur == inventory.sibur and self.mendiane == inventory.mendiane and self.phiras == inventory.phiras and self.thystame == inventory.thystame and self.player == inventory.player:
+            return True
+        return False
+    
+
+    def __add__(self, inventory):
+        """
+        Add two inventories
+
+        Parameters :
+            inventory : Inventory
+                the inventory to add
+
+        Returns :
+            Inventory
+                the self inventory with the inventory added
+        """
+        return Inventory(self.food + inventory.food, self.linemate + inventory.linemate, self.deraumere + inventory.deraumere, self.sibur + inventory.sibur, self.mendiane + inventory.mendiane, self.phiras + inventory.phiras, self.thystame + inventory.thystame, self.player + inventory.player)
+
+
+    def hasMoreStones(self, inventory : "Inventory"):
+        """
+        Check if the self inventory has more stones than the inventory
+
+        Parameters :
+            inventory : Inventory
+                the inventory to compare with
+
+        Returns :
+            bool
+                True if the self inventory has more stones, False otherwise
+        """
+        if self.linemate > inventory.linemate and self.deraumere > inventory.deraumere and self.sibur > inventory.sibur and self.mendiane > inventory.mendiane and self.phiras > inventory.phiras and self.thystame > inventory.thystame:
             return True
         return False
 
@@ -112,6 +155,8 @@ class Inventory:
                 self.phiras = int(elem[1])
             elif elem[0] == "thystame":
                 self.thystame = int(elem[1])
+            elif elem[0] == "player":
+                self.player = int(elem[1])
 
 
     def updateCaseContent(self, data : list):
@@ -187,3 +232,27 @@ class Inventory:
             self.phiras -= 1
         elif ressource == "thystame" and self.thystame > 0:
             self.thystame -= 1
+
+
+    def countStones(self):
+        """
+        Count the number of different stones in a case
+
+        Returns :
+            int
+                the number of different stones in a case
+        """
+        count = 0
+        if self.linemate > 0:
+            count += 1
+        if self.deraumere > 0:
+            count += 1
+        if self.sibur > 0:
+            count += 1
+        if self.mendiane > 0:
+            count += 1
+        if self.phiras > 0:
+            count += 1
+        if self.thystame > 0:
+            count += 1
+        return count
