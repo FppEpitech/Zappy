@@ -12,3 +12,5 @@
 #define PLAYER_HEIGHT               2
 
 #define DEFAULT_RENDER_DISTANCE     5
+#define MAX_RENDER_DISTANCE         15
+#define MIN_RENDER_DISTANCE         1

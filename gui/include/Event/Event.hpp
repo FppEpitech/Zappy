@@ -72,7 +72,7 @@ class Gui::Event {
         std::unordered_map<KeyboardKey, std::function<void()>> _eventsKeyDown =
         {
             {KEY_SPACE, [this](){moveUpCamera();}},
-            {KEY_LEFT_SHIFT, [this](){moveDownCamera();}}
+            {KEY_LEFT_SHIFT, [this](){moveDownCamera();}},
         };
 
         /**
@@ -84,7 +84,9 @@ class Gui::Event {
             {KEY_THREE, [this](){switchDisplayDebug();}},
             {KEY_F3, [this](){switchDisplayDebug();}},
             {KEY_SPACE, [this](){setFreeCam();}},
-            {KEY_R, [this](){switchTileHudToGame();}}
+            {KEY_R, [this](){switchTileHudToGame();}},
+            {KEY_J, [this](){increaseRenderDistance();}},
+            {KEY_K, [this](){decreaseRenderDistance();}},
         };
 
         /**
@@ -161,4 +163,16 @@ class Gui::Event {
          *
          */
         void switchTileHudToGame();
+
+        /**
+         * @brief Increase the render distance.
+         *
+         */
+        void increaseRenderDistance();
+
+        /**
+         * @brief Decrease the render distance.
+         *
+         */
+        void decreaseRenderDistance();
 };

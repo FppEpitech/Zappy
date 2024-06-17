@@ -202,3 +202,13 @@ void Gui::Event::switchTileHudToGame()
     if (_render.get()->getCameraType() == Gui::UserCamera::FREE_TILE)
         _render.get()->setCameraType(Gui::UserCamera::FREE);
 }
+
+void Gui::Event::increaseRenderDistance()
+{
+    _render.get()->setRenderDistance(_render.get()->getRenderDistance() + 1);
+}
+
+void Gui::Event::decreaseRenderDistance()
+{
+    _render.get()->setRenderDistance(_render.get()->getRenderDistance() - 1);
+}
