@@ -35,7 +35,7 @@ static void handle_incantation_verification(ia_t *ai, app_t *app)
 
     if (ai->incantation->status_incantation == false)
         return;
-    list_ai = check_incantation(app, ai, BEGIN_INCANTATION);
+    list_ai = check_incantation(app, ai, END_INCANTATION);
     if (list_ai == NULL) {
         printf("FAILD at end verification\n");
         update_status(app, ai, END_INCANTATION);
