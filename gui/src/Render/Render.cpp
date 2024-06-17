@@ -85,6 +85,42 @@ bool Gui::Render::getIsDebug()
 {
     return _isDebug;
 }
+
+void Gui::Render::setCameraType(Gui::UserCamera::CameraType type)
+{
+    _camera.setType(type);
+}
+
+Gui::UserCamera::CameraType Gui::Render::getCameraType() const
+{
+    return _camera.getType();
+}
+
+void Gui::Render::setCameraPlayerPov(std::size_t id)
+{
+    _camera.setPlayerId(id);
+}
+
+std::size_t Gui::Render::getCameraPlayerPov() const
+{
+    return _camera.getPlayerId();
+}
+
+void Gui::Render::setCameraTile(std::pair<std::size_t, std::size_t> pos)
+{
+    _camera.setTilePos(pos);
+}
+
+std::pair<std::size_t, std::size_t> Gui::Render::getCameraTile() const
+{
+    return _camera.getTilePos();
+}
+
+Model Gui::Render::getTileModel() const
+{
+    return _tileModel;
+}
+
 void Gui::Render::setRenderDistance(size_t renderDistance)
 {
     if (renderDistance < 1)
@@ -272,39 +308,4 @@ void Gui::Render::displayCursor()
 {
     if (_camera.getType() != Gui::UserCamera::POV_PLAYER)
         DrawTexture(_cursorTexture, GetScreenWidth() / 2 - _cursorTexture.width / 2, GetScreenHeight() / 2 - _cursorTexture.height / 2, BLACK);
-}
-
-void Gui::Render::setCameraType(Gui::UserCamera::CameraType type)
-{
-    _camera.setType(type);
-}
-
-Gui::UserCamera::CameraType Gui::Render::getCameraType() const
-{
-    return _camera.getType();
-}
-
-void Gui::Render::setCameraPlayerPov(std::size_t id)
-{
-    _camera.setPlayerId(id);
-}
-
-std::size_t Gui::Render::getCameraPlayerPov() const
-{
-    return _camera.getPlayerId();
-}
-
-void Gui::Render::setCameraTile(std::pair<std::size_t, std::size_t> pos)
-{
-    _camera.setTilePos(pos);
-}
-
-std::pair<std::size_t, std::size_t> Gui::Render::getCameraTile() const
-{
-    return _camera.getTilePos();
-}
-
-Model Gui::Render::getTileModel() const
-{
-    return _tileModel;
 }
