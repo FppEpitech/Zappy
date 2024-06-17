@@ -9,7 +9,7 @@
 #include "gui/gui.h"
 #include "types.h"
 
-static void print_tile(gui_t *gui, app_t *app, vector2i_t pos)
+static char *get_string(app_t *app, vector2i_t pos)
 {
     char *response = format_string("bct %d %d %d %d %d %d %d %d %d\n",
         pos.x, pos.y,
@@ -21,20 +21,24 @@ static void print_tile(gui_t *gui, app_t *app, vector2i_t pos)
         app->game->map[pos.y][pos.x].phiras,
         app->game->map[pos.y][pos.x].thystame);
 
-    add_message(gui->list_messages, response);
+    return response;
 }
 
 void mct_response(gui_t *gui, app_t *app, char *line)
 {
     vector2i_t pos = {0, 0};
+    char *response = NULL;
+    char *final_response = "";
 
     while ((size_t)pos.y < app->game->height) {
         pos.x = 0;
         while ((size_t)pos.x < app->game->width) {
-            print_tile(gui, app, pos);
+            response = get_string(app, pos);
+            final_response = format_string("%s%s", final_response, response);
             pos.x++;
         }
         pos.y++;
     }
+    add_message(gui->list_messages, final_response);
     (void) line;
 }
