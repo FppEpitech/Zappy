@@ -36,12 +36,14 @@ def foodInVision(vision : list):
 def getClosestTileWithFood(vision : list):
     for i in range(len(vision)):
         if vision[i].food > 0:
+            print("GOING TO THE FUCKING : ", i)
             return i
     return -1
 
 class ChildAi:
     player : Player = None
     isGoingToX : bool = False
+    foodSeek = 0
 
     def __init__(self, player):
         self.player = player
@@ -55,16 +57,16 @@ class ChildAi:
     def goTowardTile(self, index, itemSeek : Item):
         (x, y) = getMovesTowardTile(index)
 
-        for i in range(x):
+        for i in range(y):
             self.player.moveForward()
             self.queueCmd()
-        if y > 0:
+        if x > 0:
             self.player.turnRight()
             self.queueCmd()
-        if y < 0:
+        if x < 0:
             self.player.turnLeft()
             self.queueCmd()
-        for i in range(y):
+        for i in range(x):
             self.player.moveForward()
             self.queueCmd()
         self.player.take(itemSeek.value)
@@ -79,16 +81,22 @@ class ChildAi:
         #must write everything to inform the leader of current player's state.
         #must also listen to leader for invocation OR required stones.
         pass
-        
+
     def core(self):
-        hungry = self.player.inventory.food < 5
+        hungry = self.player.inventory.food < 7
         seenFood = foodInVision(self.player.vision) > 0
-        if hungry and not seenFood:
+
+        if hungry and self.foodSeek == 0:
+            self.foodSeek = 8
+        if self.foodSeek > 0 and not seenFood:
             self.player.randomMoove()
             self.queueCmd()
-        if seenFood and hungry:
+        if self.foodSeek > 0:
             self.goTowardTile(getClosestTileWithFood(self.player.vision), Item.FOOD)
+            #check if got food
+            self.foodSeek -= 1
         if not hungry:
+            print("LA JE TRAVAIL J'AI PO FAIM")
             #if needed stone in vision, take it, if very rare stone take it.
 
     def queueCmd(self):
