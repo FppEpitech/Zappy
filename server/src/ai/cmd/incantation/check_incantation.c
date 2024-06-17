@@ -94,7 +94,7 @@ list_t *check_incantation(app_t *app, ia_t *ai, int status)
     list_t *result = NULL;
 
     if (ai->level == 1)
-        result = verif_data(app, ai, (size_t[]) {1, 0, 0, 0, 0, 0, 0}, status);
+        result = verif_data(app, ai, (size_t[]) {1, 1, 0, 0, 0, 0, 0}, status);
     if (ai->level == 2)
         result = verif_data(app, ai, (size_t[]) {2, 1, 1, 1, 0, 0, 0}, status);
     if (ai->level == 3)
