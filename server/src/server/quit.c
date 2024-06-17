@@ -19,6 +19,9 @@ static bool server_quit_gui(list_t *gui_list, size_t fd)
     while (temp) {
         gui = temp->data.gui;
         if (fd == gui->fd) {
+            destroy_message_list(temp->data.gui->list_messages);
+            list_free(temp->data.gui->list_messages);
+            free(temp->data.gui);
             list_delete(gui_list, temp);
             return true;
         }
@@ -35,6 +38,7 @@ static bool server_quit_client(list_t *clients_list, size_t fd)
     while (temp) {
         client = temp->data.client;
         if (fd == client->fd) {
+            free(temp->data.client);
             list_delete(clients_list, temp);
             return true;
         }
@@ -45,6 +49,15 @@ static bool server_quit_client(list_t *clients_list, size_t fd)
 
 static void check_ia(app_t *app, team_t *team, list_node_t *ia_temp)
 {
+    destroy_message_list(ia_temp->data.ai->list_messages);
+    destroy_command_list(ia_temp->data.ai->list_command);
+    free(ia_temp->data.ai->position);
+    free(ia_temp->data.ai->inventory);
+    free(ia_temp->data.ai->incantation);
+    free(ia_temp->data.ai->time);
+    list_free(ia_temp->data.ai->list_command);
+    list_free(ia_temp->data.ai->list_messages);
+    free(ia_temp->data.ai);
     list_delete(team->list_ai, ia_temp);
     if (team->max_place > team->egg_position->len) {
         add_egg(team->egg_position, rand() % app->game->height,

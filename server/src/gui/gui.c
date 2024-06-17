@@ -18,13 +18,16 @@ gui_t *create_gui(int fd)
     return new_gui;
 }
 
-void add_gui(app_t *app, size_t fd)
+void add_gui(app_t *app, size_t fd, char *line)
 {
     node_data_t data;
+    list_node_t *client_node = find_client(app->clients_list, fd);
 
     data.gui = create_gui(fd);
     list_add_back(app->gui_list, data);
-    list_delete(app->clients_list, find_client(app->clients_list, fd));
+    free(client_node->data.client);
+    list_delete(app->clients_list, client_node);
+    free(line);
 }
 
 gui_t *find_gui(app_t *app, size_t fd)
