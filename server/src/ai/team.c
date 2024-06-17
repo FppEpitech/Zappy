@@ -100,7 +100,7 @@ void display_egg_position(app_t *app)
         egg_temp = team->eggs_list->first;
         while (egg_temp) {
             printf("\t\tEgg in: [%d] | [%d]\n",
-            egg_temp->data.coord->x, egg_temp->data.coord->y);
+            egg_temp->data.egg->pos->x, egg_temp->data.egg->pos->y);
             egg_temp = egg_temp->next;
         }
         printf("\n");
