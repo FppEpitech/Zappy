@@ -16,9 +16,9 @@
 typedef struct s_app app_t;
 
 typedef enum {
-    NORTH,
-    SOUTH,
+    NORTH = 1,
     EAST,
+    SOUTH,
     WEST,
 } orientation_t;
 
