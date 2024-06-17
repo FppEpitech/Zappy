@@ -11,6 +11,7 @@
 Gui::Decoration::Decoration()
 {
     _treeModel = LoadModel(MODEL_TREE);
+    _lanternModel = LoadModel(MODEL_LANTERN);
 }
 
 Map<bool> Gui::Decoration::getGenerationItem(std::size_t ratio)
@@ -33,6 +34,7 @@ void Gui::Decoration::display(std::pair<std::size_t, std::size_t> mapSize, size_
     if (mapSize != _mapSize) {
         _mapSize = mapSize;
         _mapTree = getGenerationItem(5);
+        _mapLantern = getGenerationItem(3);
     }
 
     for (int i = 0; i < (int)_mapSize.first; i++) {
@@ -40,6 +42,7 @@ void Gui::Decoration::display(std::pair<std::size_t, std::size_t> mapSize, size_
             if (i > (int)(camPos.first - renderDistance) && i < (int)(camPos.first + renderDistance) && j > (int)(camPos.second - renderDistance) && j < (int)(camPos.second + renderDistance)) {
                 Vector3 posTile = {(float)(i * SIZE_TILE), 0.0f, (float)(j * SIZE_TILE)};
                 displayTree(i, j, posTile);
+                displayLantern(i, j, posTile);
             }
         }
     }
