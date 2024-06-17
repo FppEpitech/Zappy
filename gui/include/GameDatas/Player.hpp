@@ -31,9 +31,9 @@ class Gui::Player {
             BEING_EJECTED = 7,
             WALK = 6, // or 10
             INCANTATION = 0,
-            LAY_EGG,
-            DROP,
-            COLLECT,
+            LAY_EGG = 7,
+            DROP = 9,
+            COLLECT = 9,
             DEAD = 1,
         };
 

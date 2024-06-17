@@ -115,7 +115,9 @@ void Gui::GUIUpdater::updateTeamMember(const std::vector<std::string> &data)
         throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pnw:" + STR_RED + "Invalid player level");
     for (auto &team : _gameData->getTeams()) {
         if (team.getName() == data[5]) {
-            team.addPlayer(Gui::Player(args[0], data[5], std::make_pair(args[1], args[2]), args[3], args[4]));
+            Player player(args[0], data[5], std::make_pair(args[1], args[2]), args[3], args[4]);
+            player.setState(Gui::Player::BORN);
+            team.addPlayer(player);
         }
     }
 }
@@ -327,9 +329,9 @@ void Gui::GUIUpdater::updatePlayerEggLaying(const std::vector<std::string> &data
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
     for (auto &team : _gameData->getTeams()) {
-        for (size_t i = 0; i < team.getPlayers().size(); i++) {
-            if (team.getPlayers()[i].getId() == id)
-                team.getPlayer(id).get()->setState(Gui::Player::PlayerState::LAY_EGG);
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == id)
+                player.setState(Gui::Player::PlayerState::LAY_EGG);
         }
     }
 }
