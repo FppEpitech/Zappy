@@ -23,6 +23,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     _hudList.push_back(std::make_shared<HudTile>(HudTile(gameData)));
     _decoration = std::make_shared<Decoration>(Decoration());
     this->LoadModels();
+    _renderDistance = 5;
 }
 
 void Gui::Render::LoadModels(void)
@@ -83,6 +84,17 @@ void Gui::Render::setIsDebug(bool isDebug)
 bool Gui::Render::getIsDebug()
 {
     return _isDebug;
+}
+void Gui::Render::setRenderDistance(size_t renderDistance)
+{
+    if (renderDistance < 1)
+        renderDistance = 1;
+    _renderDistance = renderDistance;
+}
+
+size_t Gui::Render::getRenderDistance() const
+{
+    return _renderDistance;
 }
 
 void Gui::Render::displayDebug()

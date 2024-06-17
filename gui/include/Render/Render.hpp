@@ -131,6 +131,19 @@ class Gui::Render {
         */
         Model getTileModel() const;
 
+        /**
+         * @brief Set the Render Distance value.
+         *
+         * @param renderDistance New render distance value.
+         */
+        void setRenderDistance(size_t renderDistance);
+
+        /**
+         * @brief Get the Render Distance value.
+         *
+        */
+        size_t getRenderDistance() const;
+
     private:
 
         UserCamera                                  _camera;            // Camera of the scene.
@@ -138,6 +151,7 @@ class Gui::Render {
         std::shared_ptr<GameData>                   _gameData;          // GameData class to store the game's data.
         std::shared_ptr<Decoration>                 _decoration;        // Decoration to display;
         std::vector<std::shared_ptr<Gui::IHud>>     _hudList;           // List of huds.
+        size_t                                     _renderDistance;    // Distance to render from the 3d position of the camera.
 
         Model                                       _tileModel;         // Model to display tiles.
         Model                                       _foodModel;         // Model to display foods.
