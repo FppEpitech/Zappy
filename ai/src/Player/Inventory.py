@@ -96,6 +96,8 @@ class Inventory:
         data = data.split(", ")
         for elem in data:
             elem = elem.split(" ")
+            if (elem.count("") > 0):
+                elem.remove("")
             if elem[0] == "food":
                 self.food = int(elem[1])
             elif elem[0] == "linemate":
