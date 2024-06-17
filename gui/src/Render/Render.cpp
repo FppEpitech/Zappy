@@ -124,8 +124,10 @@ Model Gui::Render::getTileModel() const
 
 void Gui::Render::setRenderDistance(size_t renderDistance)
 {
-    if (renderDistance < 1)
-        renderDistance = 1;
+    if (renderDistance < MIN_RENDER_DISTANCE)
+        renderDistance = MIN_RENDER_DISTANCE;
+    if (renderDistance > MAX_RENDER_DISTANCE)
+        renderDistance = MAX_RENDER_DISTANCE;
     _renderDistance = renderDistance;
 }
 
