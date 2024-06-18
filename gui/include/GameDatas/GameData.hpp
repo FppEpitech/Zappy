@@ -27,6 +27,12 @@ class Gui::GameData {
 
     public:
 
+        enum TimeUnitState {
+            INCREASE,
+            DECREASE,
+            NONE
+        };
+
         /**
          * @brief Construct a new GameData object.
          *
@@ -197,6 +203,20 @@ class Gui::GameData {
         */
         Team &getTeamById(std::size_t id);
 
+        /**
+         * @brief Get the Time Unit From Server object.
+         *
+         * @return true - The time unit has changed.
+        */
+        TimeUnitState getTimeUnitFromServer() const;
+
+        /**
+         * @brief Set the Time Unit From Server object.
+         *
+         * @param timeUnitFromServer Time unit state.
+        */
+        void setTimeUnitFromServer(TimeUnitState timeUnitFromServer);
+
     private:
 
         std::vector<Gui::Team>      _teams;         // Teams of the game.
@@ -205,4 +225,5 @@ class Gui::GameData {
         clock_t                     _lastTick;      // Last tick of the GameData (based on the server tick).
         bool                        _isEndGame;     // Is true if the game is finished.
         std::string                 _lastError;     // Last error message.
+        TimeUnitState                        _timeUnitFromServer; // True if the time unit has changed.
 };

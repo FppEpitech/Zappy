@@ -189,6 +189,20 @@ class Gui::Render {
          */
         void changePOVToThirdPerson(size_t id);
 
+        /**
+         * @brief Get the Time Unit value.
+         *
+         * @return size_t - Time unit value.
+        */
+        size_t getTimeUnit() const;
+
+        /**
+         * @brief Set the Time Unit value.
+         *
+         * @param timeUnit New time unit value.
+        */
+        void setTimeUnit(size_t timeUnit);
+
     private:
 
         UserCamera                                  _camera;            // Camera of the scene.

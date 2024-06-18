@@ -509,7 +509,10 @@ void Gui::GUIUpdater::updateTimeUnitRequest(const std::vector<std::string> &data
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
-    _gameData->setServerTick(timeUnit);
+    if (_gameData.get()->getServerTick() != timeUnit) {
+        _gameData->setServerTick(timeUnit);
+        _gameData.get()->setTimeUnitFromServer(GameData::TimeUnitState::NONE);
+    }
 }
 
 void Gui::GUIUpdater::updateTimeUnitModification(const std::vector<std::string> &data)
@@ -525,7 +528,10 @@ void Gui::GUIUpdater::updateTimeUnitModification(const std::vector<std::string> 
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
-    _gameData->setServerTick(timeUnit);
+    if (_gameData.get()->getServerTick() != timeUnit) {
+        _gameData->setServerTick(timeUnit);
+        _gameData.get()->setTimeUnitFromServer(GameData::TimeUnitState::NONE);
+    }
 }
 
 void Gui::GUIUpdater::updateEndOfGame(const std::vector<std::string> &data)

@@ -20,7 +20,7 @@ Gui::Engine::Engine(std::shared_ptr<Network> network) : _network(network), _game
     _event.setGameData(_gameData);
 }
 
-void Gui::Engine::run(void)
+void Gui::Engine::run()
 {
     while (_render->isOpen() && !_gameData->getIsEndGame()) {
         listenServer();
@@ -30,7 +30,7 @@ void Gui::Engine::run(void)
     }
 }
 
-void Gui::Engine::listenServer(void)
+void Gui::Engine::listenServer()
 {
     std::string command = _network.get()->listenServer();
 
@@ -49,13 +49,13 @@ void Gui::Engine::listenServer(void)
     }
 }
 
-void Gui::Engine::sendMessageUpdate(void)
+void Gui::Engine::sendMessageUpdate()
 {
     clock_t currentTick = clock();
 
-    if ((int)(_gameData->getServerTick()) == NO_TICK && (float)(currentTick - _gameData->getLastTick()) / CLOCKS_PER_SEC < (1))
+    if ((int)(_gameData->getServerTick()) == NO_TICK && (float)(currentTick - _gameData->getLastTick()) / CLOCKS_PER_SEC < 1)
         return;
-    if ((int)(_gameData->getServerTick()) != NO_TICK && (float)(currentTick - _gameData->getLastTick()) / CLOCKS_PER_SEC < (_gameData->getServerTick()))
+    if ((int)(_gameData->getServerTick()) != NO_TICK && (float)(currentTick - _gameData->getLastTick()) / CLOCKS_PER_SEC < 1 / _gameData->getServerTick())
         return;
     _gameData->restartLastTick();
 
@@ -66,4 +66,8 @@ void Gui::Engine::sendMessageUpdate(void)
             _network.get()->sendMessageServer("ppo " + std::to_string(player.getId()) + "\n");
         }
     }
+    if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::INCREASE)
+        _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() + 1) + "\n");
+    else if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::DECREASE)
+        _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() - 1) + "\n");
 }

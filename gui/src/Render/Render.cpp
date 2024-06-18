@@ -143,6 +143,16 @@ bool Gui::Render::isCameraInPlayerPov() const
     return _camera.isPlayerPov();
 }
 
+size_t Gui::Render::getTimeUnit() const
+{
+    return _gameData.get()->getServerTick();
+}
+
+void Gui::Render::setTimeUnit(size_t timeUnit)
+{
+    _gameData.get()->setServerTick(timeUnit);
+}
+
 void Gui::Render::displayDebug()
 {
     if (_isDebug) {
@@ -161,6 +171,7 @@ void Gui::Render::displayDebug()
         DrawText(("Camera Tile XZ: " + std::to_string(getCameraTile().first) + " / " + std::to_string(getCameraTile().second)).c_str(), 10, 90, 20, LIME);
         DrawText(("CAMERA TYPE: " + std::to_string(_camera.getType())).c_str(), 10, 110, 20, LIME);
     }
+    DrawText(("Time Unit: " + std::to_string(_gameData.get()->getServerTick())).c_str(), 10, WINDOW_HEIGHT - 20, 20, WHITE);
 }
 
 void Gui::Render::displayPlayers()
