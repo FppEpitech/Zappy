@@ -18,7 +18,8 @@ bool Gui::Render::displayAnimations(Team &team, Player &player)
         anim = team.getPlayerModelAnimation()[player.getState()];
 
     if (player.getState() != Gui::Player::WALK && player.getState() != Gui::Player::IDLE &&
-        player.getState() != Gui::Player::BEING_EJECTED && player.getCurrentFrame() == anim.frameCount - 1) {
+        player.getState() != Gui::Player::BEING_EJECTED && player.getState() != Gui::Player::INCANTATION &&
+        player.getCurrentFrame() == anim.frameCount - 1) {
         if (player.getState() == Gui::Player::DEAD) {
             team.removePlayer(player.getId());
             return false;
