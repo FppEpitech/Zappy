@@ -16,6 +16,10 @@ static size_t get_last_id(app_t *app)
 
     while (temp) {
         team = temp->data.team;
+        if (team->eggs_list->last == NULL) {
+            temp = temp->next;
+            continue;
+        }
         if (team->eggs_list->last->data.egg->id > id)
             id = team->eggs_list->last->data.egg->id;
         temp = temp->next;
