@@ -6,6 +6,7 @@
 */
 
 #include "Assets.hpp"
+#include "Config.hpp"
 #include "Render/Render.hpp"
 
 #include <string>
@@ -23,6 +24,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     _hudList.push_back(std::make_shared<HudTile>(HudTile(gameData)));
     _decoration = std::make_shared<Decoration>(Decoration());
     this->LoadModels();
+    _renderDistance = DEFAULT_RENDER_DISTANCE;
 }
 
 void Gui::Render::LoadModels(void)
@@ -51,7 +53,7 @@ bool Gui::Render::isOpen()
 
 void Gui::Render::draw()
 {
-    if (_camera.getType() != Gui::UserCamera::POV_PLAYER)
+    if (!_camera.isPlayerPov())
         UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
 
     BeginDrawing();
@@ -85,6 +87,60 @@ bool Gui::Render::getIsDebug()
     return _isDebug;
 }
 
+void Gui::Render::setCameraType(Gui::UserCamera::CameraType type)
+{
+    _camera.setType(type);
+}
+
+Gui::UserCamera::CameraType Gui::Render::getCameraType() const
+{
+    return _camera.getType();
+}
+
+void Gui::Render::setCameraPlayerPov(std::size_t id)
+{
+    _camera.setPlayerId(id);
+}
+
+std::size_t Gui::Render::getCameraPlayerPov() const
+{
+    return _camera.getPlayerId();
+}
+
+void Gui::Render::setCameraTile(std::pair<std::size_t, std::size_t> pos)
+{
+    _camera.setTilePos(pos);
+}
+
+std::pair<std::size_t, std::size_t> Gui::Render::getCameraTile() const
+{
+    return _camera.getTilePos();
+}
+
+Model Gui::Render::getTileModel() const
+{
+    return _tileModel;
+}
+
+void Gui::Render::setRenderDistance(size_t renderDistance)
+{
+    if (renderDistance < MIN_RENDER_DISTANCE)
+        renderDistance = MIN_RENDER_DISTANCE;
+    if (renderDistance > MAX_RENDER_DISTANCE)
+        renderDistance = MAX_RENDER_DISTANCE;
+    _renderDistance = renderDistance;
+}
+
+size_t Gui::Render::getRenderDistance() const
+{
+    return _renderDistance;
+}
+
+bool Gui::Render::isCameraInPlayerPov() const
+{
+    return _camera.isPlayerPov();
+}
+
 void Gui::Render::displayDebug()
 {
     if (_isDebug) {
@@ -99,15 +155,26 @@ void Gui::Render::displayDebug()
             std::to_string(_camera.getCamera()->target.y) + " / " +
             std::to_string(_camera.getCamera()->target.z)
             ).c_str(), 10, 50, 20, LIME);
+        DrawText(("Render distance: " + std::to_string(_renderDistance) + " chunks.").c_str(), 10, 70, 20, LIME);
+        DrawText(("Camera Tile XZ: " + std::to_string(getCameraTile().first) + " / " + std::to_string(getCameraTile().second)).c_str(), 10, 90, 20, LIME);
+        DrawText(("CAMERA TYPE: " + std::to_string(_camera.getType())).c_str(), 10, 70, 20, LIME);
     }
 }
 
 void Gui::Render::displayPlayers()
 {
+    std::pair<size_t, size_t> camTile = getCameraTile();
+
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (_gameData.get()->getMap().size() == 0 || _gameData.get()->getMap()[player.getPosition().first].size() == 0)
                 return;
+            if (abs(player.getPosition().first - camTile.first) > (_renderDistance - 1) || abs(player.getPosition().second - camTile.second) > (_renderDistance - 1))
+                continue;
+            if (abs(player.getPosition().first - camTile.first) == (_renderDistance - 1) && abs(player.getPosition().second - camTile.second) == (_renderDistance - 1))
+                continue;
+            if (_camera.getPlayerId() == player.getId() && _camera.getType() == Gui::UserCamera::FIRST_PERSON)
+                continue;
 
             float rotation = player.getRotationFromOrientation();
 
@@ -126,15 +193,19 @@ void Gui::Render::displayPlayers()
 
 void Gui::Render::displayMap()
 {
+    std::pair<size_t, size_t> camTile = getCameraTile();
+
     for (auto &line : _gameData->getMap()) {
         for (auto &tile : line) {
+            if (abs(camTile.first - tile.getPosition().first) > (_renderDistance - 1) || abs(camTile.second - tile.getPosition().second) > (_renderDistance - 1))
+                continue;
             displayTile(tile);
             displayFood(tile);
             displayResources(tile);
             displayEggs(tile);
-            _decoration->display(_gameData->getMapSize());
         }
     }
+    _decoration->display(_gameData->getMapSize(), _renderDistance, camTile);
 }
 
 void Gui::Render::displayTile(Tile tile)
@@ -243,7 +314,7 @@ void Gui::Render::displayDeraumere(Tile tile) const
 void Gui::Render::displayHUD(void)
 {
     for (auto &hud : _hudList) {
-        if (hud->getType() == Gui::HudPlayer::POV_PLAYER && _camera.getType() == Gui::UserCamera::POV_PLAYER) {
+        if (hud->getType() == Gui::HudPlayer::POV_PLAYER && _camera.isPlayerPov()) {
             hud->setPlayer(std::make_shared<Player>(_gameData->getPlayer(_camera.getPlayerId())));
             hud->display();
         }
@@ -258,41 +329,35 @@ void Gui::Render::displayHUD(void)
 
 void Gui::Render::displayCursor()
 {
-    if (_camera.getType() != Gui::UserCamera::POV_PLAYER)
+    if (_camera.getType() != Gui::UserCamera::CameraType::SECOND_PERSON && _camera.getType() != Gui::UserCamera::CameraType::THIRD_PERSON)
         DrawTexture(_cursorTexture, GetScreenWidth() / 2 - _cursorTexture.width / 2, GetScreenHeight() / 2 - _cursorTexture.height / 2, BLACK);
 }
 
-void Gui::Render::setCameraType(Gui::UserCamera::CameraType type)
+std::pair<size_t, size_t> Gui::Render::getCameraTile()
 {
-    _camera.setType(type);
-}
+    std::pair<size_t, size_t> tilePos = {1, 1};
+    if (_gameData.get()->getMap().size() == 0 || _gameData.get()->getMap()[0].size() == 0)
+        return tilePos;
+    tilePos = _gameData.get()->getMap()[0][0].getPosition();
+    Tile tileTmp = _gameData.get()->getMap()[0][0];
 
-Gui::UserCamera::CameraType Gui::Render::getCameraType() const
-{
-    return _camera.getType();
-}
-
-void Gui::Render::setCameraPlayerPov(std::size_t id)
-{
-    _camera.setPlayerId(id);
-}
-
-std::size_t Gui::Render::getCameraPlayerPov() const
-{
-    return _camera.getPlayerId();
-}
-
-void Gui::Render::setCameraTile(std::pair<std::size_t, std::size_t> pos)
-{
-    _camera.setTilePos(pos);
-}
-
-std::pair<std::size_t, std::size_t> Gui::Render::getCameraTile() const
-{
-    return _camera.getTilePos();
-}
-
-Model Gui::Render::getTileModel() const
-{
-    return _tileModel;
+    for (auto &line: _gameData.get()->getMap()) {
+        for (auto &tile: line) {
+            Vector3 tmpPos = tile.getPositionIn3DSpace();
+            Vector3 camPos = _camera.getCamera()->position;
+            size_t xDiffNew = abs(tmpPos.x - camPos.x);
+            size_t zDiffNew = abs(tmpPos.z - camPos.z);
+            size_t xDiffOld = abs(tileTmp.getPositionIn3DSpace().x - camPos.x);
+            size_t zDiffOld = abs(tileTmp.getPositionIn3DSpace().z - camPos.z);
+            if (xDiffNew < xDiffOld) {
+                tileTmp = tile;
+                tilePos = tile.getPosition();
+            }
+            if (zDiffNew < zDiffOld) {
+                tileTmp = tile;
+                tilePos = tile.getPosition();
+            }
+        }
+    }
+    return tilePos;
 }

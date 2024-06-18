@@ -44,8 +44,10 @@ class Gui::Decoration {
          * @brief Display decorations.
          *
          * @param mapSize Size of the map.
+         * @param renderDistance Distance to render.
+         * @param camPos Position of the camera.
          */
-        void display(std::pair<std::size_t, std::size_t> mapSize);
+        void display(std::pair<std::size_t, std::size_t> mapSize, size_t renderDistance, std::pair<std::size_t, std::size_t> camPos);
 
         /**
          * @brief Generate random emplacement for decorations.

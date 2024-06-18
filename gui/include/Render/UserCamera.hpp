@@ -26,7 +26,9 @@ class Gui::UserCamera {
 
         enum CameraType {
             FREE,
-            POV_PLAYER,
+            FIRST_PERSON,
+            SECOND_PERSON,
+            THIRD_PERSON,
             FREE_TILE
         };
 
@@ -146,6 +148,15 @@ class Gui::UserCamera {
          * @return std::pair<std::size_t, std::size_t> - Position of the tile.
          */
         std::pair<std::size_t, std::size_t> getTilePos() const;
+
+        /**
+         * @brief Check if the camera is in player pov.
+         *
+         * @return true - Camera is in player pov.
+         * @return false - Camera is not in player pov.
+         * @note The player pov is the first person, second person and third person.
+        */
+        bool isPlayerPov() const;
 
     private:
 

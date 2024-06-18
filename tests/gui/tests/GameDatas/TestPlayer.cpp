@@ -5,6 +5,7 @@
 ** test player
 */
 
+#include "Config.hpp"
 #include "Assets.hpp"
 #include "GameDatas/Player.hpp"
 #include "CriterionHeaders.hpp"

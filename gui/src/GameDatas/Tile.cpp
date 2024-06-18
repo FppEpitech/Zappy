@@ -5,7 +5,7 @@
 ** Tile
 */
 
-#include "Assets.hpp"
+#include "Config.hpp"
 #include "GameDatas/Tile.hpp"
 
 Gui::Tile::Tile(std::pair<std::size_t, std::size_t> position)

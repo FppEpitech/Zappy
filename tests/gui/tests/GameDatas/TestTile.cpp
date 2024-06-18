@@ -5,6 +5,7 @@
 ** test tile
 */
 
+#include "Config.hpp"
 #include "Assets.hpp"
 #include "GameDatas/Tile.hpp"
 #include "CriterionHeaders.hpp"

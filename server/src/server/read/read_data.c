@@ -73,7 +73,7 @@ void handle_request(app_t *app, size_t fd, char *line)
         return;
     }
     if (ai != NULL) {
-        if (ai->list_messages->len >= 10)
+        if (ai->list_command->len >= 10)
             return;
         add_command_to_list(ai, strdup(line));
         return;
@@ -89,7 +89,6 @@ bool server_data_handler(app_t *app, size_t fd)
         printf("QUIT\n");
         return true;
     }
-    line[strlen(line) - 1] = '\0';
     if (its_client(app, fd)) {
         if (strcmp(line, "GRAPHIC") == 0)
             add_gui(app, fd, line);
