@@ -242,7 +242,7 @@ void enw_command(app_t *app, egg_t *egg, gui_t *gui);
 void edi_command(app_t *app, int egg_id);
 
 /**
- * @brief The ebo command. For send message to all the GUI,
+ * @brief The ebo command. For send message to all the GUI.
  *
  * @param app The app structure.
  * @param egg_id The player id.
