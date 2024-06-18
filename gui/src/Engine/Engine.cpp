@@ -21,7 +21,7 @@ Gui::Engine::Engine(std::shared_ptr<Network> network) : _network(network), _game
     _event.setGameData(_gameData);
 }
 
-void Gui::Engine::run(void)
+void Gui::Engine::run()
 {
     while (_render->isOpen() && !_gameData->getIsEndGame()) {
         listenServer();
@@ -31,7 +31,7 @@ void Gui::Engine::run(void)
     }
 }
 
-void Gui::Engine::listenServer(void)
+void Gui::Engine::listenServer()
 {
     std::string command = _network.get()->listenServer();
 
@@ -50,7 +50,7 @@ void Gui::Engine::listenServer(void)
     }
 }
 
-void Gui::Engine::sendMessageUpdate(void)
+void Gui::Engine::sendMessageUpdate()
 {
     clock_t currentTick = clock();
 
