@@ -69,13 +69,17 @@ void handle_client_read(app_t *app, int fd)
 
 void handle_client_write(app_t *app, int fd)
 {
-    gui_t *gui = find_gui(app, fd);
-    ia_t *ai = find_ia(app, fd);
+    gui_t *gui = NULL;
+    ia_t *ai = NULL;
 
-    if (gui != NULL)
-        write_message(gui->list_messages, gui->fd);
-    if (ai != NULL)
-        write_message(ai->list_messages, ai->fd);
+    if (FD_ISSET(fd, &app->server->write_fds)) {
+        gui = find_gui(app, fd);
+        ai = find_ia(app, fd);
+        if (gui != NULL)
+            write_message(gui->list_messages, gui->fd);
+        if (ai != NULL)
+            write_message(ai->list_messages, ai->fd);
+    }
 }
 
 static bool server_status(bool status)
