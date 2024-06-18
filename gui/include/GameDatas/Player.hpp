@@ -191,7 +191,7 @@ class Gui::Player {
          *
          * @return int - Current frame.
          */
-        int getCurrentFrame();
+        int getCurrentFrame() const;
 
         /**
          * @brief Restart the timer animation;
@@ -204,7 +204,7 @@ class Gui::Player {
          *
          * @return clock_t - Animation time ellapsed.
          */
-        clock_t getAnimationTimeEllapsed();
+        clock_t getAnimationTimeEllapsed() const;
 
         /**
          * @brief Inventory of the player.

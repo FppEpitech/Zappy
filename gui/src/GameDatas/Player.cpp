@@ -106,7 +106,7 @@ void Gui::Player::setCurrentFrame(int currentFrame)
     _currentFrame = currentFrame;
 }
 
-int Gui::Player::getCurrentFrame()
+int Gui::Player::getCurrentFrame() const
 {
     return _currentFrame;
 }
@@ -137,7 +137,7 @@ void Gui::Player::restartAnimationTimeEllapsed()
     _animationTimeEllapsed = clock();
 }
 
-clock_t Gui::Player::getAnimationTimeEllapsed()
+clock_t Gui::Player::getAnimationTimeEllapsed() const
 {
     return _animationTimeEllapsed;
 }
