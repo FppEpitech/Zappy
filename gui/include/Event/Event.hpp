@@ -87,6 +87,8 @@ class Gui::Event {
             {KEY_K, [this](){decreaseRenderDistance();}},
             {KEY_F5, [this](){changeActualPlayerPov();}},
             {KEY_APOSTROPHE, [this](){changeActualPlayerPov();}},
+            {KEY_KP_ADD, [this](){increaseTimeUnit();}},
+            {KEY_KP_SUBTRACT, [this](){decreaseTimeUnit();}},
         };
 
         /**
@@ -210,4 +212,16 @@ class Gui::Event {
          *
          */
         void decreaseRenderDistance();
+
+        /**
+         * @brief Increase the time unit.
+         *
+        */
+        void increaseTimeUnit();
+
+        /**
+         * @brief Decrease the time unit.
+         *
+         */
+        void decreaseTimeUnit();
 };
