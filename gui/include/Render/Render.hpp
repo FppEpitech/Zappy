@@ -154,6 +154,42 @@ class Gui::Render {
         bool isCameraInPlayerPov() const;
 
         /**
+         * @brief Change the player point of view.
+         *
+         * @param playerId Player id to select.
+         * @note The player point of view is the first person, second person and third person.
+        */
+        void changePlayerPOV(size_t playerId);
+
+        /**
+         * @brief Sets the Pov of the player.
+         *
+         * @param playerId Player id to select.
+        */
+        void setPlayerPov(size_t playerId);
+
+        /**
+         * @brief Change the camera to the player.
+         *
+         * @param player Player to select.
+        */
+        void changePOVToFirstPerson(size_t id);
+
+        /**
+         * @brief Change the camera to the player.
+         *
+         * @param player Player to select.
+        */
+        void changePOVToSecondPerson(size_t id);
+
+        /**
+         * @brief Change the camera to the player.
+         *
+         * @param player Player to select.
+         */
+        void changePOVToThirdPerson(size_t id);
+
+        /**
          * @brief Get the Time Unit value.
          *
          * @return size_t - Time unit value.
@@ -284,6 +320,24 @@ class Gui::Render {
          * @param tile Tile with resources.
          */
         void displayDeraumere(Tile tile) const;
+
+        /**
+         * @brief Display animations.
+         *
+         * @param team Team for model.
+         * @param player Player to draw animation.
+         */
+        bool displayAnimations(Team &team, Player &player);
+
+        /**
+         * @brief Display walk animation.
+         *
+         * @param team Team for model.
+         * @param player Player to draw animation.
+         * @param anim Animation Model.
+         * @return ModelAnimation - Animation.
+         */
+        ModelAnimation displayWalkAnimation(Team &team, Player &player, ModelAnimation anim);
 
         /**
          * @brief Display the cursor.

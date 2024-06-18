@@ -24,18 +24,18 @@ class Gui::Player {
     public:
 
         enum PlayerState {
-            IDLE,
-            BORN,
-            BROADCAST,
-            EJECT,
-            BEING_EJECTED,
-            WALK,
-            INCANTATION,
-            FINISHED_INCANTATION,
-            LAY_EGG,
-            DROP,
-            COLLECT,
-            DEAD,
+            IDLE = 2,
+            BORN = 8,
+            BROADCAST = 12,
+            EJECT = 5,
+            BEING_EJECTED = 15,
+            EJECTED = 7,
+            WALK = 6, // or 10
+            INCANTATION = 0,
+            LAY_EGG = 7,
+            DROP = 9,
+            COLLECT = 9,
+            DEAD = 1,
         };
 
         /**
@@ -56,9 +56,16 @@ class Gui::Player {
         /**
          * @brief Set the Position object.
          *
-         * @param position Position of the player
+         * @param position Position of the player.
          */
         void setPosition(std::pair<std::size_t, std::size_t> position);
+
+        /**
+         * @brief Set the Position3D object.
+         *
+         * @param position3D Position of the player.
+         */
+        void setPosition3D(Vector3 position3D);
 
         /**
          * @brief Set the Id object.
@@ -94,6 +101,13 @@ class Gui::Player {
          * @return std::pair<std::size_t, std::size_t> - position
          */
         std::pair<std::size_t, std::size_t> getPosition(void) const;
+
+        /**
+         * @brief Get the Position3D object.
+         *
+         * @return Vector3 - position3D
+         */
+        Vector3 getPosition3D(void) const;
 
         /**
          * @brief Get the Id object.
@@ -166,6 +180,33 @@ class Gui::Player {
         Vector3 getCenterPosition();
 
         /**
+         * @brief Set the Current Frame object.
+         *
+         * @param currentFrame Current Frame to set.
+         */
+        void setCurrentFrame(int currentFrame);
+
+        /**
+         * @brief Get the Current Frame object.
+         *
+         * @return int - Current frame.
+         */
+        int getCurrentFrame() const;
+
+        /**
+         * @brief Restart the timer animation.
+         *
+         */
+        void restartAnimationTimeEllapsed();
+
+        /**
+         * @brief Get the Animation Time Ellapsed object.
+         *
+         * @return clock_t - Animation time ellapsed.
+         */
+        clock_t getAnimationTimeEllapsed() const;
+
+        /**
          * @brief Inventory of the player.
          *
          */
@@ -173,11 +214,14 @@ class Gui::Player {
 
     private:
 
-        std::size_t                             _id;            // Id of the player.
-        std::string                             _team;          // Team name.
-        std::pair<std::size_t, std::size_t>     _position;      // Position x y.
-        std::size_t                             _orientation;   // Orientation of the player.
-        std::size_t                             _level;         // Level between 1 - 8.
-        PlayerState                             _state;         // Player state.
-        std::string                             _broadcast;     // Broadcast message.
+        std::size_t                             _id;                    // Id of the player.
+        std::string                             _team;                  // Team name.
+        std::pair<std::size_t, std::size_t>     _position;              // Position x y relative to tiles.
+        Vector3                                 _position3D;            // Position in 3D scene.
+        std::size_t                             _orientation;           // Orientation of the player.
+        std::size_t                             _level;                 // Level between 1 - 8.
+        PlayerState                             _state;                 // Player state.
+        std::string                             _broadcast;             // Broadcast message.
+        int                                     _currentFrame;          // Current frame animation.
+        clock_t                                 _animationTimeEllapsed; // Time ellapsed during animation.
 };

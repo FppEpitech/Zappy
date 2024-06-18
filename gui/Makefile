@@ -25,6 +25,7 @@ SRC			=	src/Error/Error.cpp \
 				src/GameDatas/Egg.cpp \
 				\
 				src/Render/Render.cpp \
+				src/Render/RenderAnimations.cpp \
 				src/Render/UserCamera.cpp \
 				src/Render/Decoration.cpp \
 				\

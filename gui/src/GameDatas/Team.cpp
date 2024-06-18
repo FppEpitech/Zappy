@@ -14,6 +14,8 @@ Gui::Team::Team(const std::string &name, const std::string &playerModelPath, con
 {
     _playerModel = LoadModel(playerModelPath.c_str());
     _eggModel = LoadModel(eggModelPath.c_str());
+    _animsCount = 0;
+    _modelAnimation = LoadModelAnimations(MODEL_PLAYER, &_animsCount);
 }
 
 const std::string &Gui::Team::getName() const
@@ -85,6 +87,11 @@ std::shared_ptr<Gui::Player> Gui::Team::getPlayer(std::size_t id)
 Model Gui::Team::getPlayerModel() const
 {
     return _playerModel;
+}
+
+ModelAnimation *Gui::Team::getPlayerModelAnimation() const
+{
+    return _modelAnimation;
 }
 
 void Gui::Team::setPlayerModelPath(const std::string &playerModelPath)
