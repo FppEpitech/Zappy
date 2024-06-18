@@ -10,7 +10,7 @@
 #include "Hud/AHud.hpp"
 
 #define HUD_TILE_POS Vector2{0, 340}
-#define HUD_TILE_TEXT_POS Vector2{25, 420}
+#define HUD_TILE_TEXT_POS Vector2{45, 420}
 #define HUD_TILE_TEXT_TITLE_POS Vector2{50, 380}
 #define HUD_TILE_TEXT_MARGING 30
 
