@@ -115,6 +115,7 @@ void add_ia(app_t *app, size_t fd, char *line)
             list_add_back(team->list_ai, data);
             free(client_node->data.client);
             list_delete(app->clients_list, client_node);
+            free(team->eggs_list->first->data.egg);
             list_remove_front(team->eggs_list);
             free(line);
             return;
