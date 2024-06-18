@@ -28,7 +28,8 @@ class Gui::Player {
             BORN = 8,
             BROADCAST = 12,
             EJECT = 5,
-            BEING_EJECTED = 7,
+            BEING_EJECTED = 15,
+            EJECTED = 7,
             WALK = 6, // or 10
             INCANTATION = 0,
             LAY_EGG = 7,

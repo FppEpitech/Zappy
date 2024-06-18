@@ -9,9 +9,15 @@
 
 bool Gui::Render::displayAnimations(Team &team, Player &player)
 {
-    ModelAnimation anim = team.getPlayerModelAnimation()[player.getState()];
+    ModelAnimation anim;
 
-    if (player.getState() != Gui::Player::WALK && player.getState() != Gui::Player::IDLE && player.getCurrentFrame() == anim.frameCount - 1) {
+    if (player.getState() == Gui::Player::BEING_EJECTED)
+        anim = team.getPlayerModelAnimation()[Gui::Player::IDLE];
+    else
+        anim = team.getPlayerModelAnimation()[player.getState()];
+
+    if (player.getState() != Gui::Player::WALK && player.getState() != Gui::Player::IDLE &&
+        player.getState() != Gui::Player::BEING_EJECTED && player.getCurrentFrame() == anim.frameCount - 1) {
         if (player.getState() == Gui::Player::DEAD) {
             team.removePlayer(player.getId());
             return false;

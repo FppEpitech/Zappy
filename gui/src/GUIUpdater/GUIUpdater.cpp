@@ -144,9 +144,14 @@ void Gui::GUIUpdater::updatePlayerPosition(const std::vector<std::string> &data)
     for (auto &team : _gameData.get()->getTeams()) {
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
-                if (player.getPosition() != std::make_pair(args[1], args[2]))
-                    player.setState(Gui::Player::WALK);
-                else
+                if (player.getPosition() != std::make_pair(args[1], args[2])) {
+                    if (player.getState() == Gui::Player::IDLE)
+                        player.setState(Gui::Player::WALK);
+                    else if (player.getState() == Gui::Player::BEING_EJECTED)
+                        player.setState(Gui::Player::EJECTED);
+                    else
+                        player.setState(Gui::Player::IDLE);
+                } else
                     player.setState(Gui::Player::IDLE);
                 player.setPosition(std::make_pair(args[1], args[2]));
                 player.setOrientation(args[3]);
@@ -223,11 +228,17 @@ void Gui::GUIUpdater::updatePlayerExpulsion(const std::vector<std::string> &data
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
-    for (auto &team : _gameData->getTeams()) {
-        for (auto &player : team.getPlayers()) {
-            if (player.getId() == id)
-                player.setState(Gui::Player::EJECT);
+    try {
+        _gameData->getPlayer(id).setState(Gui::Player::EJECT);
+        std::pair<std::size_t, std::size_t> posPlayer = _gameData->getPlayer(id).getPosition();
+        for (auto &team : _gameData->getTeams()) {
+            for (auto &player : team.getPlayers()) {
+                if (player.getPosition() == posPlayer && player.getId() != id)
+                    player.setState(Gui::Player::BEING_EJECTED);
+            }
         }
+    } catch (const std::exception &error) {
+        throw Gui::Errors::GuiUpdaterException(error.what());
     }
 }
 
