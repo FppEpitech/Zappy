@@ -190,7 +190,7 @@ void treat_command(app_t *app);
 void destroy_command_list(list_t *command_list);
 
 /**
- * @brief Calcul The K number
+ * @brief Calcul The K number.
  *
  * @param app Application with all informations.
  * @param ai_sender IA who send the message.
