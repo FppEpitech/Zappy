@@ -12,6 +12,8 @@ import select
 from ai.src.Utils.Utils import stringifyData
 from ai.src.Network.APIException import APIException
 
+LIMIT_TRANSFER = 20480
+
 class API:
     """
     API class
@@ -110,7 +112,7 @@ class API:
         readable, _, _ = select.select(self.inputs, [], [], timeout)
         for s in readable:
             if s == self.sock:
-                data = s.recv(1024)
+                data = s.recv(LIMIT_TRANSFER)
                 if not data:
                     print("Server disconnected")
                     sys.exit(0)
@@ -120,7 +122,7 @@ class API:
         return None
 
 
-    def initConnection(self, teamName : str):
+    def initConnection(self, teamName : str, fileName : str = ""):
         """
         Function to do the first exchange with the server
 
@@ -131,6 +133,8 @@ class API:
         Parameters :
             team_name : str
                 the name of the team
+            fileName : str
+                the file name of logs
 
         Returns :
             client_num : int
@@ -142,20 +146,20 @@ class API:
         """
         welcome = self.receiveData()
         if welcome != "WELCOME\n":
-            raise APIException("invalid welcome message")
+            raise APIException("invalid welcome message", fileName)
 
         self.sendData(f"{teamName}\n")
         clientNum, data = self.receiveData().split('\n', 1)
         data = data.split(' ')
 
         if len(data) != 2:
-            raise APIException("invalid map size")
+            raise APIException("invalid map size", fileName)
         try:
             clientNum = int(clientNum)
             x = int(data[0])
             y = int(data[1])
         except Exception as e:
-            raise APIException("invalid map size")
+            raise APIException("invalid map size", fileName)
 
         print("Connected to server")
         print(f"Client number: {clientNum}")
