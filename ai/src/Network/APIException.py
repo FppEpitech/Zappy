@@ -17,11 +17,29 @@ class APIException(IError):
     Attributes :
         message : str
             the message of the exception
+        fileName : str
+            the file name of logs
+
+    ----------
+
+    Methods :
+        __init__(message : str, fileName : str = "")
+            Constructor of the APIException class
+        getFileName()
+            Get the file name of logs
     """
 
 
-    def __init__(self, message):
+    def __init__(self, message, fileName=""):
         """
         Constructor of the APIException class
         """
+        self.fileName = fileName
         super().__init__("APIException: " + message)
+
+
+    def getFileName(self):
+        """
+        Get the file name
+        """
+        return self.fileName
