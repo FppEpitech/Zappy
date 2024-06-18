@@ -213,11 +213,12 @@ void pie_command(app_t *app, list_t *ai);
 /**
  * @brief The enw command. For send message to all the GUI,
  * when an egg is laid.
- * @param gui The gui structure of client requested.
  * @param app The app structure.
  * @param egg The egg structure.
+ * @param gui The gui structure of client requested,
+ * if no client requestes set it to null.
  */
-void enw_command(app_t *app, egg_t *egg);
+void enw_command(app_t *app, egg_t *egg, gui_t *gui);
 
 /**
  * @brief The eht command. For send message to all the GUI,
