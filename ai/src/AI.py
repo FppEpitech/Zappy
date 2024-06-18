@@ -8,10 +8,10 @@
 import os
 import sys
 import uuid
-from time import sleep
 
 from ai.src.Network.API import API
 from ai.src.Player.Player import Player, Action, Mode
+from ai.src.Network.APIException import APIException
 
 class AI:
     """
@@ -63,14 +63,18 @@ class AI:
         and send it to the server and after that, it will receive the response from the server
         and handle it
         """
-        self.api.connect()
-        self.api.initConnection(self.teamName)
-        forkAI()
+        fileName = ""
         if self.player.isLeader == False:
-            createLogs(self.player.isLeader)
+            fileName = createLogs(self.player.isLeader)
+        self.api.connect()
+        self.api.initConnection(self.teamName, fileName)
+        if self.player.isLeader:
+            self.player.completeTeam()
+
         while True:
             if len(self.player.actions) == 0:
-                print("Choose action", flush=True)
+                if self.player.currentMode != Mode.NONE:
+                    print("Choose action", flush=True)
                 self.player.chooseAction()
 
             if self.player.currentMode == Mode.REGROUP and self.player.isLeader == False:
@@ -122,7 +126,11 @@ def forkAI():
     pid = os.fork()
     if pid == 0:
         from ai.src.main import main
-        main()
+        try:
+            main()
+        except APIException as e:
+            os.remove("logs/stdout_" + e.getFileName())
+            os.remove("logs/stderr_" + e.getFileName())
         sys.exit(0)
     return pid
 
@@ -141,3 +149,4 @@ def createLogs(isLeader):
         os.makedirs("logs")
     sys.stdout = open("logs/stdout_" + fileName, "w")
     sys.stderr = open("logs/stderr_" + fileName, "w")
+    return fileName
