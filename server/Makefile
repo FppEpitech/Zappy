@@ -97,7 +97,7 @@ SRC			=	src/list/list.c \
 				src/gui/communication/edi.c			\
 				src/gui/communication/ebo.c			\
 
-TEST_FILES	=	list/list_test.c \
+TEST_FILES	=	list/list_test.c 					\
 				communication/communication_test.c 	\
 				parsing/help_test.c					\
 				parsing/parse_positive_int_tests.c	\
@@ -108,8 +108,9 @@ TEST_FILES	=	list/list_test.c \
 				parsing/parse_frequency_tests.c		\
 				parsing/parse_arguments_tests.c		\
 				parsing/parse_names_tests.c			\
-				map/map_test.c \
-				ai/move_command.c \
+				map/map_test.c 						\
+				ai/move_command.c 					\
+				gui/commands/tests_bct.c			\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
