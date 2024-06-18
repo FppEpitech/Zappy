@@ -53,7 +53,7 @@ void check_egg(vector2i_t *pos, app_t *app, char **reply)
 
     while (temp) {
         team = temp->data.team;
-        egg_temp = team->egg_position->first;
+        egg_temp = team->eggs_list->first;
         while (egg_temp) {
             concat_egg(pos, egg_temp, reply);
             egg_temp = egg_temp->next;

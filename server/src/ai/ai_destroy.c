@@ -55,8 +55,8 @@ void destroy_team(list_t *teams_list)
             ia_temp = ia_temp->next;
         }
         list_free(team->list_ai);
-        destroy_egg(team->egg_position);
-        list_free(team->egg_position);
+        destroy_egg(team->eggs_list);
+        list_free(team->eggs_list);
         free(team->name);
         free(team);
         temp = temp->next;

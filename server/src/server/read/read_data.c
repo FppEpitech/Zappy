@@ -9,6 +9,7 @@
 
 #include "app/app.h"
 #include "server/client.h"
+#include "gui/communication.h"
 #include "ai/cmd/command_ai.h"
 
 void concatenate_strings(char **str1, char *str2)
@@ -66,7 +67,7 @@ void handle_request(app_t *app, size_t fd, char *line)
     ia_t *ai = find_ia(app, fd);
 
     if (gui != NULL) {
-        (void) line;
+        handle_command_gui(gui, app, line);
         return;
     }
     if (ai != NULL) {

@@ -106,7 +106,7 @@ Test(communication, add_ia_with_multiple_team, .timeout = 5)
     parsing->port = 4449;
     parsing->height = 10;
     parsing->width = 15;
-    parsing->clientsNb = 3;
+    parsing->clientsNb = 1;
     parsing->names = malloc(sizeof(char *) * 3);
     parsing->names[0] = strdup("team 1\r");
     parsing->names[1] = strdup("team 2\r");
@@ -116,9 +116,11 @@ Test(communication, add_ia_with_multiple_team, .timeout = 5)
 
     node_data_t data;
     data.team = create_team(app, strdup("team 1\r"), 1);
+    cr_assert_not_null(data.team);
     list_add_front(app->teams_list, data);
     node_data_t data1;
     data1.client = create_client(1);
+    cr_assert_not_null(data1.client);
     list_add_back(app->clients_list, data1);
     add_ia(app, 1, strdup("team 1\r"));
 

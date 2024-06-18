@@ -6,6 +6,7 @@
 */
 
 #include "server/client.h"
+#include "gui/communication.h"
 
 gui_t *create_gui(int fd)
 {
@@ -18,6 +19,21 @@ gui_t *create_gui(int fd)
     return new_gui;
 }
 
+static void send_enw_commands(app_t *app, gui_t *gui)
+{
+    list_node_t *node_team = app->teams_list->first;
+    list_node_t *node_egg = NULL;
+
+    while (node_team) {
+        node_egg = node_team->data.team->eggs_list->first;
+        while (node_egg) {
+            enw_command(app, node_egg->data.egg, gui);
+            node_egg = node_egg->next;
+        }
+        node_team = node_team->next;
+    }
+}
+
 void add_gui(app_t *app, size_t fd, char *line)
 {
     node_data_t data;
@@ -25,6 +41,7 @@ void add_gui(app_t *app, size_t fd, char *line)
 
     data.gui = create_gui(fd);
     list_add_back(app->gui_list, data);
+    send_enw_commands(app, data.gui);
     free(client_node->data.client);
     list_delete(app->clients_list, client_node);
     free(line);

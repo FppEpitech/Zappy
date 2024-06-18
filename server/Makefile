@@ -56,8 +56,9 @@ SRC			=	src/list/list.c \
 				src/game/game.c \
 				src/game/win.c \
 				\
+				src/utils.c							\
+				\
 				src/parsing/help.c					\
-				src/parsing/parse_positive_int.c	\
 				src/parsing/parse_client.c			\
 				src/parsing/parse_port.c			\
 				src/parsing/parse_height.c			\
@@ -68,9 +69,36 @@ SRC			=	src/list/list.c \
 				src/parsing/destroy_parsing.c 		\
 				\
 				src/map/map.c						\
+				\
+				src/gui/communication/loop.c		\
+				src/gui/communication/msz.c			\
+				src/gui/communication/tna.c			\
+				src/gui/communication/sgt.c			\
+				src/gui/communication/sst.c			\
+				src/gui/communication/bct.c			\
+				src/gui/communication/mct.c			\
+				src/gui/communication/ppo.c			\
+				src/gui/communication/plv.c			\
+				src/gui/communication/pin.c			\
+				src/gui/communication/pnw.c			\
+				src/gui/communication/pex.c			\
+				src/gui/communication/pbc.c			\
+				src/gui/communication/pfk.c			\
+				src/gui/communication/pdr.c			\
+				src/gui/communication/pgt.c			\
+				src/gui/communication/pdi.c			\
+				src/gui/communication/seg.c			\
+				src/gui/communication/smg.c			\
+				src/gui/communication/suc.c			\
+				src/gui/communication/sbp.c			\
+				src/gui/communication/pic.c			\
+				src/gui/communication/pie.c			\
+				src/gui/communication/enw.c			\
+				src/gui/communication/edi.c			\
+				src/gui/communication/ebo.c			\
 
 TEST_FILES	=	list/list_test.c \
-				communication/communication_test.c \
+				communication/communication_test.c 	\
 				parsing/help_test.c					\
 				parsing/parse_positive_int_tests.c	\
 				parsing/parse_client_tests.c		\
