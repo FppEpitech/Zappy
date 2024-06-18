@@ -144,6 +144,29 @@ class Gui::Render {
         */
         size_t getRenderDistance() const;
 
+        /**
+         * @brief Check if the camera is in player pov.
+         *
+         * @return true - Camera is in player pov.
+         * @return false - Camera is not in player pov.
+         * @note The player pov is the first person, second person and third person.
+         */
+        bool isCameraInPlayerPov() const;
+
+        /**
+         * @brief Get the Time Unit value.
+         *
+         * @return size_t - Time unit value.
+        */
+        size_t getTimeUnit() const;
+
+        /**
+         * @brief Set the Time Unit value.
+         *
+         * @param timeUnit New time unit value.
+        */
+        void setTimeUnit(size_t timeUnit);
+
     private:
 
         UserCamera                                  _camera;            // Camera of the scene.

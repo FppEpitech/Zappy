@@ -8,6 +8,7 @@
 #include "app/app.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
+#include "gui/communication.h"
 
 void set_time_stuck(ia_t *ai, double total_stuck)
 {
@@ -30,22 +31,49 @@ double time_elapsed(struct timeval *time)
 
 static void handle_incantation_verification(ia_t *ai, app_t *app)
 {
+    list_t *list_ai = NULL;
     char *result = NULL;
 
     if (ai->incantation->status_incantation == false)
         return;
-    if (check_incantation(app, ai, END_INCANTATION) == false) {
+    list_ai = check_incantation(app, ai, END_INCANTATION);
+    if (list_ai == NULL) {
         printf("FAILD at end verification\n");
         update_status(app, ai, END_INCANTATION);
         result = format_string("ko\n");
         add_message(ai->list_messages, result);
         return;
     }
+    pie_command(app, list_ai);
     printf("SUCCESS at end verification\n");
     level_up(app, ai);
     result = format_string("Current level: %d\n", ai->level);
     add_message(ai->list_messages, result);
     printf("Level up succefully\n");
+}
+
+static void check_fork(ia_t *ai, list_node_t *egg_node, app_t *app)
+{
+    if (egg_node->data.egg->id_player_laid == ai->fd) {
+        printf("SUCCESS at end verification, player id : %ld\n", ai->fd);
+        printf("player_laid : %ld\n", egg_node->data.egg->id_player_laid);
+        enw_command(app, egg_node->data.egg, NULL);
+        return;
+    }
+}
+
+static void handle_fork_verification(ia_t *ai, app_t *app)
+{
+    list_node_t *team_node = app->teams_list->first;
+    list_node_t *egg_node = NULL;
+
+    while (team_node) {
+        while (egg_node) {
+            check_fork(ai, egg_node, app);
+            egg_node = egg_node->next;
+        }
+        team_node = team_node->next;
+    }
 }
 
 static void check_statut_stuck(ia_t *ai, app_t *app)
@@ -56,6 +84,7 @@ static void check_statut_stuck(ia_t *ai, app_t *app)
         ai->time->stuck = false;
         ai->time->total_stuck = 0.0;
         handle_incantation_verification(ai, app);
+        handle_fork_verification(ai, app);
     }
 }
 

@@ -10,6 +10,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#include "app/app.h"
 #include "list/list.h"
 
 typedef struct s_gui {

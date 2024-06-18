@@ -12,7 +12,7 @@
 void connect_nbr_cmd(app_t *app, ia_t *ai)
 {
     team_t *team = find_team(app, ai->fd);
-    char *reply = format_string("%d\n", team->egg_position->len);
+    char *reply = format_string("%d\n", team->eggs_list->len);
 
     add_message(ai->list_messages, reply);
 }

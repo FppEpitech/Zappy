@@ -9,15 +9,13 @@
 
 #include <stddef.h>
 
+#include "types.h"
+
 typedef struct s_ia ia_t;
 typedef struct s_gui gui_t;
 typedef struct s_team team_t;
 typedef struct s_client client_t;
-
-typedef struct s_vector2i {
-    int x;
-    int y;
-} vector2i_t;
+typedef struct s_vector2i vector2i_t;
 
 typedef union s_node_data {
     ia_t *ai;
@@ -27,6 +25,7 @@ typedef union s_node_data {
     char *message;
     char *command;
     vector2i_t *coord;
+    egg_t *egg;
 } node_data_t;
 
 typedef struct s_list_node {

@@ -6,6 +6,7 @@
 */
 
 #include "app/app.h"
+#include "gui/communication.h"
 
 static size_t check_max_level(ia_t *ai)
 {
@@ -30,8 +31,10 @@ bool check_win(app_t *app)
             nb_player_max += check_max_level(ia_temp->data.ai);
             ia_temp = ia_temp->next;
         }
-        if (nb_player_max >= 6)
+        if (nb_player_max >= 6) {
+            seg_command(app, team->name);
             return true;
+        }
         nb_player_max = 0;
         temp_team = temp_team->next;
     }

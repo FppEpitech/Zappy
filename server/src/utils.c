@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** Parse positive int argument for the server
+** utils
 */
 
 #include "rules.h"
@@ -13,6 +13,10 @@
 static bool is_str_number(char *str)
 {
     for (int i = 0; str[i]; i++) {
+        if (str[i] == '\r')
+            continue;
+        if (str[i] == '\n' && str[i - 1] == '\r')
+            return true;
         if (str[i] < '0' || str[i] > '9')
             return false;
     }

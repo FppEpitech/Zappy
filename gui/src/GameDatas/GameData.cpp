@@ -170,3 +170,13 @@ Gui::Team &Gui::GameData::getTeamById(size_t id)
     }
     throw Gui::Errors::GuiGameDataException("Team not found");
 }
+
+Gui::GameData::TimeUnitState Gui::GameData::getTimeUnitFromServer() const
+{
+    return _timeUnitFromServer;
+}
+
+void Gui::GameData::setTimeUnitFromServer(TimeUnitState timeUnitFromServer)
+{
+    _timeUnitFromServer = timeUnitFromServer;
+}
