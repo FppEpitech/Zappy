@@ -16,7 +16,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
 {
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
     DisableCursor();
-    // ToggleFullscreen();
+    ToggleFullscreen();
     SetTargetFPS(140);
     _isDebug = false;
     _hudList.push_back(std::make_shared<HudPlayer>(HudPlayer(gameData)));
@@ -55,6 +55,8 @@ void Gui::Render::draw()
 {
     if (!_camera.isPlayerPov())
         UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
+    else
+        setPlayerPov(_camera.getPlayerId());
 
     BeginDrawing();
 
@@ -157,7 +159,7 @@ void Gui::Render::displayDebug()
             ).c_str(), 10, 50, 20, LIME);
         DrawText(("Render distance: " + std::to_string(_renderDistance) + " chunks.").c_str(), 10, 70, 20, LIME);
         DrawText(("Camera Tile XZ: " + std::to_string(getCameraTile().first) + " / " + std::to_string(getCameraTile().second)).c_str(), 10, 90, 20, LIME);
-        DrawText(("CAMERA TYPE: " + std::to_string(_camera.getType())).c_str(), 10, 70, 20, LIME);
+        DrawText(("CAMERA TYPE: " + std::to_string(_camera.getType())).c_str(), 10, 110, 20, LIME);
     }
 }
 
@@ -173,13 +175,15 @@ void Gui::Render::displayPlayers()
                 continue;
             if (abs(player.getPosition().first - camTile.first) == (_renderDistance - 1) && abs(player.getPosition().second - camTile.second) == (_renderDistance - 1))
                 continue;
+
+            if (!displayAnimations(team, player))
+                continue;
+
             if (_camera.getPlayerId() == player.getId() && _camera.getType() == Gui::UserCamera::FIRST_PERSON)
                 continue;
 
             float rotation = player.getRotationFromOrientation();
 
-            if (!displayAnimations(team, player))
-                continue;
 
             if (player.getState() == Gui::Player::WALK)
                 DrawModelEx(team.getPlayerModel(), player.getPosition3D(), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, WHITE);
@@ -366,4 +370,107 @@ std::pair<size_t, size_t> Gui::Render::getCameraTile()
         }
     }
     return tilePos;
+}
+
+// Camera Pov //
+
+void Gui::Render::changePlayerPOV(size_t playerId)
+{
+    if (getCameraType() == Gui::UserCamera::CameraType::FIRST_PERSON)
+        changePOVToThirdPerson(playerId);
+    else if (getCameraType() == Gui::UserCamera::CameraType::SECOND_PERSON)
+        changePOVToFirstPerson(playerId);
+    else if (getCameraType() == Gui::UserCamera::CameraType::THIRD_PERSON)
+        changePOVToSecondPerson(playerId);
+}
+
+void Gui::Render::setPlayerPov(size_t playerId)
+{
+    if (getCameraType() == Gui::UserCamera::CameraType::FIRST_PERSON)
+        changePOVToFirstPerson(playerId);
+    else if (getCameraType() == Gui::UserCamera::CameraType::SECOND_PERSON)
+        changePOVToSecondPerson(playerId);
+    else if (getCameraType() == Gui::UserCamera::CameraType::THIRD_PERSON)
+        changePOVToThirdPerson(playerId);
+}
+
+void Gui::Render::changePOVToFirstPerson(size_t playerId)
+{
+    Gui::Player player = _gameData->getPlayer(playerId);
+    Vector3 playerPos;
+
+    try {
+        playerPos = player.getPosition3D();
+    } catch (const Gui::Errors::GuiGameDataException &e) {
+        return;
+    }
+    getCamera().get()->target = playerPos;
+
+    if (player.getOrientation() == 1)
+        getCamera().get()->target.z = playerPos.z - 2.0f;
+    else if (player.getOrientation() == 3)
+        getCamera().get()->target.z = playerPos.z + 2.0f;
+    else if (player.getOrientation() == 2)
+        getCamera().get()->target.x = playerPos.x + 2.0f;
+    else if (player.getOrientation() == 4)
+        getCamera().get()->target.x = playerPos.x - 2.0f;
+    getCamera().get()->target.y = playerPos.y + PLAYER_HEIGHT;
+    getCamera().get()->position = playerPos;
+    getCamera().get()->position.y += PLAYER_HEIGHT;
+    setCameraType(Gui::UserCamera::CameraType::FIRST_PERSON);
+    setCameraPlayerPov(playerId);
+}
+
+void Gui::Render::changePOVToSecondPerson(size_t playerId)
+{
+    Gui::Player player = _gameData->getPlayer(playerId);
+    Vector3 playerPos;
+
+    try {
+        playerPos = player.getPosition3D();
+    } catch (const Gui::Errors::GuiGameDataException &e) {
+        return;
+    }
+    getCamera().get()->position = playerPos;
+
+    if (player.getOrientation() == 1)
+        getCamera().get()->position.z = playerPos.z - PLAYER_SECOND_PERSON_FOV;
+    else if (player.getOrientation() == 3)
+        getCamera().get()->position.z = playerPos.z + PLAYER_SECOND_PERSON_FOV;
+    else if (player.getOrientation() == 2)
+        getCamera().get()->position.x = playerPos.x + PLAYER_SECOND_PERSON_FOV;
+    else if (player.getOrientation() == 4)
+        getCamera().get()->position.x = playerPos.x - PLAYER_SECOND_PERSON_FOV;
+    getCamera().get()->position.y = playerPos.y + PLAYER_HEIGHT;
+    getCamera().get()->target = playerPos;
+    getCamera().get()->target.y += PLAYER_HEIGHT;
+    setCameraType(Gui::UserCamera::CameraType::SECOND_PERSON);
+    setCameraPlayerPov(playerId);
+}
+
+void Gui::Render::changePOVToThirdPerson(size_t playerId)
+{
+    Gui::Player player = _gameData->getPlayer(playerId);
+    Vector3 playerPos;
+
+    try {
+        playerPos = player.getPosition3D();
+    } catch (const Gui::Errors::GuiGameDataException &e) {
+        return;
+    }
+    getCamera().get()->position = playerPos;
+    getCamera().get()->position.y = playerPos.y + 4.0f;
+
+    if (player.getOrientation() == 1)
+        getCamera().get()->position.z = playerPos.z + PLAYER_THIRD_PERSON_FOV;
+    else if (player.getOrientation() == 3)
+        getCamera().get()->position.z = playerPos.z - PLAYER_THIRD_PERSON_FOV;
+    else if (player.getOrientation() == 2)
+        getCamera().get()->position.x = playerPos.x - PLAYER_THIRD_PERSON_FOV;
+    else if (player.getOrientation() == 4)
+        getCamera().get()->position.x = playerPos.x + PLAYER_THIRD_PERSON_FOV;
+    getCamera().get()->target = playerPos;
+    getCamera().get()->target.y += PLAYER_HEIGHT;
+    setCameraType(Gui::UserCamera::CameraType::THIRD_PERSON);
+    setCameraPlayerPov(playerId);
 }

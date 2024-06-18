@@ -7,8 +7,8 @@
 
 #pragma once
 
-#define WINDOW_WIDTH 400
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
 #define WINDOW_TITLE "Zappy GUI"
 
 #include "raylib.h"
@@ -152,6 +152,12 @@ class Gui::Render {
          * @note The player pov is the first person, second person and third person.
          */
         bool isCameraInPlayerPov() const;
+
+        void changePlayerPOV(size_t playerId);
+        void setPlayerPov(size_t playerId);
+        void changePOVToFirstPerson(size_t playerId);
+        void changePOVToSecondPerson(size_t playerId);
+        void changePOVToThirdPerson(size_t playerId);
 
     private:
 

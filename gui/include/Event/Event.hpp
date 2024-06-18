@@ -86,7 +86,7 @@ class Gui::Event {
             {KEY_J, [this](){increaseRenderDistance();}},
             {KEY_K, [this](){decreaseRenderDistance();}},
             {KEY_F5, [this](){changeActualPlayerPov();}},
-            {KEY_APOSTROPHE, [this](){changeActualPlayerPov();}},
+            {KEY_FOUR, [this](){changeActualPlayerPov();}},
         };
 
         /**
