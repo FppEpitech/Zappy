@@ -37,6 +37,7 @@ SRC			=	src/list/list.c \
 				src/ai/cmd/eject/eject_player.c \
 				src/ai/cmd/eject/eject_egg.c \
 				src/ai/cmd/broadcast/broadcast_cmd.c \
+				src/ai/cmd/broadcast/calcul_k.c \
 				src/ai/cmd/incantation/incantation_handler.c \
 				src/ai/cmd/incantation/check_incantation.c \
 				src/ai/cmd/object_info.c \
@@ -91,7 +92,7 @@ NAME		= 	zappy_server
 
 # Flags
 INCLUDE		= -I./include
-CXXFLAGS 	= -Wall -Wextra -Werror
+CXXFLAGS 	= -Wall -Wextra -Werror -lm
 
 # Colors
 YELLOW 		= /bin/echo -e "\x1b[33m $1\x1b[0m"

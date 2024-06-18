@@ -189,3 +189,13 @@ void treat_command(app_t *app);
  * @param command_list List of command to destroy.
  */
 void destroy_command_list(list_t *command_list);
+
+/**
+ * @brief Calcul The K number
+ *
+ * @param app Application with all informations.
+ * @param ai_sender IA who send the message.
+ * @param ai_destination IA who received the message.
+ * @return size_t The tile where hit th broadcast.
+ */
+size_t calcul_k(app_t *app, ia_t *ai_sender, ia_t *ai_destination);

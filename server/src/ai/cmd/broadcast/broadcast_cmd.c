@@ -9,13 +9,16 @@
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
 
-static void send_text(ia_t *ai_sender, ia_t *ai, char *text)
+static void send_text(app_t *app, ia_t *ai_sender,
+    ia_t *ai_destination, char *text)
 {
     char *reply = NULL;
+    size_t tile = 0;
 
-    if (ai_sender->fd != ai->fd) {
-        reply = format_string("message K, %s\n", text);
-        add_message(ai->list_messages, reply);
+    if (ai_sender->fd != ai_destination->fd) {
+        tile = calcul_k(app, ai_sender, ai_destination);
+        reply = format_string("message %d, %s\n", tile, text);
+        add_message(ai_destination->list_messages, reply);
     }
 }
 
@@ -29,7 +32,7 @@ static void browse_ia(app_t *app, ia_t *ai, char *text)
         team = temp->data.team;
         ia_temp = team->list_ai->first;
         while (ia_temp) {
-            send_text(ai, ia_temp->data.ai, text);
+            send_text(app, ai, ia_temp->data.ai, text);
             ia_temp = ia_temp->next;
         }
         temp = temp->next;
