@@ -14,6 +14,14 @@ Gui::HudTile::HudTile(std::shared_ptr<GameData> gameData)
     _gameData = gameData;
     _texture = LoadTexture(PNG_HUD);
     _font = LoadFont(FONT_HUD);
+    _food = LoadTexture(PNG_FOOD);
+    _linemate = LoadTexture(PNG_LINEMATE);
+    _deraumere = LoadTexture(PNG_DERAUMERE);
+    _mendiane = LoadTexture(PNG_MENDIANE);
+    _phiras = LoadTexture(PNG_PHIRAS);
+    _sibur = LoadTexture(PNG_SIBUR);
+    _thystame = LoadTexture(PNG_THYSTAME);
+    _font = LoadFont(FONT_HUD);
 }
 
 void Gui::HudTile::display()
@@ -30,5 +38,13 @@ void Gui::HudTile::display()
         DrawTextEx(_font, ("Phiras: " + std::to_string(_tile->inventory.getPhiras())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_TILE_TEXT_MARGING * 4}, 20, 0, WHITE);
         DrawTextEx(_font, ("Sibur: " + std::to_string(_tile->inventory.getSibur())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_TILE_TEXT_MARGING * 5}, 20, 0, WHITE);
         DrawTextEx(_font, ("Thystame: " + std::to_string(_tile->inventory.getThystame())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_TILE_TEXT_MARGING * 6}, 20, 0, WHITE);
+
+        DrawTexture(_food, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 0, WHITE);
+        DrawTexture(_linemate, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 1, WHITE);
+        DrawTexture(_deraumere, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 2, WHITE);
+        DrawTexture(_mendiane, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 3, WHITE);
+        DrawTexture(_phiras, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 4, WHITE);
+        DrawTexture(_sibur, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 5, WHITE);
+        DrawTexture(_thystame, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 6, WHITE);
     }
 }
