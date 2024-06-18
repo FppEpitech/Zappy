@@ -87,7 +87,6 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     new_ia->fd = fd;
     new_ia->level = 1;
     new_ia->direction = choose_direction();
-    list_remove_front(team->eggs_list);
     new_ia->position = create_vector2i(x, y);
     new_ia->list_command = list_new();
     new_ia->list_messages = list_new();
@@ -115,7 +114,9 @@ void add_ia(app_t *app, size_t fd, char *line)
             free(client_node->data.client);
             list_delete(app->clients_list, client_node);
             free(line);
+            ebo_command(app, team->eggs_list->first->data.egg->id);
             pnw_command(app, data.ai);
+            list_remove_front(team->eggs_list);
             return;
         }
         temp = temp->next;

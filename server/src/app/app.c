@@ -6,6 +6,7 @@
 */
 
 #include "server/client.h"
+#include "gui/communication.h"
 
 static void create_teams(parsing_t *parsing, app_t *app)
 {
