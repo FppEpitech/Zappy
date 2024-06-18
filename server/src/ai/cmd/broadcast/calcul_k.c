@@ -11,7 +11,8 @@
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
 
-static vector2i_t *min_distance(vector2i_t *base, vector2i_t *first, vector2i_t *second)
+static vector2i_t *min_distance(vector2i_t *base,
+    vector2i_t *first, vector2i_t *second)
 {
     if (sqrt(pow(base->x - first->x, 2) + pow(base->y - first->y, 2)) <
     sqrt(pow(base->x - second->x, 2) + pow(base->y - second->y, 2)))
@@ -140,7 +141,7 @@ static size_t tile_hit_west(double angle)
 size_t calcul_k(app_t *app, ia_t *ai_sender, ia_t *ai_destination)
 {
     vector2i_t *sender = create_vector2i(ai_sender->position->x +
-    app->game->width, ai_sender->position->y  + app->game->height);
+    app->game->width, ai_sender->position->y + app->game->height);
     vector2i_t *min = find_closest_distance(app, sender, ai_destination);
     double angle = atan2(min->y - sender->y, min->x - sender->x);
 
@@ -155,6 +156,5 @@ size_t calcul_k(app_t *app, ia_t *ai_sender, ia_t *ai_destination)
         return tile_hit_south(angle);
     if (ai_destination->direction == NORTH)
         return tile_hit_west(angle);
-
     return 1;
 }
