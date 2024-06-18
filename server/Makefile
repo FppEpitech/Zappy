@@ -112,6 +112,7 @@ TEST_FILES	=	list/list_test.c 					\
 				ai/move_command.c 					\
 				gui/commands/tests_bct.c			\
 				gui/commands/tests_ebo.c			\
+				gui/commands/tests_edi.c			\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
