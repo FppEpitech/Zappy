@@ -7,19 +7,6 @@
 
 #include "gui/communication.h"
 
-enum e_command_label {
-    CL_MSZ,
-    CL_BCT,
-    CL_MCT,
-    CL_TNA,
-    CL_PPO,
-    CL_PLV,
-    CL_PIN,
-    CL_SGT,
-    CL_SST,
-    CL_LEN,
-};
-
 static const char *command_label[CL_LEN + 1] = {
     [CL_MSZ] = "msz",
     [CL_BCT] = "bct",

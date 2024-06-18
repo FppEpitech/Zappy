@@ -7,12 +7,25 @@
 
 #pragma once
 
-#include "../app/app.h"
 #include "gui.h"
+#include "../app/app.h"
 
 #define POS_SPACE 3
 #define LEN_COMMAND 3
 #define LEN_COMMAND_AND_SPACE LEN_COMMAND + 1
+
+enum e_command_label {
+    CL_MSZ,
+    CL_BCT,
+    CL_MCT,
+    CL_TNA,
+    CL_PPO,
+    CL_PLV,
+    CL_PIN,
+    CL_SGT,
+    CL_SST,
+    CL_LEN,
+};
 
 /**
  * @brief Handle all the commands of the GUI.
