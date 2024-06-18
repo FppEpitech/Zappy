@@ -133,7 +133,7 @@ TEST 		= $(addprefix $(TEST_DIR), $(TEST_FILES))
 TEST_OBJ 	= $(TEST:.c=.o)
 TEST_GCNO 	= $(SRC:.c=.gcno)
 TEST_GCDA 	= $(SRC:.c=.gcda)
-TEST_FLAGS 	= -Wall -Wextra -Werror --coverage -lcriterion
+TEST_FLAGS 	= -Wall -Wextra -Werror --coverage -lcriterion -lm
 
 CC = gcc
 
