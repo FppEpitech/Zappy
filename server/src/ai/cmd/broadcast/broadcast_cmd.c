@@ -8,6 +8,7 @@
 #include "app/app.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
+#include "gui/communication.h"
 
 static void send_text(ia_t *ai_sender, ia_t *ai, char *text)
 {
@@ -44,6 +45,7 @@ bool broadcast_command(app_t *app, ia_t *ai, char *line)
         reply = format_string("ok\n");
         browse_ia(app, ai, line + 10);
         add_message(ai->list_messages, reply);
+        pbc_command(app, ai->fd, line + 10);
         set_time_stuck(ai, 7 / app->game->freq);
         return true;
     }

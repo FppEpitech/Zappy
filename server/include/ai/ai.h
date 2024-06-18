@@ -16,9 +16,9 @@
 typedef struct s_app app_t;
 
 typedef enum {
-    NORTH,
-    SOUTH,
+    NORTH = 1,
     EAST,
+    SOUTH,
     WEST,
 } orientation_t;
 
@@ -55,6 +55,7 @@ typedef struct s_ia {
     incantation_info_t *incantation;
     size_t level;
     time_info_t *time;
+    char *team_name;
 } ia_t;
 
 /**

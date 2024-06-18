@@ -8,6 +8,7 @@
 #include "ai/cmd/look.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
+#include "gui/communication.h"
 
 void set_cmd(app_t *app, ia_t *ai)
 {
@@ -30,4 +31,5 @@ void set_cmd(app_t *app, ia_t *ai)
     app->game->map[ai_y][ai_x].thystame += ai->inventory->thystame;
     ai->inventory->thystame = 0;
     add_message(ai->list_messages, reply);
+    pdr_command(app, ai->fd);
 }

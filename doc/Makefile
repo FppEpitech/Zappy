@@ -29,4 +29,7 @@ server-doc:
 	@mv doxygen/latex/refman.pdf ./server-doc/doxygen-auto-doc.pdf
 	@cp doxygen/html/* ./server-doc/website-doc -r
 
+install-deps:
+	sudo dnf install doxygen-latex
+
 .PHONY: ai-doc gui-doc server-doc doxygen

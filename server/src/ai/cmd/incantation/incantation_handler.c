@@ -8,14 +8,17 @@
 #include "app/app.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
+#include "gui/communication.h"
 
 bool incantation_command(app_t *app, ia_t *ai, char *line)
 {
+    list_t *list_ai = NULL;
     char *success = NULL;
 
     if (strcmp("Incantation", line) == 0) {
         printf("Check incantation begin\n");
-        if (check_incantation(app, ai, BEGIN_INCANTATION) == false) {
+        list_ai = check_incantation(app, ai, BEGIN_INCANTATION);
+        if (list_ai == NULL) {
             printf("FAILD at begin verification\n");
             return false;
         }
@@ -23,6 +26,7 @@ bool incantation_command(app_t *app, ia_t *ai, char *line)
         success = format_string("Elevation underway\n");
         add_message(ai->list_messages, success);
         update_status(app, ai, BEGIN_INCANTATION);
+        pic_command(app, list_ai);
         return true;
     }
     return false;

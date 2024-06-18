@@ -10,6 +10,7 @@
 #include "app/app.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
+#include "gui/communication.h"
 
 static bool server_quit_gui(list_t *gui_list, size_t fd)
 {
@@ -59,9 +60,9 @@ static void check_ia(app_t *app, team_t *team, list_node_t *ia_temp)
     list_free(ia_temp->data.ai->list_messages);
     free(ia_temp->data.ai);
     list_delete(team->list_ai, ia_temp);
-    if (team->max_place > team->egg_position->len) {
-        add_egg(team->egg_position, rand() % app->game->height,
-        rand() % app->game->width);
+    if (team->max_place > team->eggs_list->len) {
+        add_egg(team->eggs_list, -1, app);
+        pfk_command(app, -1);
     }
 }
 
@@ -77,6 +78,7 @@ static bool server_quit_ia(app_t *app, size_t fd)
         if (ia_temp->data.ai->fd == fd) {
             check_ia(app, team, ia_temp);
             dead_response(app);
+            pdi_command(app, fd);
             return true;
         }
         ia_temp = ia_temp->next;
