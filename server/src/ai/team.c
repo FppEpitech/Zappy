@@ -43,7 +43,8 @@ void add_egg(list_t *eggs, int id_player_laid, app_t *app)
     list_add_back(eggs, data);
 }
 
-static void add_egg_with_id(list_t *eggs, int id_player_laid, app_t *app, size_t id)
+static void add_egg_with_id(list_t *eggs, int id_player_laid, app_t *app,
+    size_t id)
 {
     node_data_t data;
 

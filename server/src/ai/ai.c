@@ -103,20 +103,18 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
 void add_ia(app_t *app, size_t fd, char *line)
 {
     list_node_t *temp = app->teams_list->first;
-    team_t *team = NULL;
     node_data_t data;
     list_node_t *client_node = find_client(app->clients_list, fd);
 
     while (temp) {
-        team = temp->data.team;
-        if (strcmp(line, team->name) == 0 &&
-        team->eggs_list->len > 0) {
-            data.ai = create_ia(app, fd, team);
-            list_add_back(team->list_ai, data);
+        if (strcmp(line, temp->data.team->name) == 0 &&
+        temp->data.team->eggs_list->len > 0) {
+            data.ai = create_ia(app, fd, temp->data.team);
+            list_add_back(temp->data.team->list_ai, data);
             free(client_node->data.client);
             list_delete(app->clients_list, client_node);
-            free(team->eggs_list->first->data.egg);
-            list_remove_front(team->eggs_list);
+            free(temp->data.team->eggs_list->first->data.egg);
+            list_remove_front(temp->data.team->eggs_list);
             free(line);
             return;
         }
