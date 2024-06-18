@@ -136,6 +136,16 @@ size_t Gui::Render::getRenderDistance() const
     return _renderDistance;
 }
 
+size_t Gui::Render::getTimeUnit() const
+{
+    return _gameData.get()->getServerTick();
+}
+
+void Gui::Render::setTimeUnit(size_t timeUnit)
+{
+    _gameData.get()->setServerTick(timeUnit);
+}
+
 void Gui::Render::displayDebug()
 {
     if (_isDebug) {

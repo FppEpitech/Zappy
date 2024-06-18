@@ -67,4 +67,8 @@ void Gui::Engine::sendMessageUpdate(void)
             _network.get()->sendMessageServer("ppo " + std::to_string(player.getId()) + "\n");
         }
     }
+    if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::INCREASE)
+        _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() + 1) + "\n");
+    else if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::DECREASE)
+        _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() - 1) + "\n");
 }

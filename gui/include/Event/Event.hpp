@@ -87,6 +87,8 @@ class Gui::Event {
             {KEY_R, [this](){switchTileHudToGame();}},
             {KEY_J, [this](){increaseRenderDistance();}},
             {KEY_K, [this](){decreaseRenderDistance();}},
+            {KEY_KP_ADD, [this](){increaseTimeUnit();}},
+            {KEY_KP_SUBTRACT, [this](){decreaseTimeUnit();}},
         };
 
         /**
@@ -175,4 +177,16 @@ class Gui::Event {
          *
          */
         void decreaseRenderDistance();
+
+        /**
+         * @brief Increase the time unit.
+         *
+        */
+        void increaseTimeUnit();
+
+        /**
+         * @brief Decrease the time unit.
+         *
+         */
+        void decreaseTimeUnit();
 };
