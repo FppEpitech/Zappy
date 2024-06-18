@@ -15,7 +15,6 @@ void fork_cmd(app_t *app, ia_t *ai)
     team_t *team = find_team(app, ai->fd);
     char *reply = format_string("ok\n");
 
-    printf("before add egg, ai fd: %ld\n", ai->fd);
     add_egg(team->eggs_list, ai->fd, app);
     pfk_command(app, ai->fd);
     add_message(ai->list_messages, reply);
