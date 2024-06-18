@@ -49,13 +49,13 @@ void add_team(app_t *app, char *team_name, size_t max_place);
 void display_egg_position(app_t *app);
 
 /**
- * @brief Add egg in the list.
+ * @brief Add an egg in the list.
  *
- * @param eggs List of egg.
+ * @param eggs List of eggs.
  * @param id_player_laid Id of the player who laid the egg.
- * @param app Application with list of eggs.
+ * @param app Application with list of team.
  */
-void add_egg(list_t *eggs, int random_x, app_t *app);
+void add_egg(list_t *eggs, int id_player_laid, app_t *app);
 
 /**
  * @brief Find the team of fd given.
