@@ -5,6 +5,7 @@
 ** TestDecoration
 */
 
+#include "Config.hpp"
 #include "Render/Decoration.hpp"
 #include "CriterionHeaders.hpp"
 
@@ -23,7 +24,7 @@ Test(Decoration, getGenerationItem, .timeout = 5)
 {
     Gui::Decoration deco;
 
-    deco.display(std::make_pair(2,2));
+    deco.display(std::make_pair(2,2), 1, std::make_pair(2,2));
     Map<bool> generation = deco.getGenerationItem(1);
 
     cr_assert(!generation[0][0]);

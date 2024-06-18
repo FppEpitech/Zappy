@@ -21,7 +21,6 @@ void command_ai_handler(app_t *app, ia_t *ai, char *line)
 {
     char *bad_command = NULL;
 
-    bad_command = format_string("ko\n");
     if (move_command(app, ai, line))
         return;
     if (object_info_command(app, ai, line))
@@ -32,6 +31,7 @@ void command_ai_handler(app_t *app, ia_t *ai, char *line)
         return;
     if (incantation_command(app, ai, line))
         return;
+    bad_command = format_string("ko\n");
     add_message(ai->list_messages, bad_command);
 }
 
@@ -45,6 +45,7 @@ static void check_ai_stuck(ia_t *ai, app_t *app)
         return;
     if (ai->time->stuck == false) {
         command_ai_handler(app, ai, command);
+        free(command);
         list_remove_front(ai->list_command);
     }
 }

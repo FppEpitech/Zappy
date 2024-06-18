@@ -6,6 +6,7 @@
 */
 
 #include "Assets.hpp"
+#include "Config.hpp"
 #include "GameDatas/Team.hpp"
 #include "raymath.h"
 

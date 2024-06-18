@@ -36,6 +36,7 @@ static bool fill_names(char **arg, int pos, int max_arg, parsing_t *parsing)
             return false;
         }
     }
+    parsing->names[max_arg] = NULL;
     return true;
 }
 

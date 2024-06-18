@@ -7,13 +7,11 @@
 
 #pragma once
 
+#include "Config.hpp"
 #include "Render/Render.hpp"
 
 #include <functional>
 #include <unordered_map>
-
-#define HIGH_CAMERA_INCREASE 0.1
-#define LOW_CAMERA_INCREASE 0.1
 
 namespace Gui {
 
@@ -72,7 +70,7 @@ class Gui::Event {
         std::unordered_map<KeyboardKey, std::function<void()>> _eventsKeyDown =
         {
             {KEY_SPACE, [this](){moveUpCamera();}},
-            {KEY_LEFT_SHIFT, [this](){moveDownCamera();}}
+            {KEY_LEFT_SHIFT, [this](){moveDownCamera();}},
         };
 
         /**
@@ -84,7 +82,11 @@ class Gui::Event {
             {KEY_THREE, [this](){switchDisplayDebug();}},
             {KEY_F3, [this](){switchDisplayDebug();}},
             {KEY_SPACE, [this](){setFreeCam();}},
-            {KEY_R, [this](){switchTileHudToGame();}}
+            {KEY_R, [this](){switchTileHudToGame();}},
+            {KEY_J, [this](){increaseRenderDistance();}},
+            {KEY_K, [this](){decreaseRenderDistance();}},
+            {KEY_F5, [this](){changeActualPlayerPov();}},
+            {KEY_APOSTROPHE, [this](){changeActualPlayerPov();}},
         };
 
         /**
@@ -150,15 +152,62 @@ class Gui::Event {
         void changePlayer(bool turn);
 
         /**
+         * @brief Change the player point of view.
+         *
+         * @param playerId Player id to select.
+         * @note The player point of view is the first person, second person and third person.
+        */
+        void changePlayerPOV(size_t playerId);
+
+        /**
+         * @brief Sets the Pov of the player.
+         *
+         * @param playerId Player id to select.
+        */
+        void setPlayerPov(size_t playerId);
+
+        /**
+         * @brief Change the actual player point of view.
+         *
+        */
+        void changeActualPlayerPov();
+
+        /**
+         * @brief Change the camera to the player.
+         *
+         * @param player Player to select.
+        */
+        void changePOVToFirstPerson(size_t id);
+
+        /**
+         * @brief Change the camera to the player.
+         *
+         * @param player Player to select.
+        */
+        void changePOVToSecondPerson(size_t id);
+
+        /**
          * @brief Change the camera to the player.
          *
          * @param player Player to select.
          */
-        void changeCameraToPlayer(size_t id);
+        void changePOVToThirdPerson(size_t id);
 
         /**
          * @brief Change the Hud of Tile to Game.
          *
          */
         void switchTileHudToGame();
+
+        /**
+         * @brief Increase the render distance.
+         *
+         */
+        void increaseRenderDistance();
+
+        /**
+         * @brief Decrease the render distance.
+         *
+         */
+        void decreaseRenderDistance();
 };

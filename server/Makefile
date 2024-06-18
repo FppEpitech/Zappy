@@ -19,6 +19,7 @@ SRC			=	src/list/list.c \
 				src/ai/stuck.c \
 				src/ai/ai_destroy.c \
 				src/ai/die.c \
+				\
 				src/ai/cmd/handler.c \
 				src/ai/cmd/move.c \
 				src/ai/cmd/look/look_handler.c \
@@ -64,6 +65,7 @@ SRC			=	src/list/list.c \
 				src/parsing/arguments.c				\
 				src/parsing/parse_names.c			\
 				src/parsing/parse_frequency.c		\
+				src/parsing/destroy_parsing.c 		\
 				\
 				src/map/map.c						\
 

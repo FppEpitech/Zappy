@@ -5,6 +5,7 @@
 ** TestTeam
 */
 
+#include "Config.hpp"
 #include "GameDatas/Team.hpp"
 #include "CriterionHeaders.hpp"
 

@@ -5,6 +5,7 @@
 ** Animations
 */
 
+#include "Config.hpp"
 #include "Render/Render.hpp"
 
 bool Gui::Render::displayAnimations(Team &team, Player &player)

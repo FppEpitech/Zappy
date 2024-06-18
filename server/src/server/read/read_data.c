@@ -40,15 +40,16 @@ char *read_line(int fd)
 {
     char buffer[1024];
     ssize_t bytes_received;
-    char *line = malloc(sizeof(char) * 1);
+    char *line = calloc(1, sizeof(char));
 
     if (line == NULL)
         return NULL;
-    line[0] = '\0';
     memset(buffer, 0, sizeof(buffer));
     bytes_received = read(fd, buffer, 1);
-    if (bytes_received <= 0)
+    if (bytes_received <= 0) {
+        free(line);
         return NULL;
+    }
     while (bytes_received > 0) {
         if (buffer[0] == '\n')
             break;
@@ -65,13 +66,11 @@ void handle_request(app_t *app, size_t fd, char *line)
     ia_t *ai = find_ia(app, fd);
 
     if (gui != NULL) {
-        if (gui->list_messages->len >= 10)
-            return;
         (void) line;
         return;
     }
     if (ai != NULL) {
-        if (ai->list_messages->len >= 10)
+        if (ai->list_command->len >= 10)
             return;
         add_command_to_list(ai, strdup(line));
         return;
@@ -89,7 +88,7 @@ bool server_data_handler(app_t *app, size_t fd)
     }
     if (its_client(app, fd)) {
         if (strcmp(line, "GRAPHIC") == 0)
-            add_gui(app, fd);
+            add_gui(app, fd, line);
         else
             add_ia(app, fd, line);
     } else {

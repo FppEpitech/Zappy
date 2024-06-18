@@ -15,6 +15,7 @@
 #define PATH_DECORATION             "decoration/"
 #define PATH_HUD                    "hud/"
 
+#define PNG_CURSOR                  PATH_ASSETS PATH_HUD "cursor.png"
 #define PNG_HUD                     PATH_ASSETS PATH_HUD "hud.png"
 #define FONT_HUD                    PATH_ASSETS PATH_HUD "SimplyMono-Bold.ttf"
 
@@ -30,10 +31,6 @@
 #define MODEL_EGG                   PATH_ASSETS PATH_PLAYER "egg.glb"
 #define MODEL_TREE                  PATH_ASSETS PATH_DECORATION "tree.glb"
 #define MODEL_LANTERN               PATH_ASSETS PATH_DECORATION "lantern.glb"
-
-#define SIZE_TILE                   4.7
-
-#define PLAYER_HEIGHT               2
 
 #define SCALE_FOOD                  (Vector3){1, 0.5, 1}
 #define SCALE_LINEMATE              (Vector3){0.1, 0.1, 0.1}

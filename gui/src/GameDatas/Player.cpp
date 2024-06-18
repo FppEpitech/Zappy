@@ -5,6 +5,7 @@
 ** Player
 */
 
+#include "Config.hpp"
 #include "Assets.hpp"
 #include "GameDatas/Player.hpp"
 
