@@ -63,8 +63,6 @@ class Gui::Decoration {
 
         Model                                   _treeModel;         // Tree model asset.
         Map<bool>                               _mapTree;           // Map to display trees.
-        Model                                   _lanternModel;      // Lantern model asset.
-        Map<bool>                               _mapLantern;        // Map to display lanterns.
 
         std::pair<std::size_t, std::size_t>     _mapSize;           // Size of the map.
 
@@ -76,13 +74,4 @@ class Gui::Decoration {
          * @param posTile Position of a tile.
          */
         void displayTree(size_t i, size_t j, Vector3 posTile);
-
-        /**
-         * @brief Display Lanterns.
-         *
-         * @param i Index width in map.
-         * @param j Index height in map.
-         * @param posTile Position of a tile.
-         */
-        void displayLantern(size_t i, size_t j, Vector3 posTile);
 };
