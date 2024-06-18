@@ -5,7 +5,6 @@
 ** Engine
 */
 
-#include "Assets.hpp"
 #include "Event/Event.hpp"
 #include "Engine/Engine.hpp"
 #include "GUIUpdater/GUIUpdater.hpp"

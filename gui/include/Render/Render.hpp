@@ -153,11 +153,41 @@ class Gui::Render {
          */
         bool isCameraInPlayerPov() const;
 
+        /**
+         * @brief Change the player point of view.
+         *
+         * @param playerId Player id to select.
+         * @note The player point of view is the first person, second person and third person.
+        */
         void changePlayerPOV(size_t playerId);
+
+        /**
+         * @brief Sets the Pov of the player.
+         *
+         * @param playerId Player id to select.
+        */
         void setPlayerPov(size_t playerId);
-        void changePOVToFirstPerson(size_t playerId);
-        void changePOVToSecondPerson(size_t playerId);
-        void changePOVToThirdPerson(size_t playerId);
+
+        /**
+         * @brief Change the camera to the player.
+         *
+         * @param player Player to select.
+        */
+        void changePOVToFirstPerson(size_t id);
+
+        /**
+         * @brief Change the camera to the player.
+         *
+         * @param player Player to select.
+        */
+        void changePOVToSecondPerson(size_t id);
+
+        /**
+         * @brief Change the camera to the player.
+         *
+         * @param player Player to select.
+         */
+        void changePOVToThirdPerson(size_t id);
 
     private:
 
