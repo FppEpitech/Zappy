@@ -163,6 +163,7 @@ void Gui::Render::displayDebug()
         DrawText(("Render distance: " + std::to_string(_renderDistance) + " chunks.").c_str(), 10, 70, 20, LIME);
         DrawText(("Camera Tile XZ: " + std::to_string(getCameraTile().first) + " / " + std::to_string(getCameraTile().second)).c_str(), 10, 90, 20, LIME);
     }
+    DrawText(("Time Unit: " + std::to_string(_gameData.get()->getServerTick())).c_str(), 10, WINDOW_HEIGHT - 20, 20, WHITE);
 }
 
 void Gui::Render::displayPlayers()
