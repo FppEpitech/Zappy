@@ -10,11 +10,17 @@
 
 static size_t get_last_id(app_t *app)
 {
+    list_node_t *temp = app->teams_list->first;
+    team_t *team = NULL;
     size_t id = 0;
 
-    if (app->eggs_list->last != NULL)
-        id = app->eggs_list->last->data.egg->id + 1;
-    return id;
+    while (temp) {
+        team = temp->data.team;
+        if (team->eggs_list->last->data.egg->id > id)
+            id = team->eggs_list->last->data.egg->id;
+        temp = temp->next;
+    }
+    return id + 1;
 }
 
 void add_egg(list_t *eggs, int id_player_laid, app_t *app)
@@ -31,7 +37,30 @@ void add_egg(list_t *eggs, int id_player_laid, app_t *app)
     data.egg->is_laid = false;
     data.egg->id_player_laid = id_player_laid;
     list_add_back(eggs, data);
-    list_add_back(app->eggs_list, data);
+}
+
+static void add_egg_with_id(list_t *eggs, int id_player_laid, app_t *app, size_t id)
+{
+    node_data_t data;
+
+    data.egg = malloc(sizeof(egg_t));
+    if (data.egg == NULL)
+        return;
+    data.egg->pos = create_vector2i(rand() % app->game->height,
+    rand() % app->game->width);
+    data.egg->id = id;
+    data.egg->is_laid = false;
+    data.egg->id_player_laid = id_player_laid;
+    list_add_back(eggs, data);
+}
+
+static void add_eggs(team_t *team, app_t *app)
+{
+    size_t id = get_last_id(app);
+
+    for (size_t index_egg = 0; index_egg < team->max_place; index_egg++) {
+        add_egg_with_id(team->eggs_list, -1, app, id + index_egg);
+    }
 }
 
 static bool check_team(team_t *team, size_t fd)
@@ -70,9 +99,7 @@ team_t *create_team(app_t *app, char *name, size_t max_place)
     new_team->max_place = max_place;
     new_team->list_ai = list_new();
     new_team->eggs_list = list_new();
-    for (size_t index_egg = 0; index_egg < new_team->max_place; index_egg++) {
-        add_egg(new_team->eggs_list, -1, app);
-    }
+    add_eggs(new_team, app);
     if (new_team->list_ai == NULL)
         return NULL;
     return new_team;

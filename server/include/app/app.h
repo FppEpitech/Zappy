@@ -27,7 +27,6 @@ typedef struct s_app {
     list_t *gui_list;
     list_t *teams_list;
     list_t *clients_list;
-    list_t *eggs_list;
     server_t *server;
     game_t *game;
 } app_t;

@@ -28,10 +28,9 @@ app_t *create_app(parsing_t *parsing)
     new_app->gui_list = list_new();
     new_app->clients_list = list_new();
     new_app->teams_list = list_new();
-    new_app->eggs_list = list_new();
     create_teams(parsing, new_app);
     if (new_app->gui_list == NULL || new_app->clients_list == NULL
-    || new_app->teams_list == NULL || new_app->eggs_list == NULL)
+    || new_app->teams_list == NULL)
         return NULL;
     return new_app;
 }
