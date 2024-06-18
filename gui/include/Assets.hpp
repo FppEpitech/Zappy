@@ -16,7 +16,15 @@
 #define PATH_HUD                    "hud/"
 
 #define PNG_CURSOR                  PATH_ASSETS PATH_HUD "cursor.png"
+
 #define PNG_HUD                     PATH_ASSETS PATH_HUD "hud.png"
+#define PNG_FOOD                    PATH_ASSETS PATH_HUD "food.png"
+#define PNG_LINEMATE                PATH_ASSETS PATH_HUD "linemate.png"
+#define PNG_DERAUMERE               PATH_ASSETS PATH_HUD "deraumere.png"
+#define PNG_MENDIANE                PATH_ASSETS PATH_HUD "mendiane.png"
+#define PNG_PHIRAS                  PATH_ASSETS PATH_HUD "phiras.png"
+#define PNG_SIBUR                   PATH_ASSETS PATH_HUD "sibur.png"
+#define PNG_THYSTAME                PATH_ASSETS PATH_HUD "thystame.png"
 #define FONT_HUD                    PATH_ASSETS PATH_HUD "SimplyMono-Bold.ttf"
 
 #define MODEL_TILE                  PATH_ASSETS PATH_TILE "tile.glb"
