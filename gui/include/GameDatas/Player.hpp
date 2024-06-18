@@ -194,7 +194,7 @@ class Gui::Player {
         int getCurrentFrame() const;
 
         /**
-         * @brief Restart the timer animation;
+         * @brief Restart the timer animation.
          *
          */
         void restartAnimationTimeEllapsed();
