@@ -67,8 +67,6 @@ void handle_request(app_t *app, size_t fd, char *line)
     ia_t *ai = find_ia(app, fd);
 
     if (gui != NULL) {
-        if (gui->list_messages->len >= 10)
-            return;
         handle_command_gui(gui, app, line);
         return;
     }
