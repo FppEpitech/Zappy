@@ -412,12 +412,32 @@ class Player:
             self.updateInventory(response)
         elif self.currentAction == Action.CONNECT_NBR:
             self.unusedSlots = int(response)
+            if self.currentCallback is not None:
+                self.currentCallback()
         elif self.currentAction == Action.INCANTATION:
             if self.handleElevation(response):
                 return
         self.currentAction = Action.NONE
         self.currentCommand = ""
         self.callback = None
+
+
+    def connectMissingPlayers(self):
+        """
+        Connect the missing players
+        """
+        print("Connecting missing players", flush=True, file=sys.stderr)
+        for _ in range(0, min(self.unusedSlots, 5)):
+            from ai.src.AI import forkAI
+            forkAI()
+
+
+    def completeTeam(self):
+        """
+        Complete the team
+        """
+        self.connectNbr()
+        self.callbacks[len(self.callbacks) - 1] = self.connectMissingPlayers
 
 
     def updateModeSlave(self):
@@ -616,6 +636,7 @@ class Player:
             else:
                 self.broadcast("Finished dropping")
                 self.currentMode = Mode.NONE
+                return
             self.cmdInventory()
 
 
@@ -704,6 +725,5 @@ class Player:
             self.incantation()
             return
         elif self.currentMode == Mode.NONE:
-            self.cmdInventory()
             return
         return
