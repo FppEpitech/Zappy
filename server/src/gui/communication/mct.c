@@ -34,7 +34,7 @@ void mct_response(gui_t *gui, app_t *app, char *line)
     char *final_response = "";
 
     if (strlen(line) != LEN_COMMAND) {
-        sbp_command(gui);
+        suc_command(gui);
         return;
     }
     while ((size_t)pos.y < app->game->height) {
