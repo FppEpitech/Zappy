@@ -95,6 +95,8 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     new_ia->time = create_time(app);
     new_ia->team_name = team->name;
     add_message_to_ia(app, team, new_ia);
+    ebo_command(app, team->eggs_list->first->data.egg->id);
+    pnw_command(app, new_ia);
     return new_ia;
 }
 
@@ -113,10 +115,8 @@ void add_ia(app_t *app, size_t fd, char *line)
             list_add_back(team->list_ai, data);
             free(client_node->data.client);
             list_delete(app->clients_list, client_node);
-            free(line);
-            ebo_command(app, team->eggs_list->first->data.egg->id);
-            pnw_command(app, data.ai);
             list_remove_front(team->eggs_list);
+            free(line);
             return;
         }
         temp = temp->next;
