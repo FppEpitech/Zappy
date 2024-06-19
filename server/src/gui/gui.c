@@ -34,6 +34,27 @@ static void send_enw_commands(app_t *app, gui_t *gui)
     }
 }
 
+static void send_pnw_commands(app_t *app, gui_t *gui)
+{
+    list_node_t *node_team = app->teams_list->first;
+    list_node_t *node_ai = NULL;
+    char *response = NULL;
+    ia_t *ai = NULL;
+
+    while (node_team) {
+        node_ai = node_team->data.team->list_ai->first;
+        while (node_ai) {
+            ai = node_ai->data.ai;
+            response = format_string("pnw %d %d %d %d %d %s\n",
+            ai->fd, ai->position->x, ai->position->y, ai->direction,
+            ai->level, ai->team_name);
+            add_message(gui->list_messages, response);
+            node_ai = node_ai->next;
+        }
+        node_team = node_team->next;
+    }
+}
+
 void add_gui(app_t *app, size_t fd, char *line)
 {
     node_data_t data;
@@ -43,6 +64,7 @@ void add_gui(app_t *app, size_t fd, char *line)
     list_add_back(app->gui_list, data);
     tna_response(data.gui, app, "tna");
     send_enw_commands(app, data.gui);
+    send_pnw_commands(app, data.gui);
     free(client_node->data.client);
     list_delete(app->clients_list, client_node);
     free(line);
