@@ -51,8 +51,9 @@ class Gui::GUIUpdater {
 
     private:
 
-        std::shared_ptr<GameData> _gameData; // The GUI GameData to update.
-        std::shared_ptr<Network> _network; // The network to send commands to the server.
+        std::shared_ptr<GameData>       _gameData; // The GUI GameData to update.
+        std::shared_ptr<Network>        _network; // The network to send commands to the server.
+        size_t                          _colorIndex; // The index of the color to use for the team.
 
         std::unordered_map<std::string, std::function<void(std::vector<std::string>)>> _updateMap =
         {
@@ -249,4 +250,10 @@ class Gui::GUIUpdater {
          * @param data The data to update the GUI GameData command parameter.
         */
         void updateCommandParameter(const std::vector<std::string> &data);
+
+        /**
+         * @brief Increase the color index.
+         *
+        */
+        void increaseColorIndex();
 };
