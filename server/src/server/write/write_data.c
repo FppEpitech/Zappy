@@ -44,10 +44,14 @@ bool write_message(list_t *list_messages, size_t fd)
     if (list_messages->len == 0)
         return true;
     tmp = list_messages->first;
-    bytes_writted = write(fd, tmp->data.message, strlen(tmp->data.message));
-    if (bytes_writted == -1)
-        return false;
-    free(tmp->data.message);
-    list_remove_front(list_messages);
+    while (tmp) {
+        bytes_writted = write(fd, tmp->data.message,
+        strlen(tmp->data.message));
+        if (bytes_writted == -1)
+            return false;
+        free(tmp->data.message);
+        list_remove_front(list_messages);
+        tmp = list_messages->first;
+    }
     return true;
 }
