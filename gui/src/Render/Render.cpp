@@ -193,7 +193,7 @@ void Gui::Render::displayPlayers()
 
             if (_isDebug) {
                 std::vector<BoundingBox> bboxes = team.getPlayerBoundingBoxes(player.getPosition(), player.getOrientation(), player.getCenterPosition());
-                // std::vector<RayCollision> hitbox = team.getPlayerModelHitbox(player.getId(), *_camera.getCamera().get());
+                std::vector<RayCollision> hitbox = team.getPlayerModelHitbox(player.getId(), *_camera.getCamera().get());
 
                 for (size_t i = 0; i < bboxes.size(); i++)
                     DrawBoundingBox(bboxes[i], GREEN);
@@ -221,23 +221,27 @@ void Gui::Render::displayMap()
 
 void Gui::Render::displayTile(Tile tile)
 {
-    DrawModel(_tileModel, tile.getPositionIn3DSpace(), 1.0f, WHITE);
-    std::vector<BoundingBox> bboxes = tile.getTileBoundingBoxes(tile, _tileModel);
+    Vector3 tilePos3D = tile.getPositionIn3DSpace();
+    DrawModel(_tileModel, tilePos3D, 1.0f, WHITE);
 
     if (_isDebug) {
+        std::vector<BoundingBox> bboxes = tile.getTileBoundingBoxes(tile, _tileModel);
         for (size_t i = 0; i < bboxes.size(); i++)
             DrawBoundingBox(bboxes[i], GREEN);
     } else {
-        BoundingBox bbox = bboxes[0];
-        DrawLine3D(bbox.max, { bbox.min.x, bbox.max.y, bbox.max.z }, BLACK);
-        DrawLine3D({ bbox.min.x, bbox.max.y, bbox.max.z },
-            { bbox.min.x, bbox.max.y, bbox.min.z }, BLACK);
-        DrawLine3D({ bbox.min.x, bbox.max.y, bbox.min.z },
-            { bbox.max.x, bbox.max.y, bbox.min.z }, BLACK);
-        DrawLine3D({ bbox.max.x, bbox.max.y, bbox.min.z }, bbox.max, BLACK);
+        DrawLine3D( (Vector3){(float)(tilePos3D.x - SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z - SIZE_TILE / 2.0f)},
+                    (Vector3){(float)(tilePos3D.x - SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z + SIZE_TILE / 2.0f)}, DARKGREEN);
+
+        DrawLine3D( (Vector3){(float)(tilePos3D.x - SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z + SIZE_TILE / 2.0f)},
+                    (Vector3){(float)(tilePos3D.x + SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z + SIZE_TILE / 2.0f)}, DARKGREEN);
+
+        DrawLine3D( (Vector3){(float)(tilePos3D.x + SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z + SIZE_TILE / 2.0f)},
+                    (Vector3){(float)(tilePos3D.x + SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z - SIZE_TILE / 2.0f)}, DARKGREEN);
+
+        DrawLine3D( (Vector3){(float)(tilePos3D.x + SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z - SIZE_TILE / 2.0f)},
+                    (Vector3){(float)(tilePos3D.x - SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z - SIZE_TILE / 2.0f)}, DARKGREEN);
     }
 }
-
 
 void Gui::Render::displayEggs(Tile tile) const
 {
