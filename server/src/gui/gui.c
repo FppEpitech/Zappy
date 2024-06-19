@@ -41,6 +41,7 @@ void add_gui(app_t *app, size_t fd, char *line)
 
     data.gui = create_gui(fd);
     list_add_back(app->gui_list, data);
+    tna_response(data.gui, app, "tna");
     send_enw_commands(app, data.gui);
     free(client_node->data.client);
     list_delete(app->clients_list, client_node);
