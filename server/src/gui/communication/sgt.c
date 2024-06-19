@@ -18,7 +18,7 @@ void sgt_response(gui_t *gui, app_t *app, char *line)
     int freq = app->game->freq;
 
     if (strlen(line) != LEN_COMMAND) {
-        sbp_command(gui);
+        suc_command(gui);
         return;
     }
     response = format_string("sgt %d\n", freq);
