@@ -503,8 +503,18 @@ void Gui::GUIUpdater::updateEggDeath(const std::vector<std::string> &data)
     }
     for (auto &team : _gameData->getTeams()) {
         for (auto &egg : team.getEggs()) {
-            if (egg.getId() == id)
+            if (egg.getId() == id) {
                 egg.setState(Gui::Egg::EggState::DEAD);
+                team.removeEgg(id);
+                break;
+            }
+        }
+    }
+    for (auto &egg : _gameData.get()->getServerEggs()) {
+        if (egg.getId() == id) {
+            egg.setState(Gui::Egg::EggState::DEAD);
+            _gameData.get()->removeServerEgg(id);
+            break;
         }
     }
 }
