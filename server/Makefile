@@ -110,6 +110,7 @@ TEST_FILES	=	list/list_test.c 					\
 				parsing/parse_names_tests.c			\
 				map/map_test.c 						\
 				ai/move_command.c 					\
+				gui/commands/tests_loop.c			\
 				gui/commands/tests_bct.c			\
 				gui/commands/tests_ebo.c			\
 				gui/commands/tests_edi.c			\
