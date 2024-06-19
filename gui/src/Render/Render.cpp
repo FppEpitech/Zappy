@@ -231,11 +231,25 @@ void Gui::Render::displayMap()
 
 void Gui::Render::displayTile(Tile tile)
 {
-    DrawModel(_tileModel, tile.getPositionIn3DSpace(), 1.0f, WHITE);
+    Vector3 tilePos3D = tile.getPositionIn3DSpace();
+    DrawModel(_tileModel, tilePos3D, 1.0f, WHITE);
+
     if (_isDebug) {
         std::vector<BoundingBox> bboxes = tile.getTileBoundingBoxes(tile, _tileModel);
         for (size_t i = 0; i < bboxes.size(); i++)
             DrawBoundingBox(bboxes[i], GREEN);
+    } else {
+        DrawLine3D( (Vector3){(float)(tilePos3D.x - SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z - SIZE_TILE / 2.0f)},
+                    (Vector3){(float)(tilePos3D.x - SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z + SIZE_TILE / 2.0f)}, DARKGREEN);
+
+        DrawLine3D( (Vector3){(float)(tilePos3D.x - SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z + SIZE_TILE / 2.0f)},
+                    (Vector3){(float)(tilePos3D.x + SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z + SIZE_TILE / 2.0f)}, DARKGREEN);
+
+        DrawLine3D( (Vector3){(float)(tilePos3D.x + SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z + SIZE_TILE / 2.0f)},
+                    (Vector3){(float)(tilePos3D.x + SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z - SIZE_TILE / 2.0f)}, DARKGREEN);
+
+        DrawLine3D( (Vector3){(float)(tilePos3D.x + SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z - SIZE_TILE / 2.0f)},
+                    (Vector3){(float)(tilePos3D.x - SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z - SIZE_TILE / 2.0f)}, DARKGREEN);
     }
 }
 
