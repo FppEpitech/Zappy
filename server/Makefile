@@ -123,6 +123,7 @@ TEST_FILES	=	list/list_test.c 					\
 				gui/commands/tests_pfk.c			\
 				gui/commands/tests_pgt.c			\
 				gui/commands/tests_pic.c			\
+				gui/commands/tests_pie.c			\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
