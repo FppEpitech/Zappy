@@ -7,23 +7,10 @@
 
 import sys
 
-from enum import Enum
-
+from ai.src.Enum.Mode import Mode
 from ai.src.Enum.Action import Action
 from ai.src.Player.Inventory import Inventory
 from ai.src.Player.PlayerException import PlayerDeathException
-
-class Mode(Enum):
-    FOOD = 0
-    STONES = 1
-    FORKING = 2
-    BROADCASTING = 3
-    HANDLINGRESPONSE = 4
-    WAITING = 5
-    ELEVATING = 6
-    REGROUP = 7
-    DROPPING = 8
-    NONE = 9
 
 class Player:
     """
@@ -35,12 +22,18 @@ class Player:
             the inventory of the player
         level : int
             the level of the player
+        actions : list
+            the actions of the player
         currentAction : Action
             the current action of the player
+        commands : list
+            the commands of the player
         currentCommand : str
             the current command of the player
-        callback : function
-            the callback function
+        callbacks : list
+            the callbacks of the player
+        currentCallback : function
+            the current callback of the player
         vision : list
             the vision of the player
         broadcastReceived : list
@@ -53,6 +46,20 @@ class Player:
             the unused slots
         currentlyElevating : bool
             if the player is currently elevating
+        currentMode : Mode
+            the current mode of the player
+        currentFood : int
+            the current food of the player
+        nbSlaves : int
+            the number of slaves that are alive
+        waitingResponse : bool
+            if the player is waiting for a response
+        regroupDirection : int
+            the direction of the regroup
+        arrived : bool
+            if the player arrived to the regroup
+        isTimed : bool
+            if the player is timed
 
     ----------
 
@@ -106,6 +113,36 @@ class Player:
             Check if something happened
         handleResponse(response : str)
             Handle the response
+        connectMissingPlayers()
+            Connect the missing players
+        completeTeam()
+            Complete the team
+        updateModeSlave()
+            Update the mode of the player when he is a slave
+        updateModeLeader()
+            Update the mode of the player when he is a leader
+        updateMode()
+            Update the mode of the player
+        lookingForFood()
+            Look for food
+        lookingForStones()
+            Look for stones
+        askSlavesForInventory()
+            Ask the slaves for their inventory
+        checkIfEnoughFood(response : str)
+            Check if the slave has enough food
+        handleResponseBroadcast()
+            Handle the response of the broadcast
+        slavesReponses()
+            Handle the leader order as a slave
+        waitingEveryone()
+            Wait for everyone to finish the regroup
+        waitingDrop()
+            Wait for everyone to finish droping the stones
+        dropping()
+            Drop the stones
+        regroupAction()
+            Regroup the players
         chooseAction()
             Choose the action of the player
     """
@@ -441,6 +478,9 @@ class Player:
 
 
     def updateModeSlave(self):
+        """
+        Update the mode of the player when he is a slave
+        """
         if self.inventory.food < 35:
             self.currentMode = Mode.FOOD
         elif self.inventory.food >= 45:
@@ -448,6 +488,9 @@ class Player:
 
 
     def updateModeLeader(self):
+        """
+        Update the mode of the player when he is a leader
+        """
         if self.inventory.food < 35:
             self.currentMode = Mode.FOOD
         elif self.inventory.food >= 45 or self.currentMode != Mode.FOOD:
@@ -471,6 +514,9 @@ class Player:
 
 
     def updateMode(self):
+        """
+        Update the mode of the player
+        """
         if self.currentMode == Mode.REGROUP or self.currentMode == Mode.DROPPING or self.currentMode == Mode.ELEVATING or self.currentMode == Mode.NONE:
             return
         if self.isLeader:
@@ -480,6 +526,12 @@ class Player:
 
 
     def lookingForFood(self):
+        """
+        Look for food
+        The player will look for the nearest food in his vision.
+        When he finds food, he will  go to the case
+        where there is food and take it.
+        """
         index = -1
         order = [0, 2, 1, 3]
         for i in order:
@@ -510,6 +562,12 @@ class Player:
 
 
     def lookingForStones(self):
+        """
+        Look for stones
+        The player will look for the case with the most stones in his vision.
+        When he finds stones, he will  go to the case
+        where there are stones and take them.
+        """
         index = -1
         count = 0
         order = [0, 2, 1, 3]
@@ -548,11 +606,18 @@ class Player:
 
 
     def askSlavesForInventory(self):
+        """
+        Ask the slaves for their inventory
+        The leader will ask the slaves for their inventory
+        """
         self.broadcast("Inventory")
         self.nbSlaves = 0
 
 
     def checkIfEnoughFood(self, response : str):
+        """
+        Check if the slave has enough food to survive the regroup
+        """
         inv = Inventory(0, 0, 0, 0, 0, 0, 0, 0)
         inv.updateInventory(response)
         if inv.food < 35:
@@ -561,6 +626,9 @@ class Player:
 
 
     def handleResponseBroadcast(self):
+        """
+        Handle the response of the broadcast
+        """
         print(self.broadcastReceived, flush=True)
         self.nbSlaves = len(self.broadcastReceived)
         print("nb slaves: ", self.nbSlaves, flush=True)
@@ -585,6 +653,9 @@ class Player:
 
 
     def slavesReponses(self):
+        """
+        Handle the leader order as a slave
+        """
         for broadcast in self.broadcastReceived:
             if broadcast[1] == "Inventory":
                 response = self.inventory.toStr()
@@ -596,6 +667,9 @@ class Player:
 
 
     def waitingEveryone(self):
+        """
+        Wait for everyone to finish the regroup
+        """
         nbSlavesHere = len(self.broadcastReceived)
         print("nb slaves here: ", nbSlavesHere, flush=True)
         if nbSlavesHere >= 5:
@@ -607,6 +681,9 @@ class Player:
 
 
     def waitingDrop(self):
+        """
+        Wait for everyone to finish droping the stones
+        """
         nbSlavesHere = len(self.broadcastReceived)
         print("nb slaves who finished droping: ", nbSlavesHere, flush=True)
         if nbSlavesHere >= 5:
@@ -617,6 +694,11 @@ class Player:
 
 
     def dropping(self):
+        """
+        Drop the stones
+        As a leader, you will wait for the slaves to drop the stones
+        As a slave, you will drop the stones until you have none left
+        """
         if self.isLeader:
             self.waitingDrop()
         else:
@@ -640,6 +722,11 @@ class Player:
 
 
     def regroupAction(self):
+        """
+        Regroup the players
+        As a leader, you will wait for the slaves to regroup
+        As a slave, you will regroup with the leader
+        """
         if self.isLeader:
             self.waitingEveryone()
         else:
@@ -680,7 +767,8 @@ class Player:
     def chooseAction(self):
         """
         Choose the action of the player
-        TODO: Implement the logic to choose the action of the player
+        The action is chosen depending on the mode of the player
+        The mode is updated before choosing the action
         """
         self.updateMode()
         if self.currentMode == Mode.REGROUP:
