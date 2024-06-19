@@ -10,10 +10,12 @@
 #include "GameDatas/Team.hpp"
 #include "raymath.h"
 
-Gui::Team::Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath) : _name(name)
+Gui::Team::Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath, Color playerColor) : _name(name), _playerColor(playerColor)
 {
     _playerModel = LoadModel(playerModelPath.c_str());
     _eggModel = LoadModel(eggModelPath.c_str());
+    _animsCount = 0;
+    _modelAnimation = LoadModelAnimations(MODEL_PLAYER, &_animsCount);
 }
 
 const std::string &Gui::Team::getName() const
@@ -85,6 +87,11 @@ std::shared_ptr<Gui::Player> Gui::Team::getPlayer(std::size_t id)
 Model Gui::Team::getPlayerModel() const
 {
     return _playerModel;
+}
+
+ModelAnimation *Gui::Team::getPlayerModelAnimation() const
+{
+    return _modelAnimation;
 }
 
 void Gui::Team::setPlayerModelPath(const std::string &playerModelPath)
@@ -193,6 +200,11 @@ bool Gui::Team::isPlayerHit(size_t id, Camera camera)
             return true;
     }
     return false;
+}
+
+Color Gui::Team::getPlayerColor() const
+{
+    return _playerColor;
 }
 
 BoundingBox Gui::Team::rotateBoundingBoxByOrientation(BoundingBox bbox, size_t orientation, std::pair<size_t, size_t> pos, Vector3 centerPos)

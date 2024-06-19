@@ -73,8 +73,9 @@ class Gui::GameData {
          * @param name Name of the team.
          * @param playerModelPath Path to the asset of the team for players.
          * @param eggModelPath Path to the asset of the team for eggs.
+         * @param playerColor Color of the team.
          */
-        void addTeam(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath);
+        void addTeam(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath, Color playerColor);
 
         /**
          * @brief Add a player to a team.
@@ -217,6 +218,27 @@ class Gui::GameData {
         */
         void setTimeUnitFromServer(TimeUnitState timeUnitFromServer);
 
+        /**
+         * @brief Get the Server Eggs object.
+         *
+         * @return std::vector<Gui::Egg>& Eggs from the server.
+        */
+        std::vector<Gui::Egg> &getServerEggs();
+
+        /**
+         * @brief Add an egg to the server ones.
+         *
+         * @param egg Egg to add.
+        */
+        void addServerEgg(const Gui::Egg &egg);
+
+        /**
+         * @brief Remove an egg from the server ones.
+         *
+         * @param id Id of the egg.
+        */
+        void removeServerEgg(size_t id);
+
     private:
 
         std::vector<Gui::Team>      _teams;         // Teams of the game.
@@ -226,4 +248,5 @@ class Gui::GameData {
         bool                        _isEndGame;     // Is true if the game is finished.
         std::string                 _lastError;     // Last error message.
         TimeUnitState                        _timeUnitFromServer; // True if the time unit has changed.
+        std::vector<Gui::Egg>       _serverEggs;          // Eggs from the server.
 };

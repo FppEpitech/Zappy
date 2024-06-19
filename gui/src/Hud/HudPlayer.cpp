@@ -8,19 +8,29 @@
 #include "Assets.hpp"
 #include "Hud/HudPlayer.hpp"
 
+#include <list>
+
 Gui::HudPlayer::HudPlayer(std::shared_ptr<GameData> gameData)
 {
     _typeScene = POV_PLAYER;
     _gameData = gameData;
     _texture = LoadTexture(PNG_HUD);
+    _food = LoadTexture(PNG_FOOD);
+    _linemate = LoadTexture(PNG_LINEMATE);
+    _deraumere = LoadTexture(PNG_DERAUMERE);
+    _mendiane = LoadTexture(PNG_MENDIANE);
+    _phiras = LoadTexture(PNG_PHIRAS);
+    _sibur = LoadTexture(PNG_SIBUR);
+    _thystame = LoadTexture(PNG_THYSTAME);
     _font = LoadFont(FONT_HUD);
+    _playerTexture = LoadTexture(PNG_PLAYER);
 }
 
 void Gui::HudPlayer::display()
 {
     Vector2 hudPos = HUD_PLAYER_POS;
-    DrawTexture(_texture, hudPos.x, hudPos.y, WHITE);
-    DrawTextEx(_font, "Statistics", HUD_PLAYER_TEXT_TITLE_POS, 20, 0, (Color){170, 121, 89, 255});
+    DrawTexture(_texture, hudPos.x, hudPos.y, _gameData.get()->getTeam(_player.get()->getTeam()).getPlayerColor());
+    DrawTextEx(_font, "Player", HUD_PLAYER_TEXT_TITLE_POS, 20, 0, (Color){170, 121, 89, 255});
     if (_player != nullptr) {
         Vector2 hudTextPos = HUD_PLAYER_TEXT_POS;
         DrawTextEx(_font, ("Food: " + std::to_string(_player->inventory.getFood())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 0}, 20, 0, WHITE);
@@ -33,5 +43,14 @@ void Gui::HudPlayer::display()
         DrawTextEx(_font, ("Level: " + std::to_string(_player->getLevel())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 7}, 20, 0, WHITE);
         DrawTextEx(_font, ("Id: " + std::to_string(_player->getId())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 8}, 20, 0, WHITE);
         DrawTextEx(_font, ("Team: " + _player->getTeam()).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 9}, 20, 0, WHITE);
+
+        std::list<Texture2D> textureList = {_food, _linemate, _deraumere, _mendiane, _phiras, _sibur, _thystame};
+
+        int count = 0;
+        for (Texture2D texture : textureList) {
+            DrawTexture(texture, hudTextPos.x + HUD_PLAYER_ICONS_MARGING, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * count, WHITE);
+            count++;
+        }
+        DrawTexture(_playerTexture, hudPos.x + HUD_PLAYER_TITLE_ICON_MARGING.x, hudPos.y + HUD_PLAYER_TITLE_ICON_MARGING.y, WHITE);
     }
 }

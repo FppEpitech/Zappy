@@ -14,6 +14,7 @@ Gui::HudGame::HudGame(std::shared_ptr<GameData> gameData)
     _gameData = gameData;
     _texture = LoadTexture(PNG_HUD);
     _font = LoadFont(FONT_HUD);
+    _playerTexture = LoadTexture(PNG_PLAYER);
 }
 
 void Gui::HudGame::display()
@@ -25,15 +26,16 @@ void Gui::HudGame::display()
     Vector2 hudTextPos = HUD_GAME_TEXT_POS;
     DrawTextEx(_font, ("Tick: " + std::to_string(_gameData->getServerTick())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_GAME_TEXT_MARGING * 0}, 20, 0, WHITE);
 
-    for (size_t index = 0; _gameData->getTeams().size() > index && index < 9; index++) {
-        int maxLevel = -1;
-        for (auto &player : _gameData->getTeams()[index].getPlayers()) {
-            if (maxLevel < (int)player.getLevel())
-                maxLevel = (int)player.getLevel();
+    for (std::size_t index = 0; _gameData->getTeams().size() > index && index < 9; index++) {
+
+        std::string teamName = _gameData->getTeams()[index].getName();
+        if (teamName.size() > 10) {
+            teamName = teamName.substr(0, 8);
+            teamName += "..";
         }
-        if (maxLevel == -1)
-            DrawTextEx(_font, (_gameData->getTeams()[index].getName() + " : 0").c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_GAME_TEXT_MARGING * (index + 1)}, 20, 0, WHITE);
-        else
-            DrawTextEx(_font, (_gameData->getTeams()[index].getName() + " : " + std::to_string(maxLevel)).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_GAME_TEXT_MARGING * (index + 1)}, 20, 0, WHITE);
+        DrawTextEx(_font, teamName.c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_GAME_TEXT_MARGING * (index + 1)}, 20, 0, WHITE);
+        DrawTextEx(_font, (std::to_string(_gameData->getTeams()[index].getPlayers().size()) + "x").c_str(), (Vector2){hudTextPos.x + 110, hudTextPos.y + HUD_GAME_TEXT_MARGING * (index + 1)}, 20, 0, WHITE);
+
+        DrawTexture(_playerTexture, hudTextPos.x + 130, hudTextPos.y + HUD_GAME_TEXT_MARGING * (index + 1), _gameData.get()->getTeams()[index].getPlayerColor());
     }
 }

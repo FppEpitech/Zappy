@@ -35,10 +35,27 @@ void add_egg(list_t *eggs, int id_player_laid, app_t *app)
     data.egg = malloc(sizeof(egg_t));
     if (data.egg == NULL)
         return;
-    data.egg->pos = create_vector2i(rand() % app->game->height,
-    rand() % app->game->width);
+    data.egg->pos = create_vector2i(rand() % app->game->width,
+    rand() % app->game->height);
     data.egg->id = id;
     data.egg->is_laid = false;
+    data.egg->id_player_laid = id_player_laid;
+    list_add_back(eggs, data);
+}
+
+void add_egg_on_player(list_t *eggs, int id_player_laid,
+    app_t *app, ia_t *ai)
+{
+    node_data_t data;
+    size_t id = get_last_id(app);
+
+    data.egg = malloc(sizeof(egg_t));
+    if (data.egg == NULL)
+        return;
+    data.egg->pos = create_vector2i(ai->position->x,
+    ai->position->y);
+    data.egg->id = id;
+    data.egg->is_laid = true;
     data.egg->id_player_laid = id_player_laid;
     list_add_back(eggs, data);
 }
@@ -51,10 +68,10 @@ static void add_egg_with_id(list_t *eggs, int id_player_laid, app_t *app,
     data.egg = malloc(sizeof(egg_t));
     if (data.egg == NULL)
         return;
-    data.egg->pos = create_vector2i(rand() % app->game->height,
-    rand() % app->game->width);
-    data.egg->id = id;
+    data.egg->pos = create_vector2i(rand() % app->game->width,
+    rand() % app->game->height);
     data.egg->is_laid = false;
+    data.egg->id = id;
     data.egg->id_player_laid = id_player_laid;
     list_add_back(eggs, data);
 }
@@ -116,25 +133,4 @@ void add_team(app_t *app, char *team_name, size_t max_place)
 
     data.team = create_team(app, team_name, max_place);
     list_add_back(app->teams_list, data);
-}
-
-void display_egg_position(app_t *app)
-{
-    list_node_t *temp = app->teams_list->first;
-    team_t *team = NULL;
-    list_node_t *egg_temp = NULL;
-
-    printf("\nEgg Position:\n");
-    while (temp) {
-        team = temp->data.team;
-        printf("\tTeam name: [%s]\n", team->name);
-        egg_temp = team->eggs_list->first;
-        while (egg_temp) {
-            printf("\t\tEgg in: [%d] | [%d]\n",
-            egg_temp->data.egg->pos->x, egg_temp->data.egg->pos->y);
-            egg_temp = egg_temp->next;
-        }
-        printf("\n");
-        temp = temp->next;
-    }
 }

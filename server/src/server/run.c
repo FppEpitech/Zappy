@@ -97,23 +97,42 @@ static void handle_control_c(int sig)
         server_status(false);
 }
 
-bool server_run(app_t *app)
+static int game_run(int result_select, app_t *app)
 {
-    signal(SIGINT, handle_control_c);
-    while (server_status(true)) {
-        server_reset_fd(app);
-        if (select(FD_SETSIZE, &app->server->read_fds,
-        &app->server->write_fds, NULL, NULL) < 0)
-            return false;
+    if (result_select < 0)
+        return ERROR;
+    if (result_select != 0) {
         for (int fd = 0; fd < FD_SETSIZE; fd++) {
             handle_client_read(app, fd);
             handle_client_write(app, fd);
         }
-        treat_command(app);
-        treat_stuck(app);
-        check_die(app);
-        if (check_win(app))
-            break;
+    }
+    treat_command(app);
+    treat_stuck(app);
+    check_die(app);
+    if (check_win(app))
+        return END_GAME;
+    return GAME_CONTINUE;
+}
+
+bool server_run(app_t *app)
+{
+    struct timeval timeout;
+    int result_select = 0;
+    int result_game = 0;
+
+    timeout.tv_sec = SELECT_TIMEOUT_SECONDS;
+    timeout.tv_usec = 0;
+    signal(SIGINT, handle_control_c);
+    while (server_status(true)) {
+        server_reset_fd(app);
+        result_select = select(FD_SETSIZE, &app->server->read_fds,
+        &app->server->write_fds, NULL, &timeout);
+        result_game = game_run(result_select, app);
+        if (result_game == -1)
+            return false;
+        if (result_game == 1)
+            return true;
     }
     return true;
 }

@@ -35,8 +35,9 @@ class Gui::Team {
          * @param name Name of the team.
          * @param playerModelPath Path to the team model asset for players.
          * @param eggSkinPath Path to the skin of the team.
+         * @param playerColor Color of the players.
          */
-        Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath);
+        Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath, Color playerColor);
 
         /**
          * @brief Destroy the Team object.
@@ -120,6 +121,13 @@ class Gui::Team {
         Model getPlayerModel() const;
 
         /**
+         * @brief Get the Player Model Animation object.
+         *
+         * @return ModelAnimation* - Players' animations.
+         */
+        ModelAnimation *getPlayerModelAnimation() const;
+
+        /**
          * @brief Set the Model object.
          *
          * @param playerModelPath Path to the team model asset for players.
@@ -183,13 +191,23 @@ class Gui::Team {
         */
         bool isPlayerHit(size_t id, Camera camera);
 
+        /**
+         * @brief Get the Player Color object.
+         *
+        */
+        Color getPlayerColor() const;
+
     private:
 
+
+        ModelAnimation*             _modelAnimation;    // Model to animate players.
+        int                         _animsCount;        // Animation number of players.
         std::string                 _name;      // Name of the team.
         std::vector<Gui::Player>    _players;   // Players of the team.
         Model                       _playerModel;     // Model player asset of the team.
         std::vector<Gui::Egg>       _eggs;      // Eggs of the team.
         Model                       _eggModel;  // Eggs Model of the team.
+        Color                       _playerColor;   // Color of the players.
 
         /**
          * @brief Rotate a bounding box by orientation.

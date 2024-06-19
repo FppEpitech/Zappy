@@ -122,8 +122,10 @@ void pin_response(gui_t *gui, app_t *app, char *line);
  *
  * @param app The app structure with all the gui fds.
  * @param ai The ia structure of client requested.
+ * @param gui The gui structure of client requested,
+ * if no client requestes set it to null.
  */
-void pnw_command(app_t *app, ia_t *ai);
+void pnw_command(app_t *app, ia_t *ai, gui_t *gui);
 
 /**
  * @brief Perform the pex command. For inform the GUI when a player expulse.
