@@ -379,8 +379,10 @@ void Gui::GUIUpdater::updatePlayerRessourceDropping(const std::vector<std::strin
         throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pdr:" + STR_RED + "Invalid argument number");
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            if (player.getId() == args[0])
+            if (player.getId() == args[0]) {
                 player.setState(Gui::Player::PlayerState::DROP);
+                _gameData.get()->getTile(player.getPosition().first, player.getPosition().second).inventory.addResource(args[1], 1);
+            }
         }
     }
 }
@@ -407,6 +409,7 @@ void Gui::GUIUpdater::updatePlayerRessourceCollecting(const std::vector<std::str
             if (player.getId() == args[0]) {
                 player.setState(Gui::Player::PlayerState::COLLECT);
                 _network->sendMessageServer("pin " + std::to_string(player.getId()) + "\n");
+                _gameData.get()->getTile(player.getPosition().first, player.getPosition().second).inventory.removeResource(args[1], 1);
             }
         }
     }
