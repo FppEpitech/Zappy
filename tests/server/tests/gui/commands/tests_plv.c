@@ -306,3 +306,27 @@ Test(plv_response, invalid_command)
     cr_assert_str_eq(gui.list_messages->first->data.message, "suc\n");
     free_map(app.game->map, 5);
 }
+
+Test(plv_response, invalid_parameter)
+{
+    gui_t gui;
+    app_t app;
+    char line[] = "plv -3";
+
+    app.game = create_game(5, 5, 1);
+    app.game->map[3][2].food = 1;
+    app.game->map[3][2].linemate = 2;
+    app.game->map[3][2].deraumere = 3;
+    app.game->map[3][2].sibur = 4;
+    app.game->map[3][2].mendiane = 5;
+    app.game->map[3][2].phiras = 6;
+    app.game->map[3][2].thystame = 7;
+
+    gui.list_messages = list_new();
+    cr_assert_not_null(gui.list_messages);
+    gui.fd = 1;
+
+    plv_response(&gui, &app, line);
+    cr_assert_str_eq(gui.list_messages->first->data.message, "sbp\n");
+    free_map(app.game->map, 5);
+}
