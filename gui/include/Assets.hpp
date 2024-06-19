@@ -90,3 +90,5 @@
 #define POS_TREE                    (Vector3){2, -0.3, 2}
 #define POS_LANTERN                 (Vector3){1, -0.3, 2}
 #define POS_Y_DELIMITATION          -0.27f
+
+#define PLAYER_TEXT_SIZE            40

@@ -255,6 +255,14 @@ class Gui::Render {
         void displayPlayerLevel(Team &team, Player &player);
 
         /**
+         * @brief Display player broadcast.
+         *
+         * @param team Team for the player 3d position.
+         * @param player Player to display broadcast.
+         */
+        void displayPlayerBroadcast(Team &team, Player &player);
+
+        /**
          * @brief Display the map.
          *
          */
