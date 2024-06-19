@@ -7,9 +7,11 @@
 
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
+
 #include "types.h"
 #include "app/app.h"
 #include "gui/gui.h"
+#include "gui/communication.h"
 #include "gui/communication.h"
 
 Test(sgt_response, basic_test)

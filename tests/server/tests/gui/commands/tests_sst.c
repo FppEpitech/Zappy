@@ -7,6 +7,7 @@
 
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
+
 #include "types.h"
 #include "app/app.h"
 #include "gui/gui.h"
