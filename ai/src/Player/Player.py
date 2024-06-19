@@ -174,6 +174,7 @@ class Player:
         self.regroupDirection = 0
         self.arrived = False
         self.isTimed = False
+        self.nbSlavesHere = 0
 
     def __str__(self):
         """
