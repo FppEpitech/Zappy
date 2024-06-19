@@ -10,7 +10,7 @@
 #include "GameDatas/Team.hpp"
 #include "raymath.h"
 
-Gui::Team::Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath) : _name(name)
+Gui::Team::Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath, Color playerColor) : _name(name), _playerColor(playerColor)
 {
     _playerModel = LoadModel(playerModelPath.c_str());
     _eggModel = LoadModel(eggModelPath.c_str());
@@ -200,6 +200,11 @@ bool Gui::Team::isPlayerHit(size_t id, Camera camera)
             return true;
     }
     return false;
+}
+
+Color Gui::Team::getPlayerColor() const
+{
+    return _playerColor;
 }
 
 BoundingBox Gui::Team::rotateBoundingBoxByOrientation(BoundingBox bbox, size_t orientation, std::pair<size_t, size_t> pos, Vector3 centerPos)

@@ -73,8 +73,9 @@ class Gui::GameData {
          * @param name Name of the team.
          * @param playerModelPath Path to the asset of the team for players.
          * @param eggModelPath Path to the asset of the team for eggs.
+         * @param playerColor Color of the team.
          */
-        void addTeam(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath);
+        void addTeam(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath, Color playerColor);
 
         /**
          * @brief Add a player to a team.

@@ -10,7 +10,7 @@
 #include "Error/Error.hpp"
 #include "GUIUpdater/GUIUpdater.hpp"
 
-Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData, std::shared_ptr<Network> network) : _gameData(gameData), _network(network) {}
+Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData, std::shared_ptr<Network> network) : _gameData(gameData), _network(network), _colorIndex(0) {}
 
 void Gui::GUIUpdater::update(const std::string &command, const std::vector<std::string> &data)
 {
@@ -80,9 +80,10 @@ void Gui::GUIUpdater::updateMapContent(const std::vector<std::string> &data)
 void Gui::GUIUpdater::updateTeamNames(const std::vector<std::string> &data)
 {
     try {
-        for (size_t i = 0; i < data.size(); i++)
-            _gameData->addTeam(data[i], MODEL_PLAYER, MODEL_EGG);
-        // TODO: Implement a system that allows to set different models for each team.
+        for (size_t i = 0; i < data.size(); i++) {
+            _gameData->addTeam(data[i], MODEL_PLAYER, MODEL_EGG, playerColors[_colorIndex]);
+            increaseColorIndex();
+        }
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "tna: " + STR_RED + error.what());
     }
@@ -578,4 +579,11 @@ void Gui::GUIUpdater::updateCommandParameter(const std::vector<std::string> &dat
 {
     (void)data;
     return; // TODO: Implement the command parameter
+}
+
+void Gui::GUIUpdater::increaseColorIndex()
+{
+    _colorIndex++;
+    if (_colorIndex >= playerColors.size())
+        _colorIndex = 0;
 }
