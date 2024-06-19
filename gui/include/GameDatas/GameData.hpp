@@ -217,6 +217,27 @@ class Gui::GameData {
         */
         void setTimeUnitFromServer(TimeUnitState timeUnitFromServer);
 
+        /**
+         * @brief Get the Server Eggs object.
+         *
+         * @return std::vector<Gui::Egg>& Eggs from the server.
+        */
+        std::vector<Gui::Egg> &getServerEggs();
+
+        /**
+         * @brief Add an egg to the server ones.
+         *
+         * @param egg Egg to add.
+        */
+        void addServerEgg(const Gui::Egg &egg);
+
+        /**
+         * @brief Remove an egg from the server ones.
+         *
+         * @param id Id of the egg.
+        */
+        void removeServerEgg(size_t id);
+
     private:
 
         std::vector<Gui::Team>      _teams;         // Teams of the game.
@@ -226,4 +247,5 @@ class Gui::GameData {
         bool                        _isEndGame;     // Is true if the game is finished.
         std::string                 _lastError;     // Last error message.
         TimeUnitState                        _timeUnitFromServer; // True if the time unit has changed.
+        std::vector<Gui::Egg>       _serverEggs;          // Eggs from the server.
 };
