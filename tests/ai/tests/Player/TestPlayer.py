@@ -89,14 +89,17 @@ def testPlayer():
 def testPlayerConstructor():
     try:
         player = Player(True)
-        assert player.currentAction == Action.NONE
-        assert player.currentCommand == ""
         assert player.vision == []
         assert player.inventory == Inventory()
         assert player.broadcastReceived == []
         assert player.ejectionReceived == []
         assert player.level == 1
-        assert player.callback == None
+        assert player.actions == []
+        assert player.commands == []
+        assert player.callbacks == []
+        assert player.currentAction == Action.NONE
+        assert player.currentCommand == ""
+        assert player.currentCallback == None
         assert player.currentlyElevating == False
         assert player.unusedSlots == 0
         assert player.isLeader == True
@@ -114,8 +117,9 @@ def testPlayerMoveForward():
     try:
         player = Player(True)
         player.moveForward()
-        assert player.currentAction == Action.FORWARD
-        assert player.currentCommand == "Forward"
+        assert player.actions == [Action.FORWARD]
+        assert player.commands == ["Forward"]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -123,8 +127,9 @@ def testPlayerTurnRight():
     try:
         player = Player(True)
         player.turnRight()
-        assert player.currentAction == Action.RIGHT
-        assert player.currentCommand == "Right"
+        assert player.actions == [Action.RIGHT]
+        assert player.commands == ["Right"]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -132,8 +137,9 @@ def testPlayerTurnLeft():
     try:
         player = Player(True)
         player.turnLeft()
-        assert player.currentAction == Action.LEFT
-        assert player.currentCommand == "Left"
+        assert player.actions == [Action.LEFT]
+        assert player.commands == ["Left"]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -141,8 +147,9 @@ def testPlayerLook():
     try:
         player = Player(True)
         player.look()
-        assert player.currentAction == Action.LOOK
-        assert player.currentCommand == "Look"
+        assert player.actions == [Action.LOOK]
+        assert player.commands == ["Look"]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -150,8 +157,9 @@ def testPlayerCmdInventory():
     try:
         player = Player(True)
         player.cmdInventory()
-        assert player.currentAction == Action.INVENTORY
-        assert player.currentCommand == "Inventory"
+        assert player.actions == [Action.INVENTORY]
+        assert player.commands == ["Inventory"]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -159,8 +167,9 @@ def testPlayerBroadcast():
     try:
         player = Player(True)
         player.broadcast("test")
-        assert player.currentAction == Action.BROADCAST
-        assert player.currentCommand == "Broadcast \"test\""
+        assert player.actions == [Action.BROADCAST]
+        assert player.commands == ["Broadcast \"test\""]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -168,8 +177,9 @@ def testPlayerConnectNbr():
     try:
         player = Player(True)
         player.connectNbr()
-        assert player.currentAction == Action.CONNECT_NBR
-        assert player.currentCommand == "Connect_nbr"
+        assert player.actions == [Action.CONNECT_NBR]
+        assert player.commands == ["Connect_nbr"]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -177,8 +187,9 @@ def testPlayerFork():
     try:
         player = Player(True)
         player.fork()
-        assert player.currentAction == Action.FORK
-        assert player.currentCommand == "Fork"
+        assert player.actions == [Action.FORK]
+        assert player.commands == ["Fork"]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -186,8 +197,9 @@ def testPlayerEject():
     try:
         player = Player(True)
         player.eject()
-        assert player.currentAction == Action.EJECT
-        assert player.currentCommand == "Eject"
+        assert player.actions == [Action.EJECT]
+        assert player.commands == ["Eject"]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -195,8 +207,9 @@ def testPlayerTake():
     try:
         player = Player(True)
         player.take("food")
-        assert player.currentAction == Action.TAKE
-        assert player.currentCommand == "Take food"
+        assert player.actions == [Action.TAKE]
+        assert player.commands == ["Take food"]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -204,8 +217,9 @@ def testPlayerSet():
     try:
         player = Player(True)
         player.set("food")
-        assert player.currentAction == Action.SET
-        assert player.currentCommand == "Set food"
+        assert player.actions == [Action.SET]
+        assert player.commands == ["Set food"]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -213,8 +227,9 @@ def testPlayerIncantation():
     try:
         player = Player(True)
         player.incantation()
-        assert player.currentAction == Action.INCANTATION
-        assert player.currentCommand == "Incantation"
+        assert player.actions == [Action.INCANTATION]
+        assert player.commands == ["Incantation"]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -222,8 +237,9 @@ def testPlayerNone():
     try:
         player = Player(True)
         player.none()
-        assert player.currentAction == Action.NONE
-        assert player.currentCommand == ""
+        assert player.actions == [Action.NONE]
+        assert player.commands == [""]
+        assert player.callbacks == [None]
     except Exception as _:
         raise Exception("Test failed")
 
@@ -311,34 +327,44 @@ def testPlayerHasSomethingHappened():
 def testPlayerHandleResponse():
     try:
         player = Player(True)
-        player.moveForward()
         player.handleResponse("eject: 5")
         assert player.ejectionReceived == [5]
-        assert player.currentAction == Action.FORWARD
 
         player.handleResponse("ko")
         assert player.currentAction == Action.NONE
 
-        player.take("food")
+        player.currentAction = Action.TAKE
+        player.currentCommand = "Take food"
+        player.currentCallback = player.inventory.addAnObject("food")
         player.handleResponse("ok")
         assert player.inventory.food == 11
         assert player.currentAction == Action.NONE
 
-        player.moveForward()
+        player.currentAction = Action.FORWARD
+        player.currentCommand = "Forward"
+        player.currentCallback = None
         player.handleResponse("ok")
         assert player.currentAction == Action.NONE
 
-        player.look()
+        player.currentAction = Action.LOOK
+        player.currentCommand = "Look"
+        player.currentCallback = None
         player.handleResponse("[player food food, player, player]")
 
-        player.cmdInventory()
+        player.currentAction = Action.INVENTORY
+        player.currentCommand = "Inventory"
+        player.currentCallback = None
         player.handleResponse("[food 100, linemate 5, deraumere 6, sibur 7, mendiane 8, phiras 9, thystame 10]")
 
-        player.connectNbr()
+        player.currentAction = Action.CONNECT_NBR
+        player.currentCommand = "Connect_nbr"
+        player.currentCallback = None
         player.handleResponse("5")
         assert player.unusedSlots == 5
 
-        player.incantation()
+        player.currentAction = Action.INCANTATION
+        player.currentCommand = "Incantation"
+        player.currentCallback = None
         player.handleResponse("Elevation underway")
         assert player.currentlyElevating == True
         assert player.currentAction == Action.INCANTATION
