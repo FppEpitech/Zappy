@@ -201,6 +201,8 @@ void Gui::Render::displayPlayers()
                 DrawModelEx(team.getPlayerModel(), team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, team.getPlayerColor());
 
             displayPlayerLevel(team, player);
+            if (player.getState() == Gui::Player::BROADCAST)
+                displayPlayerBroadcast(team, player);
 
             if (_isDebug) {
                 std::vector<BoundingBox> bboxes = team.getPlayerBoundingBoxes(player.getPosition(), player.getOrientation(), player.getCenterPosition());
@@ -218,8 +220,21 @@ void Gui::Render::displayPlayerLevel(Gui::Team &team, Gui::Player &player)
     EndMode3D();
 
     Vector3 playerPos = team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap());
-    Vector2 playerScreenPosition = GetWorldToScreen((Vector3){playerPos.x, playerPos.y + PLAYER_HEIGHT + 0.5F, playerPos.z}, *_camera.getCamera().get());
+    Vector2 playerScreenPosition = GetWorldToScreen((Vector3){playerPos.x, playerPos.y + PLAYER_HEIGHT + 0.5f, playerPos.z}, *_camera.getCamera().get());
     std::string countStr = "Lvl: " + std::to_string(player.getLevel());
+
+    DrawText(countStr.c_str(), (int)playerScreenPosition.x - MeasureText(countStr.c_str(), 40)/2, (int)playerScreenPosition.y , 40, WHITE);
+
+    BeginMode3D(*_camera.getCamera());
+}
+
+void Gui::Render::displayPlayerBroadcast(Gui::Team &team, Gui::Player &player)
+{
+    EndMode3D();
+
+    Vector3 playerPos = team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap());
+    Vector2 playerScreenPosition = GetWorldToScreen((Vector3){playerPos.x, playerPos.y + PLAYER_HEIGHT + 0.7f, playerPos.z}, *_camera.getCamera().get());
+    std::string countStr = player.getBroadcast();
 
     DrawText(countStr.c_str(), (int)playerScreenPosition.x - MeasureText(countStr.c_str(), 40)/2, (int)playerScreenPosition.y , 40, WHITE);
 
