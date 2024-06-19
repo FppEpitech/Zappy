@@ -197,9 +197,9 @@ void Gui::Render::displayPlayers()
 
 
             if (player.getState() == Gui::Player::WALK)
-                DrawModelEx(team.getPlayerModel(), player.getPosition3D(), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, WHITE);
+                DrawModelEx(team.getPlayerModel(), player.getPosition3D(), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, team.getPlayerColor());
             else
-                DrawModelEx(team.getPlayerModel(), team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, WHITE);
+                DrawModelEx(team.getPlayerModel(), team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, team.getPlayerColor());
 
             if (_isDebug) {
                 std::vector<BoundingBox> bboxes = team.getPlayerBoundingBoxes(player.getPosition(), player.getOrientation(), player.getCenterPosition());
