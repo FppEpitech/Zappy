@@ -199,3 +199,20 @@ Test(ppo_response, invalid_command)
     cr_assert_str_eq(gui.list_messages->first->data.message, "suc\n");
     free_map(app.game->map, 5);
 }
+
+Test(ppo_response, invalid_parameter)
+{
+    gui_t gui;
+    app_t app;
+    char line[] = "ppo -3";
+
+    app.game = create_game(5, 5, 1);
+
+    gui.list_messages = list_new();
+    cr_assert_not_null(gui.list_messages);
+    gui.fd = 1;
+
+    ppo_response(&gui, &app, line);
+    cr_assert_str_eq(gui.list_messages->first->data.message, "sbp\n");
+    free_map(app.game->map, 5);
+}
