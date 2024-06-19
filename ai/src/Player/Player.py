@@ -448,6 +448,8 @@ class Player:
         """
         if response == "Elevation underway":
             self.currentlyElevating = True
+            if self.isLeader == False:
+                self.currentMode = Mode.NONE
             return True
         elif response.startswith("Current level:"):
             self.updateLevel(int(response.split(" ")[2]))
@@ -509,6 +511,9 @@ class Player:
         self.currentAction = Action.NONE
         self.currentCommand = ""
         self.callback = None
+        if self.currentMode == Mode.REGROUP and self.isLeader == False:
+            if response == "ok":
+                self.broadcastReceived = []
 
 
     def connectMissingPlayers(self):
@@ -736,6 +741,13 @@ class Player:
         Wait for everyone to finish droping the stones
         """
         nbSlavesHere = len(self.broadcastReceived)
+        if nbSlavesHere != self.nbSlavesHere:
+            minStoneCase = Inventory(0, 8, 9, 10, 5, 6, 1, 0)
+            currentCase = self.vision[0]
+            if currentCase.hasMoreStones(minStoneCase):
+                self.currentMode = Mode.ELEVATING
+                self.broadcastReceived = []
+        self.nbSlavesHere = nbSlavesHere
         print("nb slaves who finished droping: ", nbSlavesHere, flush=True)
         if nbSlavesHere >= 5:
             self.currentMode = Mode.ELEVATING
@@ -756,17 +768,17 @@ class Player:
             print("Dropping", flush=True, file=sys.stderr)
             if self.inventory.linemate > 0:
                 self.set("linemate")
-            elif self.inventory.deraumere > 0:
+            if self.inventory.deraumere > 0:
                 self.set("deraumere")
-            elif self.inventory.sibur > 0:
+            if self.inventory.sibur > 0:
                 self.set("sibur")
-            elif self.inventory.mendiane > 0:
+            if self.inventory.mendiane > 0:
                 self.set("mendiane")
-            elif self.inventory.phiras > 0:
+            if self.inventory.phiras > 0:
                 self.set("phiras")
-            elif self.inventory.thystame > 0:
+            if self.inventory.thystame > 0:
                 self.set("thystame")
-            else:
+            if self.inventory.linemate == 0 and self.inventory.deraumere == 0 and self.inventory.sibur == 0 and self.inventory.mendiane == 0 and self.inventory.phiras == 0 and self.inventory.thystame == 0:
                 self.broadcast("Finished dropping")
                 self.currentMode = Mode.NONE
                 return
@@ -783,6 +795,7 @@ class Player:
         else:
             isThereARegroup = False
 
+            print(self.broadcastReceived, flush=True, file=sys.stderr)
             for broadcast in self.broadcastReceived:
                 if broadcast[1] == "Drop":
                     print("DROP MODE", flush=True, file=sys.stderr)
