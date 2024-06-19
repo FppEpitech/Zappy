@@ -21,7 +21,7 @@ Gui::HudPlayer::HudPlayer(std::shared_ptr<GameData> gameData)
     _sibur = LoadTexture(PNG_SIBUR);
     _thystame = LoadTexture(PNG_THYSTAME);
     _font = LoadFont(FONT_HUD);
-    _playertexture = LoadTexture(PNG_PLAYER);
+    _playerTexture = LoadTexture(PNG_PLAYER);
 }
 
 void Gui::HudPlayer::display()
@@ -50,6 +50,6 @@ void Gui::HudPlayer::display()
         DrawTexture(_sibur, hudTextPos.x - 24, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 5, WHITE);
         DrawTexture(_thystame, hudTextPos.x - 24, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 6, WHITE);
 
-        DrawTexture(_playertexture, hudPos.x + 35, hudPos.y + 35, WHITE);
+        DrawTexture(_playerTexture, hudPos.x + 35, hudPos.y + 35, WHITE);
     }
 }

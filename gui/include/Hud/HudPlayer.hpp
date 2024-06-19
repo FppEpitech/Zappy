@@ -58,5 +58,5 @@ class Gui::HudPlayer : public Gui::AHud {
         Texture2D   _phiras;        // Texture for phiras png.
         Texture2D   _sibur;         // Texture for sibur png.
         Texture2D   _thystame;      // Texture for thystame png.
-        Texture2D   _playertexture;         // Texture for thystame png.
+        Texture2D   _playerTexture; // Texture for player png.
 };

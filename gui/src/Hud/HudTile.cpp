@@ -22,6 +22,7 @@ Gui::HudTile::HudTile(std::shared_ptr<GameData> gameData)
     _sibur = LoadTexture(PNG_SIBUR);
     _thystame = LoadTexture(PNG_THYSTAME);
     _font = LoadFont(FONT_HUD);
+    _tileTexture = LoadTexture(PNG_TILE);
 }
 
 void Gui::HudTile::display()
@@ -46,5 +47,7 @@ void Gui::HudTile::display()
         DrawTexture(_phiras, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 4, WHITE);
         DrawTexture(_sibur, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 5, WHITE);
         DrawTexture(_thystame, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 6, WHITE);
+
+        DrawTexture(_tileTexture, hudPos.x + 45, hudPos.y + 40, WHITE);
     }
 }

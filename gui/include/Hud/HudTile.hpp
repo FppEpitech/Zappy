@@ -11,7 +11,7 @@
 
 #define HUD_TILE_POS Vector2{0, 340}
 #define HUD_TILE_TEXT_POS Vector2{45, 420}
-#define HUD_TILE_TEXT_TITLE_POS Vector2{50, 380}
+#define HUD_TILE_TEXT_TITLE_POS Vector2{60, 380}
 #define HUD_TILE_TEXT_MARGING 30
 
 namespace Gui {
@@ -58,4 +58,5 @@ class Gui::HudTile : public Gui::AHud {
         Texture2D   _phiras;        // Texture for phiras png.
         Texture2D   _sibur;         // Texture for sibur png.
         Texture2D   _thystame;      // Texture for thystame png.
+        Texture2D   _tileTexture;   // Texture for tile png.
 };
