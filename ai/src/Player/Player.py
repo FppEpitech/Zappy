@@ -68,31 +68,29 @@ class Player:
             Constructor of the Player class
         __str__()
             Print the player
-        moveForward()
+        moveForward(callback = None)
             Move the player forward
-        turnRight()
+        turnRight(callback = None)
             Turn the player right
-        turnLeft()
-            Turn
-        print("current food: ", self.inventory.food) the player left
-        look()
+        turnLeft(callback = None)
+            Turn the player left
+        look(callback = None)
             Look around the player
-        cmdInventory()
+        cmdInventory(callback = None)
             Get the inventory of the player
-        broadcast(message : str = "Hello")
+        broadcast(message : str = "Hello", callback = None)
             Broadcast a message
-        connectNbr()
+        connectNbr(callback = None)
             Connect to the number of players
-        fork()
+        fork(callback = None)
             Fork the player
-        eject()
+        eject(callback = None)
             Eject the player
-        take(res
-        print("current food: ", self.inventory.food)ource : str = "food")
+        take(resource : str = "food", callback = None)
             Take a resource
-        set(resource : str = "food")
+        set(resource : str = "food", callback = None)
             Set a resource
-        incantation()
+        incantation(callback = None)
             Start the incantation
         none()
             Do nothing
@@ -101,8 +99,7 @@ class Player:
         updateInventory(inventory : str)
             Update the inventory of the player
         updateBroadcastReceived(message : str)
-            Upda
-        print("current food: ", self.inventory.food)te the broadcast received by the player
+            Update the broadcast received by the player
         updateEjectionReceived(message : str)
             Update the ejection received by the player
         updateLevel(level : int)
@@ -185,124 +182,178 @@ class Player:
         return f"Level: {self.level}, Inventory: [{self.inventory}], Current action: {self.currentAction}, Current command: {self.currentCommand}, Vision: {self.vision}, Broadcast received: {self.broadcastReceived}, Ejection received: {self.ejectionReceived}"
 
 
-    def moveForward(self):
+    def moveForward(self, callback = None):
         """
         Set the current action to forward
+
+        Parameters :
+            callback : function
+                the callback to call after the action
+                (default is None)
         """
         self.actions.append(Action.FORWARD)
         self.commands.append("Forward")
-        self.callbacks.append(None)
+        self.callbacks.append(callback)
 
 
-    def turnRight(self):
+    def turnRight(self, callback = None):
         """
         Set the current action to right
+
+        Parameters :
+            callback : function
+                the callback to call after the action
+                (default is None)
         """
         self.actions.append(Action.RIGHT)
         self.commands.append("Right")
-        self.callbacks.append(None)
+        self.callbacks.append(callback)
 
 
-    def turnLeft(self):
+    def turnLeft(self, callback = None):
         """
         Set the current action tl moderation bot designed for mo left
+
+        Parameters :
+            callback : function
+                the callback to call after the action
+                (default is None)
         """
         self.actions.append(Action.LEFT)
         self.commands.append("Left")
-        self.callbacks.append(None)
+        self.callbacks.append(callback)
 
 
-    def look(self):
+    def look(self, callback = None):
         """
         Set the current action to look
+
+        Parameters :
+            callback : function
+                the callback to call after the action
+                (default is None)
         """
         self.actions.append(Action.LOOK)
         self.commands.append("Look")
-        self.callbacks.append(None)
+        self.callbacks.append(callback)
 
 
-    def cmdInventory(self):
+    def cmdInventory(self, callback = None):
         """
         Set the current action to inventory
+
+        Parameters :
+            callback : function
+                the callback to call after the action
+                (default is None)
         """
         self.actions.append(Action.INVENTORY)
         self.commands.append("Inventory")
-        self.callbacks.append(None)
+        self.callbacks.append(callback)
 
 
-    def broadcast(self, message : str = "Hello"):
+    def broadcast(self, message : str = "Hello", callback = None):
         """
         Set the current action to broadcast
 
         Parameters :
             message : str
                 the message to broadcast
+            callback : function
+                the callback to call after the action
+                (default is None)
         """
         self.actions.append(Action.BROADCAST)
         self.commands.append(f"Broadcast \"{message}\"")
-        self.callbacks.append(None)
+        self.callbacks.append(callback)
 
 
-    def connectNbr(self):
+    def connectNbr(self, callback = None):
         """
         Set the current action to connect_nbr
+
+        Parameters :
+            callback : function
+                the callback to call after the action
+                (default is None)
         """
         self.actions.append(Action.CONNECT_NBR)
         self.commands.append("Connect_nbr")
-        self.callbacks.append(None)
+        self.callbacks.append(callback)
 
 
-    def fork(self):
+    def fork(self, callback = None):
         """
         Set the current action to fork
+
+        Parameters :
+            callback : function
+                the callback to call after the action
+                (default is None)
         """
         self.actions.append(Action.FORK)
         self.commands.append("Fork")
-        self.callbacks.append(None)
+        self.callbacks.append(callback)
 
 
-    def eject(self):
+    def eject(self, callback = None):
         """
         Set the current action to eject
+
+        Parameters :
+            callback : function
+                the callback to call after the action
+                (default is None)
         """
         self.actions.append(Action.EJECT)
         self.commands.append("Eject")
-        self.callbacks.append(None)
+        self.callbacks.append(callback)
 
 
-    def take(self, resource : str = "food"):
+    def take(self, resource : str = "food", callback = None):
         """
         Set the current action to take
 
         Parameters :
             resource : str
                 the resource to take
+            callback : function
+                the callback to call after the action
+                (default is None)
         """
         self.actions.append(Action.TAKE)
         self.commands.append(f"Take {resource}")
-        self.callbacks.append(None)
+        self.callbacks.append(callback)
 
 
-    def set(self, resource : str = "food"):
+    def set(self, resource : str = "food", callback = None):
         """
         Set the current action to set
 
         Parameters :
             resource : str
                 the resource to set
+            callback : function
+                the callback to call after the action
+                (default is None)
         """
         self.actions.append(Action.SET)
         self.commands.append(f"Set {resource}")
         self.callbacks.append(self.inventory.removeAnObject(resource))
 
 
-    def incantation(self):
+    def incantation(self, callback = None):
         """
         Set the current action to incantation
+
+        Parameters :
+            callback : function
+                the callback to call after the action
+                (default is None)
         """
         self.actions.append(Action.INCANTATION)
         self.commands.append("Incantation")
-        self.callbacks.append(None)
+        self.callbacks.append(callback)
 
 
     def none(self):
@@ -473,8 +524,7 @@ class Player:
         """
         Complete the team
         """
-        self.connectNbr()
-        self.callbacks[len(self.callbacks) - 1] = self.connectMissingPlayers
+        self.connectNbr(self.connectMissingPlayers)
 
 
     def updateModeSlave(self):
@@ -782,17 +832,14 @@ class Player:
                 self.slavesReponses()
                 self.broadcastReceived = []
         if self.currentMode == Mode.FOOD:
-            self.look()
-            self.callbacks[len(self.callbacks) - 1] = self.lookingForFood
+            self.look(self.lookingForFood)
         elif self.currentMode == Mode.STONES:
-            self.look()
-            self.callbacks[len(self.callbacks) - 1] = self.lookingForStones
+            self.look(self.lookingForStones)
             return
         elif self.currentMode == Mode.FORKING:
             print("Forking")
-            self.fork()
             from ai.src.AI import forkAI
-            self.callbacks[len(self.callbacks) - 1] = forkAI
+            self.fork(forkAI)
             self.nbSlaves += 1
             self.cmdInventory()
             return
