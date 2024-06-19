@@ -326,11 +326,11 @@ void Gui::GUIUpdater::updatePlayerEggLaying(const std::vector<std::string> &data
 
 void Gui::GUIUpdater::updatePlayerRessourceDropping(const std::vector<std::string> &data)
 {
-    std::vector<size_t> args;
-    size_t tmp = 0;
+    std::vector<std::size_t> args;
+    std::size_t tmp = 0;
 
     try {
-        for (size_t i = 0; i < data.size(); i++) {
+        for (std::size_t i = 0; i < data.size(); i++) {
             int temp = std::stoi(data[i], &tmp);
             args.push_back(temp);
             if (temp < 0 || tmp != data[i].size())
@@ -343,19 +343,21 @@ void Gui::GUIUpdater::updatePlayerRessourceDropping(const std::vector<std::strin
         throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pdr:" + STR_RED + "Invalid argument number");
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            if (player.getId() == args[0])
+            if (player.getId() == args[0]) {
                 player.setState(Gui::Player::PlayerState::DROP);
+                _gameData.get()->getTile(player.getPosition().first, player.getPosition().second).inventory.addResource(args[1], 1);
+            }
         }
     }
 }
 
 void Gui::GUIUpdater::updatePlayerRessourceCollecting(const std::vector<std::string> &data)
 {
-    std::vector<size_t> args;
-    size_t tmp = 0;
+    std::vector<std::size_t> args;
+    std::size_t tmp = 0;
 
     try {
-        for (size_t i = 0; i < data.size(); i++) {
+        for (std::size_t i = 0; i < data.size(); i++) {
             int temp = std::stoi(data[i], &tmp);
             args.push_back(temp);
             if (temp < 0 || tmp != data[i].size())
@@ -371,6 +373,7 @@ void Gui::GUIUpdater::updatePlayerRessourceCollecting(const std::vector<std::str
             if (player.getId() == args[0]) {
                 player.setState(Gui::Player::PlayerState::COLLECT);
                 _network->sendMessageServer("pin " + std::to_string(player.getId()) + "\n");
+                _gameData.get()->getTile(player.getPosition().first, player.getPosition().second).inventory.removeResource(args[1], 1);
             }
         }
     }
