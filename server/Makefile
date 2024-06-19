@@ -201,4 +201,4 @@ tests_run: fclean
 	@$(CC) -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(TEST_FLAGS) $(INCLUDE)
 	./$(TEST_NAME)
 	gcovr --exclude tests/
-	gcovr --exclude tests/ --branches
+	gcovr --exclude tests/ --txt-metric branch
