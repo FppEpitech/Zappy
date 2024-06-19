@@ -34,7 +34,7 @@ Test(pnw_command, basic_test)
     ia->direction = 1;
     ia->team_name = "kiki";
 
-    pnw_command(&app, ia);
+    pnw_command(&app, ia, NULL);
     cr_assert_str_eq(gui.list_messages->first->data.message, "pnw 1 1 1 1 1 kiki\n");
 }
 
@@ -60,7 +60,7 @@ Test(pnw_command, basic_test_2)
     ia->direction = 2;
     ia->team_name = "alice";
 
-    pnw_command(&app, ia);
+    pnw_command(&app, ia, NULL);
     cr_assert_str_eq(gui.list_messages->first->data.message, "pnw 54 4 3 2 5 alice\n");
 }
 
@@ -86,11 +86,35 @@ Test(pnw_command, multiple_gui_test)
     ia->direction = 2;
     ia->team_name = "leo";
 
-    pnw_command(&app, ia);
+    pnw_command(&app, ia, NULL);
 
     list_node_t *node = gui.list_messages->first;
     while (node) {
         cr_assert_str_eq(gui.list_messages->first->data.message, "pnw 105 2 3 2 5 leo\n");
         node = node->next;
     }
+}
+
+Test(pnw_command, one_gui_test)
+{
+    app_t app;
+    gui_t gui;
+
+    app.game = create_game(5, 5, 1);
+    app.gui_list = list_new();
+
+    gui.list_messages = list_new();
+    cr_assert_not_null(gui.list_messages);
+
+    ia_t *ia = malloc(sizeof(ia_t));
+    cr_assert_not_null(ia);
+    ia->position = create_vector2i(2, 3);
+    ia->fd = 105;
+    ia->level = 5;
+    ia->direction = 2;
+    ia->team_name = "leo";
+
+    pnw_command(&app, ia, &gui);
+
+    cr_assert_str_eq(gui.list_messages->first->data.message, "pnw 105 2 3 2 5 leo\n");
 }
