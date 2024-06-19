@@ -12,6 +12,8 @@ import select
 from ai.src.Utils.Utils import stringifyData
 from ai.src.Network.APIException import APIException
 
+LIMIT_TRANSFER = 20480
+
 class API:
     """
     API class
@@ -98,19 +100,19 @@ class API:
                 print("sent : ", stringifyData(data), flush=True, file=sys.stderr)
 
 
-    def receiveData(self, timeout : int = None):
+    def receiveData(self, timeout : float = None):
         """
         Receive data from the server
 
         Parameters :
-            timeout : int
+            timeout : float
                 the timeout to wait for the server to send data
                 (default is None which means no timeout)
         """
         readable, _, _ = select.select(self.inputs, [], [], timeout)
         for s in readable:
             if s == self.sock:
-                data = s.recv(1024)
+                data = s.recv(LIMIT_TRANSFER)
                 if not data:
                     print("Server disconnected")
                     sys.exit(0)
@@ -120,7 +122,7 @@ class API:
         return None
 
 
-    def initConnection(self, teamName : str):
+    def initConnection(self, teamName : str, fileName : str = ""):
         """
         Function to do the first exchange with the server
 
@@ -131,6 +133,8 @@ class API:
         Parameters :
             team_name : str
                 the name of the team
+            fileName : str
+                the file name of logs
 
         Returns :
             client_num : int
@@ -142,20 +146,27 @@ class API:
         """
         welcome = self.receiveData()
         if welcome != "WELCOME\n":
-            raise APIException("invalid welcome message")
+            raise APIException("invalid welcome message", fileName)
 
         self.sendData(f"{teamName}\n")
-        clientNum, data = self.receiveData().split('\n', 1)
-        data = data.split(' ')
+        received = self.receiveData()
+        if received == "ko\n":
+            raise APIException("invalid team name", fileName)
+        if received.count('\n') == 2:
+            clientNum, data = received.split('\n', 1)
+            data = data.split(' ')
+        else:
+            clientNum = received.replace('\n', '')
+            data = self.receiveData().replace('\n', '').split(' ')
 
         if len(data) != 2:
-            raise APIException("invalid map size")
+            raise APIException("invalid map size", fileName)
         try:
             clientNum = int(clientNum)
             x = int(data[0])
             y = int(data[1])
         except Exception as e:
-            raise APIException("invalid map size")
+            raise APIException("invalid map size", fileName)
 
         print("Connected to server")
         print(f"Client number: {clientNum}")

@@ -10,9 +10,11 @@
 #include "Hud/AHud.hpp"
 
 #define HUD_TILE_POS Vector2{0, 340}
-#define HUD_TILE_TEXT_POS Vector2{25, 420}
-#define HUD_TILE_TEXT_TITLE_POS Vector2{50, 380}
+#define HUD_TILE_TEXT_POS Vector2{55, 420}
+#define HUD_TILE_TEXT_TITLE_POS Vector2{60, 380}
 #define HUD_TILE_TEXT_MARGING 30
+#define HUD_TILE_ICONS_MARGING -32
+#define HUD_TILE_TITLE_ICON_MARGING Vector2{45, 40}
 
 namespace Gui {
 
@@ -50,4 +52,13 @@ class Gui::HudTile : public Gui::AHud {
 
         Texture2D   _texture;       // Texture for Hud Background.
         Font        _font;          // Font for Hud's texts.
+
+        Texture2D   _food;          // Texture for food png.
+        Texture2D   _linemate;      // Texture for linemate png.
+        Texture2D   _deraumere;     // Texture for deraumere png.
+        Texture2D   _mendiane;      // Texture for mendiane png.
+        Texture2D   _phiras;        // Texture for phiras png.
+        Texture2D   _sibur;         // Texture for sibur png.
+        Texture2D   _thystame;      // Texture for thystame png.
+        Texture2D   _tileTexture;   // Texture for tile png.
 };
