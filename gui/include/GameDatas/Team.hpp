@@ -35,6 +35,7 @@ class Gui::Team {
          * @param name Name of the team.
          * @param playerModelPath Path to the team model asset for players.
          * @param eggSkinPath Path to the skin of the team.
+         * @param playerColor Color of the players.
          */
         Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath, Color playerColor);
 
