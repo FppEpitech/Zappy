@@ -637,7 +637,6 @@ class Player:
                 self.broadcast("Finished dropping")
                 self.currentMode = Mode.NONE
                 return
-            self.cmdInventory()
 
 
     def regroupAction(self):
