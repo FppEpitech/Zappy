@@ -106,7 +106,7 @@ void connect_nbr_cmd(app_t *app, ia_t *ai);
  *
  * @param app Application with necessary information.
  * @param ai AI who have done a command.
- * @param ressource Ressource Taked.
+ * @param ressource Ressource taken.
  */
 void take_cmd(app_t *app, ia_t *ai, char *ressource);
 
