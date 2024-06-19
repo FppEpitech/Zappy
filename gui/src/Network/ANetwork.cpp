@@ -9,8 +9,8 @@
 
 Gui::ANetwork::ANetwork(int port, const std::string &hostName)
 {
-    this->_port = port;
-    this->_hostName = hostName;
+    this->setPort(port);
+    this->setHostName(hostName);
 }
 
 void Gui::ANetwork::setPort(int port)
