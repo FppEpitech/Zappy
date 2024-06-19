@@ -8,6 +8,8 @@
 #include "Assets.hpp"
 #include "Hud/HudTile.hpp"
 
+#include <list>
+
 Gui::HudTile::HudTile(std::shared_ptr<GameData> gameData)
 {
     _typeScene = TILE;
@@ -40,14 +42,13 @@ void Gui::HudTile::display()
         DrawTextEx(_font, ("Sibur: " + std::to_string(_tile->inventory.getSibur())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_TILE_TEXT_MARGING * 5}, 20, 0, WHITE);
         DrawTextEx(_font, ("Thystame: " + std::to_string(_tile->inventory.getThystame())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_TILE_TEXT_MARGING * 6}, 20, 0, WHITE);
 
-        DrawTexture(_food, hudTextPos.x + HUD_TILE_ICONS_MARGING, hudTextPos.y + HUD_TILE_TEXT_MARGING * 0, WHITE);
-        DrawTexture(_linemate, hudTextPos.x + HUD_TILE_ICONS_MARGING, hudTextPos.y + HUD_TILE_TEXT_MARGING * 1, WHITE);
-        DrawTexture(_deraumere, hudTextPos.x + HUD_TILE_ICONS_MARGING, hudTextPos.y + HUD_TILE_TEXT_MARGING * 2, WHITE);
-        DrawTexture(_mendiane, hudTextPos.x + HUD_TILE_ICONS_MARGING, hudTextPos.y + HUD_TILE_TEXT_MARGING * 3, WHITE);
-        DrawTexture(_phiras, hudTextPos.x + HUD_TILE_ICONS_MARGING, hudTextPos.y + HUD_TILE_TEXT_MARGING * 4, WHITE);
-        DrawTexture(_sibur, hudTextPos.x + HUD_TILE_ICONS_MARGING, hudTextPos.y + HUD_TILE_TEXT_MARGING * 5, WHITE);
-        DrawTexture(_thystame, hudTextPos.x + HUD_TILE_ICONS_MARGING, hudTextPos.y + HUD_TILE_TEXT_MARGING * 6, WHITE);
+        std::list<Texture2D> textureList = {_food, _linemate, _deraumere, _mendiane, _phiras, _sibur, _thystame};
 
+        int count = 0;
+        for (Texture2D texture : textureList) {
+            DrawTexture(texture, hudTextPos.x + HUD_TILE_ICONS_MARGING, hudTextPos.y + HUD_TILE_TEXT_MARGING * count, WHITE);
+            count++;
+        }
         DrawTexture(_tileTexture, hudPos.x + HUD_TILE_TITLE_ICON_MARGING.x, hudPos.y + HUD_TILE_TITLE_ICON_MARGING.y, WHITE);
     }
 }
