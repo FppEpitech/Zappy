@@ -14,6 +14,7 @@ Gui::GameData::GameData()
     _serverTick = NO_TICK;
     _lastTick = clock();
     _isEndGame = false;
+    _serverEggs = std::vector<Gui::Egg>();
 }
 
 std::vector<Gui::Team> &Gui::GameData::getTeams()
@@ -179,4 +180,28 @@ Gui::GameData::TimeUnitState Gui::GameData::getTimeUnitFromServer() const
 void Gui::GameData::setTimeUnitFromServer(TimeUnitState timeUnitFromServer)
 {
     _timeUnitFromServer = timeUnitFromServer;
+}
+
+std::vector<Gui::Egg> &Gui::GameData::getServerEggs()
+{
+    return _serverEggs;
+}
+
+void Gui::GameData::addServerEgg(const Gui::Egg &egg)
+{
+    for (auto &registeredEgg : _serverEggs) {
+        if (registeredEgg.getId() == egg.getId())
+            throw Gui::Errors::GuiGameDataException("Egg already exists");
+    }
+    _serverEggs.push_back(egg);
+}
+
+void Gui::GameData::removeServerEgg(size_t id)
+{
+    for (size_t i = 0; i < _serverEggs.size(); i++) {
+        if (_serverEggs[i].getId() == id) {
+            _serverEggs.erase(_serverEggs.begin() + i);
+            return;
+        }
+    }
 }
