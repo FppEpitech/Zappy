@@ -14,6 +14,14 @@
 #define LEN_COMMAND 3
 #define LEN_COMMAND_AND_SPACE LEN_COMMAND + 1
 
+#define FOOD_INDEX 0
+#define LINEMATE_INDEX 1
+#define DERAUMERE_INDEX 2
+#define SIBUR_INDEX 3
+#define MENDIANE_INDEX 4
+#define PHIRAS_INDEX 5
+#define THYSTAME_INDEX 6
+
 enum e_command_label {
     CL_MSZ,
     CL_BCT,
@@ -158,8 +166,9 @@ void pfk_command(app_t *app, int player_id);
  *
  * @param app The app structure with all the gui fds.
  * @param player_id The player id who call the command.
+ * @param index_ressource Index of ressources dropped.
  */
-void pdr_command(app_t *app, int player_id);
+void pdr_command(app_t *app, int player_id, size_t index_ressource);
 
 /**
  * @brief Perform the pgt command.
@@ -167,8 +176,9 @@ void pdr_command(app_t *app, int player_id);
  *
  * @param app The app structure with all the gui fds.
  * @param player_id The player id who call the command.
+ * @param index_ressource Index of ressources taken.
  */
-void pgt_command(app_t *app, int player_id);
+void pgt_command(app_t *app, int player_id, size_t index_ressource);
 
 /**
  * @brief Perform the pdi command. For inform the GUI when a player die.

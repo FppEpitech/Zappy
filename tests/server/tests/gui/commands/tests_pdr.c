@@ -24,14 +24,8 @@ Test(pdr_command, basic_test)
     cr_assert_not_null(gui.list_messages);
     gui_data.gui = &gui;
     list_add_back(app.gui_list, gui_data);
-    pdr_command(&app, 1);
+    pdr_command(&app, 1, 0);
     cr_assert_str_eq(gui.list_messages->first->data.message, "pdr 1 0\n");
-    cr_assert_str_eq(gui.list_messages->first->next->data.message, "pdr 1 1\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->data.message, "pdr 1 2\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->data.message, "pdr 1 3\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->next->data.message, "pdr 1 4\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->next->next->data.message, "pdr 1 5\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->next->next->next->data.message, "pdr 1 6\n");
 }
 
 Test(pdr_command, basic_test_2)
@@ -46,14 +40,8 @@ Test(pdr_command, basic_test_2)
     cr_assert_not_null(gui.list_messages);
     gui_data.gui = &gui;
     list_add_back(app.gui_list, gui_data);
-    pdr_command(&app, 58975);
-    cr_assert_str_eq(gui.list_messages->first->data.message, "pdr 58975 0\n");
-    cr_assert_str_eq(gui.list_messages->first->next->data.message, "pdr 58975 1\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->data.message, "pdr 58975 2\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->data.message, "pdr 58975 3\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->next->data.message, "pdr 58975 4\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->next->next->data.message, "pdr 58975 5\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->next->next->next->data.message, "pdr 58975 6\n");
+    pdr_command(&app, 58975, 1);
+    cr_assert_str_eq(gui.list_messages->first->data.message, "pdr 58975 1\n");
 }
 
 Test(pdr_command, multiple_gui_test)
@@ -74,16 +62,10 @@ Test(pdr_command, multiple_gui_test)
     cr_assert_not_null(gui2.list_messages);
     gui_data2.gui = &gui2;
     list_add_back(app.gui_list, gui_data2);
-    pdr_command(&app, 1);
+    pdr_command(&app, 1, 1);
     list_node_t *node = gui.list_messages->first;
     while (node) {
-        cr_assert_str_eq(gui.list_messages->first->data.message, "pdr 1 0\n");
-        cr_assert_str_eq(gui.list_messages->first->next->data.message, "pdr 1 1\n");
-        cr_assert_str_eq(gui.list_messages->first->next->next->data.message, "pdr 1 2\n");
-        cr_assert_str_eq(gui.list_messages->first->next->next->next->data.message, "pdr 1 3\n");
-        cr_assert_str_eq(gui.list_messages->first->next->next->next->next->data.message, "pdr 1 4\n");
-        cr_assert_str_eq(gui.list_messages->first->next->next->next->next->next->data.message, "pdr 1 5\n");
-        cr_assert_str_eq(gui.list_messages->first->next->next->next->next->next->next->data.message, "pdr 1 6\n");
+        cr_assert_str_eq(gui.list_messages->first->data.message, "pdr 1 1\n");
         node = node->next;
     }
 }

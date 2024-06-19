@@ -24,14 +24,8 @@ Test(pgt_command, basic_test)
     cr_assert_not_null(gui.list_messages);
     gui_data.gui = &gui;
     list_add_back(app.gui_list, gui_data);
-    pgt_command(&app, 1);
+    pgt_command(&app, 1, 0);
     cr_assert_str_eq(gui.list_messages->first->data.message, "pgt 1 0\n");
-    cr_assert_str_eq(gui.list_messages->first->next->data.message, "pgt 1 1\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->data.message, "pgt 1 2\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->data.message, "pgt 1 3\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->next->data.message, "pgt 1 4\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->next->next->data.message, "pgt 1 5\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->next->next->next->data.message, "pgt 1 6\n");
 }
 
 Test(pgt_command, basic_test_2)
@@ -46,14 +40,8 @@ Test(pgt_command, basic_test_2)
     cr_assert_not_null(gui.list_messages);
     gui_data.gui = &gui;
     list_add_back(app.gui_list, gui_data);
-    pgt_command(&app, 58975);
+    pgt_command(&app, 58975, 0);
     cr_assert_str_eq(gui.list_messages->first->data.message, "pgt 58975 0\n");
-    cr_assert_str_eq(gui.list_messages->first->next->data.message, "pgt 58975 1\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->data.message, "pgt 58975 2\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->data.message, "pgt 58975 3\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->next->data.message, "pgt 58975 4\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->next->next->data.message, "pgt 58975 5\n");
-    cr_assert_str_eq(gui.list_messages->first->next->next->next->next->next->next->data.message, "pgt 58975 6\n");
 }
 
 Test(pgt_command, multiple_gui_test)
@@ -74,16 +62,10 @@ Test(pgt_command, multiple_gui_test)
     cr_assert_not_null(gui2.list_messages);
     gui_data2.gui = &gui2;
     list_add_back(app.gui_list, gui_data2);
-    pgt_command(&app, 1);
+    pgt_command(&app, 1, 0);
     list_node_t *node = gui.list_messages->first;
     while (node) {
         cr_assert_str_eq(gui.list_messages->first->data.message, "pgt 1 0\n");
-        cr_assert_str_eq(gui.list_messages->first->next->data.message, "pgt 1 1\n");
-        cr_assert_str_eq(gui.list_messages->first->next->next->data.message, "pgt 1 2\n");
-        cr_assert_str_eq(gui.list_messages->first->next->next->next->data.message, "pgt 1 3\n");
-        cr_assert_str_eq(gui.list_messages->first->next->next->next->next->data.message, "pgt 1 4\n");
-        cr_assert_str_eq(gui.list_messages->first->next->next->next->next->next->data.message, "pgt 1 5\n");
-        cr_assert_str_eq(gui.list_messages->first->next->next->next->next->next->next->data.message, "pgt 1 6\n");
         node = node->next;
     }
 }
