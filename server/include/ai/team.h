@@ -55,7 +55,7 @@ void add_egg(list_t *eggs, int id_player_laid, app_t *app);
  *
  * @param eggs Eggs list.
  * @param id_player_laid Id of player.
- * @param app Application with all information
+ * @param app Application with all information.
  * @param ai AI who want add an egg.
  */
 void add_egg_on_player(list_t *eggs, int id_player_laid,
