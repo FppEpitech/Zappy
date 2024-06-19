@@ -226,31 +226,31 @@ class Gui::Render {
          * @brief Load the models to draw.
          *
          */
-        void LoadModels(void);
+        void LoadModels();
 
         /**
          * @brief Display HUD infos related to player's pov.
          *
          */
-        void displayHUD(void);
+        void displayHUD();
 
         /**
          * @brief Display the debug interface.
          *
          */
-        void displayDebug(void);
+        void displayDebug();
 
         /**
          * @brief Display players.
          *
          */
-        void displayPlayers(void);
+        void displayPlayers();
 
         /**
          * @brief Display the map.
          *
          */
-        void displayMap(void);
+        void displayMap();
 
         /**
          * @brief Display a Tile.
