@@ -13,6 +13,8 @@
 #define HUD_TILE_TEXT_POS Vector2{55, 420}
 #define HUD_TILE_TEXT_TITLE_POS Vector2{60, 380}
 #define HUD_TILE_TEXT_MARGING 30
+#define HUD_TILE_ICONS_MARGING -32
+#define HUD_TILE_TITLE_ICON_MARGING Vector2{45, 40}
 
 namespace Gui {
 
