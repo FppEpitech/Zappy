@@ -118,6 +118,18 @@ void Gui::GUIUpdater::updateTeamMember(const std::vector<std::string> &data)
             Player player(args[0], data[5], std::make_pair(args[1], args[2]), args[3], args[4]);
             player.setState(Gui::Player::BORN);
             team.addPlayer(player);
+            for (auto &egg : team.getEggs()) {
+                if (egg.getPosition() == std::make_pair(args[1], args[2])) {
+                    team.removeEgg(egg.getId());
+                    break;
+                }
+            }
+            for (auto &egg : _gameData.get()->getServerEggs()) {
+                if (egg.getPosition() == std::make_pair(args[1], args[2])) {
+                    _gameData.get()->removeServerEgg(egg.getId());
+                    break;
+                }
+            }
         }
     }
 }
@@ -443,13 +455,14 @@ void Gui::GUIUpdater::updateEggLaidByPlayer(const std::vector<std::string> &data
     }
     if (args.size() != 4)
         throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "enw:" + STR_RED + "Invalid argument number");
+    if (serverId != 0)
+        _gameData.get()->addServerEgg(Gui::Egg(args[0], "", std::make_pair(args[2], args[3])));
     for (auto &team : _gameData->getTeams()) {
-        if (serverId != 0) {
-            team.addEgg(Gui::Egg(args[0], team.getName(), std::make_pair(args[2], args[3])));
-        }
         for (auto &player : team.getPlayers()) {
-            if (player.getId() == args[1])
+            if (player.getId() == args[1]) {
                 team.addEgg(Gui::Egg(args[0], team.getName(), std::make_pair(args[2], args[3])));
+                break;
+            }
         }
     }
 }
