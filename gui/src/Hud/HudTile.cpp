@@ -40,13 +40,13 @@ void Gui::HudTile::display()
         DrawTextEx(_font, ("Sibur: " + std::to_string(_tile->inventory.getSibur())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_TILE_TEXT_MARGING * 5}, 20, 0, WHITE);
         DrawTextEx(_font, ("Thystame: " + std::to_string(_tile->inventory.getThystame())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_TILE_TEXT_MARGING * 6}, 20, 0, WHITE);
 
-        DrawTexture(_food, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 0, WHITE);
-        DrawTexture(_linemate, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 1, WHITE);
-        DrawTexture(_deraumere, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 2, WHITE);
-        DrawTexture(_mendiane, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 3, WHITE);
-        DrawTexture(_phiras, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 4, WHITE);
-        DrawTexture(_sibur, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 5, WHITE);
-        DrawTexture(_thystame, hudTextPos.x - 24, hudTextPos.y + HUD_TILE_TEXT_MARGING * 6, WHITE);
+        DrawTexture(_food, hudTextPos.x - 32, hudTextPos.y + HUD_TILE_TEXT_MARGING * 0, WHITE);
+        DrawTexture(_linemate, hudTextPos.x - 32, hudTextPos.y + HUD_TILE_TEXT_MARGING * 1, WHITE);
+        DrawTexture(_deraumere, hudTextPos.x - 32, hudTextPos.y + HUD_TILE_TEXT_MARGING * 2, WHITE);
+        DrawTexture(_mendiane, hudTextPos.x - 32, hudTextPos.y + HUD_TILE_TEXT_MARGING * 3, WHITE);
+        DrawTexture(_phiras, hudTextPos.x - 32, hudTextPos.y + HUD_TILE_TEXT_MARGING * 4, WHITE);
+        DrawTexture(_sibur, hudTextPos.x - 32, hudTextPos.y + HUD_TILE_TEXT_MARGING * 5, WHITE);
+        DrawTexture(_thystame, hudTextPos.x - 32, hudTextPos.y + HUD_TILE_TEXT_MARGING * 6, WHITE);
 
         DrawTexture(_tileTexture, hudPos.x + 45, hudPos.y + 40, WHITE);
     }

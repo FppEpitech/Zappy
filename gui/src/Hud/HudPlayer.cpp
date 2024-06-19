@@ -28,7 +28,7 @@ void Gui::HudPlayer::display()
 {
     Vector2 hudPos = HUD_PLAYER_POS;
     DrawTexture(_texture, hudPos.x, hudPos.y, WHITE);
-    DrawTextEx(_font, "Statistics", HUD_PLAYER_TEXT_TITLE_POS, 20, 0, (Color){170, 121, 89, 255});
+    DrawTextEx(_font, "Player", HUD_PLAYER_TEXT_TITLE_POS, 20, 0, (Color){170, 121, 89, 255});
     if (_player != nullptr) {
         Vector2 hudTextPos = HUD_PLAYER_TEXT_POS;
         DrawTextEx(_font, ("Food: " + std::to_string(_player->inventory.getFood())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 0}, 20, 0, WHITE);
@@ -42,14 +42,14 @@ void Gui::HudPlayer::display()
         DrawTextEx(_font, ("Id: " + std::to_string(_player->getId())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 8}, 20, 0, WHITE);
         DrawTextEx(_font, ("Team: " + _player->getTeam()).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 9}, 20, 0, WHITE);
 
-        DrawTexture(_food, hudTextPos.x - 24, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 0, WHITE);
-        DrawTexture(_linemate, hudTextPos.x - 24, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 1, WHITE);
-        DrawTexture(_deraumere, hudTextPos.x - 24, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 2, WHITE);
-        DrawTexture(_mendiane, hudTextPos.x - 24, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 3, WHITE);
-        DrawTexture(_phiras, hudTextPos.x - 24, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 4, WHITE);
-        DrawTexture(_sibur, hudTextPos.x - 24, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 5, WHITE);
-        DrawTexture(_thystame, hudTextPos.x - 24, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 6, WHITE);
+        DrawTexture(_food, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 0, WHITE);
+        DrawTexture(_linemate, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 1, WHITE);
+        DrawTexture(_deraumere, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 2, WHITE);
+        DrawTexture(_mendiane, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 3, WHITE);
+        DrawTexture(_phiras, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 4, WHITE);
+        DrawTexture(_sibur, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 5, WHITE);
+        DrawTexture(_thystame, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 6, WHITE);
 
-        DrawTexture(_playerTexture, hudPos.x + 35, hudPos.y + 35, WHITE);
+        DrawTexture(_playerTexture, hudPos.x + 45, hudPos.y + 35, WHITE);
     }
 }
