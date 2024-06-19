@@ -120,6 +120,7 @@ TEST_FILES	=	list/list_test.c 					\
 				gui/commands/tests_pdi.c			\
 				gui/commands/tests_pdr.c			\
 				gui/commands/tests_pex.c			\
+				gui/commands/tests_pfk.c			\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
