@@ -98,7 +98,7 @@ SRC			=	src/list/list.c \
 				src/gui/communication/edi.c			\
 				src/gui/communication/ebo.c			\
 
-TEST_FILES	=	list/list_test.c \
+TEST_FILES	=	list/list_test.c 					\
 				communication/communication_test.c 	\
 				parsing/help_test.c					\
 				parsing/parse_positive_int_tests.c	\
@@ -109,8 +109,34 @@ TEST_FILES	=	list/list_test.c \
 				parsing/parse_frequency_tests.c		\
 				parsing/parse_arguments_tests.c		\
 				parsing/parse_names_tests.c			\
-				map/map_test.c \
-				ai/move_command.c \
+				map/map_test.c 						\
+				ai/move_command.c 					\
+				gui/commands/tests_loop.c			\
+				gui/commands/tests_bct.c			\
+				gui/commands/tests_ebo.c			\
+				gui/commands/tests_edi.c			\
+				gui/commands/tests_enw.c			\
+				gui/commands/tests_mct.c			\
+				gui/commands/tests_msz.c			\
+				gui/commands/tests_pbc.c			\
+				gui/commands/tests_pdi.c			\
+				gui/commands/tests_pdr.c			\
+				gui/commands/tests_pex.c			\
+				gui/commands/tests_pfk.c			\
+				gui/commands/tests_pgt.c			\
+				gui/commands/tests_pic.c			\
+				gui/commands/tests_pie.c			\
+				gui/commands/tests_pin.c			\
+				gui/commands/tests_plv.c			\
+				gui/commands/tests_pnw.c			\
+				gui/commands/tests_ppo.c			\
+				gui/commands/tests_sbp.c			\
+				gui/commands/tests_seg.c			\
+				gui/commands/tests_sgt.c			\
+				gui/commands/tests_smg.c			\
+				gui/commands/tests_sst.c			\
+				gui/commands/tests_suc.c			\
+				gui/commands/tests_tna.c			\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)

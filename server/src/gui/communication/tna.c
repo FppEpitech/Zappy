@@ -19,7 +19,7 @@ void tna_response(gui_t *gui, app_t *app, char *line)
     list_node_t *node = app->teams_list->first;
 
     if (strlen(line) != LEN_COMMAND) {
-        sbp_command(gui);
+        suc_command(gui);
         return;
     }
     while (node) {
