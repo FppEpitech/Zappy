@@ -11,13 +11,13 @@
 
 static bool object_cmd_handler(app_t *app, ia_t *ai, char *line)
 {
-    if (strcmp("Take object", line) == 0) {
-        take_cmd(app, ai);
+    if (strncmp("Take ", line, 5) == 0) {
+        take_cmd(app, ai, line + 5);
         set_time_stuck(ai, 7 / app->game->freq);
         return true;
     }
-    if (strcmp("Set object", line) == 0) {
-        set_cmd(app, ai);
+    if (strncmp("Set ", line, 4) == 0) {
+        set_cmd(app, ai, line + 4);
         set_time_stuck(ai, 7 / app->game->freq);
         return true;
     }
