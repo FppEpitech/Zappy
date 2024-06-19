@@ -42,14 +42,14 @@ void Gui::HudPlayer::display()
         DrawTextEx(_font, ("Id: " + std::to_string(_player->getId())).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 8}, 20, 0, WHITE);
         DrawTextEx(_font, ("Team: " + _player->getTeam()).c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 9}, 20, 0, WHITE);
 
-        DrawTexture(_food, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 0, WHITE);
-        DrawTexture(_linemate, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 1, WHITE);
-        DrawTexture(_deraumere, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 2, WHITE);
-        DrawTexture(_mendiane, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 3, WHITE);
-        DrawTexture(_phiras, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 4, WHITE);
-        DrawTexture(_sibur, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 5, WHITE);
-        DrawTexture(_thystame, hudTextPos.x - 32, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 6, WHITE);
+        DrawTexture(_food, hudTextPos.x + HUD_PLAYER_ICONS_MARGING, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 0, WHITE);
+        DrawTexture(_linemate, hudTextPos.x + HUD_PLAYER_ICONS_MARGING, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 1, WHITE);
+        DrawTexture(_deraumere, hudTextPos.x + HUD_PLAYER_ICONS_MARGING, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 2, WHITE);
+        DrawTexture(_mendiane, hudTextPos.x + HUD_PLAYER_ICONS_MARGING, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 3, WHITE);
+        DrawTexture(_phiras, hudTextPos.x + HUD_PLAYER_ICONS_MARGING, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 4, WHITE);
+        DrawTexture(_sibur, hudTextPos.x + HUD_PLAYER_ICONS_MARGING, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 5, WHITE);
+        DrawTexture(_thystame, hudTextPos.x + HUD_PLAYER_ICONS_MARGING, hudTextPos.y + HUD_PLAYER_TEXT_MARGING * 6, WHITE);
 
-        DrawTexture(_playerTexture, hudPos.x + 45, hudPos.y + 35, WHITE);
+        DrawTexture(_playerTexture, hudPos.x + HUD_PLAYER_TITLE_ICON_MARGING.x, hudPos.y + HUD_PLAYER_TITLE_ICON_MARGING.y, WHITE);
     }
 }
