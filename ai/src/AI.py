@@ -5,6 +5,7 @@
 ## AI
 ##
 
+
 import os
 import sys
 import uuid
@@ -53,7 +54,6 @@ class AI:
         self.player = Player(isLeader)
         self.teamName = teamName
 
-
     def run(self):
         """
         Run the AI (the main loop)
@@ -76,10 +76,8 @@ class AI:
                 if self.player.currentMode != Mode.NONE:
                     print("Choose action", flush=True)
                 self.player.chooseAction()
-
             if self.player.currentMode == Mode.REGROUP and self.player.isLeader == False:
                 break
-
             for _ in range(0, len(self.player.actions)):
                 self.player.currentAction = self.player.actions[0]
                 self.player.currentCommand = self.player.commands[0]

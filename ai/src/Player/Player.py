@@ -5,12 +5,76 @@
 ## Player
 ##
 
+from enum import Enum
+import random
 import sys
 
 from ai.src.Enum.Mode import Mode
 from ai.src.Enum.Action import Action
+from ai.src.Enum.Item import Item
 from ai.src.Player.Inventory import Inventory
 from ai.src.Player.PlayerException import PlayerDeathException
+
+def getXmovement(middle, max, width, target):
+    if middle == target:
+        return 0
+    return target - middle
+ 
+def getMovesTowardTile(index):
+    maxRowNum = 3
+    crowWidth = 3
+    fwdRow = 1
+    middleTileIndex = 2
+
+    if index == 0:
+        return (0, 0)
+    if index <= maxRowNum:
+        return (getXmovement(middleTileIndex, maxRowNum, crowWidth, index), 1)
+    for i in range(7):
+        fwdRow += 1
+        crowWidth += 2
+        middleTileIndex += fwdRow*2
+        maxRowNum += crowWidth
+        if index <= maxRowNum:
+            return (getXmovement(middleTileIndex, maxRowNum, crowWidth, index), fwdRow)
+    return -1
+
+def foodInVision(vision : list):
+    total : int = 0
+
+    for i in range(len(vision)):
+        if vision[i].food > 0:
+            return (True, i)
+    return (False, -1)
+
+def stonesInVision(vision: list):
+    for i, v in enumerate(vision):
+        if v.linemate > 0:
+            return (True, i, Item.LINEMATE)
+        if v.deraumere > 0:
+            return (True, i, Item.DERAUMERE)
+        if v.sibur > 0:
+            return (True, i, Item.SIBUR)
+        if v.mendiane > 0:
+            return (True, i, Item.MENDIANE)
+        if v.phiras > 0:
+            return (True, i, Item.PHIRAS)
+        if v.thystame > 0:
+            return (True, i, Item.THYSTAME)
+    return (False, -1, None)
+
+
+class Mode(Enum):
+    FOOD = 0
+    STONES = 1
+    FORKING = 2
+    BROADCASTING = 3
+    HANDLINGRESPONSE = 4
+    WAITING = 5
+    ELEVATING = 6
+    REGROUP = 7
+    DROPPING = 8
+    NONE = 9
 
 class Player:
     """
@@ -374,7 +438,6 @@ class Player:
         direction = int(message)
         self.ejectionReceived.append(direction)
 
-
     def updateLevel(self, level : int):
         """
         Update the level of the player
@@ -458,7 +521,6 @@ class Player:
         self.currentCommand = ""
         self.callback = None
 
-
     def connectMissingPlayers(self):
         """
         Connect the missing players
@@ -486,7 +548,6 @@ class Player:
         elif self.inventory.food >= 45:
             self.currentMode = Mode.STONES
 
-
     def updateModeLeader(self):
         """
         Update the mode of the player when he is a leader
@@ -512,7 +573,6 @@ class Player:
                 self.currentMode = Mode.WAITING
         self.currentFood = self.inventory.food
 
-
     def updateMode(self):
         """
         Update the mode of the player
@@ -532,34 +592,11 @@ class Player:
         When he finds food, he will  go to the case
         where there is food and take it.
         """
-        index = -1
-        order = [0, 2, 1, 3]
-        for i in order:
-            if len(self.vision) > i and self.vision[i].food > 0:
-                index = i
-                break
-        if index == -1:
-            self.moveForward()
-            self.moveForward()
-            self.cmdInventory()
-            return
-        if index == 1:
-            self.moveForward()
-            self.turnLeft()
-            self.moveForward()
-        elif index == 2:
-            self.moveForward()
-        elif index == 3:
-            self.moveForward()
-            self.turnRight()
-            self.moveForward()
-        for i in range(0, self.vision[index].food):
-            if len(self.actions) < 9:
-                self.take("food")
-            else:
-                break
+        (found, index) = foodInVision(self.vision)
+        if not found:
+            return random.choice([self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
+        self.goTowardTile(index, Item.FOOD)
         self.cmdInventory()
-
 
     def lookingForStones(self):
         """
@@ -568,42 +605,11 @@ class Player:
         When he finds stones, he will  go to the case
         where there are stones and take them.
         """
-        index = -1
-        count = 0
-        order = [0, 2, 1, 3]
-        for i in order:
-            if len(self.vision) > i and self.vision[i].countStones() > count:
-                index = i
-                count = self.vision[i].countStones()
-        if index == -1:
-            self.moveForward()
-            self.moveForward()
-            self.cmdInventory()
-            return
-        if index == 1:
-            self.moveForward()
-            self.turnLeft()
-            self.moveForward()
-        elif index == 2:
-            self.moveForward()
-        elif index == 3:
-            self.moveForward()
-            self.turnRight()
-            self.moveForward()
-        if self.vision[index].linemate > 0:
-            self.take("linemate")
-        if self.vision[index].deraumere > 0:
-            self.take("deraumere")
-        if self.vision[index].sibur > 0:
-            self.take("sibur")
-        if self.vision[index].mendiane > 0:
-            self.take("mendiane")
-        if self.vision[index].phiras > 0:
-            self.take("phiras")
-        if self.vision[index].thystame > 0:
-            self.take("thystame")
-        self.cmdInventory()
-
+        (found, index, enum) = stonesInVision(self.vision)
+        if not found:
+            return random.choice([self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
+        self.goTowardTile(index, enum)
+        self.cmdInventory()  
 
     def askSlavesForInventory(self):
         """
@@ -612,7 +618,6 @@ class Player:
         """
         self.broadcast("Inventory")
         self.nbSlaves = 0
-
 
     def checkIfEnoughFood(self, response : str):
         """
@@ -814,3 +819,19 @@ class Player:
         elif self.currentMode == Mode.NONE:
             return
         return
+
+    def goTowardTile(self, index, itemSeek : Item):
+        (x, y) = getMovesTowardTile(index)
+        moves : int = 1 + x + y + (1 if x > 0 or x < 0 else 0)
+        
+        if (len(self.actions) + moves) > 9:
+            return
+        for i in range(y):
+            self.moveForward()
+        if x > 0:
+            self.turnRight()
+        if x < 0:
+            self.turnLeft()
+        for i in range(x):
+            self.moveForward()
+        self.take(itemSeek.value)
