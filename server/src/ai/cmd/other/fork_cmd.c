@@ -15,7 +15,7 @@ void fork_cmd(app_t *app, ia_t *ai)
     team_t *team = find_team(app, ai->fd);
     char *reply = format_string("ok\n");
 
-    add_egg(team->eggs_list, ai->fd, app);
+    add_egg_on_player(team->eggs_list, ai->fd, app, ai);
     pfk_command(app, ai->fd);
     add_message(ai->list_messages, reply);
     printf("EGG IS LAYING\n");
