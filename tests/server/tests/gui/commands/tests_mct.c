@@ -14,7 +14,6 @@
 
 Test(mct_response, valid_position)
 {
-    printf("\n\n\n\n\n\ntest\n\n\n\n\n\n");
     gui_t gui;
     app_t app;
     char line[] = "mct";
