@@ -17,7 +17,6 @@ void pgt_command(app_t *app, int player_id)
     for (int i = 0; i < MAX_ITEMS; i++) {
         response = format_string("pgt %d %d\n", player_id, i);
         gui_node = app->gui_list->first;
-        printf("%s", response);
         while (gui_node) {
             add_message(gui_node->data.gui->list_messages, response);
             gui_node = gui_node->next;

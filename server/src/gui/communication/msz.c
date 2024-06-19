@@ -16,7 +16,7 @@ void msz_response(gui_t *gui, app_t *app, char *line)
     char *response = NULL;
 
     if (strlen(line) != LEN_COMMAND) {
-        sbp_command(gui);
+        suc_command(gui);
         return;
     }
     response = format_string("msz %d %d\n", app->game->width,
