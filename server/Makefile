@@ -115,6 +115,7 @@ TEST_FILES	=	list/list_test.c 					\
 				gui/commands/tests_edi.c			\
 				gui/commands/tests_enw.c			\
 				gui/commands/tests_mct.c			\
+				gui/commands/tests_msz.c			\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
