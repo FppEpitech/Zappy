@@ -96,7 +96,7 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     new_ia->team_name = team->name;
     add_message_to_ia(app, team, new_ia);
     ebo_command(app, team->eggs_list->first->data.egg->id);
-    pnw_command(app, new_ia);
+    pnw_command(app, new_ia, NULL);
     return new_ia;
 }
 

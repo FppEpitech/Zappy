@@ -38,17 +38,11 @@ static void send_pnw_commands(app_t *app, gui_t *gui)
 {
     list_node_t *node_team = app->teams_list->first;
     list_node_t *node_ai = NULL;
-    char *response = NULL;
-    ia_t *ai = NULL;
 
     while (node_team) {
         node_ai = node_team->data.team->list_ai->first;
         while (node_ai) {
-            ai = node_ai->data.ai;
-            response = format_string("pnw %d %d %d %d %d %s\n",
-            ai->fd, ai->position->x, ai->position->y, ai->direction,
-            ai->level, ai->team_name);
-            add_message(gui->list_messages, response);
+            pnw_command(app, node_ai->data.ai, gui);
             node_ai = node_ai->next;
         }
         node_team = node_team->next;
