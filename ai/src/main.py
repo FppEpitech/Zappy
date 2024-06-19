@@ -82,8 +82,8 @@ def main(isLeader=False):
 
 
 if __name__ == "__main__":
-    # try:
+    try:
         main(True)
-    # except Exception as e:
-    #     print(e, file=sys.stderr)
-    #     sys.exit(84)
+    except Exception as e:
+        print(e, file=sys.stderr)
+        sys.exit(84)
