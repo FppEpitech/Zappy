@@ -42,13 +42,6 @@ team_t *create_team(app_t *app, char *name, size_t max_place);
 void add_team(app_t *app, char *team_name, size_t max_place);
 
 /**
- * @brief Display all egg position of all team.
- *
- * @param app Application with list of team.
- */
-void display_egg_position(app_t *app);
-
-/**
  * @brief Add an egg in the list.
  *
  * @param eggs List of eggs.
@@ -56,6 +49,17 @@ void display_egg_position(app_t *app);
  * @param app Application with list of team.
  */
 void add_egg(list_t *eggs, int id_player_laid, app_t *app);
+
+/**
+ * @brief Add an egg on the player.
+ *
+ * @param eggs Eggs list.
+ * @param id_player_laid Id of player.
+ * @param app Application with all information.
+ * @param ai AI who want add an egg.
+ */
+void add_egg_on_player(list_t *eggs, int id_player_laid,
+    app_t *app, ia_t *ai);
 
 /**
  * @brief Find the team of fd given.

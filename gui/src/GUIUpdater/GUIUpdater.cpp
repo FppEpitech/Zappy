@@ -151,7 +151,7 @@ void Gui::GUIUpdater::updatePlayerPosition(const std::vector<std::string> &data)
                         player.setState(Gui::Player::EJECTED);
                     else
                         player.setState(Gui::Player::IDLE);
-                } else
+                } else if (player.getState() != Gui::Player::INCANTATION)
                     player.setState(Gui::Player::IDLE);
                 player.setPosition(std::make_pair(args[1], args[2]));
                 player.setOrientation(args[3]);

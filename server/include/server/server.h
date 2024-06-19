@@ -20,6 +20,11 @@
 #define LISTEN_NUMBER 100
 #define WELCOME_MESSAGE "WELCOME\n"
 #define WELCOME_MESSAGE_LEN 8
+#define SELECT_TIMEOUT_SECONDS 1
+
+#define END_GAME 1
+#define ERROR -1
+#define GAME_CONTINUE 0
 
 typedef struct s_app app_t;
 

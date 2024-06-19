@@ -7,9 +7,11 @@
 
 import os
 import sys
+import uuid
 
 from ai.src.Network.API import API
-from ai.src.Player.Player import Player, Action
+from ai.src.Player.Player import Player, Action, Mode
+from ai.src.Network.APIException import APIException
 
 class AI:
     """
@@ -61,19 +63,61 @@ class AI:
         and send it to the server and after that, it will receive the response from the server
         and handle it
         """
+        fileName = ""
+        if self.player.isLeader == False:
+            fileName = createLogs(self.player.isLeader)
         self.api.connect()
-        self.api.initConnection(self.teamName)
-        forkAI()
-        while True:
-            if self.player.currentAction == Action.NONE:
-                self.player.chooseAction()
-                self.api.sendData(self.player.currentCommand)
-            responses = self.api.receiveData().split("\n")
-            for response in responses:
-                if response == '':
-                    continue
-                self.player.handleResponse(response)
+        self.api.initConnection(self.teamName, fileName)
+        if self.player.isLeader:
+            self.player.completeTeam()
 
+        while True:
+            if len(self.player.actions) == 0:
+                if self.player.currentMode != Mode.NONE:
+                    print("Choose action", flush=True)
+                self.player.chooseAction()
+
+            if self.player.currentMode == Mode.REGROUP and self.player.isLeader == False:
+                break
+
+            for _ in range(0, len(self.player.actions)):
+                self.player.currentAction = self.player.actions[0]
+                self.player.currentCommand = self.player.commands[0]
+                self.player.currentCallback = self.player.callbacks[0]
+                self.api.sendData(self.player.currentCommand)
+                while self.player.currentAction != Action.NONE:
+                    responses = self.api.receiveData().split("\n")
+                    for response in responses:
+                        if response == '':
+                            continue
+                        self.player.handleResponse(response)
+                self.player.actions.pop(0)
+                self.player.commands.pop(0)
+                self.player.callbacks.pop(0)
+        print("Regrouping Start", flush=True)
+        while True:
+            responses = self.api.receiveData(0.1)
+            if responses is not None :
+                responses = responses.split("\n")
+                for response in responses:
+                    if response == '':
+                        continue
+                    self.player.handleResponse(response)
+            self.player.chooseAction()
+            for _ in range(0, len(self.player.actions)):
+                self.player.currentAction = self.player.actions[0]
+                self.player.currentCommand = self.player.commands[0]
+                self.player.currentCallback = self.player.callbacks[0]
+                self.api.sendData(self.player.currentCommand)
+                while self.player.currentAction != Action.NONE:
+                    responses = self.api.receiveData().split("\n")
+                    for response in responses:
+                        if response == '':
+                            continue
+                        self.player.handleResponse(response)
+                self.player.actions.pop(0)
+                self.player.commands.pop(0)
+                self.player.callbacks.pop(0)
 
 def forkAI():
     """
@@ -82,6 +126,27 @@ def forkAI():
     pid = os.fork()
     if pid == 0:
         from ai.src.main import main
-        main()
+        try:
+            main()
+        except APIException as e:
+            os.remove("logs/stdout_" + e.getFileName())
+            os.remove("logs/stderr_" + e.getFileName())
         sys.exit(0)
     return pid
+
+
+def createLogs(isLeader):
+    """
+    Create the logs
+    """
+    myuuid = uuid.uuid4()
+    fileName = ""
+    if isLeader:
+        fileName = f"leader_{myuuid}.log"
+    else:
+        fileName = f"follower_{myuuid}.log"
+    if not os.path.exists("logs"):
+        os.makedirs("logs")
+    sys.stdout = open("logs/stdout_" + fileName, "w")
+    sys.stderr = open("logs/stderr_" + fileName, "w")
+    return fileName
