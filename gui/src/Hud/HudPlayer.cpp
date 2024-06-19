@@ -29,7 +29,7 @@ Gui::HudPlayer::HudPlayer(std::shared_ptr<GameData> gameData)
 void Gui::HudPlayer::display()
 {
     Vector2 hudPos = HUD_PLAYER_POS;
-    DrawTexture(_texture, hudPos.x, hudPos.y, WHITE);
+    DrawTexture(_texture, hudPos.x, hudPos.y, _gameData.get()->getTeam(_player.get()->getTeam()).getPlayerColor());
     DrawTextEx(_font, "Player", HUD_PLAYER_TEXT_TITLE_POS, 20, 0, (Color){170, 121, 89, 255});
     if (_player != nullptr) {
         Vector2 hudTextPos = HUD_PLAYER_TEXT_POS;
