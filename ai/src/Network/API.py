@@ -149,8 +149,15 @@ class API:
             raise APIException("invalid welcome message", fileName)
 
         self.sendData(f"{teamName}\n")
-        clientNum, data = self.receiveData().split('\n', 1)
-        data = data.split(' ')
+        received = self.receiveData()
+        if received == "ko\n":
+            raise APIException("invalid team name", fileName)
+        if received.count('\n') == 2:
+            clientNum, data = received.split('\n', 1)
+            data = data.split(' ')
+        else:
+            clientNum = received.replace('\n', '')
+            data = self.receiveData().replace('\n', '').split(' ')
 
         if len(data) != 2:
             raise APIException("invalid map size", fileName)
