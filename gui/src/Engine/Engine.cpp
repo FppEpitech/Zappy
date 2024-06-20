@@ -5,8 +5,8 @@
 ** Engine
 */
 
-#include "Engine/Engine.hpp"
 #include "Colors.hpp"
+#include "Engine/Engine.hpp"
 
 #include <iostream>
 #include <sstream>
