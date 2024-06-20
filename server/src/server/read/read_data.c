@@ -78,6 +78,22 @@ void handle_request(app_t *app, size_t fd, char *line)
     }
 }
 
+static void client_handler(app_t *app, size_t fd, char *line)
+{
+    list_node_t *client = NULL;
+
+    if (strcmp(line, "GRAPHIC") == 0) {
+        add_gui(app, fd, line);
+    }
+    if (add_ia(app, fd, line) == false) {
+        client = find_client(app->clients_list, fd);
+        free(client->data.client);
+        list_delete(app->clients_list, client);
+        close(fd);
+    }
+    free(line);
+}
+
 bool server_data_handler(app_t *app, size_t fd)
 {
     char *line = read_line(fd);
@@ -88,10 +104,7 @@ bool server_data_handler(app_t *app, size_t fd)
         return true;
     }
     if (its_client(app, fd)) {
-        if (strcmp(line, "GRAPHIC") == 0)
-            add_gui(app, fd, line);
-        else
-            add_ia(app, fd, line);
+        client_handler(app, fd, line);
     } else {
         handle_request(app, fd, line);
         free(line);

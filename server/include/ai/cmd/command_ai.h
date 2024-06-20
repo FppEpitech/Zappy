@@ -81,9 +81,9 @@ void eject_egg(app_t *app, ia_t *ai);
 /**
  * @brief Dead response for all other AI.
  *
- * @param app Application with necessary information.
+ * @param ai AI who is dead.
  */
-void dead_response(app_t *app);
+void dead_response(ia_t *ai);
 
 /**
  * @brief Command to fork and create an egg.
