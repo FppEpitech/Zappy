@@ -92,6 +92,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: install_dependencies
         run: |
+            sudo apt-get install lcov gcovr -y
             make install-deps-ci -C gui
             make install-deps -C ai
       - name: run_tests
