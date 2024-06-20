@@ -9,6 +9,7 @@
 import sys
 
 from ai.src.AI import AI
+from ai.src.Enum.Role import Role
 from ai.src.Errors.ArgsException import ArgsException
 from ai.src.Player.PlayerException import PlayerDeathException
 
@@ -66,24 +67,24 @@ def getArgs(av=sys.argv):
     return host, port, name
 
 
-def main(isLeader=False):
+def main():
         """
         Main function
         """
         host, port, teamName = getArgs()
         try:
-            ai = AI(host, port, teamName, isLeader)
+            ai = AI(host, port, teamName)
             ai.run()
         except PlayerDeathException as e:
             print(e, file=sys.stderr)
-            if isLeader:
+            if ai.player.isLeader == Role.LEADER:
                 print("The leader is dead, the AI will fork", file=sys.stderr)
-                main(True)
+                main() # TODO: Need to be fixed (can't connect if there is no slot available)
 
 
 if __name__ == "__main__":
     try:
-        main(True)
+        main()
     except Exception as e:
         print(e, file=sys.stderr)
         sys.exit(84)

@@ -20,8 +20,10 @@ Map<bool> Gui::Decoration::getGenerationItem(std::size_t ratio)
     for (size_t i = 0; i < _mapSize.first; i++) {
         std::vector<bool> line;
         for (size_t j = 0; j < _mapSize.second; j++) {
-            if (std::rand() % ratio == 1) line.push_back(true);
-            else line.push_back(false);
+            if (std::rand() % ratio == 1)
+                line.push_back(true);
+            else
+                line.push_back(false);
         }
         map.push_back(line);
     }

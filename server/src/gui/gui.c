@@ -38,11 +38,15 @@ static void send_pnw_commands(app_t *app, gui_t *gui)
 {
     list_node_t *node_team = app->teams_list->first;
     list_node_t *node_ai = NULL;
+    char *line = NULL;
 
     while (node_team) {
         node_ai = node_team->data.team->list_ai->first;
         while (node_ai) {
             pnw_command(app, node_ai->data.ai, gui);
+            line = format_string("pin %d", node_ai->data.ai->fd);
+            pin_response(gui, app, line);
+            free(line);
             node_ai = node_ai->next;
         }
         node_team = node_team->next;

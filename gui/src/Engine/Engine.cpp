@@ -5,19 +5,21 @@
 ** Engine
 */
 
-#include "Event/Event.hpp"
-#include "Engine/Engine.hpp"
-#include "GUIUpdater/GUIUpdater.hpp"
 #include "Colors.hpp"
+#include "Engine/Engine.hpp"
 
 #include <iostream>
 #include <sstream>
 
-Gui::Engine::Engine(std::shared_ptr<Network> network) : _network(network), _gameData(std::make_shared<GameData>()), _guiUpdater(_gameData, _network)
+Gui::Engine::Engine(std::shared_ptr<INetwork> network) : _network(network)
 {
+    _gameData = std::make_shared<GameData>();
     _render = std::make_shared<Render>(_gameData);
-    _event.setRender(_render);
-    _event.setGameData(_gameData);
+    _event = std::make_unique<Event>();
+    _event->setRender(_render);
+    _event->setGameData(_gameData);
+    _guiUpdater = std::make_unique<GUIUpdater>(_gameData, _network);
+    _parser = std::make_unique<ServerParser>();
 }
 
 void Gui::Engine::run()
@@ -25,7 +27,7 @@ void Gui::Engine::run()
     while (_render->isOpen() && !_gameData->getIsEndGame()) {
         listenServer();
         _render->draw();
-        _event.listen();
+        _event->listen();
         sendMessageUpdate();
     }
 }
@@ -37,12 +39,12 @@ void Gui::Engine::listenServer()
     if (command == "")
         return;
     try {
-        std::vector<std::string> arguments = _parser.parse(command);
+        std::vector<std::string> arguments = _parser->parse(command);
         std::istringstream stream(command);
         std::string keyCommand;
 
         stream >> keyCommand;
-        _guiUpdater.update(keyCommand, arguments);
+        _guiUpdater->update(keyCommand, arguments);
     }
     catch (const std::exception &error) {
         std::cerr << STR_RED << error.what() << STR_RESET << std::endl;

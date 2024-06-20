@@ -42,7 +42,7 @@ static inventory_t *create_inventory(void)
 
     if (new_inventory == NULL)
         return NULL;
-    new_inventory->food = 0;
+    new_inventory->food = 10;
     new_inventory->linemate = 0;
     new_inventory->deraumere = 0;
     new_inventory->sibur = 0;
@@ -63,7 +63,7 @@ static incantation_info_t *create_incantation(void)
     return new_incantation;
 }
 
-static time_info_t *create_time(app_t *app)
+static time_info_t *create_time(void)
 {
     time_info_t *new_time = malloc(sizeof(time_info_t));
 
@@ -72,8 +72,26 @@ static time_info_t *create_time(app_t *app)
     new_time->stuck = false;
     new_time->total_stuck = 0.0;
     gettimeofday(&new_time->start_life, NULL);
-    new_time->total_life = 1260.0 / app->game->freq;
+    new_time->total_life = 0;
     return new_time;
+}
+
+static void send_gui_message(app_t *app, ia_t *ia, team_t *team)
+{
+    char *response = NULL;
+    list_node_t *temp = app->gui_list->first;
+
+    ebo_command(app, team->eggs_list->first->data.egg->id);
+    pnw_command(app, ia, NULL);
+    while (temp) {
+        response = format_string("pin %d %d %d %d %d %d %d %d %d %d\n",
+            ia->fd, ia->position->x, ia->position->y, ia->inventory->food,
+            ia->inventory->linemate, ia->inventory->deraumere,
+            ia->inventory->sibur, ia->inventory->mendiane,
+            ia->inventory->phiras, ia->inventory->thystame);
+        add_message(temp->data.gui->list_messages, response);
+        temp = temp->next;
+    }
 }
 
 ia_t *create_ia(app_t *app, int fd, team_t *team)
@@ -92,11 +110,10 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     new_ia->list_messages = list_new();
     new_ia->inventory = create_inventory();
     new_ia->incantation = create_incantation();
-    new_ia->time = create_time(app);
+    new_ia->time = create_time();
     new_ia->team_name = team->name;
     add_message_to_ia(app, team, new_ia);
-    ebo_command(app, team->eggs_list->first->data.egg->id);
-    pnw_command(app, new_ia, NULL);
+    send_gui_message(app, new_ia, team);
     return new_ia;
 }
 

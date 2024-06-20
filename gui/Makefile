@@ -10,6 +10,7 @@ MAIN 		=	src/main.cpp
 
 SRC			=	src/Error/Error.cpp \
 				\
+				src/Network/ANetwork.cpp \
 				src/Network/Network.cpp \
 				\
 				src/Engine/Engine.cpp \
@@ -29,8 +30,10 @@ SRC			=	src/Error/Error.cpp \
 				src/Render/UserCamera.cpp \
 				src/Render/Decoration.cpp \
 				\
+				src/Event/AEvent.cpp \
 				src/Event/Event.cpp \
 				\
+				src/GUIUpdater/AGUIUpdater.cpp \
 				src/GUIUpdater/GUIUpdater.cpp \
 				\
 				src/Hud/AHud.cpp \
