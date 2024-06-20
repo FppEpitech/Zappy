@@ -17,6 +17,13 @@ static void send_message_begin(ia_t *ai)
     add_message(ai->list_messages, success);
 }
 
+static void send_message_end(ia_t *ai)
+{
+    char *not_success = format_string("ko\n");
+
+    add_message(ai->list_messages, not_success);
+}
+
 static void update_other_ai(ia_t *ai, ia_t *ai_check,
     app_t *app, int update_status)
 {
@@ -31,14 +38,14 @@ static void update_other_ai(ia_t *ai, ia_t *ai_check,
     }
     if (ai_check->fd != ai->fd && update_status == END_INCANTATION
     && ai_check->position->x == ai->position->x
-    && ai_check->position->y == ai->position->y
-    && ai_check->level == ai->level
+    && ai_check->position->y == ai->position->y && ai_check->level == ai->level
     && ai_check->incantation->status_incantation == true
     && ai_check->incantation->target_level == ai->incantation->target_level) {
         ai_check->incantation->status_incantation = false;
         ai_check->incantation->target_level = 0;
         ai_check->time->stuck = false;
         ai_check->time->total_stuck = 0.0;
+        send_message_end(ai_check);
     }
 }
 
@@ -53,6 +60,7 @@ static void update_ai(ia_t *ai, app_t *app, int update_status)
     if (update_status == END_INCANTATION) {
         ai->incantation->status_incantation = false;
         ai->incantation->target_level = 0;
+        send_message_end(ai);
     }
 }
 
