@@ -240,19 +240,31 @@ class Gui::GameData {
         void removeServerEgg(size_t id);
 
         /**
-         * @brief Set the CanSendMctCommand object
+         * @brief Set the number of bct command received.
          *
-         * @param canSend Bool to set.
+         * @param nb Number of bct command received.
          */
-        void setCanSendMctCommand(bool canSend);
+        void setnbBCTCommandReceived(std::size_t nb);
 
         /**
-         * @brief Check if Gui can send mct command to server.
+         * @brief Get the number of bct command received.
          *
-         * @return true - Mct can be sent.
-         * @return false - Mct cannot be sent.
+         * @return std::size_t - Number of bct command received.
          */
-        bool CanSendMctCommand();
+        std::size_t getnbBCTCommandReceived();
+
+        /**
+         * @brief Restart the last tick mct command clock.
+         *
+         */
+        void restartLastTickMctCommand();
+
+        /**
+         * @brief Get the Last Tick mct command object.
+         *
+         * @return clock_t - Last Tick Mct command.
+         */
+        clock_t getLastTickMctCommand() const;
 
     private:
 
@@ -261,7 +273,7 @@ class Gui::GameData {
         std::size_t                 _serverTick;            // Tick value of the server.
         clock_t                     _lastTick;              // Last tick of the GameData (based on the server tick).
         bool                        _isEndGame;             // Is true if the game is finished.
-        bool                        _canSendMctCommand;     // Is true if GUI can send mct command to server.
+        std::size_t                 _nbBCTCommandReceived;  // Number of bct command received.
         clock_t                     _lastTickMctCommand;    // Last tick when mct command is send.
         std::string                 _lastError;             // Last error message.
         TimeUnitState               _timeUnitFromServer;    // True if the time unit has changed.

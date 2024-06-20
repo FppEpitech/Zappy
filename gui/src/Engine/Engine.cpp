@@ -51,6 +51,8 @@ void Gui::Engine::listenServer()
 
 void Gui::Engine::sendMessageUpdate()
 {
+    updateMap();
+
     clock_t currentTick = clock();
 
     if ((int)(_gameData->getServerTick()) == NO_TICK && (float)(currentTick - _gameData->getLastTick()) / CLOCKS_PER_SEC < 1)
@@ -69,4 +71,25 @@ void Gui::Engine::sendMessageUpdate()
         _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() + 1) + "\n");
     else if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::DECREASE)
         _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() - 1) + "\n");
+}
+
+void Gui::Engine::updateMap()
+{
+    clock_t currentTick = clock();
+    std::pair<std::size_t, std::size_t> mapSize = _gameData.get()->getMapSize();
+
+    if (!(mapSize.first == 0 && mapSize.second == 0) && _gameData.get()->getnbBCTCommandReceived() >= mapSize.first * mapSize.second) {
+        if (20 / _gameData->getServerTick() >= 2 && (float)(currentTick - _gameData->getLastTickMctCommand()) / CLOCKS_PER_SEC > 20 / _gameData->getServerTick()) {
+            sendUpdateMapMessage();
+        } else if (20 / _gameData->getServerTick() < 2 && (float)(currentTick - _gameData->getLastTickMctCommand()) / CLOCKS_PER_SEC > 2) {
+            sendUpdateMapMessage();
+        }
+    }
+}
+
+void Gui::Engine::sendUpdateMapMessage()
+{
+    _network.get()->sendMessageServer("mct\n");
+    _gameData.get()->setnbBCTCommandReceived(0);
+    _gameData.get()->restartLastTickMctCommand();
 }
