@@ -10,6 +10,7 @@ import sys
 import uuid
 import threading
 
+from ai.src.Enum.Role import Role
 from ai.src.Network.API import API
 from ai.src.Player.Player import Player, Action, Mode
 from ai.src.Network.APIException import APIException
@@ -37,7 +38,7 @@ class AI:
     """
 
 
-    def __init__(self, host, port, teamName, isLeader=False):
+    def __init__(self, host, port, teamName):
         """
         Constructor of the AI class
         Assign the API, the player and the team name
@@ -51,7 +52,7 @@ class AI:
                 the name of the team
         """
         self.api = API(host, port)
-        self.player = Player(isLeader)
+        self.player = Player()
         self.teamName = teamName
         self.threads = []
 
@@ -61,7 +62,7 @@ class AI:
         Handle the communication with the server in a thread
         """
         while True:
-            if self.player.currentMode == Mode.REGROUP and self.player.isLeader == False:
+            if self.player.currentMode == Mode.REGROUP and self.player.isLeader == Role.SLAVE:
                 break
             for _ in range(0, len(self.player.callbacks)):
                 self.player.currentAction = self.player.actions[0]
@@ -149,16 +150,12 @@ def forkAI():
     return pid
 
 
-def createLogs(isLeader):
+def createLogs():
     """
     Create the logs
     """
     myuuid = uuid.uuid4()
-    fileName = ""
-    if isLeader:
-        fileName = f"leader_{myuuid}.log"
-    else:
-        fileName = f"follower_{myuuid}.log"
+    fileName = f"{myuuid}.log"
     if not os.path.exists("logs"):
         os.makedirs("logs")
     sys.stdout = open("logs/stdout_" + fileName, "w")
