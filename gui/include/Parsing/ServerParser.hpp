@@ -8,8 +8,8 @@
 #pragma once
 
 #include "Error/Error.hpp"
+#include "Parsing/IServerParser.hpp"
 
-#include <string>
 #include <functional>
 #include <unordered_map>
 
@@ -22,7 +22,7 @@ namespace Gui {
     class ServerParser;
 };
 
-class Gui::ServerParser {
+class Gui::ServerParser : public Gui::IServerParser {
 
     public:
 
@@ -46,6 +46,8 @@ class Gui::ServerParser {
          */
         std::vector<std::string> parse(const std::string& command);
 
+    private:
+
         /**
          * @brief Enum of types to parse.
          *
@@ -56,8 +58,6 @@ class Gui::ServerParser {
             MESSAGE,
             LIST_INT
         };
-
-    private:
 
         /**
          * @brief Map of types to parse related to the command
