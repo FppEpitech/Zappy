@@ -8,6 +8,7 @@
 import os
 import sys
 import uuid
+import threading
 
 from ai.src.Network.API import API
 from ai.src.Player.Player import Player, Action, Mode
@@ -52,6 +53,53 @@ class AI:
         self.api = API(host, port)
         self.player = Player(isLeader)
         self.teamName = teamName
+        self.threads = []
+
+
+    def serverCommunicationInThread(self):
+        """
+        Handle the communication with the server in a thread
+        """
+        while True:
+            if self.player.currentMode == Mode.REGROUP and self.player.isLeader == False:
+                break
+            for _ in range(0, len(self.player.callbacks)):
+                self.player.currentAction = self.player.actions[0]
+                self.player.currentCommand = self.player.commands[0]
+                self.player.currentCallback = self.player.callbacks[0]
+                self.api.sendData(self.player.currentCommand)
+                while self.player.currentAction != Action.NONE:
+                    responses = self.api.receiveData().split("\n")
+                    for response in responses:
+                        if response == '':
+                            continue
+                        self.player.handleResponse(response)
+                self.player.actions.pop(0)
+                self.player.commands.pop(0)
+                self.player.callbacks.pop(0)
+        print("Regrouping Start", flush=True, file=sys.stderr)
+        while True:
+            responses = self.api.receiveData(0.1)
+            if responses is not None :
+                responses = responses.split("\n")
+                for response in responses:
+                    if response == '':
+                        continue
+                    self.player.handleResponse(response)
+            for _ in range(0, len(self.player.callbacks)):
+                self.player.currentAction = self.player.actions[0]
+                self.player.currentCommand = self.player.commands[0]
+                self.player.currentCallback = self.player.callbacks[0]
+                self.api.sendData(self.player.currentCommand)
+                while self.player.currentAction != Action.NONE:
+                    responses = self.api.receiveData().split("\n")
+                    for response in responses:
+                        if response == '':
+                            continue
+                        self.player.handleResponse(response)
+                self.player.actions.pop(0)
+                self.player.commands.pop(0)
+                self.player.callbacks.pop(0)
 
 
     def run(self):
@@ -70,54 +118,20 @@ class AI:
         self.api.initConnection(self.teamName, fileName)
         if self.player.isLeader:
             self.player.completeTeam()
+        thread = threading.Thread(target=self.serverCommunicationInThread)
+        thread.start()
+        self.threads.append(thread)
 
         while True:
             if len(self.player.actions) == 0:
                 if self.player.currentMode != Mode.NONE:
                     print("Choose action", flush=True)
                 self.player.chooseAction()
-
-            if self.player.currentMode == Mode.REGROUP and self.player.isLeader == False:
+            if self.threads[0].is_alive() == False:
                 break
-
-            for _ in range(0, len(self.player.actions)):
-                self.player.currentAction = self.player.actions[0]
-                self.player.currentCommand = self.player.commands[0]
-                self.player.currentCallback = self.player.callbacks[0]
-                self.api.sendData(self.player.currentCommand)
-                while self.player.currentAction != Action.NONE:
-                    responses = self.api.receiveData().split("\n")
-                    for response in responses:
-                        if response == '':
-                            continue
-                        self.player.handleResponse(response)
-                self.player.actions.pop(0)
-                self.player.commands.pop(0)
-                self.player.callbacks.pop(0)
-        print("Regrouping Start", flush=True)
-        while True:
-            responses = self.api.receiveData(0.1)
-            if responses is not None :
-                responses = responses.split("\n")
-                for response in responses:
-                    if response == '':
-                        continue
-                    self.player.handleResponse(response)
-            self.player.chooseAction()
-            for _ in range(0, len(self.player.actions)):
-                self.player.currentAction = self.player.actions[0]
-                self.player.currentCommand = self.player.commands[0]
-                self.player.currentCallback = self.player.callbacks[0]
-                self.api.sendData(self.player.currentCommand)
-                while self.player.currentAction != Action.NONE:
-                    responses = self.api.receiveData().split("\n")
-                    for response in responses:
-                        if response == '':
-                            continue
-                        self.player.handleResponse(response)
-                self.player.actions.pop(0)
-                self.player.commands.pop(0)
-                self.player.callbacks.pop(0)
+        for thread in self.threads:
+            thread.join()
+        self.api.close()
 
 def forkAI():
     """
