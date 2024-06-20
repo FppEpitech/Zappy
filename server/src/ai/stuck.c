@@ -5,6 +5,7 @@
 ** AI stuck
 */
 
+#include "utils.h"
 #include "app/app.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
@@ -15,18 +16,6 @@ void set_time_stuck(ia_t *ai, double total_stuck)
     ai->time->stuck = true;
     gettimeofday(&ai->time->start_stuck, NULL);
     ai->time->total_stuck = total_stuck;
-}
-
-double time_elapsed(struct timeval *time)
-{
-    struct timeval end;
-    double seconds = 0.0;
-    double microseconds = 0.0;
-
-    gettimeofday(&end, NULL);
-    seconds = (end.tv_sec - time->tv_sec);
-    microseconds = (end.tv_usec - time->tv_usec) / 1000000.0;
-    return seconds + microseconds;
 }
 
 static void handle_incantation_verification(ia_t *ai, app_t *app)
