@@ -7,6 +7,8 @@
 
 #include "server/server.h"
 
+#include <sys/time.h>
+
 static bool init_server(server_t *server)
 {
     if (server->fd < 0)
@@ -29,6 +31,7 @@ server_t *create_server(size_t port)
     new_server->addr.sin_addr.s_addr = INADDR_ANY;
     new_server->addr.sin_port = htons(port);
     new_server->addrlen = sizeof(new_server->addr);
+    gettimeofday(&new_server->last_tick_time, NULL);
     new_server->fd = socket(AF_INET, SOCK_STREAM, 0);
     if (init_server(new_server) == false) {
         free(new_server);

@@ -5,6 +5,7 @@
 ** Game
 */
 
+#include "utils.h"
 #include "app/app.h"
 
 static void add_ressources(size_t index_entity, tile_t **map,

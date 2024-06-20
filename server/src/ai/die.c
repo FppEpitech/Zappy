@@ -5,6 +5,7 @@
 ** AI die
 */
 
+#include "utils.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
 #include "gui/communication.h"

@@ -5,8 +5,11 @@
 ** run
 */
 
+#include "utils.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
+
+#include <sys/time.h>
 
 static void reset_ai(app_t *app)
 {
@@ -106,13 +109,30 @@ static int game_run(int result_select, app_t *app)
             handle_client_read(app, fd);
             handle_client_write(app, fd);
         }
+    } else {
+        gettimeofday(&app->server->last_tick_time, NULL);
+        treat_command(app);
+        treat_stuck(app);
+        check_die(app);
+        if (check_win(app))
+            return END_GAME;
     }
-    treat_command(app);
-    treat_stuck(app);
-    check_die(app);
-    if (check_win(app))
-        return END_GAME;
     return GAME_CONTINUE;
+}
+
+static struct timeval get_timeout(app_t *app)
+{
+    struct timeval timeout;
+
+    timeout.tv_sec = (double)SELECT_TIMEOUT_SECONDS / (double)app->game->freq
+        - time_elapsed(&app->server->last_tick_time);
+    timeout.tv_usec = ((double)SELECT_TIMEOUT_SECONDS / (double)app->game->freq
+        - time_elapsed(&app->server->last_tick_time)) * 1000000;
+    if (timeout.tv_sec < 0 || timeout.tv_usec < 0) {
+        timeout.tv_sec = 0;
+        timeout.tv_usec = 0;
+    }
+    return timeout;
 }
 
 bool server_run(app_t *app)
@@ -121,11 +141,10 @@ bool server_run(app_t *app)
     int result_select = 0;
     int result_game = 0;
 
-    timeout.tv_sec = SELECT_TIMEOUT_SECONDS;
-    timeout.tv_usec = 0;
     signal(SIGINT, handle_control_c);
     while (server_status(true)) {
         server_reset_fd(app);
+        timeout = get_timeout(app);
         result_select = select(FD_SETSIZE, &app->server->read_fds,
         &app->server->write_fds, NULL, &timeout);
         result_game = game_run(result_select, app);
