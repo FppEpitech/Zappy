@@ -30,16 +30,6 @@ void Gui::Event::listen()
     }
 }
 
-void Gui::Event::setRender(std::shared_ptr<Render> render)
-{
-    _render = render;
-}
-
-void Gui::Event::setGameData(std::shared_ptr<GameData> gameData)
-{
-    _gameData = gameData;
-}
-
 void Gui::Event::moveUpCamera()
 {
     if (_render->getCameraType() != Gui::UserCamera::FREE && _render->getCameraType() != Gui::UserCamera::FREE_TILE)
