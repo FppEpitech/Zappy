@@ -16,6 +16,8 @@
 
 #include <time.h>
 
+#define TIME_UNIT_MAP_UPDATE 20
+
 namespace Gui {
 
     /**
