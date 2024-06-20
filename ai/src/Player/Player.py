@@ -16,7 +16,7 @@ from ai.src.Enum.Action import Action
 from ai.src.Enum.Item import Item
 from ai.src.Player.Inventory import Inventory
 from ai.src.Player.PlayerException import PlayerDeathException
-from ai.src.Utils.Utils import mapRangeOpti
+from ai.src.Utils.Utils import getMovesTowardTile, mapRangeOpti
 
 class Mode(Enum):
     FOOD = 0
@@ -162,10 +162,6 @@ class Player:
             Choose the action of the player
         goGetItem()
             Go get items at tile
-        getXmovement()
-            Get the movements to do horizontally to reach tile
-        getMovesTowardTile()
-            Get the movements to do to reach tile
         foodInVision()
             Check if there is food in the vision
         stonesInVision()
@@ -856,7 +852,7 @@ class Player:
             itemSeek : List[Item]
                 List of items to take on the tile
         """
-        (x, y) = self.getMovesTowardTile(index)
+        (x, y) = getMovesTowardTile(index)
         moves : int = x + y + (1 if x > 0 or x < 0 else 0)
 
         if (len(self.actions) + moves) > 8:
@@ -873,51 +869,7 @@ class Player:
             if len(self.actions) < 9:
                 self.take(itemSeek[i].value)
 
-    def getXmovement(self, middle, max, width, target):
-        """
-        Get the horizontal movements to do to reach the target tile
-        Parameters :
-            middle : int
-                index of the middle tile
-            max : int
-                index of the last tile on the row
-            width : int
-                width of the current row
-        Returns :
-            int : the number of movements to do
-        """
-        if middle == target:
-            return 0
-        return target - middle
-
-    def getMovesTowardTile(self, index):
-        """
-        Return the XY movements to do to reach the tile at index X
-        
-        Parameters : 
-            index : int
-                Index of the tile to reach
-        
-        Returns :
-            tuple : (int, int) movements to do
-        """
-        maxRowNum = 3
-        crowWidth = 3
-        fwdRow = 1
-        middleTileIndex = 2
-
-        if index == 0:
-            return (0, 0)
-        if index <= maxRowNum:
-            return (self.getXmovement(middleTileIndex, maxRowNum, crowWidth, index), 1)
-        for i in range(7):
-            fwdRow += 1
-            crowWidth += 2
-            middleTileIndex += fwdRow*2
-            maxRowNum += crowWidth
-            if index <= maxRowNum:
-                return (self.getXmovement(middleTileIndex, maxRowNum, crowWidth, index), fwdRow)
-        return -1
+    
 
     def foodInVision(self, vision : list):
         """
