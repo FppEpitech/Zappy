@@ -5,7 +5,6 @@
 ## Player
 ##
 
-from enum import Enum
 import random
 import sys
 from typing import List
@@ -17,18 +16,6 @@ from ai.src.Enum.Item import Item
 from ai.src.Player.Inventory import Inventory
 from ai.src.Player.PlayerException import PlayerDeathException
 from ai.src.Utils.Utils import getMovesTowardTile, mapRangeOpti
-
-class Mode(Enum):
-    FOOD = 0
-    STONES = 1
-    FORKING = 2
-    BROADCASTING = 3
-    HANDLINGRESPONSE = 4
-    WAITING = 5
-    ELEVATING = 6
-    REGROUP = 7
-    DROPPING = 8
-    NONE = 9
 
 class Player:
     """
@@ -167,6 +154,7 @@ class Player:
         stonesInVision()
             Check if there are stones in the vision
     """
+
 
     def __init__(self):
         """
@@ -446,6 +434,7 @@ class Player:
         direction = int(message)
         self.ejectionReceived.append(direction)
 
+
     def updateLevel(self, level : int):
         """
         Update the level of the player
@@ -534,6 +523,7 @@ class Player:
             if response == "ok":
                 self.broadcastReceived = []
 
+
     def connectMissingPlayers(self):
         """
         Connect the missing players
@@ -560,6 +550,7 @@ class Player:
         elif self.inventory.food >= 45:
             self.currentMode = Mode.STONES
 
+
     def updateModeLeader(self):
         """
         Update the mode of the player when he is a leader
@@ -584,6 +575,7 @@ class Player:
             else:
                 self.currentMode = Mode.WAITING
         self.currentFood = self.inventory.food
+
 
     def updateMode(self):
         """
@@ -610,6 +602,7 @@ class Player:
         self.goGetItem(index, [Item.FOOD] * self.vision[index].food)
         self.cmdInventory()
 
+
     def lookingForStones(self):
         """
         Look for stones
@@ -623,6 +616,7 @@ class Player:
         self.goGetItem(index, enums)
         self.cmdInventory()  
 
+
     def askSlavesForInventory(self):
         """
         Ask the slaves for their inventory
@@ -630,6 +624,7 @@ class Player:
         """
         self.broadcast("Inventory")
         self.nbSlaves = 0
+
 
     def checkIfEnoughFood(self, response : str):
         """
@@ -841,6 +836,7 @@ class Player:
         elif self.currentMode == Mode.NONE:
             return
         return
+
 
     def goGetItem(self, index, itemSeek : List[Item]):
         """

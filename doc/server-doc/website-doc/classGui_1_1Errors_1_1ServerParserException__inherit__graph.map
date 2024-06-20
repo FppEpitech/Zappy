@@ -1,0 +1,7 @@
+<map id="Gui::Errors::ServerParserException" name="Gui::Errors::ServerParserException">
+<area shape="rect" id="node1" title="Error class for network errors." alt="" coords="5,299,185,339"/>
+<area shape="rect" id="node2" href="$classGui_1_1Errors_1_1Error.html" title="Base class for argument&#45;related errors." alt="" coords="31,225,160,251"/>
+<area shape="rect" id="node3" href="$classGui_1_1Errors_1_1AError.html" title="Base class for custom error types. This class is derived from the IError interface and provides a com..." alt="" coords="26,152,165,177"/>
+<area shape="rect" id="node4" href="$classGui_1_1Errors_1_1IError.html" title=" " alt="" coords="29,79,162,104"/>
+<area shape="rect" id="node5" title=" " alt="" coords="38,5,153,31"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="Gui::HudTile" name="Gui::HudTile">
+<area shape="rect" id="node1" title=" " alt="" coords="5,152,108,177"/>
+<area shape="rect" id="node2" href="$classGui_1_1AHud.html" title=" " alt="" coords="13,79,100,104"/>
+<area shape="rect" id="node3" href="$classGui_1_1IHud.html" title=" " alt="" coords="15,5,98,31"/>
+</map>

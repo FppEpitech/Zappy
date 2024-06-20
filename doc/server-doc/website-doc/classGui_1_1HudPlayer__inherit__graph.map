@@ -1,0 +1,5 @@
+<map id="Gui::HudPlayer" name="Gui::HudPlayer">
+<area shape="rect" id="node1" title=" " alt="" coords="5,152,124,177"/>
+<area shape="rect" id="node2" href="$classGui_1_1AHud.html" title=" " alt="" coords="21,79,108,104"/>
+<area shape="rect" id="node3" href="$classGui_1_1IHud.html" title=" " alt="" coords="23,5,106,31"/>
+</map>

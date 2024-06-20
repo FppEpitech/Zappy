@@ -102,6 +102,7 @@ class AI:
                 self.player.commands.pop(0)
                 self.player.callbacks.pop(0)
 
+
     def run(self):
         """
         Run the AI (the main loop)

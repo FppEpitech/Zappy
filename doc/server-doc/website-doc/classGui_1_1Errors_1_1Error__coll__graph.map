@@ -1,0 +1,6 @@
+<map id="Gui::Errors::Error" name="Gui::Errors::Error">
+<area shape="rect" id="node1" title="Base class for argument&#45;related errors." alt="" coords="10,225,139,251"/>
+<area shape="rect" id="node2" href="$classGui_1_1Errors_1_1AError.html" title="Base class for custom error types. This class is derived from the IError interface and provides a com..." alt="" coords="5,152,144,177"/>
+<area shape="rect" id="node3" href="$classGui_1_1Errors_1_1IError.html" title=" " alt="" coords="8,79,141,104"/>
+<area shape="rect" id="node4" title=" " alt="" coords="17,5,132,31"/>
+</map>

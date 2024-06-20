@@ -1,0 +1,14 @@
+<map id="s_list_node" name="s_list_node">
+<area shape="rect" id="node1" title=" " alt="" coords="5,7,100,33"/>
+<area shape="rect" id="node4" href="$structs__list.html" title=" " alt="" coords="507,112,563,137"/>
+<area shape="rect" id="node2" href="$unions__node__data.html" title=" " alt="" coords="602,303,706,328"/>
+<area shape="rect" id="node3" href="$structs__ia.html" title=" " alt="" coords="378,215,426,240"/>
+<area shape="rect" id="node9" href="$structs__gui.html" title=" " alt="" coords="626,215,682,240"/>
+<area shape="rect" id="node11" href="$structs__team.html" title=" " alt="" coords="529,215,600,240"/>
+<area shape="rect" id="node5" href="$structs__vector2i.html" title=" " alt="" coords="817,112,907,137"/>
+<area shape="rect" id="node12" href="$structs__egg.html" title=" " alt="" coords="928,215,988,240"/>
+<area shape="rect" id="node6" href="$structs__inventory.html" title=" " alt="" coords="69,112,167,137"/>
+<area shape="rect" id="node7" href="$structs__incantation__info.html" title=" " alt="" coords="191,112,333,137"/>
+<area shape="rect" id="node8" href="$structs__time__info.html" title=" " alt="" coords="357,112,455,137"/>
+<area shape="rect" id="node10" href="$structs__client.html" title=" " alt="" coords="706,215,778,240"/>
+</map>

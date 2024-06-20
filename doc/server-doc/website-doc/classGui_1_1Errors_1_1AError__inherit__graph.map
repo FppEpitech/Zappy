@@ -1,0 +1,11 @@
+<map id="Gui::Errors::AError" name="Gui::Errors::AError">
+<area shape="rect" id="node1" title="Base class for custom error types. This class is derived from the IError interface and provides a com..." alt="" coords="349,119,488,145"/>
+<area shape="rect" id="node4" href="$classGui_1_1Errors_1_1Error.html" title="Base class for argument&#45;related errors." alt="" coords="536,119,665,145"/>
+<area shape="rect" id="node2" href="$classGui_1_1Errors_1_1IError.html" title=" " alt="" coords="168,119,301,145"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,119,120,145"/>
+<area shape="rect" id="node5" href="$classGui_1_1Errors_1_1GuiGameDataException.html" title="Error class for GameData errors." alt="" coords="736,5,927,45"/>
+<area shape="rect" id="node6" href="$classGui_1_1Errors_1_1GuiUpdaterException.html" title="Error class for GUIUpdater errors." alt="" coords="713,70,949,95"/>
+<area shape="rect" id="node7" href="$classGui_1_1Errors_1_1NetworkException.html" title="Error class for network errors." alt="" coords="723,119,940,145"/>
+<area shape="rect" id="node8" href="$classGui_1_1Errors_1_1ParseCommandLineException.html" title="Error class for parseCommandLine errors." alt="" coords="731,169,931,209"/>
+<area shape="rect" id="node9" href="$classGui_1_1Errors_1_1ServerParserException.html" title="Error class for network errors." alt="" coords="741,233,921,273"/>
+</map>
