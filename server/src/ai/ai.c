@@ -123,7 +123,6 @@ void add_ia(app_t *app, size_t fd, char *line)
     node_data_t data;
     list_node_t *client_node = find_client(app->clients_list, fd);
 
-    line[strlen(line) - 1] = '\0';
     while (temp) {
         if (strcmp(line, temp->data.team->name) == 0 &&
         temp->data.team->eggs_list->len > 0) {
