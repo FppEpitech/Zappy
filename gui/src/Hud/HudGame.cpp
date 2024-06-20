@@ -34,7 +34,9 @@ void Gui::HudGame::display()
             teamName += "..";
         }
         DrawTextEx(_font, teamName.c_str(), (Vector2){hudTextPos.x, hudTextPos.y + HUD_GAME_TEXT_MARGING * (index + 1)}, 20, 0, WHITE);
-        DrawTextEx(_font, (std::to_string(_gameData->getTeams()[index].getPlayers().size()) + "x").c_str(), (Vector2){hudTextPos.x + 110, hudTextPos.y + HUD_GAME_TEXT_MARGING * (index + 1)}, 20, 0, WHITE);
+        DrawTextEx(_font, (std::to_string(_gameData->getTeams()[index].getPlayers().size()) + "/" +
+            std::to_string(_gameData->getTeams()[index].getPlayers().size() + _gameData->getTeams()[index].getEggs().size())).c_str(),
+            (Vector2){hudTextPos.x + 100, hudTextPos.y + HUD_GAME_TEXT_MARGING * (index + 1)}, 20, 0, WHITE);
 
         DrawTexture(_playerTexture, hudTextPos.x + 130, hudTextPos.y + HUD_GAME_TEXT_MARGING * (index + 1), _gameData.get()->getTeams()[index].getPlayerColor());
     }
