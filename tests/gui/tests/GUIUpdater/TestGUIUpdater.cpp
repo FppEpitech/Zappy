@@ -11,7 +11,7 @@
 Test(GUIUpdater, constructor, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_not_null(&guiUpdater);
@@ -20,7 +20,7 @@ Test(GUIUpdater, constructor, .timeout = 5)
 Test(GUIUpdater, update, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     guiUpdater.update("test", {"test"});
@@ -30,7 +30,7 @@ Test(GUIUpdater, update, .timeout = 5)
 Test(GUIUpdater, updateMapSize, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     guiUpdater.update("msz", {"10", "10"});
@@ -41,7 +41,7 @@ Test(GUIUpdater, updateMapSize, .timeout = 5)
 Test(GUIUpdater, updateMapSizeError, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("msz", {"test"}), Gui::Errors::GuiUpdaterException);
@@ -50,7 +50,7 @@ Test(GUIUpdater, updateMapSizeError, .timeout = 5)
 Test(GUIUpdater, updateMapSizeErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("msz", {"-5"}), Gui::Errors::GuiUpdaterException);
@@ -59,7 +59,7 @@ Test(GUIUpdater, updateMapSizeErrorValue, .timeout = 5)
 Test(GUIUpdater, updateMapSizeInvalidNumberOfArguments, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     cr_assert_throw(guiUpdater.update("msz", {}), Gui::Errors::GuiUpdaterException);
 }
@@ -67,7 +67,7 @@ Test(GUIUpdater, updateMapSizeInvalidNumberOfArguments, .timeout = 5)
 Test(GUIUpdater, updateMapContent, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     gameData.get()->setMapSize(10, 10);
@@ -84,7 +84,7 @@ Test(GUIUpdater, updateMapContent, .timeout = 5)
 Test(GUIUpdater, updateMapContentError, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("bct", {"test"}), Gui::Errors::GuiUpdaterException);
@@ -94,7 +94,7 @@ Test(GUIUpdater, updateMapContentErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData.get()->setMapSize(10, 10);
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("bct", {"-5"}), Gui::Errors::GuiUpdaterException);
@@ -104,7 +104,7 @@ Test(GUIUpdater, updateMapContentInvalidNumberOfArguments, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData.get()->setMapSize(10, 10);
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("bct", {}), Gui::Errors::GuiUpdaterException);
@@ -114,7 +114,7 @@ Test(GUIUpdater, updateMapContentErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData.get()->setMapSize(2, 2);
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("bct", {"5", "5", "2", "3", "4", "5", "6", "7", "8"}),Gui::Errors::GuiUpdaterException);
@@ -123,7 +123,7 @@ Test(GUIUpdater, updateMapContentErrorValue2, .timeout = 5)
 Test(GUIUpdater, updateTeamNames, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     guiUpdater.update("tna", {"TEAM1"});
@@ -133,7 +133,7 @@ Test(GUIUpdater, updateTeamNames, .timeout = 5)
 Test(GUIUpdater, updateTeamNamesError, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     guiUpdater.update("tna", {"test"});
@@ -143,7 +143,7 @@ Test(GUIUpdater, updateTeamNamesError, .timeout = 5)
 Test(GUIUpdater, updateTeamNamesInvalidNumberOfArguments, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     cr_assert_throw(guiUpdater.update("tna", {}), Gui::Errors::GuiUpdaterException);
 }
@@ -151,7 +151,7 @@ Test(GUIUpdater, updateTeamNamesInvalidNumberOfArguments, .timeout = 5)
 Test(GUIUpdater, updateTeamMember, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
@@ -168,7 +168,7 @@ Test(GUIUpdater, updateTeamMemberErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pnw", {"1", "-1", "1", "1", "1", "TEAM1"}), Gui::Errors::GuiUpdaterException);
@@ -179,7 +179,7 @@ Test(GUIUpdater, updateTeamMemberErrorValue, .timeout = 5)
 Test(GUIUpdater, updateTeamMemberError, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pnw", {"test"}), Gui::Errors::GuiUpdaterException);
@@ -188,7 +188,7 @@ Test(GUIUpdater, updateTeamMemberError, .timeout = 5)
 Test(GUIUpdater, updateTeamMemberInvalidNumberOfArguments, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     cr_assert_throw(guiUpdater.update("pnw", {"1", "1", "1", "1", "1", "TEAM", "1"}), Gui::Errors::GuiUpdaterException);
 }
@@ -197,7 +197,7 @@ Test(GUIUpdater, updateTeamMemberErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData.get()->setMapSize(10, 10);
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pnw", {"1", "1", "1", "0", "1", "1"}), Gui::Errors::GuiUpdaterException);
@@ -207,7 +207,7 @@ Test(GUIUpdater, updateTeamMemberErrorValue3, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData.get()->setMapSize(10, 10);
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pnw", {"1", "1", "1", "2", "0", "1"}), Gui::Errors::GuiUpdaterException);
@@ -216,7 +216,7 @@ Test(GUIUpdater, updateTeamMemberErrorValue3, .timeout = 5)
 Test(GUIUpdater, updatePlayerPosition, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
@@ -230,7 +230,7 @@ Test(GUIUpdater, updatePlayerPosition, .timeout = 5)
 Test(GUIUpdater, updatePlayerPositionErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("ppo", {"test"}), Gui::Errors::GuiUpdaterException);
@@ -239,7 +239,7 @@ Test(GUIUpdater, updatePlayerPositionErrorValue, .timeout = 5)
 Test(GUIUpdater, updatePlayerPositionErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("ppo", {"-5"}), Gui::Errors::GuiUpdaterException);
@@ -249,7 +249,7 @@ Test(GUIUpdater, updatePlayerPositionInvalidNumberOfArguments, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData.get()->setMapSize(10, 10);
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("ppo", {}), Gui::Errors::GuiUpdaterException);
@@ -258,7 +258,7 @@ Test(GUIUpdater, updatePlayerPositionInvalidNumberOfArguments, .timeout = 5)
 Test(GUIUpdater, updatePlayerPositionOrientationErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("ppo", {"1", "1", "0", "50"}), Gui::Errors::GuiUpdaterException);
@@ -268,7 +268,7 @@ Test(GUIUpdater, updatePlayerPositionOrientationInvalidNumberOfArguments, .timeo
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("ppo", {"1", "1", "1"}), Gui::Errors::GuiUpdaterException);
@@ -278,7 +278,7 @@ Test(GUIUpdater, updatePlayerPositionOrientationInvalidNumberOfArguments, .timeo
 Test(GUIUpdater, updatePlayerLevel, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
@@ -291,7 +291,7 @@ Test(GUIUpdater, updatePlayerLevel, .timeout = 5)
 Test(GUIUpdater, updatePlayerLevelErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("plv", {"test"}), Gui::Errors::GuiUpdaterException);
@@ -300,7 +300,7 @@ Test(GUIUpdater, updatePlayerLevelErrorValue, .timeout = 5)
 Test(GUIUpdater, updatePlayerLevelErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("plv", {"-5"}), Gui::Errors::GuiUpdaterException);
@@ -309,7 +309,7 @@ Test(GUIUpdater, updatePlayerLevelErrorValue2, .timeout = 5)
 Test(GUIUpdater, updatePlayerLevelErrorValue3, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("plv", {"0", "50"}), Gui::Errors::GuiUpdaterException);
@@ -319,7 +319,7 @@ Test(GUIUpdater, updatePlayerLevelInvalidNumberOfArguments, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData.get()->setMapSize(10, 10);
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("plv", {}), Gui::Errors::GuiUpdaterException);
@@ -328,7 +328,7 @@ Test(GUIUpdater, updatePlayerLevelInvalidNumberOfArguments, .timeout = 5)
 Test(GUIUpdater, updatePlayerInventory, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
@@ -347,7 +347,7 @@ Test(GUIUpdater, updatePlayerInventory, .timeout = 5)
 Test(GUIUpdater, updatePlayerInventoryError, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pin", {"test"}), Gui::Errors::GuiUpdaterException);
@@ -356,7 +356,7 @@ Test(GUIUpdater, updatePlayerInventoryError, .timeout = 5)
 Test(GUIUpdater, updatePlayerInventoryErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pin", {"-5"}), Gui::Errors::GuiUpdaterException);
@@ -366,7 +366,7 @@ Test(GUIUpdater, updatePlayerInventoryInvalidNumberOfArguments, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pin", {"1"}), Gui::Errors::GuiUpdaterException);
@@ -375,7 +375,7 @@ Test(GUIUpdater, updatePlayerInventoryInvalidNumberOfArguments, .timeout = 5)
 Test(GUIUpdater, updatePlayerExpulsion, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
@@ -389,7 +389,7 @@ Test(GUIUpdater, updatePlayerExpulsion, .timeout = 5)
 Test(GUIUpdater, updatePlayerExpulsionError, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pex", {"test"}), Gui::Errors::GuiUpdaterException);
@@ -398,7 +398,7 @@ Test(GUIUpdater, updatePlayerExpulsionError, .timeout = 5)
 Test(GUIUpdater, updatePlayerExpulsionErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pex", {"-5"}), Gui::Errors::GuiUpdaterException);
@@ -407,7 +407,7 @@ Test(GUIUpdater, updatePlayerExpulsionErrorValue, .timeout = 5)
 Test(GUIUpdater, updatePlayerBroadcast, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
@@ -421,7 +421,7 @@ Test(GUIUpdater, updatePlayerBroadcast, .timeout = 5)
 Test(GUIUpdater, updatePlayerBroadcastError, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pbc", {"test"}), Gui::Errors::GuiUpdaterException);
@@ -430,7 +430,7 @@ Test(GUIUpdater, updatePlayerBroadcastError, .timeout = 5)
 Test(GUIUpdater, updatePlayerBroadcastErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pbc", {"-5"}), Gui::Errors::GuiUpdaterException);
@@ -439,7 +439,7 @@ Test(GUIUpdater, updatePlayerBroadcastErrorValue, .timeout = 5)
 Test(GUIUpdater, updatePlayerStartIncantation, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -451,7 +451,7 @@ Test(GUIUpdater, updatePlayerStartIncantation, .timeout = 5)
 Test(GUIUpdater, updatePlayerStartIncantationErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -462,7 +462,7 @@ Test(GUIUpdater, updatePlayerStartIncantationErrorValue, .timeout = 5)
 Test(GUIUpdater, updatePlayerStartIncantationErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -474,7 +474,7 @@ Test(GUIUpdater, updatePlayerEndIncantationInvalidNumberOfArguments, .timeout = 
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pie", {}), Gui::Errors::GuiUpdaterException);
@@ -484,7 +484,7 @@ Test(GUIUpdater, updatePlayerEndIncantationInvalidNumberOfArguments, .timeout = 
 Test(GUIUpdater, updatePlayerEndIncantation, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -496,7 +496,7 @@ Test(GUIUpdater, updatePlayerEndIncantation, .timeout = 5)
 Test(GUIUpdater, updatePlayerEndIncantationErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -507,7 +507,7 @@ Test(GUIUpdater, updatePlayerEndIncantationErrorValue, .timeout = 5)
 Test(GUIUpdater, updatePlayerEndIncantationErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -519,7 +519,7 @@ Test(GUIUpdater, updatePlayerStartIncantationInvalidNumberOfArguments, .timeout 
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pic", {}), Gui::Errors::GuiUpdaterException);
@@ -528,7 +528,7 @@ Test(GUIUpdater, updatePlayerStartIncantationInvalidNumberOfArguments, .timeout 
 Test(GUIUpdater, updatePlayerEggLaying, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -540,7 +540,7 @@ Test(GUIUpdater, updatePlayerEggLaying, .timeout = 5)
 Test(GUIUpdater, updatePlayerEggLayingErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -551,7 +551,7 @@ Test(GUIUpdater, updatePlayerEggLayingErrorValue, .timeout = 5)
 Test(GUIUpdater, updatePlayerEggLayingErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -562,7 +562,7 @@ Test(GUIUpdater, updatePlayerEggLayingErrorValue2, .timeout = 5)
 Test(GUIUpdater, updatePlayerRessourceDropping, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -574,7 +574,7 @@ Test(GUIUpdater, updatePlayerRessourceDropping, .timeout = 5)
 Test(GUIUpdater, updatePlayerRessourceDroppingErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -585,7 +585,7 @@ Test(GUIUpdater, updatePlayerRessourceDroppingErrorValue, .timeout = 5)
 Test(GUIUpdater, updatePlayerRessourceDroppingErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -597,7 +597,7 @@ Test(GUIUpdater, updatePlayerRessourceDroppingInvalidNumberOfArguments, .timeout
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pdr", {}), Gui::Errors::GuiUpdaterException);
@@ -606,7 +606,7 @@ Test(GUIUpdater, updatePlayerRessourceDroppingInvalidNumberOfArguments, .timeout
 Test(GUIUpdater, updateRessourceCollecting, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -618,7 +618,7 @@ Test(GUIUpdater, updateRessourceCollecting, .timeout = 5)
 Test(GUIUpdater, updateRessourceCollectingErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -629,7 +629,7 @@ Test(GUIUpdater, updateRessourceCollectingErrorValue, .timeout = 5)
 Test(GUIUpdater, updateRessourceCollectingErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -641,7 +641,7 @@ Test(GUIUpdater, updateRessourceCollectingInvalidNumberOfArguments, .timeout = 5
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("pgt", {}), Gui::Errors::GuiUpdaterException);
@@ -650,7 +650,7 @@ Test(GUIUpdater, updateRessourceCollectingInvalidNumberOfArguments, .timeout = 5
 Test(GUIUpdater, updatePlayerDeath, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -662,7 +662,7 @@ Test(GUIUpdater, updatePlayerDeath, .timeout = 5)
 Test(GUIUpdater, updatePlayerDeathErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -673,7 +673,7 @@ Test(GUIUpdater, updatePlayerDeathErrorValue, .timeout = 5)
 Test(GUIUpdater, updatePlayerDeathErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -684,7 +684,7 @@ Test(GUIUpdater, updatePlayerDeathErrorValue2, .timeout = 5)
 Test(GUIUpdater, updateEggLaidByPlayer, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -697,7 +697,7 @@ Test(GUIUpdater, updateEggLaidByPlayerServerId, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData.get()->setMapSize(10, 10);
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData.get()->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData.get()->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -709,7 +709,7 @@ Test(GUIUpdater, updateEggLaidByPlayerServerId, .timeout = 5)
 Test(GUIUpdater, updateEggLaidByPlayerErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("enw", {"test", "test", "test", "test"}), Gui::Errors::GuiUpdaterException);
@@ -718,7 +718,7 @@ Test(GUIUpdater, updateEggLaidByPlayerErrorValue, .timeout = 5)
 Test(GUIUpdater, updateEggLaidByPlayerErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("enw", {"-1", "-1", "-1", "-1"}), Gui::Errors::GuiUpdaterException);
@@ -728,7 +728,7 @@ Test(GUIUpdater, updateEggLaidByPlayerInvalidNumberOfArguments, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("enw", {}), Gui::Errors::GuiUpdaterException);
@@ -737,7 +737,7 @@ Test(GUIUpdater, updateEggLaidByPlayerInvalidNumberOfArguments, .timeout = 5)
 Test(GUIUpdater, updatePlayerBorn, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData.get()->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
@@ -749,7 +749,7 @@ Test(GUIUpdater, updatePlayerBorn, .timeout = 5)
 Test(GUIUpdater, updatePlayerBornErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("ebo", {"test"}), Gui::Errors::GuiUpdaterException);
@@ -758,7 +758,7 @@ Test(GUIUpdater, updatePlayerBornErrorValue, .timeout = 5)
 Test(GUIUpdater, updatePlayerBornErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("ebo", {"-1"}), Gui::Errors::GuiUpdaterException);
@@ -767,7 +767,7 @@ Test(GUIUpdater, updatePlayerBornErrorValue2, .timeout = 5)
 Test(GUIUpdater, updateEggDeath, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     Gui::Egg egg(1, "TEAM1", std::make_pair(1, 1));
@@ -780,7 +780,7 @@ Test(GUIUpdater, updateEggDeath, .timeout = 5)
 Test(GUIUpdater, updateEggDeathErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("edi", {"test"}), Gui::Errors::GuiUpdaterException);
@@ -789,7 +789,7 @@ Test(GUIUpdater, updateEggDeathErrorValue, .timeout = 5)
 Test(GUIUpdater, updateEggDeathErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("edi", {"-1"}), Gui::Errors::GuiUpdaterException);
@@ -798,7 +798,7 @@ Test(GUIUpdater, updateEggDeathErrorValue2, .timeout = 5)
 Test(GUIUpdater, updateTimeUnitRequest, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     guiUpdater.update("sgt", {"5"});
@@ -809,7 +809,7 @@ Test(GUIUpdater, updateTimeUnitRequest, .timeout = 5)
 Test(GUIUpdater, updateTimeUnitRequestErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("sgt", {"test"}), Gui::Errors::GuiUpdaterException);
@@ -818,7 +818,7 @@ Test(GUIUpdater, updateTimeUnitRequestErrorValue, .timeout = 5)
 Test(GUIUpdater, updateTimeUnitRequestErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("sgt", {"-1"}), Gui::Errors::GuiUpdaterException);
@@ -827,7 +827,7 @@ Test(GUIUpdater, updateTimeUnitRequestErrorValue2, .timeout = 5)
 Test(GUIUpdater, updateTimeUnitModification, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
 
@@ -838,7 +838,7 @@ Test(GUIUpdater, updateTimeUnitModification, .timeout = 5)
 Test(GUIUpdater, updateTimeUnitModificationErrorValue, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("sst", {"test"}), Gui::Errors::GuiUpdaterException);
@@ -847,7 +847,7 @@ Test(GUIUpdater, updateTimeUnitModificationErrorValue, .timeout = 5)
 Test(GUIUpdater, updateTimeUnitModificationErrorValue2, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert_throw(guiUpdater.update("sst", {"-1"}), Gui::Errors::GuiUpdaterException);
@@ -856,7 +856,7 @@ Test(GUIUpdater, updateTimeUnitModificationErrorValue2, .timeout = 5)
 Test(GUIUpdater, updateEndOfGame, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     cr_assert(!gameData->getIsEndGame());
@@ -870,7 +870,7 @@ Test(GUIUpdater, updateMessageFromServer, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     gameData.get()->setMapSize(10, 10);
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     guiUpdater.update("smg", {"test"});
@@ -880,7 +880,7 @@ Test(GUIUpdater, updateMessageFromServer, .timeout = 5)
 Test(GUIUpdater, updateUnknownMessage, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     guiUpdater.update("suc", {"test"});
@@ -890,7 +890,7 @@ Test(GUIUpdater, updateUnknownMessage, .timeout = 5)
 Test(GUIUpdater, updateCommandParameter, .timeout = 5)
 {
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
-    std::shared_ptr<Gui::Network> network = std::make_shared<Gui::Network>(4242, "no_tested");
+    std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
     guiUpdater.update("sbp", {"test"});

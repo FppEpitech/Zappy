@@ -9,7 +9,7 @@
 
 #include "Event/Event.hpp"
 #include "Render/Render.hpp"
-#include "Network/Network.hpp"
+#include "Network/INetwork.hpp"
 #include "GameDatas/GameData.hpp"
 #include "Parsing/ServerParser.hpp"
 #include "GUIUpdater/GUIUpdater.hpp"
@@ -34,7 +34,7 @@ class Gui::Engine {
          *
          * @param network Network class.
          */
-        Engine(std::shared_ptr<Network> network);
+        Engine(std::shared_ptr<INetwork> network);
 
         /**
          * @brief Destroy the Engine object.
@@ -51,7 +51,7 @@ class Gui::Engine {
     private:
 
         ServerParser                _parser;        // Parser class for server's command.
-        std::shared_ptr<Network>    _network;       // Network class to connect to the server.
+        std::shared_ptr<INetwork>    _network;       // Network class to connect to the server.
         std::shared_ptr<Render>     _render;        // Render class to draw the scene.
         Event                       _event;         // Event class to listen the user's inputs.
         std::shared_ptr<GameData>   _gameData;      // GameData class to store the game's data.
