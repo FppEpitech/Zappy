@@ -14,5 +14,7 @@ void dead_response(ia_t *ai)
     char *reply = NULL;
 
     reply = strdup("dead\n");
+    if (!reply)
+        return;
     add_message(ai->list_messages, reply);
 }
