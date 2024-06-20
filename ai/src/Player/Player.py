@@ -614,38 +614,35 @@ class Player:
         Returns : 
             truple: bool for found stones, tile's index, list of stones enum
         """
-        bestFound : List[Item] = []
-        foundStones : List[Item] = []
+        index = -1
+        maxStoneInCase = 0
+        foundStones : List[Item]
 
-        map = list(enumerate(vision))
-        map[0], map[1] = map[1], map[0]
-        ret = None
-
-        for i, v in map:
-            if v.linemate > 0:
-                foundStones.append(Item.LINEMATE)
-            if v.deraumere > 0:
-                foundStones.append(Item.DERAUMERE)
-            if v.sibur > 0:
-                foundStones.append(Item.SIBUR)
-            if v.mendiane > 0:
-                foundStones.append(Item.MENDIANE)
-            if v.phiras > 0:
-                foundStones.append(Item.PHIRAS)
-            if v.thystame > 0:
-                foundStones.append(Item.THYSTAME)
-            if (len(foundStones) > 0 and len(foundStones) > len(bestFound)):
-                ret = (True, i, foundStones)
-                bestFound = foundStones
-        if len(foundStones) > 0:
-            return ret
-        return (False, -1, None)
+        for i in mapRangeOpti(len(self.vision)):
+            if self.vision[i].countInStones() > maxStoneInCase:
+                index = i
+                maxStoneInCase = self.vision[i].countInStones()
+        if index == -1:
+            return (False, -1, None)
+        if self.vision[index].linemate > 0:
+            foundStones.append(Item.LINEMATE)
+        if self.vision[index].deraumere > 0:
+            foundStones.append(Item.DERAUMERE)
+        if self.vision[index].sibur > 0:
+            foundStones.append(Item.SIBUR)
+        if self.vision[index].mendiane > 0:
+            foundStones.append(Item.MENDIANE)
+        if self.vision[index].phiras > 0:
+            foundStones.append(Item.PHIRAS)
+        if self.vision[index].thystame > 0:
+            foundStones.append(Item.THYSTAME)
+        return (True, index, foundStones)
 
 
     def lookingForStones(self):
         """
         Look for stones
-        The player will look for the case with the most stones in his vision.
+        The player will look for the case with the most stones in his self.vision[index]ision.
         When he finds stones, he will  go to the case
         where there are stones and take them.
         """
