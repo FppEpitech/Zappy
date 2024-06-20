@@ -146,7 +146,7 @@ NAME		= 	zappy_server
 
 # Flags
 INCLUDE		= -I./include
-CXXFLAGS 	= -Wall -Wextra -Werror -lm
+CXXFLAGS 	= -Wall -Wextra -Werror -lm -g
 
 # Colors
 YELLOW 		= /bin/echo -e "\x1b[33m $1\x1b[0m"

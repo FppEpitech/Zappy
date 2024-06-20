@@ -23,8 +23,12 @@ app_t *create_app(parsing_t *parsing)
     new_app->server = create_server(parsing->port);
     new_app->game = create_game(parsing->height,
     parsing->width, parsing->freq);
-    if (new_app->server == NULL || new_app->game == NULL)
+    if (new_app->server == NULL || new_app->game == NULL) {
+        destroy_game(new_app->game);
+        destroy_parsing(parsing);
+        free(new_app);
         return NULL;
+    }
     new_app->gui_list = list_new();
     new_app->clients_list = list_new();
     new_app->teams_list = list_new();
