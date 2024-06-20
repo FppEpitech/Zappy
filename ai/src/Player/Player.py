@@ -589,6 +589,53 @@ class Player:
             self.updateModeSlave()
 
 
+    def foodInVision(self, vision : list):
+        """
+        Allows us to know if there is food in view
+
+        Parameters:
+            vision (list) : 
+                List of items in view
+
+        Returns:
+            tuple : Contains bool if food found, and the tile's index
+        """
+        total : int = 0
+
+        for i in mapRangeOpti(len(vision)):
+            if vision[i].food > 0:
+                return (True, i)
+        return (False, -1)
+
+
+    def goGetItem(self, index, itemSeek : List[Item]):
+        """
+        Allows us to go get items on the map at index X
+
+        Parameters :
+            index : int
+                index of the tile to go on
+            itemSeek : List[Item]
+                List of items to take on the tile
+        """
+        (x, y) = getMovesTowardTile(index)
+        moves : int = x + y + (1 if x > 0 or x < 0 else 0)
+
+        if (len(self.actions) + moves) > 8:
+            return
+        for i in range(y):
+            self.moveForward()
+        if x > 0:
+            self.turnRight()
+        if x < 0:
+            self.turnLeft()
+        for i in range(x):
+            self.moveForward()
+        for i in range(0, len(itemSeek)):
+            if len(self.actions) < 9:
+                self.take(itemSeek[i].value)
+
+
     def lookingForFood(self):
         """
         Look for food
@@ -606,37 +653,40 @@ class Player:
     def stonesInVision(self, vision: list):
         """
         Allows us to know if there are stones in view
-        
+
         Parameters :
             vision : list:
-                List of items in view
-        
+                    List of items in view
+
         Returns : 
             truple: bool for found stones, tile's index, list of stones enum
         """
-        index = -1
-        maxStoneInCase = 0
-        foundStones : List[Item]
+        bestFound : List[Item] = []
+        foundStones : List[Item] = []
 
-        for i in mapRangeOpti(len(self.vision)):
-            if self.vision[i].countInStones() > maxStoneInCase:
-                index = i
-                maxStoneInCase = self.vision[i].countInStones()
-        if index == -1:
-            return (False, -1, None)
-        if self.vision[index].linemate > 0:
-            foundStones.append(Item.LINEMATE)
-        if self.vision[index].deraumere > 0:
-            foundStones.append(Item.DERAUMERE)
-        if self.vision[index].sibur > 0:
-            foundStones.append(Item.SIBUR)
-        if self.vision[index].mendiane > 0:
-            foundStones.append(Item.MENDIANE)
-        if self.vision[index].phiras > 0:
-            foundStones.append(Item.PHIRAS)
-        if self.vision[index].thystame > 0:
-            foundStones.append(Item.THYSTAME)
-        return (True, index, foundStones)
+        map = list(enumerate(vision))
+        map[0], map[1] = map[1], map[0]
+        ret = None
+
+        for i, v in map:
+            if v.linemate > 0:
+                foundStones.append(Item.LINEMATE)
+            if v.deraumere > 0:
+                foundStones.append(Item.DERAUMERE)
+            if v.sibur > 0:
+                foundStones.append(Item.SIBUR)
+            if v.mendiane > 0:
+                foundStones.append(Item.MENDIANE)
+            if v.phiras > 0:
+                foundStones.append(Item.PHIRAS)
+            if v.thystame > 0:
+                foundStones.append(Item.THYSTAME)
+            if (len(foundStones) > 0 and len(foundStones) > len(bestFound)):
+                ret = (True, i, foundStones)
+                bestFound = foundStones
+        if len(foundStones) > 0:
+            return ret
+        return (False, -1, None)
 
 
     def lookingForStones(self):
@@ -872,50 +922,3 @@ class Player:
         elif self.currentMode == Mode.NONE:
             return
         return
-
-
-    def goGetItem(self, index, itemSeek : List[Item]):
-        """
-        Allows us to go get items on the map at index X
-
-        Parameters :
-            index : int
-                index of the tile to go on
-            itemSeek : List[Item]
-                List of items to take on the tile
-        """
-        (x, y) = getMovesTowardTile(index)
-        moves : int = x + y + (1 if x > 0 or x < 0 else 0)
-
-        if (len(self.actions) + moves) > 8:
-            return
-        for i in range(y):
-            self.moveForward()
-        if x > 0:
-            self.turnRight()
-        if x < 0:
-            self.turnLeft()
-        for i in range(x):
-            self.moveForward()
-        for i in range(0, len(itemSeek)):
-            if len(self.actions) < 9:
-                self.take(itemSeek[i].value)
-
-
-    def foodInVision(self, vision : list):
-        """
-        Allows us to know if there is food in view
-
-        Parameters:
-            vision (list) : 
-                List of items in view
-
-        Returns:
-            tuple : Contains bool if food found, and the tile's index
-        """
-        total : int = 0
-
-        for i in mapRangeOpti(len(vision)):
-            if vision[i].food > 0:
-                return (True, i)
-        return (False, -1)
