@@ -8,6 +8,7 @@
 from enum import Enum
 import random
 import sys
+from typing import List
 
 from ai.src.Enum.Mode import Mode
 from ai.src.Enum.Action import Action
@@ -15,53 +16,6 @@ from ai.src.Enum.Item import Item
 from ai.src.Player.Inventory import Inventory
 from ai.src.Player.PlayerException import PlayerDeathException
 
-def getXmovement(middle, max, width, target):
-    if middle == target:
-        return 0
-    return target - middle
- 
-def getMovesTowardTile(index):
-    maxRowNum = 3
-    crowWidth = 3
-    fwdRow = 1
-    middleTileIndex = 2
-
-    if index == 0:
-        return (0, 0)
-    if index <= maxRowNum:
-        return (getXmovement(middleTileIndex, maxRowNum, crowWidth, index), 1)
-    for i in range(7):
-        fwdRow += 1
-        crowWidth += 2
-        middleTileIndex += fwdRow*2
-        maxRowNum += crowWidth
-        if index <= maxRowNum:
-            return (getXmovement(middleTileIndex, maxRowNum, crowWidth, index), fwdRow)
-    return -1
-
-def foodInVision(vision : list):
-    total : int = 0
-
-    for i in range(len(vision)):
-        if vision[i].food > 0:
-            return (True, i)
-    return (False, -1)
-
-def stonesInVision(vision: list):
-    for i, v in enumerate(vision):
-        if v.linemate > 0:
-            return (True, i, Item.LINEMATE)
-        if v.deraumere > 0:
-            return (True, i, Item.DERAUMERE)
-        if v.sibur > 0:
-            return (True, i, Item.SIBUR)
-        if v.mendiane > 0:
-            return (True, i, Item.MENDIANE)
-        if v.phiras > 0:
-            return (True, i, Item.PHIRAS)
-        if v.thystame > 0:
-            return (True, i, Item.THYSTAME)
-    return (False, -1, None)
 
 
 class Mode(Enum):
@@ -592,23 +546,23 @@ class Player:
         When he finds food, he will  go to the case
         where there is food and take it.
         """
-        (found, index) = foodInVision(self.vision)
+        (found, index) = self.foodInVision(self.vision)
         if not found:
             return random.choice([self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
-        self.goTowardTile(index, Item.FOOD)
+        self.goGetItem(index, [Item.FOOD] * self.vision[index].food)
         self.cmdInventory()
 
-    def lookingForStones(self):
+    def lookingForStones(self): #UP TO FIX YKYK
         """
         Look for stones
         The player will look for the case with the most stones in his vision.
         When he finds stones, he will  go to the case
         where there are stones and take them.
         """
-        (found, index, enum) = stonesInVision(self.vision)
+        (found, index, enums) = self.stonesInVision(self.vision)
         if not found:
             return random.choice([self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
-        self.goTowardTile(index, enum)
+        self.goGetItem(index, enums)
         self.cmdInventory()  
 
     def askSlavesForInventory(self):
@@ -820,11 +774,11 @@ class Player:
             return
         return
 
-    def goTowardTile(self, index, itemSeek : Item):
-        (x, y) = getMovesTowardTile(index)
-        moves : int = 1 + x + y + (1 if x > 0 or x < 0 else 0)
-        
-        if (len(self.actions) + moves) > 9:
+    def goGetItem(self, index, itemSeek : List[Item]):
+        (x, y) = self.getMovesTowardTile(index)
+        moves : int = x + y + (1 if x > 0 or x < 0 else 0)
+
+        if (len(self.actions) + moves) > 8:
             return
         for i in range(y):
             self.moveForward()
@@ -834,4 +788,58 @@ class Player:
             self.turnLeft()
         for i in range(x):
             self.moveForward()
-        self.take(itemSeek.value)
+        for i in range(0, len(itemSeek)):
+            if len(self.actions) < 9:
+                self.take(itemSeek[i].value)
+
+    def getXmovement(self, middle, max, width, target):
+        if middle == target:
+            return 0
+        return target - middle
+
+    def getMovesTowardTile(self, index):
+        maxRowNum = 3
+        crowWidth = 3
+        fwdRow = 1
+        middleTileIndex = 2
+
+        if index == 0:
+            return (0, 0)
+        if index <= maxRowNum:
+            return (self.getXmovement(middleTileIndex, maxRowNum, crowWidth, index), 1)
+        for i in range(7):
+            fwdRow += 1
+            crowWidth += 2
+            middleTileIndex += fwdRow*2
+            maxRowNum += crowWidth
+            if index <= maxRowNum:
+                return (self.getXmovement(middleTileIndex, maxRowNum, crowWidth, index), fwdRow)
+        return -1
+
+    def foodInVision(self, vision : list):
+        total : int = 0
+
+        for i in range(len(vision)):
+            if vision[i].food > 0:
+                return (True, i)
+        return (False, -1)
+
+    def stonesInVision(self, vision: list):
+        foundStones : List[Item] = []
+
+        for i, v in enumerate(vision):
+            if v.linemate > 0:
+                foundStones.append(Item.LINEMATE)
+            if v.deraumere > 0:
+                foundStones.append(Item.DERAUMERE)
+            if v.sibur > 0:
+                foundStones.append(Item.SIBUR)
+            if v.mendiane > 0:
+                foundStones.append(Item.MENDIANE)
+            if v.phiras > 0:
+                foundStones.append(Item.PHIRAS)
+            if v.thystame > 0:
+                foundStones.append(Item.THYSTAME)
+            if (len(foundStones) > 0):
+                return (True, i, foundStones)
+        return (False, -1, None)
