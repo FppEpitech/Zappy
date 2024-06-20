@@ -15,6 +15,7 @@ Gui::GameData::GameData()
     _lastTick = clock();
     _isEndGame = false;
     _serverEggs = std::vector<Gui::Egg>();
+    _canSendMctCommand = false;
 }
 
 std::vector<Gui::Team> &Gui::GameData::getTeams()
@@ -204,4 +205,14 @@ void Gui::GameData::removeServerEgg(size_t id)
             return;
         }
     }
+}
+
+bool Gui::GameData::CanSendMctCommand()
+{
+    return _canSendMctCommand;
+}
+
+void Gui::GameData::setCanSendMctCommand(bool canSend)
+{
+    _canSendMctCommand = canSend;
 }
