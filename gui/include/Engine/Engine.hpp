@@ -16,6 +16,8 @@
 
 #include <time.h>
 
+#define TIME_UNIT_MAP_UPDATE 20
+
 namespace Gui {
 
     /**
@@ -46,7 +48,7 @@ class Gui::Engine {
          * @brief Run the engine loop.
          *
          */
-        void run(void);
+        void run();
 
     private:
 
@@ -61,7 +63,7 @@ class Gui::Engine {
          * @brief Listen the server and update Engine with its commands.
          *
          */
-        void listenServer(void);
+        void listenServer();
 
         /**
          * @brief Send Messages to server at each tick.
@@ -70,5 +72,17 @@ class Gui::Engine {
          * - The names of teams.
          * - The tick.
          */
-        void sendMessageUpdate(void);
+        void sendMessageUpdate();
+
+        /**
+         * @brief Update the map at each 20 / ticks units.
+         *
+         */
+        void updateMap();
+
+        /**
+         * @brief Send update map message.
+         *
+         */
+        void sendUpdateMapMessage();
 };
