@@ -168,7 +168,6 @@ class Player:
             Check if there are stones in the vision
     """
 
-
     def __init__(self):
         """
         Constructor of the Player class
@@ -195,6 +194,7 @@ class Player:
         self.arrived = False
         self.isTimed = False
         self.nbSlavesHere = 0
+
 
     def __str__(self):
         """
@@ -610,7 +610,7 @@ class Player:
         self.goGetItem(index, [Item.FOOD] * self.vision[index].food)
         self.cmdInventory()
 
-    def lookingForStones(self): #UP TO FIX YKYK
+    def lookingForStones(self):
         """
         Look for stones
         The player will look for the case with the most stones in his vision.
@@ -869,7 +869,6 @@ class Player:
             if len(self.actions) < 9:
                 self.take(itemSeek[i].value)
 
-    
 
     def foodInVision(self, vision : list):
         """
@@ -888,6 +887,7 @@ class Player:
             if vision[i].food > 0:
                 return (True, i)
         return (False, -1)
+
 
     def stonesInVision(self, vision: list):
         """
