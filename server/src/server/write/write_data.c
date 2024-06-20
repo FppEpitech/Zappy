@@ -36,7 +36,15 @@ void add_message(list_t *list, char *message)
     list_add_back(list, message_team);
 }
 
-bool write_message(list_t *list_messages, size_t fd)
+static void check_died_ai(app_t *app, size_t fd)
+{
+    ia_t *ai = find_ia(app, fd);
+
+    if (ai != NULL && ai->dead == true)
+        free_ai(app, ai);
+}
+
+bool write_message(app_t *app, list_t *list_messages, size_t fd)
 {
     list_node_t *tmp = NULL;
     ssize_t bytes_writted = 0;
@@ -53,5 +61,6 @@ bool write_message(list_t *list_messages, size_t fd)
         list_remove_front(list_messages);
         tmp = list_messages->first;
     }
+    check_died_ai(app, fd);
     return true;
 }
