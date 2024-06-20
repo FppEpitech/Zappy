@@ -200,7 +200,8 @@ void Gui::Render::displayPlayers()
             else
                 DrawModelEx(team.getPlayerModel(), team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, team.getPlayerColor());
 
-            displayPlayerLevel(team, player);
+            displayPlayerLevel(player, team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()));
+
             if (player.getState() == Gui::Player::BROADCAST)
                 displayPlayerBroadcast(team, player);
 
@@ -215,15 +216,23 @@ void Gui::Render::displayPlayers()
     }
 }
 
-void Gui::Render::displayPlayerLevel(Gui::Team &team, Gui::Player &player)
+void Gui::Render::displayPlayerLevel(Gui::Player &player, Vector3 playerPos)
 {
     EndMode3D();
 
-    Vector3 playerPos = team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap());
     Vector2 playerScreenPosition = GetWorldToScreen((Vector3){playerPos.x, playerPos.y + PLAYER_HEIGHT + 0.5f, playerPos.z}, *_camera.getCamera().get());
     std::string countStr = "Lvl: " + std::to_string(player.getLevel());
+    Vector3 posDiff = (Vector3){playerPos.x, playerPos.y + PLAYER_HEIGHT + 0.5f, playerPos.z};
+    posDiff.x -= _camera.getCamera()->position.x;
+    posDiff.y -= _camera.getCamera()->position.y;
+    posDiff.z -= _camera.getCamera()->position.z;
 
-    DrawText(countStr.c_str(), (int)playerScreenPosition.x - MeasureText(countStr.c_str(), PLAYER_TEXT_SIZE)/2, (int)playerScreenPosition.y , PLAYER_TEXT_SIZE, WHITE);
+    posDiff.z = posDiff.z < 0 ? posDiff.z * -1 : posDiff.z;
+    posDiff.x = posDiff.x < 0 ? posDiff.x * -1 : posDiff.x;
+    posDiff.y = posDiff.y < 0 ? posDiff.y * -1 : posDiff.y;
+    int fontSize = PLAYER_TEXT_SIZE - (int)(posDiff.z * PLAYER_TEXT_SIZE_RATIO);
+
+    DrawText(countStr.c_str(), (int)playerScreenPosition.x - MeasureText(countStr.c_str(), fontSize)/2, (int)playerScreenPosition.y , fontSize, WHITE);
 
     BeginMode3D(*_camera.getCamera());
 }
