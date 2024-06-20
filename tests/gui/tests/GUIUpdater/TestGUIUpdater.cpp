@@ -567,6 +567,7 @@ Test(GUIUpdater, updatePlayerRessourceDropping, .timeout = 5)
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
 
+    guiUpdater.update("msz", {"2", "2"});
     guiUpdater.update("pdr", {"1", "1"});
     cr_assert_not_null(&guiUpdater);
 }
@@ -579,6 +580,7 @@ Test(GUIUpdater, updatePlayerRessourceDroppingErrorValue, .timeout = 5)
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
 
+    guiUpdater.update("msz", {"2", "2"});
     cr_assert_throw(guiUpdater.update("pdr", {"1", "test"}), Gui::Errors::GuiUpdaterException);
 }
 
@@ -590,6 +592,7 @@ Test(GUIUpdater, updatePlayerRessourceDroppingErrorValue2, .timeout = 5)
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
 
+    guiUpdater.update("msz", {"2", "2"});
     cr_assert_throw(guiUpdater.update("pdr", {"-1"}), Gui::Errors::GuiUpdaterException);
 }
 
@@ -600,6 +603,7 @@ Test(GUIUpdater, updatePlayerRessourceDroppingInvalidNumberOfArguments, .timeout
     std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
+    guiUpdater.update("msz", {"2", "2"});
     cr_assert_throw(guiUpdater.update("pdr", {}), Gui::Errors::GuiUpdaterException);
 }
 
@@ -611,6 +615,7 @@ Test(GUIUpdater, updateRessourceCollecting, .timeout = 5)
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
 
+    guiUpdater.update("msz", {"2", "2"});
     guiUpdater.update("pgt", {"1", "1"});
     cr_assert_not_null(&guiUpdater);
 }
@@ -623,6 +628,7 @@ Test(GUIUpdater, updateRessourceCollectingErrorValue, .timeout = 5)
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
 
+    guiUpdater.update("msz", {"2", "2"});
     cr_assert_throw(guiUpdater.update("pgt", {"1", "test"}), Gui::Errors::GuiUpdaterException);
 }
 
@@ -634,6 +640,7 @@ Test(GUIUpdater, updateRessourceCollectingErrorValue2, .timeout = 5)
     gameData->addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
     gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
 
+    guiUpdater.update("msz", {"2", "2"});
     cr_assert_throw(guiUpdater.update("pgt", {"-1"}), Gui::Errors::GuiUpdaterException);
 }
 
@@ -644,6 +651,7 @@ Test(GUIUpdater, updateRessourceCollectingInvalidNumberOfArguments, .timeout = 5
     std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
 
+    guiUpdater.update("msz", {"2", "2"});
     cr_assert_throw(guiUpdater.update("pgt", {}), Gui::Errors::GuiUpdaterException);
 }
 
