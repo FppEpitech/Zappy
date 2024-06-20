@@ -39,6 +39,7 @@ def mapRangeOpti(n):
     for i in range(2, n):
         yield i
 
+
 def getXmovement(middle, max, width, target):
     """
     Get the horizontal movements to do to reach the target tile
@@ -57,6 +58,7 @@ def getXmovement(middle, max, width, target):
     if middle == target:
         return 0
     return target - middle
+
 
 def getMovesTowardTile(index):
     """

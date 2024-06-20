@@ -11,8 +11,8 @@ from typing import List
 
 from ai.src.Enum.Mode import Mode
 from ai.src.Enum.Role import Role
-from ai.src.Enum.Action import Action
 from ai.src.Enum.Item import Item
+from ai.src.Enum.Action import Action
 from ai.src.Player.Inventory import Inventory
 from ai.src.Player.PlayerException import PlayerDeathException
 from ai.src.Utils.Utils import getMovesTowardTile, mapRangeOpti
@@ -603,6 +603,45 @@ class Player:
         self.cmdInventory()
 
 
+    def stonesInVision(self, vision: list):
+        """
+        Allows us to know if there are stones in view
+        
+        Parameters :
+            vision : list:
+                List of items in view
+        
+        Returns : 
+            truple: bool for found stones, tile's index, list of stones enum
+        """
+        bestFound : List[Item] = []
+        foundStones : List[Item] = []
+
+        map = list(enumerate(vision))
+        map[0], map[1] = map[1], map[0]
+        ret = None
+
+        for i, v in map:
+            if v.linemate > 0:
+                foundStones.append(Item.LINEMATE)
+            if v.deraumere > 0:
+                foundStones.append(Item.DERAUMERE)
+            if v.sibur > 0:
+                foundStones.append(Item.SIBUR)
+            if v.mendiane > 0:
+                foundStones.append(Item.MENDIANE)
+            if v.phiras > 0:
+                foundStones.append(Item.PHIRAS)
+            if v.thystame > 0:
+                foundStones.append(Item.THYSTAME)
+            if (len(foundStones) > 0 and len(foundStones) > len(bestFound)):
+                ret = (True, i, foundStones)
+                bestFound = foundStones
+        if len(foundStones) > 0:
+            return ret
+        return (False, -1, None)
+
+
     def lookingForStones(self):
         """
         Look for stones
@@ -883,36 +922,3 @@ class Player:
             if vision[i].food > 0:
                 return (True, i)
         return (False, -1)
-
-
-    def stonesInVision(self, vision: list):
-        """
-        Allows us to know if there are stones in view
-        
-        Parameters :
-            vision : list:
-                List of items in view
-        
-        Returns : 
-            truple: bool for found stones, tile's index, list of stones enum
-        """
-        foundStones : List[Item] = []
-
-        map = list(enumerate(vision))
-        map[0], map[1] = map[1], map[0]
-        for i, v in map:
-            if v.linemate > 0:
-                foundStones.append(Item.LINEMATE)
-            if v.deraumere > 0:
-                foundStones.append(Item.DERAUMERE)
-            if v.sibur > 0:
-                foundStones.append(Item.SIBUR)
-            if v.mendiane > 0:
-                foundStones.append(Item.MENDIANE)
-            if v.phiras > 0:
-                foundStones.append(Item.PHIRAS)
-            if v.thystame > 0:
-                foundStones.append(Item.THYSTAME)
-            if (len(foundStones) > 0):
-                return (True, i, foundStones)
-        return (False, -1, None)
