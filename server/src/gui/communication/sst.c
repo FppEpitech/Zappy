@@ -27,7 +27,7 @@ void sst_response(gui_t *gui, app_t *app, char *line)
     }
     line += LEN_COMMAND_AND_SPACE;
     freq = parse_positive_int_arg(line);
-    if (freq == CODE_ERROR_INVALID_NUMBER) {
+    if (freq == CODE_ERROR_INVALID_NUMBER || freq == 0) {
         sbp_command(gui);
         return;
     }
