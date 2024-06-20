@@ -17,8 +17,6 @@ from ai.src.Player.Inventory import Inventory
 from ai.src.Player.PlayerException import PlayerDeathException
 from ai.src.Utils.Utils import mapRangeOpti
 
-
-
 class Mode(Enum):
     FOOD = 0
     STONES = 1
@@ -878,7 +876,7 @@ class Player:
             truple: bool for found stones, tile's index, list of stones enum
         """
         foundStones : List[Item] = []
-        
+
         map = list(enumerate(vision))
         map[0], map[1] = map[1], map[0]
         for i, v in map:
