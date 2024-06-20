@@ -13,7 +13,6 @@
 bool incantation_command(app_t *app, ia_t *ai, char *line)
 {
     list_t *list_ai = NULL;
-    char *success = NULL;
 
     if (strcmp("Incantation", line) == 0) {
         printf("Check incantation begin\n");
@@ -23,8 +22,6 @@ bool incantation_command(app_t *app, ia_t *ai, char *line)
             return false;
         }
         printf("SUCCESS at begin verification\n");
-        success = format_string("Elevation underway\n");
-        add_message(ai->list_messages, success);
         update_status(app, ai, BEGIN_INCANTATION);
         pic_command(app, list_ai);
         return true;

@@ -47,8 +47,6 @@ static void handle_incantation_verification(ia_t *ai, app_t *app)
     pie_command(app, list_ai);
     printf("SUCCESS at end verification\n");
     level_up(app, ai);
-    result = format_string("Current level: %d\n", ai->level);
-    add_message(ai->list_messages, result);
     printf("Level up succefully\n");
 }
 
