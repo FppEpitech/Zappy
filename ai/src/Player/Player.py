@@ -163,6 +163,16 @@ class Player:
             Regroup the players
         chooseAction()
             Choose the action of the player
+        goGetItem()
+            Go get items at tile
+        getXmovement()
+            Get the movements to do horizontally to reach tile
+        getMovesTowardTile()
+            Get the movements to do to reach tile
+        foodInVision()
+            Check if there is food in the vision
+        stonesInVision()
+            Check if there are stones in the vision
     """
 
 
