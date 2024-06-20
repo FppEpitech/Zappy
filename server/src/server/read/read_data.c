@@ -82,9 +82,8 @@ static void client_handler(app_t *app, size_t fd, char *line)
 {
     list_node_t *client = NULL;
 
-    if (strcmp(line, "GRAPHIC") == 0) {
+    if (strcmp(line, "GRAPHIC") == 0)
         add_gui(app, fd, line);
-    }
     if (add_ia(app, fd, line) == false) {
         client = find_client(app->clients_list, fd);
         free(client->data.client);

@@ -40,9 +40,8 @@ static void check_died_ai(app_t *app, size_t fd)
 {
     ia_t *ai = find_ia(app, fd);
 
-    if (ai != NULL && ai->dead == true) {
+    if (ai != NULL && ai->dead == true)
         free_ai(app, ai);
-    }
 }
 
 bool write_message(app_t *app, list_t *list_messages, size_t fd)
