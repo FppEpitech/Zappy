@@ -31,7 +31,6 @@ void sst_response(gui_t *gui, app_t *app, char *line)
         sbp_command(gui);
         return;
     }
-    printf("sst %d\n", freq);
     app->game->freq = freq;
     response = format_string("sst %d\n", freq);
     add_message(gui->list_messages, response);
