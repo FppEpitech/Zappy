@@ -60,7 +60,7 @@ class Gui::ServerParser : public Gui::IServerParser {
         };
 
         /**
-         * @brief Map of types to parse related to the command
+         * @brief Map of types to parse related to the command.
          *
          */
         std::unordered_map<std::string, std::vector<ParseType>> _typesCommand =

@@ -31,7 +31,7 @@ class Gui::IServerParser {
          * @brief Parse the command server.
          *
          * @param command Command to parse.
-         * @return std::vector<std::string> - arguments parsed
+         * @return std::vector<std::string> - arguments parsed.
          */
         virtual std::vector<std::string> parse(const std::string& command) = 0;
 };
