@@ -7,8 +7,7 @@
 
 #pragma once
 
-#include "Network/Network.hpp"
-#include "GameDatas/GameData.hpp"
+#include "GUIUpdater/AGUIUpdater.hpp"
 
 #include <string>
 #include <functional>
@@ -24,7 +23,7 @@ namespace Gui {
     class GUIUpdater;
 }
 
-class Gui::GUIUpdater {
+class Gui::GUIUpdater : public Gui::AGUIUpdater {
 
     public:
 
@@ -51,8 +50,6 @@ class Gui::GUIUpdater {
 
     private:
 
-        std::shared_ptr<GameData>       _gameData; // The GUI GameData to update.
-        std::shared_ptr<INetwork>       _network; // The network to send commands to the server.
         size_t                          _colorIndex; // The index of the color to use for the team.
 
         std::unordered_map<std::string, std::function<void(std::vector<std::string>)>> _updateMap =
