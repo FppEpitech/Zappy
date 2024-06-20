@@ -8,6 +8,7 @@
 import sys
 
 from ai.src.Enum.Mode import Mode
+from ai.src.Enum.Role import Role
 from ai.src.Enum.Action import Action
 from ai.src.Player.Inventory import Inventory
 from ai.src.Player.PlayerException import PlayerDeathException
@@ -40,8 +41,8 @@ class Player:
             the broadcast received by the player
         ejectionReceived : list
             the ejection received by the player
-        isLeader : bool
-            if the player is the leader
+        isLeader : Role
+            if the player is the leader/undefined/slave
         unusedSlots : int
             the unused slots
         currentlyElevating : bool
@@ -64,7 +65,7 @@ class Player:
     ----------
 
     Methods :
-        __init__(isLeader : bool)
+        __init__()
             Constructor of the Player class
         __str__()
             Print the player
@@ -145,13 +146,9 @@ class Player:
     """
 
 
-    def __init__(self, isLeader : bool):
+    def __init__(self):
         """
         Constructor of the Player class
-
-        Parameters :
-            isLeader : bool
-                if the player is the leader
         """
         self.inventory = Inventory()
         self.level = 1
@@ -164,7 +161,7 @@ class Player:
         self.vision = []
         self.broadcastReceived = []
         self.ejectionReceived = []
-        self.isLeader = isLeader
+        self.isLeader = Role.UNDEFINED
         self.unusedSlots = 0
         self.currentlyElevating = False
         self.currentMode = Mode.FOOD
@@ -448,7 +445,7 @@ class Player:
         """
         if response == "Elevation underway":
             self.currentlyElevating = True
-            if self.isLeader == False:
+            if self.isLeader == Role.SLAVE:
                 self.currentMode = Mode.NONE
             return True
         elif response.startswith("Current level:"):
@@ -511,7 +508,7 @@ class Player:
         self.currentAction = Action.NONE
         self.currentCommand = ""
         self.callback = None
-        if self.currentMode == Mode.REGROUP and self.isLeader == False:
+        if self.currentMode == Mode.REGROUP and self.isLeader == Role.SLAVE:
             if response == "ok":
                 self.broadcastReceived = []
 
@@ -575,7 +572,7 @@ class Player:
         """
         if self.currentMode == Mode.REGROUP or self.currentMode == Mode.DROPPING or self.currentMode == Mode.ELEVATING or self.currentMode == Mode.NONE:
             return
-        if self.isLeader:
+        if self.isLeader == Role.LEADER:
             self.updateModeLeader()
         else:
             self.updateModeSlave()
@@ -762,7 +759,7 @@ class Player:
         As a leader, you will wait for the slaves to drop the stones
         As a slave, you will drop the stones until you have none left
         """
-        if self.isLeader:
+        if self.isLeader == Role.LEADER:
             self.waitingDrop()
         else:
             print("Dropping", flush=True, file=sys.stderr)
@@ -790,7 +787,7 @@ class Player:
         As a leader, you will wait for the slaves to regroup
         As a slave, you will regroup with the leader
         """
-        if self.isLeader:
+        if self.isLeader == Role.LEADER:
             self.waitingEveryone()
         else:
             isThereARegroup = False
@@ -834,6 +831,11 @@ class Player:
         The action is chosen depending on the mode of the player
         The mode is updated before choosing the action
         """
+        if self.isLeader == Role.LEADER:
+            for msg in self.broadcastReceived:
+                if msg[1] == "IsLeader?":
+                    self.broadcast("Yes")
+                    self.broadcastReceived.remove(msg)
         self.updateMode()
         if self.currentMode == Mode.REGROUP:
             self.regroupAction()
@@ -841,7 +843,7 @@ class Player:
         if self.currentMode == Mode.DROPPING:
             self.dropping()
             return
-        if self.isLeader == False:
+        if self.isLeader == Role.SLAVE:
             if len(self.broadcastReceived) > 0:
                 self.slavesReponses()
                 self.broadcastReceived = []

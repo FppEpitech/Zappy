@@ -10,6 +10,7 @@ import sys
 import uuid
 import threading
 
+from ai.src.Enum.Role import Role
 from ai.src.Network.API import API
 from ai.src.Player.Player import Player, Action, Mode
 from ai.src.Network.APIException import APIException
@@ -37,7 +38,7 @@ class AI:
     """
 
 
-    def __init__(self, host, port, teamName, isLeader=False):
+    def __init__(self, host, port, teamName):
         """
         Constructor of the AI class
         Assign the API, the player and the team name
@@ -51,7 +52,7 @@ class AI:
                 the name of the team
         """
         self.api = API(host, port)
-        self.player = Player(isLeader)
+        self.player = Player()
         self.teamName = teamName
         self.threads = []
 
@@ -61,7 +62,7 @@ class AI:
         Handle the communication with the server in a thread
         """
         while True:
-            if self.player.currentMode == Mode.REGROUP and self.player.isLeader == False:
+            if self.player.currentMode == Mode.REGROUP and self.player.isLeader == Role.SLAVE:
                 break
             for _ in range(0, len(self.player.callbacks)):
                 self.player.currentAction = self.player.actions[0]
@@ -112,15 +113,34 @@ class AI:
         and handle it
         """
         fileName = ""
-        if self.player.isLeader == False:
-            fileName = createLogs(self.player.isLeader)
+        fileName = createLogs()
         self.api.connect()
         self.api.initConnection(self.teamName, fileName)
-        if self.player.isLeader:
-            self.player.completeTeam()
+
         thread = threading.Thread(target=self.serverCommunicationInThread)
         thread.start()
         self.threads.append(thread)
+
+        self.player.broadcast("IsLeader?")
+
+        while self.player.isLeader == Role.UNDEFINED:
+            if len(self.player.callbacks) == 0:
+                self.player.cmdInventory()
+            if self.threads[0].is_alive() == False:
+                break
+            if self.player.inventory.food <= 8:
+                for msg in self.player.broadcastReceived:
+                    if msg[1] == "Yes":
+                        print("I'm a slave", flush=True, file=sys.stderr)
+                        self.player.isLeader = Role.SLAVE
+                        self.player.broadcastReceived.remove(msg)
+                        break
+                if self.player.isLeader == Role.UNDEFINED:
+                    print("I'm a leader", flush=True, file=sys.stderr)
+                    self.player.isLeader = Role.LEADER
+
+        if self.player.isLeader == Role.LEADER:
+            self.player.completeTeam()
 
         while True:
             if len(self.player.actions) == 0:
@@ -149,16 +169,12 @@ def forkAI():
     return pid
 
 
-def createLogs(isLeader):
+def createLogs():
     """
     Create the logs
     """
     myuuid = uuid.uuid4()
-    fileName = ""
-    if isLeader:
-        fileName = f"leader_{myuuid}.log"
-    else:
-        fileName = f"follower_{myuuid}.log"
+    fileName = f"{myuuid}.log"
     if not os.path.exists("logs"):
         os.makedirs("logs")
     sys.stdout = open("logs/stdout_" + fileName, "w")
