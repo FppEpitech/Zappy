@@ -35,6 +35,12 @@ class Gui::Network : public Gui::ANetwork {
         Network(int port, const std::string &hostName);
 
         /**
+         * @brief Destroy the Network object.
+         *
+         */
+        ~Network();
+
+        /**
          * @brief Connect the Gui network with the server.
          *
          * @throw NetworkException If the connection failed.
