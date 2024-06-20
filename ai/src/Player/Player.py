@@ -775,6 +775,15 @@ class Player:
         return
 
     def goGetItem(self, index, itemSeek : List[Item]):
+        """
+        Allows us to go get items on the map at index X
+
+        Parameters :
+            index : int
+                index of the tile to go on
+            itemSeek : List[Item]
+                List of items to take on the tile
+        """
         (x, y) = self.getMovesTowardTile(index)
         moves : int = x + y + (1 if x > 0 or x < 0 else 0)
 
@@ -793,6 +802,18 @@ class Player:
                 self.take(itemSeek[i].value)
 
     def getXmovement(self, middle, max, width, target):
+        """
+        Get the horizontal movements to do to reach the target tile
+        Parameters :
+            middle : int
+                index of the middle tile
+            max : int
+                index of the last tile on the row
+            width : int
+                width of the current row
+        Returns :
+            int : the number of movements to do
+        """
         if middle == target:
             return 0
         return target - middle
@@ -817,6 +838,16 @@ class Player:
         return -1
 
     def foodInVision(self, vision : list):
+        """
+        Allows us to know if there is food in view
+
+        Parameters:
+            vision (list) : 
+                List of items in view
+
+        Returns:
+            tuple : Contains bool if food found, and the tile's index
+        """
         total : int = 0
 
         for i in range(len(vision)):
@@ -825,6 +856,16 @@ class Player:
         return (False, -1)
 
     def stonesInVision(self, vision: list):
+        """
+        Allows us to know if there are stones in view
+        
+        Parameters :
+            vision : list:
+                List of items in view
+        
+        Returns : 
+            truple: bool for found stones, tile's index, list of stones enum
+        """
         foundStones : List[Item] = []
 
         for i, v in enumerate(vision):
