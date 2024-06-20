@@ -113,15 +113,34 @@ class AI:
         and handle it
         """
         fileName = ""
-        if self.player.isLeader == False:
-            fileName = createLogs(self.player.isLeader)
+        fileName = createLogs()
         self.api.connect()
         self.api.initConnection(self.teamName, fileName)
-        if self.player.isLeader:
-            self.player.completeTeam()
+
         thread = threading.Thread(target=self.serverCommunicationInThread)
         thread.start()
         self.threads.append(thread)
+
+        self.player.broadcast("IsLeader?")
+
+        while self.player.isLeader == Role.UNDEFINED:
+            if len(self.player.callbacks) == 0:
+                self.player.cmdInventory()
+            if self.threads[0].is_alive() == False:
+                break
+            if self.player.inventory.food <= 8:
+                for msg in self.player.broadcastReceived:
+                    if msg[1] == "Yes":
+                        print("I'm a slave", flush=True, file=sys.stderr)
+                        self.player.isLeader = Role.SLAVE
+                        self.player.broadcastReceived.remove(msg)
+                        break
+                if self.player.isLeader == Role.UNDEFINED:
+                    print("I'm a leader", flush=True, file=sys.stderr)
+                    self.player.isLeader = Role.LEADER
+
+        if self.player.isLeader == Role.LEADER:
+            self.player.completeTeam()
 
         while True:
             if len(self.player.actions) == 0:
