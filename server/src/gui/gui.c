@@ -83,6 +83,7 @@ void destroy_gui(list_t *gui_list)
     while (temp) {
         close(temp->data.gui->fd);
         destroy_message_list(temp->data.gui->list_messages);
+        free(temp->data.gui->list_messages);
         free(temp->data.gui);
         temp = temp->next;
     }

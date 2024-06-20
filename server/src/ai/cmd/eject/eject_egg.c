@@ -15,8 +15,8 @@ static void check_position_egg(team_t *team,
 {
     if (egg_temp->data.coord->x == ai_position->x &&
     egg_temp->data.coord->y == ai_position->y) {
-        list_delete(team->eggs_list, egg_temp);
         edi_command(app, egg_temp->data.egg->id);
+        list_delete(team->eggs_list, egg_temp);
     }
 }
 

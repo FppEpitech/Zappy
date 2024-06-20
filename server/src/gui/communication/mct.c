@@ -30,8 +30,9 @@ static char *get_string(app_t *app, vector2i_t pos)
 void mct_response(gui_t *gui, app_t *app, char *line)
 {
     vector2i_t pos = {0, 0};
-    char *response = NULL;
-    char *final_response = "";
+    char *tile = NULL;
+    char *map = strdup("");
+    char *final_response = NULL;
 
     if (strlen(line) != LEN_COMMAND) {
         suc_command(gui);
@@ -40,11 +41,15 @@ void mct_response(gui_t *gui, app_t *app, char *line)
     while ((size_t)pos.y < app->game->height) {
         pos.x = 0;
         while ((size_t)pos.x < app->game->width) {
-            response = get_string(app, pos);
-            final_response = format_string("%s%s", final_response, response);
+            tile = get_string(app, pos);
+            final_response = format_string("%s%s", map, tile);
+            free(tile);
+            free(map);
+            map = strdup(final_response);
+            free(final_response);
             pos.x++;
         }
         pos.y++;
     }
-    add_message(gui->list_messages, final_response);
+    add_message(gui->list_messages, map);
 }
