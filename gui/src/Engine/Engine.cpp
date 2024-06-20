@@ -38,6 +38,11 @@ void Gui::Engine::listenServer()
 
     if (command == "")
         return;
+    if (command == SERVER_DOWN_MESSAGE) {
+        std::cout << STR_RED << SERVER_DOWN_MESSAGE << STR_RESET << std::endl;
+        _gameData.get()->setIsEndGame(true);
+        return;
+    }
     try {
         std::vector<std::string> arguments = _parser->parse(command);
         std::istringstream stream(command);
