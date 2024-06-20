@@ -54,10 +54,12 @@ static void handle_incantation_verification(ia_t *ai, app_t *app)
 
 static void check_fork(ia_t *ai, list_node_t *egg_node, app_t *app)
 {
-    if (egg_node->data.egg->id_player_laid == ai->fd) {
+    if (egg_node->data.egg->id_player_laid == ai->fd &&
+    egg_node->data.egg->is_laid == true) {
         printf("SUCCESS at end verification, player id : %ld\n", ai->fd);
         printf("player_laid : %ld\n", egg_node->data.egg->id_player_laid);
         enw_command(app, egg_node->data.egg, NULL);
+        egg_node->data.egg->is_laid = false;
         return;
     }
 }
@@ -68,6 +70,7 @@ static void handle_fork_verification(ia_t *ai, app_t *app)
     list_node_t *egg_node = NULL;
 
     while (team_node) {
+        egg_node = team_node->data.team->eggs_list->first;
         while (egg_node) {
             check_fork(ai, egg_node, app);
             egg_node = egg_node->next;

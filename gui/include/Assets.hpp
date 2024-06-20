@@ -59,8 +59,8 @@
 #define ROTATION_ANGLE_MENDIANE     0
 #define ROTATION_ANGLE_PHIRAS       270
 #define ROTATION_ANGLE_SIBUR        270
-#define ROTATION_ANGLE_THYSTAME     0
-#define ROTATION_ANGLE_DERAUMERE    0
+#define ROTATION_ANGLE_THYSTAME     270
+#define ROTATION_ANGLE_DERAUMERE    90
 #define ROTATION_ANGLE_PLAYER       0
 #define ROTATION_ANGLE_EGG          270
 #define ROTATION_ANGLE_TREE         0
@@ -71,8 +71,8 @@
 #define ROTATION_AXIS_MENDIANE      (Vector3){1, 0, 0}
 #define ROTATION_AXIS_PHIRAS        (Vector3){1, 0, 0}
 #define ROTATION_AXIS_SIBUR         (Vector3){1, 0, 0}
-#define ROTATION_AXIS_THYSTAME      (Vector3){0, 0, 0}
-#define ROTATION_AXIS_DERAUMERE     (Vector3){0, 0, 0}
+#define ROTATION_AXIS_THYSTAME      (Vector3){1, 0, 0}
+#define ROTATION_AXIS_DERAUMERE     (Vector3){1, 0, 0}
 #define ROTATION_AXIS_PLAYER        (Vector3){0, 1, 0}
 #define ROTATION_AXIS_EGG           (Vector3){1, 0, 0}
 #define ROTATION_AXIS_TREE          (Vector3){1, 0, 0}
@@ -83,9 +83,12 @@
 #define POS_MENDIANE                (Vector3){2, -0.25, -0.5}
 #define POS_PHIRAS                  (Vector3){0.5, -0.3, -1.5}
 #define POS_SIBUR                   (Vector3){1.5, -0.3, -1.5}
-#define POS_THYSTAME                (Vector3){1, -0.2, -2}
+#define POS_THYSTAME                (Vector3){1, 0, -2}
 #define POS_DERAUMERE               (Vector3){2, -0.3, -2}
 #define POS_PLAYER                  (Vector3){0, -0.25, 0}
 #define POS_EGG                     (Vector3){0.5, 0, 0.5}
 #define POS_TREE                    (Vector3){2, -0.3, 2}
 #define POS_LANTERN                 (Vector3){1, -0.3, 2}
+#define POS_Y_DELIMITATION          -0.27f
+
+#define PLAYER_TEXT_SIZE            40

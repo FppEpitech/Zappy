@@ -195,11 +195,14 @@ void Gui::Render::displayPlayers()
 
             float rotation = player.getRotationFromOrientation();
 
-
             if (player.getState() == Gui::Player::WALK)
-                DrawModelEx(team.getPlayerModel(), player.getPosition3D(), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, WHITE);
+                DrawModelEx(team.getPlayerModel(), player.getPosition3D(), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, team.getPlayerColor());
             else
-                DrawModelEx(team.getPlayerModel(), team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, WHITE);
+                DrawModelEx(team.getPlayerModel(), team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, team.getPlayerColor());
+
+            displayPlayerLevel(team, player);
+            if (player.getState() == Gui::Player::BROADCAST)
+                displayPlayerBroadcast(team, player);
 
             if (_isDebug) {
                 std::vector<BoundingBox> bboxes = team.getPlayerBoundingBoxes(player.getPosition(), player.getOrientation(), player.getCenterPosition());
@@ -210,6 +213,32 @@ void Gui::Render::displayPlayers()
             }
         }
     }
+}
+
+void Gui::Render::displayPlayerLevel(Gui::Team &team, Gui::Player &player)
+{
+    EndMode3D();
+
+    Vector3 playerPos = team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap());
+    Vector2 playerScreenPosition = GetWorldToScreen((Vector3){playerPos.x, playerPos.y + PLAYER_HEIGHT + 0.5f, playerPos.z}, *_camera.getCamera().get());
+    std::string countStr = "Lvl: " + std::to_string(player.getLevel());
+
+    DrawText(countStr.c_str(), (int)playerScreenPosition.x - MeasureText(countStr.c_str(), PLAYER_TEXT_SIZE)/2, (int)playerScreenPosition.y , PLAYER_TEXT_SIZE, WHITE);
+
+    BeginMode3D(*_camera.getCamera());
+}
+
+void Gui::Render::displayPlayerBroadcast(Gui::Team &team, Gui::Player &player)
+{
+    EndMode3D();
+
+    Vector3 playerPos = team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap());
+    Vector2 playerScreenPosition = GetWorldToScreen((Vector3){playerPos.x, playerPos.y + PLAYER_HEIGHT + 0.7f, playerPos.z}, *_camera.getCamera().get());
+    std::string countStr = player.getBroadcast();
+
+    DrawText(countStr.c_str(), (int)playerScreenPosition.x - MeasureText(countStr.c_str(), PLAYER_TEXT_SIZE)/2, (int)playerScreenPosition.y , PLAYER_TEXT_SIZE, WHITE);
+
+    BeginMode3D(*_camera.getCamera());
 }
 
 void Gui::Render::displayMap()
@@ -231,11 +260,25 @@ void Gui::Render::displayMap()
 
 void Gui::Render::displayTile(Tile tile)
 {
-    DrawModel(_tileModel, tile.getPositionIn3DSpace(), 1.0f, WHITE);
+    Vector3 tilePos3D = tile.getPositionIn3DSpace();
+    DrawModel(_tileModel, tilePos3D, 1.0f, WHITE);
+
     if (_isDebug) {
         std::vector<BoundingBox> bboxes = tile.getTileBoundingBoxes(tile, _tileModel);
         for (size_t i = 0; i < bboxes.size(); i++)
             DrawBoundingBox(bboxes[i], GREEN);
+    } else {
+        DrawLine3D( (Vector3){(float)(tilePos3D.x - SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z - SIZE_TILE / 2.0f)},
+                    (Vector3){(float)(tilePos3D.x - SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z + SIZE_TILE / 2.0f)}, DARKGREEN);
+
+        DrawLine3D( (Vector3){(float)(tilePos3D.x - SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z + SIZE_TILE / 2.0f)},
+                    (Vector3){(float)(tilePos3D.x + SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z + SIZE_TILE / 2.0f)}, DARKGREEN);
+
+        DrawLine3D( (Vector3){(float)(tilePos3D.x + SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z + SIZE_TILE / 2.0f)},
+                    (Vector3){(float)(tilePos3D.x + SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z - SIZE_TILE / 2.0f)}, DARKGREEN);
+
+        DrawLine3D( (Vector3){(float)(tilePos3D.x + SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z - SIZE_TILE / 2.0f)},
+                    (Vector3){(float)(tilePos3D.x - SIZE_TILE / 2.0f), tilePos3D.y + POS_Y_DELIMITATION, (float)(tilePos3D.z - SIZE_TILE / 2.0f)}, DARKGREEN);
     }
 }
 
@@ -249,6 +292,13 @@ void Gui::Render::displayEggs(Tile tile) const
             Vector3 posTile = tile.getPositionIn3DSpace();
             DrawModelEx(team.getEggModel(), (Vector3){posTile.x + posEggModel.x, posTile.y + posEggModel.y, posTile.z + posEggModel.z}, ROTATION_AXIS_EGG, ROTATION_ANGLE_EGG, SCALE_EGG, WHITE);
         }
+    }
+    for (auto &eggs: _gameData.get()->getServerEggs()) {
+        if (eggs.getPosition().first != tile.getPosition().first || eggs.getPosition().second != tile.getPosition().second)
+            continue;
+        Vector3 posEggModel = POS_EGG;
+        Vector3 posTile = tile.getPositionIn3DSpace();
+        DrawModelEx(_gameData.get()->getTeams()[0].getEggModel(), (Vector3){posTile.x + posEggModel.x, posTile.y + posEggModel.y, posTile.z + posEggModel.z}, ROTATION_AXIS_EGG, ROTATION_ANGLE_EGG, SCALE_EGG, WHITE);
     }
 }
 
