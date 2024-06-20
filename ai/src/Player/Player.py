@@ -15,6 +15,7 @@ from ai.src.Enum.Action import Action
 from ai.src.Enum.Item import Item
 from ai.src.Player.Inventory import Inventory
 from ai.src.Player.PlayerException import PlayerDeathException
+from ai.src.Utils.Utils import mapRangeOpti
 
 
 
@@ -860,7 +861,7 @@ class Player:
         """
         total : int = 0
 
-        for i in range(len(vision)):
+        for i in mapRangeOpti(len(vision)):
             if vision[i].food > 0:
                 return (True, i)
         return (False, -1)
@@ -877,8 +878,10 @@ class Player:
             truple: bool for found stones, tile's index, list of stones enum
         """
         foundStones : List[Item] = []
-
-        for i, v in enumerate(vision):
+        
+        map = list(enumerate(vision))
+        map[0], map[1] = map[1], map[0]
+        for i, v in map:
             if v.linemate > 0:
                 foundStones.append(Item.LINEMATE)
             if v.deraumere > 0:
