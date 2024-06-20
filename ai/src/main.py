@@ -84,7 +84,7 @@ def main():
 
 if __name__ == "__main__":
     try:
-        main(True)
+        main()
     except Exception as e:
         print(e, file=sys.stderr)
         sys.exit(84)
