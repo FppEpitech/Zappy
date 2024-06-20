@@ -14,6 +14,13 @@ static void create_teams(parsing_t *parsing, app_t *app)
         add_team(app, parsing->names[index], parsing->clientsNb);
 }
 
+static void destroy_error(parsing_t *parsing, app_t *new_app)
+{
+    destroy_game(new_app->game);
+    destroy_parsing(parsing);
+    free(new_app);
+}
+
 app_t *create_app(parsing_t *parsing)
 {
     app_t *new_app = malloc(sizeof(app_t));
@@ -24,9 +31,7 @@ app_t *create_app(parsing_t *parsing)
     new_app->game = create_game(parsing->height,
     parsing->width, parsing->freq);
     if (new_app->server == NULL || new_app->game == NULL) {
-        destroy_game(new_app->game);
-        destroy_parsing(parsing);
-        free(new_app);
+        destroy_error(parsing, new_app);
         return NULL;
     }
     new_app->gui_list = list_new();
