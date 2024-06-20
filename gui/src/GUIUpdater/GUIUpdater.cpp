@@ -544,6 +544,8 @@ void Gui::GUIUpdater::updateTimeUnitRequest(const std::vector<std::string> &data
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
+    if (timeUnit == 0)
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "sgt:" + STR_RED + "Invalid time unit value");
     if (_gameData.get()->getServerTick() != timeUnit) {
         _gameData->setServerTick(timeUnit);
         _gameData.get()->setTimeUnitFromServer(GameData::TimeUnitState::NONE);
@@ -563,6 +565,8 @@ void Gui::GUIUpdater::updateTimeUnitModification(const std::vector<std::string> 
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(error.what());
     }
+    if (timeUnit == 0)
+        throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "sst:" + STR_RED + "Invalid time unit value");
     if (_gameData.get()->getServerTick() != timeUnit) {
         _gameData->setServerTick(timeUnit);
         _gameData.get()->setTimeUnitFromServer(GameData::TimeUnitState::NONE);
