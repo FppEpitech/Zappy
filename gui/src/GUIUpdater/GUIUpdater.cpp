@@ -75,7 +75,7 @@ void Gui::GUIUpdater::updateMapContent(const std::vector<std::string> &data)
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "bct:" + STR_RED + "Invalid tile");
     }
-    _gameData.get()->setnbBCTCommandReceived(_gameData.get()->getnbBCTCommandReceived() + 1);
+    _gameData.get()->setNbBCTCommandReceived(_gameData.get()->getNbBCTCommandReceived() + 1);
 }
 
 void Gui::GUIUpdater::updateTeamNames(const std::vector<std::string> &data)

@@ -244,14 +244,14 @@ class Gui::GameData {
          *
          * @param nb Number of bct command received.
          */
-        void setnbBCTCommandReceived(std::size_t nb);
+        void setNbBCTCommandReceived(std::size_t nb);
 
         /**
          * @brief Get the number of bct command received.
          *
          * @return std::size_t - Number of bct command received.
          */
-        std::size_t getnbBCTCommandReceived();
+        std::size_t getNbBCTCommandReceived() const;
 
         /**
          * @brief Restart the last tick mct command clock.

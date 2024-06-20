@@ -78,7 +78,7 @@ void Gui::Engine::updateMap()
     clock_t currentTick = clock();
     std::pair<std::size_t, std::size_t> mapSize = _gameData.get()->getMapSize();
 
-    if (!(mapSize.first == 0 && mapSize.second == 0) && _gameData.get()->getnbBCTCommandReceived() >= mapSize.first * mapSize.second) {
+    if (!(mapSize.first == 0 && mapSize.second == 0) && _gameData.get()->getNbBCTCommandReceived() >= mapSize.first * mapSize.second) {
         if (20 / _gameData->getServerTick() >= 2 && (float)(currentTick - _gameData->getLastTickMctCommand()) / CLOCKS_PER_SEC > 20 / _gameData->getServerTick()) {
             sendUpdateMapMessage();
         } else if (20 / _gameData->getServerTick() < 2 && (float)(currentTick - _gameData->getLastTickMctCommand()) / CLOCKS_PER_SEC > 2) {
@@ -90,6 +90,6 @@ void Gui::Engine::updateMap()
 void Gui::Engine::sendUpdateMapMessage()
 {
     _network.get()->sendMessageServer("mct\n");
-    _gameData.get()->setnbBCTCommandReceived(0);
+    _gameData.get()->setNbBCTCommandReceived(0);
     _gameData.get()->restartLastTickMctCommand();
 }

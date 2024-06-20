@@ -208,12 +208,12 @@ void Gui::GameData::removeServerEgg(size_t id)
     }
 }
 
-std::size_t Gui::GameData::getnbBCTCommandReceived()
+std::size_t Gui::GameData::getNbBCTCommandReceived() const
 {
     return _nbBCTCommandReceived;
 }
 
-void Gui::GameData::setnbBCTCommandReceived(std::size_t nb)
+void Gui::GameData::setNbBCTCommandReceived(std::size_t nb)
 {
     _nbBCTCommandReceived = nb;
 }

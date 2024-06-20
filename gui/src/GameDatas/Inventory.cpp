@@ -103,9 +103,8 @@ void Gui::Inventory::addResource(std::size_t resource, std::size_t quantity)
         _food += quantity;
         return;
     }
-    if (resource >= 1 && resource <= 6) {
+    if (resource >= 1 && resource <= 6)
         _ressources[resource - 1] += quantity;
-    }
 }
 
 void Gui::Inventory::removeResource(std::size_t resource, std::size_t quantity)
@@ -114,7 +113,6 @@ void Gui::Inventory::removeResource(std::size_t resource, std::size_t quantity)
         _food = (_food < quantity) ? 0 : _food - quantity;
         return;
     }
-    if (resource >= 1 && resource <= 6) {
+    if (resource >= 1 && resource <= 6)
         _ressources[resource - 1] = (_ressources[resource - 1] < quantity) ? 0 : _ressources[resource - 1] - quantity;
-    }
 }
