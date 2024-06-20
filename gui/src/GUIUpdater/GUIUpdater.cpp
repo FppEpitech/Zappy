@@ -10,7 +10,7 @@
 #include "Error/Error.hpp"
 #include "GUIUpdater/GUIUpdater.hpp"
 
-Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData, std::shared_ptr<Network> network) : _gameData(gameData), _network(network), _colorIndex(0) {}
+Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData, std::shared_ptr<INetwork> network) : _gameData(gameData), _network(network), _colorIndex(0) {}
 
 void Gui::GUIUpdater::update(const std::string &command, const std::vector<std::string> &data)
 {
@@ -332,7 +332,7 @@ void Gui::GUIUpdater::updatePlayerEndIncantation(const std::vector<std::string> 
                 player.setState(Gui::Player::PlayerState::IDLE);
                 for (size_t i = 0; i < team.getPlayers().size(); i++) {
                     if (team.getPlayers()[i].getPosition().first == player.getPosition().first && team.getPlayers()[i].getPosition().second == player.getPosition().second)
-                        _network->sendMessageServer("plv " + std::to_string(player.getId()) + "\n");
+                        _network.get()->sendMessageServer("plv " + std::to_string(player.getId()) + "\n");
                 }
             }
         }
@@ -406,7 +406,7 @@ void Gui::GUIUpdater::updatePlayerRessourceCollecting(const std::vector<std::str
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
                 player.setState(Gui::Player::PlayerState::COLLECT);
-                _network->sendMessageServer("pin " + std::to_string(player.getId()) + "\n");
+                _network.get()->sendMessageServer("pin " + std::to_string(player.getId()) + "\n");
             }
         }
     }

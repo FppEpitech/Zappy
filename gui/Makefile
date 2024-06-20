@@ -10,6 +10,7 @@ MAIN 		=	src/main.cpp
 
 SRC			=	src/Error/Error.cpp \
 				\
+				src/Network/ANetwork.cpp \
 				src/Network/Network.cpp \
 				\
 				src/Engine/Engine.cpp \

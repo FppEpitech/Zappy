@@ -11,33 +11,9 @@
 #include <unistd.h>
 #include <iostream>
 
-Gui::Network::Network(int port, const std::string& hostName)
+Gui::Network::Network(int port, const std::string &hostName) : ANetwork(port, hostName)
 {
-    setPort(port);
-    setHostName(hostName);
     _isConnected = false;
-}
-
-void Gui::Network::setPort(int port)
-{
-    if (port < MIN_PORT || port > MAX_PORT)
-        throw Errors::NetworkException("Port should be in range 1 to 65535.");
-    _port = port;
-}
-
-void Gui::Network::setHostName(const std::string& hostName)
-{
-    _hostName = hostName;
-}
-
-int Gui::Network::getPort() const
-{
-    return _port;
-}
-
-std::string Gui::Network::getHostName() const
-{
-    return _hostName;
 }
 
 void Gui::Network::connectToServer()
@@ -97,7 +73,7 @@ const std::string Gui::Network::readInfoServer()
     return data;
 }
 
-void Gui::Network::sendMessageServer(const std::string& message)
+void Gui::Network::sendMessageServer(const std::string &message)
 {
     if (FD_ISSET(_serverFd, &_writeFd)) {
         write(_serverFd, message.c_str(), message.length());
