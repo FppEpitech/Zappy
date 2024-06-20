@@ -5,6 +5,7 @@
 ** Network
 */
 
+#include "Config.hpp"
 #include "Colors.hpp"
 #include "Network/Network.hpp"
 
@@ -14,6 +15,11 @@
 Gui::Network::Network(int port, const std::string &hostName) : ANetwork(port, hostName)
 {
     _isConnected = false;
+}
+
+Gui::Network::~Network()
+{
+    close(_serverFd);
 }
 
 void Gui::Network::connectToServer()
@@ -70,6 +76,8 @@ const std::string Gui::Network::readInfoServer()
             break;
         data.append(&buffer, 1);
     }
+    if (len == 0)
+        return SERVER_DOWN_MESSAGE;
     return data;
 }
 

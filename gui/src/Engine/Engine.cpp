@@ -38,6 +38,11 @@ void Gui::Engine::listenServer()
 
     if (command == "")
         return;
+    if (command == SERVER_DOWN_MESSAGE) {
+        std::cout << STR_RED << SERVER_DOWN_MESSAGE << STR_RESET << std::endl;
+        _gameData.get()->setIsEndGame(true);
+        return;
+    }
     try {
         std::vector<std::string> arguments = _parser->parse(command);
         std::istringstream stream(command);
@@ -53,6 +58,8 @@ void Gui::Engine::listenServer()
 
 void Gui::Engine::sendMessageUpdate()
 {
+    updateMap();
+
     clock_t currentTick = clock();
 
     if ((int)(_gameData->getServerTick()) == NO_TICK && (float)(currentTick - _gameData->getLastTick()) / CLOCKS_PER_SEC < 1)
@@ -62,7 +69,6 @@ void Gui::Engine::sendMessageUpdate()
     _gameData->restartLastTick();
 
     _network.get()->sendMessageServer("sgt\n");
-    _network.get()->sendMessageServer("mct\n");
     for (auto &team : _gameData.get()->getTeams()) {
         for (auto &player : team.getPlayers()) {
             _network.get()->sendMessageServer("ppo " + std::to_string(player.getId()) + "\n");
@@ -72,4 +78,25 @@ void Gui::Engine::sendMessageUpdate()
         _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() + 1) + "\n");
     else if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::DECREASE)
         _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() - 1) + "\n");
+}
+
+void Gui::Engine::updateMap()
+{
+    clock_t currentTick = clock();
+    std::pair<std::size_t, std::size_t> mapSize = _gameData.get()->getMapSize();
+
+    if (!(mapSize.first == 0 && mapSize.second == 0) && _gameData.get()->getNbBCTCommandReceived() >= mapSize.first * mapSize.second) {
+        if (TIME_UNIT_MAP_UPDATE / _gameData->getServerTick() >= 2 && (float)(currentTick - _gameData->getLastTickMctCommand()) / CLOCKS_PER_SEC > TIME_UNIT_MAP_UPDATE / _gameData->getServerTick()) {
+            sendUpdateMapMessage();
+        } else if (TIME_UNIT_MAP_UPDATE / _gameData->getServerTick() < 2 && (float)(currentTick - _gameData->getLastTickMctCommand()) / CLOCKS_PER_SEC > 2) {
+            sendUpdateMapMessage();
+        }
+    }
+}
+
+void Gui::Engine::sendUpdateMapMessage()
+{
+    _network.get()->sendMessageServer("mct\n");
+    _gameData.get()->setNbBCTCommandReceived(0);
+    _gameData.get()->restartLastTickMctCommand();
 }

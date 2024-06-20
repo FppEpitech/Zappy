@@ -13,10 +13,10 @@
 static void check_position_egg(team_t *team,
     list_node_t *egg_temp, vector2i_t *ai_position, app_t *app)
 {
-    if (egg_temp->data.coord->x == ai_position->x &&
-    egg_temp->data.coord->y == ai_position->y) {
-        list_delete(team->eggs_list, egg_temp);
+    if (egg_temp->data.egg->pos->x == ai_position->x &&
+    egg_temp->data.egg->pos->y == ai_position->y) {
         edi_command(app, egg_temp->data.egg->id);
+        list_delete(team->eggs_list, egg_temp);
     }
 }
 

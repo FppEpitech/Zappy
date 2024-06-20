@@ -75,6 +75,7 @@ void Gui::GUIUpdater::updateMapContent(const std::vector<std::string> &data)
     } catch (const std::exception &error) {
         throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "bct:" + STR_RED + "Invalid tile");
     }
+    _gameData.get()->setNbBCTCommandReceived(_gameData.get()->getNbBCTCommandReceived() + 1);
 }
 
 void Gui::GUIUpdater::updateTeamNames(const std::vector<std::string> &data)
@@ -382,6 +383,7 @@ void Gui::GUIUpdater::updatePlayerRessourceDropping(const std::vector<std::strin
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
                 player.setState(Gui::Player::PlayerState::DROP);
+                _gameData.get()->getTile(player.getPosition().first, player.getPosition().second).inventory.addResource(args[1], 1);
                 return;
             }
         }
@@ -410,6 +412,7 @@ void Gui::GUIUpdater::updatePlayerRessourceCollecting(const std::vector<std::str
             if (player.getId() == args[0]) {
                 player.setState(Gui::Player::PlayerState::COLLECT);
                 _network.get()->sendMessageServer("pin " + std::to_string(player.getId()) + "\n");
+                _gameData.get()->getTile(player.getPosition().first, player.getPosition().second).inventory.removeResource(args[1], 1);
                 return;
             }
         }

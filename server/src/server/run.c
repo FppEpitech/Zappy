@@ -110,6 +110,7 @@ static int game_run(int result_select, app_t *app)
             handle_client_write(app, fd);
         }
     } else {
+        spawn_ressources(app);
         treat_command(app);
         treat_stuck(app);
         check_die(app);
