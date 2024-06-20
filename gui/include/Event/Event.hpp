@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Config.hpp"
+#include "Event/AEvent.hpp"
 #include "Render/Render.hpp"
 
 #include <functional>
@@ -22,7 +23,7 @@ namespace Gui {
     class Event;
 };
 
-class Gui::Event {
+class Gui::Event : public Gui::AEvent {
 
     public:
 
@@ -44,24 +45,7 @@ class Gui::Event {
          */
         void listen();
 
-        /**
-         * @brief Set the Render object.
-         *
-         * @param render Render class.
-         */
-        void setRender(std::shared_ptr<Render> render);
-
-        /**
-         * @brief Set the GameData object.
-         *
-         * @param gameData GameData class.
-         */
-        void setGameData(std::shared_ptr<GameData> gameData);
-
     private:
-
-        std::shared_ptr<Render>         _render;    // Render class to draw scene.
-        std::shared_ptr<GameData>       _gameData;  // GameData class to contain scene.
 
         /**
          * @brief Map for events by down key.
