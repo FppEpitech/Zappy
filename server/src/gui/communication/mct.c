@@ -26,12 +26,20 @@ static char *get_string(app_t *app, int x, int y)
     return response;
 }
 
+static void free_tile_map(char *tile, char *map)
+{
+    free(tile);
+    free(map);
+}
+
 void mct_response(gui_t *gui, app_t *app, char *line)
 {
     char *tile = NULL;
     char *map = strdup("");
     char *final_response = NULL;
 
+    if (!map)
+        return;
     if (strlen(line) != LEN_COMMAND) {
         suc_command(gui);
         return;
@@ -40,8 +48,7 @@ void mct_response(gui_t *gui, app_t *app, char *line)
         for (size_t x = 0; x < app->game->width; x++) {
             tile = get_string(app, x, y);
             final_response = format_string("%s%s", map, tile);
-            free(tile);
-            free(map);
+            free_tile_map(tile, map);
             map = strdup(final_response);
             free(final_response);
         }
