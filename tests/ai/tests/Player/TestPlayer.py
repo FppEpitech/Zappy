@@ -5,6 +5,7 @@
 ## TestPlayer
 ##
 
+from ai.src.Enum.Role import Role
 from ai.src.Enum.Action import Action
 from ai.src.Player.Player import Player
 from ai.src.Player.Inventory import Inventory
@@ -88,7 +89,7 @@ def testPlayer():
 
 def testPlayerConstructor():
     try:
-        player = Player(True)
+        player = Player()
         assert player.vision == []
         assert player.inventory == Inventory()
         assert player.broadcastReceived == []
@@ -102,20 +103,20 @@ def testPlayerConstructor():
         assert player.currentCallback == None
         assert player.currentlyElevating == False
         assert player.unusedSlots == 0
-        assert player.isLeader == True
+        assert player.isLeader == Role.UNDEFINED
     except Exception as e:
         raise Exception("Test failed : " + str(e))
 
 def testPlayerString():
     try:
-        player = Player(True)
+        player = Player()
         assert str(player) == "Level: 1, Inventory: [food 10, linemate 0, deraumere 0, sibur 0, mendiane 0, phiras 0, thystame 0, player 0], Current action: Action.NONE, Current command: , Vision: [], Broadcast received: [], Ejection received: []"
     except Exception as _:
         raise Exception("Test failed")
 
 def testPlayerMoveForward():
     try:
-        player = Player(True)
+        player = Player()
         player.moveForward()
         assert player.actions == [Action.FORWARD]
         assert player.commands == ["Forward"]
@@ -125,7 +126,7 @@ def testPlayerMoveForward():
 
 def testPlayerTurnRight():
     try:
-        player = Player(True)
+        player = Player()
         player.turnRight()
         assert player.actions == [Action.RIGHT]
         assert player.commands == ["Right"]
@@ -135,7 +136,7 @@ def testPlayerTurnRight():
 
 def testPlayerTurnLeft():
     try:
-        player = Player(True)
+        player = Player()
         player.turnLeft()
         assert player.actions == [Action.LEFT]
         assert player.commands == ["Left"]
@@ -145,7 +146,7 @@ def testPlayerTurnLeft():
 
 def testPlayerLook():
     try:
-        player = Player(True)
+        player = Player()
         player.look()
         assert player.actions == [Action.LOOK]
         assert player.commands == ["Look"]
@@ -155,7 +156,7 @@ def testPlayerLook():
 
 def testPlayerCmdInventory():
     try:
-        player = Player(True)
+        player = Player()
         player.cmdInventory()
         assert player.actions == [Action.INVENTORY]
         assert player.commands == ["Inventory"]
@@ -165,7 +166,7 @@ def testPlayerCmdInventory():
 
 def testPlayerBroadcast():
     try:
-        player = Player(True)
+        player = Player()
         player.broadcast("test")
         assert player.actions == [Action.BROADCAST]
         assert player.commands == ["Broadcast \"test\""]
@@ -175,7 +176,7 @@ def testPlayerBroadcast():
 
 def testPlayerConnectNbr():
     try:
-        player = Player(True)
+        player = Player()
         player.connectNbr()
         assert player.actions == [Action.CONNECT_NBR]
         assert player.commands == ["Connect_nbr"]
@@ -185,7 +186,7 @@ def testPlayerConnectNbr():
 
 def testPlayerFork():
     try:
-        player = Player(True)
+        player = Player()
         player.fork()
         assert player.actions == [Action.FORK]
         assert player.commands == ["Fork"]
@@ -195,7 +196,7 @@ def testPlayerFork():
 
 def testPlayerEject():
     try:
-        player = Player(True)
+        player = Player()
         player.eject()
         assert player.actions == [Action.EJECT]
         assert player.commands == ["Eject"]
@@ -205,7 +206,7 @@ def testPlayerEject():
 
 def testPlayerTake():
     try:
-        player = Player(True)
+        player = Player()
         player.take("food")
         assert player.actions == [Action.TAKE]
         assert player.commands == ["Take food"]
@@ -215,7 +216,7 @@ def testPlayerTake():
 
 def testPlayerSet():
     try:
-        player = Player(True)
+        player = Player()
         player.set("food")
         assert player.actions == [Action.SET]
         assert player.commands == ["Set food"]
@@ -225,7 +226,7 @@ def testPlayerSet():
 
 def testPlayerIncantation():
     try:
-        player = Player(True)
+        player = Player()
         player.incantation()
         assert player.actions == [Action.INCANTATION]
         assert player.commands == ["Incantation"]
@@ -235,7 +236,7 @@ def testPlayerIncantation():
 
 def testPlayerNone():
     try:
-        player = Player(True)
+        player = Player()
         player.none()
         assert player.actions == [Action.NONE]
         assert player.commands == [""]
@@ -245,7 +246,7 @@ def testPlayerNone():
 
 def testPlayerUpdateVision():
     try:
-        player = Player(True)
+        player = Player()
         player.updateVision("[player food food, player, player]")
         assert player.vision[0] == Inventory(2, 0, 0, 0, 0, 0, 0, 1)
         assert player.vision[1] == Inventory(0, 0, 0, 0, 0, 0, 0, 1)
@@ -255,7 +256,7 @@ def testPlayerUpdateVision():
 
 def testPlayerUpdateInventory():
     try:
-        player = Player(True)
+        player = Player()
         player.updateInventory("[food 100, linemate 5, deraumere 6, sibur 7, mendiane 8, phiras 9, thystame 10]")
         assert player.inventory.food == 100
         assert player.inventory.linemate == 5
@@ -269,7 +270,7 @@ def testPlayerUpdateInventory():
 
 def testPlayerUpdateBroadcast():
     try:
-        player = Player(True)
+        player = Player()
         player.updateBroadcastReceived("message 5, \"text\"")
         assert player.broadcastReceived == [(5, "text")]
 
@@ -280,7 +281,7 @@ def testPlayerUpdateBroadcast():
 
 def testPlayerUpdateEjection():
     try:
-        player = Player(True)
+        player = Player()
         player.updateEjectionReceived("eject: 5")
         assert player.ejectionReceived == [5]
     except Exception as _:
@@ -288,7 +289,7 @@ def testPlayerUpdateEjection():
 
 def testPlayerUpdateLevel():
     try:
-        player = Player(True)
+        player = Player()
         player.updateLevel(5)
         assert player.level == 5
     except Exception as _:
@@ -296,7 +297,7 @@ def testPlayerUpdateLevel():
 
 def testPlayerHandleElevation():
     try:
-        player = Player(True)
+        player = Player()
         assert player.handleElevation("Elevation underway") == True
         assert player.currentlyElevating == True
         assert player.handleElevation("Current level: 5") == False
@@ -309,7 +310,7 @@ def testPlayerHandleElevation():
 
 def testPlayerHasSomethingHappened():
     try:
-        player = Player(True)
+        player = Player()
         assert player.hasSomethingHappened("nothing") == False
 
         imDead = False
@@ -326,7 +327,7 @@ def testPlayerHasSomethingHappened():
 
 def testPlayerHandleResponse():
     try:
-        player = Player(True)
+        player = Player()
         player.handleResponse("eject: 5")
         assert player.ejectionReceived == [5]
 

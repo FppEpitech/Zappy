@@ -13,7 +13,7 @@
 #include <iostream>
 #include <sstream>
 
-Gui::Engine::Engine(std::shared_ptr<Network> network) : _network(network), _gameData(std::make_shared<GameData>()), _guiUpdater(_gameData, _network)
+Gui::Engine::Engine(std::shared_ptr<INetwork> network) : _network(network), _gameData(std::make_shared<GameData>()), _guiUpdater(_gameData, _network)
 {
     _render = std::make_shared<Render>(_gameData);
     _event.setRender(_render);

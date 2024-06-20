@@ -8,7 +8,9 @@
 import os
 import sys
 import uuid
+import threading
 
+from ai.src.Enum.Role import Role
 from ai.src.Network.API import API
 from ai.src.Player.Player import Player, Action, Mode
 from ai.src.Network.APIException import APIException
@@ -36,7 +38,7 @@ class AI:
     """
 
 
-    def __init__(self, host, port, teamName, isLeader=False):
+    def __init__(self, host, port, teamName):
         """
         Constructor of the AI class
         Assign the API, the player and the team name
@@ -50,8 +52,55 @@ class AI:
                 the name of the team
         """
         self.api = API(host, port)
-        self.player = Player(isLeader)
+        self.player = Player()
         self.teamName = teamName
+        self.threads = []
+
+
+    def serverCommunicationInThread(self):
+        """
+        Handle the communication with the server in a thread
+        """
+        while True:
+            if self.player.currentMode == Mode.REGROUP and self.player.isLeader == Role.SLAVE:
+                break
+            for _ in range(0, len(self.player.callbacks)):
+                self.player.currentAction = self.player.actions[0]
+                self.player.currentCommand = self.player.commands[0]
+                self.player.currentCallback = self.player.callbacks[0]
+                self.api.sendData(self.player.currentCommand)
+                while self.player.currentAction != Action.NONE:
+                    responses = self.api.receiveData().split("\n")
+                    for response in responses:
+                        if response == '':
+                            continue
+                        self.player.handleResponse(response)
+                self.player.actions.pop(0)
+                self.player.commands.pop(0)
+                self.player.callbacks.pop(0)
+        print("Regrouping Start", flush=True, file=sys.stderr)
+        while True:
+            responses = self.api.receiveData(0.1)
+            if responses is not None :
+                responses = responses.split("\n")
+                for response in responses:
+                    if response == '':
+                        continue
+                    self.player.handleResponse(response)
+            for _ in range(0, len(self.player.callbacks)):
+                self.player.currentAction = self.player.actions[0]
+                self.player.currentCommand = self.player.commands[0]
+                self.player.currentCallback = self.player.callbacks[0]
+                self.api.sendData(self.player.currentCommand)
+                while self.player.currentAction != Action.NONE:
+                    responses = self.api.receiveData().split("\n")
+                    for response in responses:
+                        if response == '':
+                            continue
+                        self.player.handleResponse(response)
+                self.player.actions.pop(0)
+                self.player.commands.pop(0)
+                self.player.callbacks.pop(0)
 
 
     def run(self):
@@ -64,11 +113,33 @@ class AI:
         and handle it
         """
         fileName = ""
-        if self.player.isLeader == False:
-            fileName = createLogs(self.player.isLeader)
+        fileName = createLogs()
         self.api.connect()
         self.api.initConnection(self.teamName, fileName)
-        if self.player.isLeader:
+
+        thread = threading.Thread(target=self.serverCommunicationInThread)
+        thread.start()
+        self.threads.append(thread)
+
+        self.player.broadcast("IsLeader?")
+
+        while self.player.isLeader == Role.UNDEFINED:
+            if len(self.player.callbacks) == 0:
+                self.player.cmdInventory()
+            if self.threads[0].is_alive() == False:
+                break
+            if self.player.inventory.food <= 8:
+                for msg in self.player.broadcastReceived:
+                    if msg[1] == "Yes":
+                        print("I'm a slave", flush=True, file=sys.stderr)
+                        self.player.isLeader = Role.SLAVE
+                        self.player.broadcastReceived.remove(msg)
+                        break
+                if self.player.isLeader == Role.UNDEFINED:
+                    print("I'm a leader", flush=True, file=sys.stderr)
+                    self.player.isLeader = Role.LEADER
+
+        if self.player.isLeader == Role.LEADER:
             self.player.completeTeam()
 
         while True:
@@ -76,48 +147,11 @@ class AI:
                 if self.player.currentMode != Mode.NONE:
                     print("Choose action", flush=True)
                 self.player.chooseAction()
-
-            if self.player.currentMode == Mode.REGROUP and self.player.isLeader == False:
+            if self.threads[0].is_alive() == False:
                 break
-
-            for _ in range(0, len(self.player.actions)):
-                self.player.currentAction = self.player.actions[0]
-                self.player.currentCommand = self.player.commands[0]
-                self.player.currentCallback = self.player.callbacks[0]
-                self.api.sendData(self.player.currentCommand)
-                while self.player.currentAction != Action.NONE:
-                    responses = self.api.receiveData().split("\n")
-                    for response in responses:
-                        if response == '':
-                            continue
-                        self.player.handleResponse(response)
-                self.player.actions.pop(0)
-                self.player.commands.pop(0)
-                self.player.callbacks.pop(0)
-        print("Regrouping Start", flush=True)
-        while True:
-            responses = self.api.receiveData(0.1)
-            if responses is not None :
-                responses = responses.split("\n")
-                for response in responses:
-                    if response == '':
-                        continue
-                    self.player.handleResponse(response)
-            self.player.chooseAction()
-            for _ in range(0, len(self.player.actions)):
-                self.player.currentAction = self.player.actions[0]
-                self.player.currentCommand = self.player.commands[0]
-                self.player.currentCallback = self.player.callbacks[0]
-                self.api.sendData(self.player.currentCommand)
-                while self.player.currentAction != Action.NONE:
-                    responses = self.api.receiveData().split("\n")
-                    for response in responses:
-                        if response == '':
-                            continue
-                        self.player.handleResponse(response)
-                self.player.actions.pop(0)
-                self.player.commands.pop(0)
-                self.player.callbacks.pop(0)
+        for thread in self.threads:
+            thread.join()
+        self.api.close()
 
 def forkAI():
     """
@@ -135,16 +169,12 @@ def forkAI():
     return pid
 
 
-def createLogs(isLeader):
+def createLogs():
     """
     Create the logs
     """
     myuuid = uuid.uuid4()
-    fileName = ""
-    if isLeader:
-        fileName = f"leader_{myuuid}.log"
-    else:
-        fileName = f"follower_{myuuid}.log"
+    fileName = f"{myuuid}.log"
     if not os.path.exists("logs"):
         os.makedirs("logs")
     sys.stdout = open("logs/stdout_" + fileName, "w")
