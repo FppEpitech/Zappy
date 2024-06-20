@@ -10,7 +10,7 @@
 #include "Error/Error.hpp"
 #include "GUIUpdater/GUIUpdater.hpp"
 
-Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData, std::shared_ptr<INetwork> network) : _gameData(gameData), _network(network), _colorIndex(0) {}
+Gui::GUIUpdater::GUIUpdater(std::shared_ptr<GameData> gameData, std::shared_ptr<INetwork> network) : AGUIUpdater(gameData, network), _colorIndex(0) {}
 
 void Gui::GUIUpdater::update(const std::string &command, const std::vector<std::string> &data)
 {
@@ -120,16 +120,12 @@ void Gui::GUIUpdater::updateTeamMember(const std::vector<std::string> &data)
             player.setState(Gui::Player::BORN);
             team.addPlayer(player);
             for (auto &egg : team.getEggs()) {
-                if (egg.getPosition() == std::make_pair(args[1], args[2])) {
+                if (egg.getPosition() == std::make_pair(args[1], args[2]))
                     team.removeEgg(egg.getId());
-                    break;
-                }
             }
             for (auto &egg : _gameData.get()->getServerEggs()) {
-                if (egg.getPosition() == std::make_pair(args[1], args[2])) {
+                if (egg.getPosition() == std::make_pair(args[1], args[2]))
                     _gameData.get()->removeServerEgg(egg.getId());
-                    break;
-                }
             }
         }
     }
@@ -196,6 +192,7 @@ void Gui::GUIUpdater::updatePlayerLevel(const std::vector<std::string> &data)
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
                 player.setLevel(args[1]);
+                return;
             }
         }
     }
@@ -223,6 +220,7 @@ void Gui::GUIUpdater::updatePlayerInventory(const std::vector<std::string> &data
             if (player.getId() == args[0]) {
                 player.inventory = Gui::Inventory(args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
                 player.setPosition(std::make_pair(args[1], args[2]));
+                return;
             }
         }
     }
@@ -273,6 +271,7 @@ void Gui::GUIUpdater::updatePlayerBroadcast(const std::vector<std::string> &data
             if (player.getId() == id) {
                 player.setState(Gui::Player::PlayerState::BROADCAST);
                 player.setBroadcast(data[1]);
+                return;
             }
         }
     }
@@ -354,8 +353,10 @@ void Gui::GUIUpdater::updatePlayerEggLaying(const std::vector<std::string> &data
     }
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            if (player.getId() == id)
+            if (player.getId() == id) {
                 player.setState(Gui::Player::PlayerState::LAY_EGG);
+                return;
+            }
         }
     }
 }
@@ -379,8 +380,10 @@ void Gui::GUIUpdater::updatePlayerRessourceDropping(const std::vector<std::strin
         throw Gui::Errors::GuiUpdaterException(std::string(STR_YELLOW) + "pdr:" + STR_RED + "Invalid argument number");
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            if (player.getId() == args[0])
+            if (player.getId() == args[0]) {
                 player.setState(Gui::Player::PlayerState::DROP);
+                return;
+            }
         }
     }
 }
@@ -407,6 +410,7 @@ void Gui::GUIUpdater::updatePlayerRessourceCollecting(const std::vector<std::str
             if (player.getId() == args[0]) {
                 player.setState(Gui::Player::PlayerState::COLLECT);
                 _network.get()->sendMessageServer("pin " + std::to_string(player.getId()) + "\n");
+                return;
             }
         }
     }
@@ -427,8 +431,10 @@ void Gui::GUIUpdater::updatePlayerDeath(const std::vector<std::string> &data)
     }
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
-            if (player.getId() == id)
+            if (player.getId() == id) {
                 player.setState(Gui::Player::PlayerState::DEAD);
+                return;
+            }
         }
     }
 }
@@ -462,7 +468,7 @@ void Gui::GUIUpdater::updateEggLaidByPlayer(const std::vector<std::string> &data
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[1]) {
                 team.addEgg(Gui::Egg(args[0], team.getName(), std::make_pair(args[2], args[3])));
-                break;
+                return;
             }
         }
     }
@@ -483,8 +489,10 @@ void Gui::GUIUpdater::updatePlayerBorn(const std::vector<std::string> &data)
     }
     for (auto &team : _gameData->getTeams()) {
         for (size_t i = 0; i < team.getPlayers().size(); i++) {
-            if (team.getPlayers()[i].getId() == id)
+            if (team.getPlayers()[i].getId() == id) {
                 team.getPlayer(id).get()->setState(Gui::Player::PlayerState::BORN);
+                return;
+            }
         }
     }
 }
@@ -507,7 +515,7 @@ void Gui::GUIUpdater::updateEggDeath(const std::vector<std::string> &data)
             if (egg.getId() == id) {
                 egg.setState(Gui::Egg::EggState::DEAD);
                 team.removeEgg(id);
-                break;
+                return;
             }
         }
     }
@@ -515,7 +523,7 @@ void Gui::GUIUpdater::updateEggDeath(const std::vector<std::string> &data)
         if (egg.getId() == id) {
             egg.setState(Gui::Egg::EggState::DEAD);
             _gameData.get()->removeServerEgg(id);
-            break;
+            return;
         }
     }
 }
