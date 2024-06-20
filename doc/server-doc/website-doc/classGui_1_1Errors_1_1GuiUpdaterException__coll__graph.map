@@ -1,7 +1,0 @@
-<map id="Gui::Errors::GuiUpdaterException" name="Gui::Errors::GuiUpdaterException">
-<area shape="rect" id="node1" title="Error class for GUIUpdater errors." alt="" coords="5,299,241,324"/>
-<area shape="rect" id="node2" href="$classGui_1_1Errors_1_1Error.html" title="Base class for argument&#45;related errors." alt="" coords="59,225,188,251"/>
-<area shape="rect" id="node3" href="$classGui_1_1Errors_1_1AError.html" title="Base class for custom error types. This class is derived from the IError interface and provides a com..." alt="" coords="54,152,193,177"/>
-<area shape="rect" id="node4" href="$classGui_1_1Errors_1_1IError.html" title=" " alt="" coords="57,79,190,104"/>
-<area shape="rect" id="node5" title=" " alt="" coords="66,5,181,31"/>
-</map>

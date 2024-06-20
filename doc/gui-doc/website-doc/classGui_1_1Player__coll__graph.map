@@ -1,4 +1,0 @@
-<map id="Gui::Player" name="Gui::Player">
-<area shape="rect" id="node1" title=" " alt="" coords="16,93,109,119"/>
-<area shape="rect" id="node2" href="$classGui_1_1Inventory.html" title=" " alt="" coords="5,5,120,31"/>
-</map>

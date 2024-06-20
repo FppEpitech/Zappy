@@ -24,4 +24,4 @@ logs/*.log
 doc/doxygen/html
 doc/doxygen/latex
 website-doc/**
-!website-doc/**/.gitkeep
+!website-doc/.gitkeep
