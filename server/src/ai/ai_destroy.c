@@ -22,7 +22,8 @@ static void destroy_egg(list_t *egg_list)
     list_node_t *temp = egg_list->first;
 
     while (temp) {
-        free(temp->data.coord);
+        free(temp->data.egg->pos);
+        free(temp->data.egg);
         temp = temp->next;
     }
 }

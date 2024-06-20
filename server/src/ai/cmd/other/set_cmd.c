@@ -12,7 +12,7 @@
 
 static bool set_food(app_t *app, ia_t *ai, char *ressource)
 {
-    char *reply = format_string("ok\n");
+    char *reply = NULL;
     int ai_x = ai->position->x;
     int ai_y = ai->position->y;
 
@@ -20,6 +20,7 @@ static bool set_food(app_t *app, ia_t *ai, char *ressource)
         if (ai->inventory->food > 0) {
             ai->inventory->food -= 1;
             app->game->map[ai_y][ai_x].food += 1;
+            reply = format_string("ok\n");
             add_message(ai->list_messages, reply);
             pdr_command(app, ai->fd, FOOD_INDEX);
             return true;
@@ -30,7 +31,7 @@ static bool set_food(app_t *app, ia_t *ai, char *ressource)
 
 static bool set_linemate(app_t *app, ia_t *ai, char *ressource)
 {
-    char *reply = format_string("ok\n");
+    char *reply = NULL;
     int ai_x = ai->position->x;
     int ai_y = ai->position->y;
 
@@ -38,6 +39,7 @@ static bool set_linemate(app_t *app, ia_t *ai, char *ressource)
         if (ai->inventory->linemate > 0) {
             ai->inventory->linemate -= 1;
             app->game->map[ai_y][ai_x].linemate += 1;
+            reply = format_string("ok\n");
             add_message(ai->list_messages, reply);
             pdr_command(app, ai->fd, LINEMATE_INDEX);
             return true;
@@ -48,7 +50,7 @@ static bool set_linemate(app_t *app, ia_t *ai, char *ressource)
 
 static bool set_deraumere(app_t *app, ia_t *ai, char *ressource)
 {
-    char *reply = format_string("ok\n");
+    char *reply = NULL;
     int ai_x = ai->position->x;
     int ai_y = ai->position->y;
 
@@ -56,6 +58,7 @@ static bool set_deraumere(app_t *app, ia_t *ai, char *ressource)
         if (ai->inventory->deraumere > 0) {
             ai->inventory->deraumere -= 1;
             app->game->map[ai_y][ai_x].deraumere += 1;
+            reply = format_string("ok\n");
             add_message(ai->list_messages, reply);
             pdr_command(app, ai->fd, DERAUMERE_INDEX);
             return true;
@@ -66,7 +69,7 @@ static bool set_deraumere(app_t *app, ia_t *ai, char *ressource)
 
 static bool set_sibur(app_t *app, ia_t *ai, char *ressource)
 {
-    char *reply = format_string("ok\n");
+    char *reply = NULL;
     int ai_x = ai->position->x;
     int ai_y = ai->position->y;
 
@@ -74,6 +77,7 @@ static bool set_sibur(app_t *app, ia_t *ai, char *ressource)
         if (ai->inventory->sibur > 0) {
             ai->inventory->sibur -= 1;
             app->game->map[ai_y][ai_x].sibur += 1;
+            reply = format_string("ok\n");
             add_message(ai->list_messages, reply);
             pdr_command(app, ai->fd, SIBUR_INDEX);
             return true;
@@ -84,7 +88,7 @@ static bool set_sibur(app_t *app, ia_t *ai, char *ressource)
 
 static bool set_mendiane(app_t *app, ia_t *ai, char *ressource)
 {
-    char *reply = format_string("ok\n");
+    char *reply = NULL;
     int ai_x = ai->position->x;
     int ai_y = ai->position->y;
 
@@ -92,6 +96,7 @@ static bool set_mendiane(app_t *app, ia_t *ai, char *ressource)
         if (ai->inventory->mendiane > 0) {
             ai->inventory->mendiane -= 1;
             app->game->map[ai_y][ai_x].mendiane += 1;
+            reply = format_string("ok\n");
             add_message(ai->list_messages, reply);
             pdr_command(app, ai->fd, MENDIANE_INDEX);
             return true;
@@ -102,7 +107,7 @@ static bool set_mendiane(app_t *app, ia_t *ai, char *ressource)
 
 static bool set_phiras(app_t *app, ia_t *ai, char *ressource)
 {
-    char *reply = format_string("ok\n");
+    char *reply = NULL;
     int ai_x = ai->position->x;
     int ai_y = ai->position->y;
 
@@ -110,6 +115,7 @@ static bool set_phiras(app_t *app, ia_t *ai, char *ressource)
         if (ai->inventory->phiras > 0) {
             ai->inventory->phiras -= 1;
             app->game->map[ai_y][ai_x].phiras += 1;
+            reply = format_string("ok\n");
             add_message(ai->list_messages, reply);
             pdr_command(app, ai->fd, PHIRAS_INDEX);
             return true;
@@ -120,7 +126,7 @@ static bool set_phiras(app_t *app, ia_t *ai, char *ressource)
 
 static bool set_thystame(app_t *app, ia_t *ai, char *ressource)
 {
-    char *reply = format_string("ok\n");
+    char *reply = NULL;
     int ai_x = ai->position->x;
     int ai_y = ai->position->y;
 
@@ -128,6 +134,7 @@ static bool set_thystame(app_t *app, ia_t *ai, char *ressource)
         if (ai->inventory->thystame > 0) {
             ai->inventory->thystame -= 1;
             app->game->map[ai_y][ai_x].thystame += 1;
+            reply = format_string("ok\n");
             add_message(ai->list_messages, reply);
             pdr_command(app, ai->fd, THYSTAME_INDEX);
             return true;
@@ -138,7 +145,7 @@ static bool set_thystame(app_t *app, ia_t *ai, char *ressource)
 
 void set_cmd(app_t *app, ia_t *ai, char *ressource)
 {
-    char *bad_response = format_string("ko\n");
+    char *bad_response = NULL;
 
     if (set_food(app, ai, ressource))
         return;
@@ -154,5 +161,6 @@ void set_cmd(app_t *app, ia_t *ai, char *ressource)
         return;
     if (set_thystame(app, ai, ressource))
         return;
+    bad_response = format_string("ko\n");
     add_message(ai->list_messages, bad_response);
 }

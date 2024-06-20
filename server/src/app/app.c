@@ -41,7 +41,8 @@ void destroy_message_list(list_t *message_list)
 
     while (temp) {
         free(temp->data.message);
-        temp = temp->next;
+        list_remove_front(message_list);
+        temp = message_list->first;
     }
 }
 

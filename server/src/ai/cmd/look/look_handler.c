@@ -39,8 +39,8 @@ void check_player(vector2i_t *pos, app_t *app, char **reply, ia_t *ai)
 static void concat_egg(vector2i_t *pos, list_node_t *egg_temp,
     char **reply)
 {
-    if (egg_temp->data.coord->x == pos->x &&
-    egg_temp->data.coord->y == pos->y) {
+    if (egg_temp->data.egg->pos->x == pos->x &&
+    egg_temp->data.egg->pos->y == pos->y) {
         concatenate_strings(reply, EGG_STRING);
     }
 }
