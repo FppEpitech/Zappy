@@ -73,10 +73,10 @@ void free_map(tile_t **map, int height);
 void display_map(tile_t **map, int height, int width);
 
 /**
- * @brief Distribute resources on the map!
+ * @brief Distribute resources on the map.
  *
- * @param map Map where distribute resources !
- * @param width Width of the map !
- * @param height Height of the map !
+ * @param map Map where distribute resources.
+ * @param width Width of the map.
+ * @param height Height of the map.
  */
 void distribute_resources(tile_t **map, int width, int height);
