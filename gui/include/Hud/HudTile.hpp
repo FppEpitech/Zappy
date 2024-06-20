@@ -48,6 +48,18 @@ class Gui::HudTile : public Gui::AHud {
          */
         void display();
 
+        /**
+         * @brief Display number of players.
+         *
+         */
+        void displayNbPlayers();
+
+        /**
+         * @brief Display number of eggs.
+         *
+         */
+        void displayNbEggs();
+
     private:
 
         Texture2D   _texture;       // Texture for Hud Background.
@@ -61,4 +73,6 @@ class Gui::HudTile : public Gui::AHud {
         Texture2D   _sibur;         // Texture for sibur png.
         Texture2D   _thystame;      // Texture for thystame png.
         Texture2D   _tileTexture;   // Texture for tile png.
+        Texture2D   _playerTexture; // Texture for player png.
+        Texture2D   _eggTexture;    // Texture for egg png.
 };
