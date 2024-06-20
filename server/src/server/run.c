@@ -110,7 +110,6 @@ static int game_run(int result_select, app_t *app)
             handle_client_write(app, fd);
         }
     } else {
-        gettimeofday(&app->server->last_tick_time, NULL);
         treat_command(app);
         treat_stuck(app);
         check_die(app);
@@ -147,6 +146,7 @@ bool server_run(app_t *app)
         timeout = get_timeout(app);
         result_select = select(FD_SETSIZE, &app->server->read_fds,
         &app->server->write_fds, NULL, &timeout);
+        gettimeofday(&app->server->last_tick_time, NULL);
         result_game = game_run(result_select, app);
         if (result_game == -1)
             return false;
