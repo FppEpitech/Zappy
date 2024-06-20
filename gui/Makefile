@@ -30,8 +30,10 @@ SRC			=	src/Error/Error.cpp \
 				src/Render/UserCamera.cpp \
 				src/Render/Decoration.cpp \
 				\
+				src/Event/AEvent.cpp \
 				src/Event/Event.cpp \
 				\
+				src/GUIUpdater/AGUIUpdater.cpp \
 				src/GUIUpdater/GUIUpdater.cpp \
 				\
 				src/Hud/AHud.cpp \
