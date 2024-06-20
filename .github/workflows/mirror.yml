@@ -92,9 +92,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: install_dependencies
         run: |
-            sudo dnf install lcov gcovr -y
             make install-deps-ci -C gui
             make install-deps -C ai
+            gcovr --version
       - name: run_tests
         run: make tests_run
         timeout-minutes: 5
