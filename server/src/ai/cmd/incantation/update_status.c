@@ -9,6 +9,21 @@
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
 
+static void send_message_begin(ia_t *ai)
+{
+    char *success = NULL;
+
+    success = format_string("Elevation underway\n");
+    add_message(ai->list_messages, success);
+}
+
+static void send_message_end(ia_t *ai)
+{
+    char *not_success = format_string("ko\n");
+
+    add_message(ai->list_messages, not_success);
+}
+
 static void update_other_ai(ia_t *ai, ia_t *ai_check,
     app_t *app, int update_status)
 {
@@ -18,18 +33,19 @@ static void update_other_ai(ia_t *ai, ia_t *ai_check,
     && ai_check->level == ai->level) {
         ai_check->incantation->status_incantation = true;
         ai_check->incantation->target_level = ai->level + 1;
-        set_time_stuck(ai, 300 / app->game->freq);
+        set_time_stuck(ai_check, 300 / app->game->freq);
+        send_message_begin(ai_check);
     }
     if (ai_check->fd != ai->fd && update_status == END_INCANTATION
     && ai_check->position->x == ai->position->x
-    && ai_check->position->y == ai->position->y
-    && ai_check->level == ai->level
+    && ai_check->position->y == ai->position->y && ai_check->level == ai->level
     && ai_check->incantation->status_incantation == true
     && ai_check->incantation->target_level == ai->incantation->target_level) {
         ai_check->incantation->status_incantation = false;
         ai_check->incantation->target_level = 0;
         ai_check->time->stuck = false;
         ai_check->time->total_stuck = 0.0;
+        send_message_end(ai_check);
     }
 }
 
@@ -39,10 +55,12 @@ static void update_ai(ia_t *ai, app_t *app, int update_status)
         ai->incantation->status_incantation = true;
         ai->incantation->target_level = ai->level + 1;
         set_time_stuck(ai, 300 / app->game->freq);
+        send_message_begin(ai);
     }
     if (update_status == END_INCANTATION) {
         ai->incantation->status_incantation = false;
         ai->incantation->target_level = 0;
+        send_message_end(ai);
     }
 }
 

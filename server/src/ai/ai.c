@@ -104,6 +104,7 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
         return NULL;
     new_ia->fd = fd;
     new_ia->level = 1;
+    new_ia->dead = false;
     new_ia->direction = choose_direction();
     new_ia->position = create_vector2i(x, y);
     new_ia->list_command = list_new();
@@ -117,7 +118,7 @@ ia_t *create_ia(app_t *app, int fd, team_t *team)
     return new_ia;
 }
 
-void add_ia(app_t *app, size_t fd, char *line)
+bool add_ia(app_t *app, size_t fd, char *line)
 {
     list_node_t *temp = app->teams_list->first;
     node_data_t data;
@@ -133,12 +134,11 @@ void add_ia(app_t *app, size_t fd, char *line)
             free(temp->data.team->eggs_list->first->data.egg->pos);
             free(temp->data.team->eggs_list->first->data.egg);
             list_remove_front(temp->data.team->eggs_list);
-            free(line);
-            return;
+            return true;
         }
         temp = temp->next;
     }
-    free(line);
+    return false;
 }
 
 static ia_t *check_ia(team_t *team, size_t fd)

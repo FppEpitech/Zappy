@@ -16,6 +16,8 @@
 
 void destroy_parsing(parsing_t *parsing)
 {
+    for (int index = 0; parsing->names[index] != NULL; index++)
+        free(parsing->names[index]);
     free(parsing->names);
     free(parsing);
 }

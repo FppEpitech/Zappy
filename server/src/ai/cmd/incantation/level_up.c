@@ -40,6 +40,14 @@ static void delete_ressources(app_t *app, ia_t *ai)
         decremente_ressources(app, (size_t[]) {6, 2, 2, 2, 2, 2, 1}, ai);
 }
 
+static void send_message_end(ia_t *ai)
+{
+    char *success = NULL;
+
+    success = format_string("Current level: %d\n", ai->level);
+    add_message(ai->list_messages, success);
+}
+
 static void update_ai(ia_t *ai, ia_t *ai_check,
     size_t level_before, size_t target_level)
 {
@@ -51,6 +59,7 @@ static void update_ai(ia_t *ai, ia_t *ai_check,
         ai_check->incantation->status_incantation = false;
         ai_check->incantation->target_level = 0;
         ai_check->level += 1;
+        send_message_end(ai_check);
     }
 }
 
