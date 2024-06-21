@@ -601,7 +601,6 @@ std::vector<Vector2> Gui::Render::getPositionsInPlayerVision(size_t playerId)
                 tmp.x -= 1;
                 break;
             default:
-                std::cout << "Error: Invalid orientation" << std::endl;
                 break;
         }
         positions = addVisionPosition(positions, getLineOfVision(tmp, i, orientation));
