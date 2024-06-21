@@ -54,6 +54,20 @@ class Gui::AEvent : public Gui::IEvent {
          */
         void setGameData(std::shared_ptr<GameData> gameData);
 
+        /**
+         * @brief Get the Render object.
+         *
+         * @return std::shared_ptr<Render> - Render class.
+         */
+        std::shared_ptr<Render> getRender();
+
+        /**
+         * @brief Get the GameData object.
+         *
+         * @return std::shared_ptr<GameData> - GameData class.
+         */
+        std::shared_ptr<GameData> getGameData();
+
     protected:
 
         std::shared_ptr<Render>         _render;        // Render class to draw scene.
