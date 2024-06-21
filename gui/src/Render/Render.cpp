@@ -53,6 +53,7 @@ bool Gui::Render::isOpen()
 
 void Gui::Render::draw()
 {
+    _playerVisionPositions.clear();
     if (!_camera.isPlayerPov())
         UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
     else
@@ -153,6 +154,16 @@ void Gui::Render::setTimeUnit(size_t timeUnit)
     _gameData.get()->setServerTick(timeUnit);
 }
 
+void Gui::Render::setPlayerVision(bool isPlayerVision)
+{
+    _camera.setPlayerVision(isPlayerVision);
+}
+
+bool Gui::Render::getPlayerVision() const
+{
+    return _camera.isPlayerVision();
+}
+
 void Gui::Render::displayDebug()
 {
     if (_isDebug) {
@@ -186,6 +197,8 @@ void Gui::Render::displayPlayers()
             if (abs(player.getPosition().first - camTile.first) > (_renderDistance - 1) || abs(player.getPosition().second - camTile.second) > (_renderDistance - 1))
                 continue;
             if (abs(player.getPosition().first - camTile.first) == (_renderDistance - 1) && abs(player.getPosition().second - camTile.second) == (_renderDistance - 1))
+                continue;
+            if (!isInArrayPlayerVision(player.getPosition()))
                 continue;
 
             if (!displayAnimations(team, player))
@@ -269,13 +282,15 @@ void Gui::Render::displayMap()
         for (auto &tile : line) {
             if (abs(camTile.first - tile.getPosition().first) > (_renderDistance - 1) || abs(camTile.second - tile.getPosition().second) > (_renderDistance - 1))
                 continue;
+            if (!isInArrayPlayerVision(tile.getPosition()))
+                continue;
             displayTile(tile);
             displayFood(tile);
             displayResources(tile);
             displayEggs(tile);
         }
     }
-    _decoration->display(_gameData->getMapSize(), _renderDistance, camTile);
+    _decoration->display(_gameData->getMapSize(), _renderDistance, camTile, _playerVisionPositions);
 }
 
 void Gui::Render::displayTile(Tile tile)
@@ -463,6 +478,8 @@ void Gui::Render::changePlayerPOV(size_t playerId)
         changePOVToFirstPerson(playerId);
     else if (getCameraType() == Gui::UserCamera::CameraType::THIRD_PERSON)
         changePOVToSecondPerson(playerId);
+    if (_camera.isPlayerVision())
+        _playerVisionPositions = getPositionsInPlayerVision(playerId);
 }
 
 void Gui::Render::setPlayerPov(size_t playerId)
@@ -473,6 +490,8 @@ void Gui::Render::setPlayerPov(size_t playerId)
         changePOVToSecondPerson(playerId);
     else if (getCameraType() == Gui::UserCamera::CameraType::THIRD_PERSON)
         changePOVToThirdPerson(playerId);
+    if (_camera.isPlayerVision())
+        _playerVisionPositions = getPositionsInPlayerVision(playerId);
 }
 
 void Gui::Render::changePOVToFirstPerson(size_t playerId)
@@ -554,4 +573,24 @@ void Gui::Render::changePOVToThirdPerson(size_t playerId)
     getCamera().get()->target.y += PLAYER_HEIGHT;
     setCameraType(Gui::UserCamera::CameraType::THIRD_PERSON);
     setCameraPlayerPov(playerId);
+}
+
+std::vector<Vector2> Gui::Render::getPositionsInPlayerVision(size_t playerId)
+{
+    Player player = _gameData->getPlayer(playerId);
+    std::vector<Vector2> positions = {(Vector2){(float)player.getPosition().first, (float)player.getPosition().second}};
+    size_t orientation = player.getOrientation();
+    (void)orientation;
+    return positions;
+}
+
+bool Gui::Render::isInArrayPlayerVision(std::pair<size_t, size_t> pos)
+{
+    if (_playerVisionPositions.empty())
+        return true;
+    for (auto &position : _playerVisionPositions) {
+        if (position.x == pos.first && position.y == pos.second)
+            return true;
+    }
+    return false;
 }
