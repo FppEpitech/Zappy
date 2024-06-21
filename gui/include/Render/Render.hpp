@@ -402,4 +402,22 @@ class Gui::Render {
          * @return false - Position is not in player vision.
         */
         bool isInArrayPlayerVision(std::pair<size_t, size_t> pos);
+
+        /**
+         * @brief Get the line of vision.
+         *
+         * @param pos Position to check.
+         * @param sizeOfHalf size of the half of the line of vision.
+         * @param orientation orientation of the vision.
+         */
+        std::vector<Vector2> getLineOfVision(Vector2 pos, size_t sizeOfHalf, size_t orientation);
+
+        /**
+         * @brief Add a position to the vision.
+         *
+         * @param vision Vision to add the position.
+         * @param pos Positions to add.
+         * @return std::vector<Vector2> - Vision with the position added.
+        */
+        std::vector<Vector2> addVisionPosition(std::vector<Vector2> vision, std::vector<Vector2> pos);
 };
