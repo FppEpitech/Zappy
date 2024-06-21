@@ -5,6 +5,7 @@
 ** run
 */
 
+#include "rules.h"
 #include "utils.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
@@ -128,12 +129,13 @@ static struct timeval get_timeout(app_t *app, struct timespec *start)
     double timeout = 1.0 / app->game->freq;
 
     timeout_final.tv_sec = 0;
-    timeout_final.tv_usec = timeout * 1000000;
+    timeout_final.tv_usec = timeout * MICROSECOND_TO_SECOND;
     clock_gettime(CLOCK_MONOTONIC, &end);
-    time_elapsed = (end.tv_sec - start->tv_sec) * 1000 +
-        (end.tv_nsec - start->tv_nsec) / 1000000;
-    if (time_elapsed < timeout * 1000) {
-        timeout_final.tv_usec = (timeout * 1000 - time_elapsed) * 1000;
+    time_elapsed = (end.tv_sec - start->tv_sec) * MILLISECOND_TO_SECOND +
+        (end.tv_nsec - start->tv_nsec) / MICROSECOND_TO_SECOND;
+    if (time_elapsed < timeout * MILLISECOND_TO_SECOND) {
+        timeout_final.tv_usec = (timeout * MILLISECOND_TO_SECOND -
+            time_elapsed) * MILLISECOND_TO_SECOND;
     } else {
         clock_gettime(CLOCK_MONOTONIC, start);
     }
@@ -152,7 +154,7 @@ bool server_run(app_t *app)
     while (server_status(true)) {
         server_reset_fd(app);
         timeout = get_timeout(app, &start);
-        if (timeout.tv_usec == (1.0 / app->game->freq) * 1000000)
+        if (timeout.tv_usec == (1.0 / app->game->freq) * MICROSECOND_TO_SECOND)
             logic_loop = true;
         result_game = game_run(select(FD_SETSIZE, &app->server->read_fds,
         &app->server->write_fds, NULL, &timeout), app, logic_loop);
