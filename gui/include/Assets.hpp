@@ -92,4 +92,34 @@
 #define POS_LANTERN                 (Vector3){1, -0.3, 2}
 #define POS_Y_DELIMITATION          -0.27f
 
-#define PLAYER_TEXT_SIZE            40
+#define PLAYER_TEXT_SIZE                40
+
+#define HELP_BACKGROUND_SCALE           3.5f
+#define HELP_BACKGROUND_TEXTURE_SIZE    (Vector2){400 * HELP_BACKGROUND_SCALE, 200 * HELP_BACKGROUND_SCALE}
+#define HELP_BACKGROUND_POSITION        (Vector2){WINDOW_WIDTH / 2 - HELP_BACKGROUND_TEXTURE_SIZE.x / 2, WINDOW_HEIGHT / 2 - HELP_BACKGROUND_TEXTURE_SIZE.y / 2}
+#define HELP_TEXT_POSITION_LEFT         (Vector2){HELP_BACKGROUND_POSITION.x + 270, HELP_BACKGROUND_POSITION.y + 180}
+#define HELP_TEXT_POSITION_RIGHT        (Vector2){HELP_TEXT_POSITION_LEFT.x + 610, HELP_TEXT_POSITION_LEFT.y}
+#define HELP_TEXT_SPACING               30
+#define HELP_TITLE_OFFSET               90
+
+static std::vector<std::string> globalControlsTexts = {
+    "Move the camera in the space",
+    "Move the camera up",
+    "Move the camera down",
+    "Switch on/off the debug display",
+    "Reset the HUD from tile view to game view",
+    "Switch on/off the help HELP",
+    "Increase the render distance",
+    "Decrease the render distance",
+    "Increase the time unit",
+    "Decrease the time unit",
+    "Select the player point of view",
+    "Select the tile to display its HUD",
+};
+
+static std::vector<std::string> playerControlsTexts = {
+    "Change the player point of view",
+    "Get off the player point of view",
+    "Switch to the next player",
+    "Switch to the previous player",
+};
