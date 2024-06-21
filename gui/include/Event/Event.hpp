@@ -92,7 +92,8 @@ class Gui::Event : public Gui::AEvent {
             {GAMEPAD_BUTTON_LEFT_FACE_RIGHT, [this](){increaseTimeUnit();}},
             {GAMEPAD_BUTTON_RIGHT_FACE_LEFT, [this](){switchDisplayDebug();}},
             {GAMEPAD_BUTTON_RIGHT_FACE_RIGHT, [this](){switchTileHudToGame();}},
-            {GAMEPAD_BUTTON_RIGHT_FACE_UP, [this](){changeActualPlayerPov();}}
+            {GAMEPAD_BUTTON_RIGHT_FACE_UP, [this](){changeActualPlayerPov();}},
+            {GAMEPAD_BUTTON_MIDDLE_RIGHT, [this](){closeWindowGamepad();}},
         };
 
         /**
@@ -197,4 +198,9 @@ class Gui::Event : public Gui::AEvent {
          * @brief Handle Space for Gamepad
          */
         void handleSpaceGamepad();
+
+        /**
+         * @brief Close the window for Gamepad
+         */
+        void closeWindowGamepad();
 };

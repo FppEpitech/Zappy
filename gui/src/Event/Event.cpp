@@ -206,3 +206,8 @@ void Gui::Event::handleSpaceGamepad()
     setFreeCam();
     moveUpCamera();
 }
+
+void Gui::Event::closeWindowGamepad()
+{
+    _gameData.get()->setIsEndGame(true);
+}
