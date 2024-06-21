@@ -124,7 +124,7 @@ class AI:
         thread.start()
         self.threads.append(thread)
 
-        self.player.messageHistory.append(self.player.broadcast("IsLeader?", self.teamName, self.myuuid, self.creationTime))
+        self.player.broadcast("IsLeader?", self.teamName, self.myuuid, self.creationTime)
 
         while self.player.isLeader == Role.UNDEFINED:
             if len(self.player.callbacks) == 0:
