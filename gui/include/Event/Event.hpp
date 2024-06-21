@@ -71,6 +71,7 @@ class Gui::Event : public Gui::AEvent {
             {KEY_K, [this](){decreaseRenderDistance();}},
             {KEY_F5, [this](){changeActualPlayerPov();}},
             {KEY_FOUR, [this](){changeActualPlayerPov();}},
+            {KEY_V, [this](){setPlayerVision();}},
             {KEY_KP_ADD, [this](){increaseTimeUnit();}},
             {KEY_KP_SUBTRACT, [this](){decreaseTimeUnit();}},
         };
@@ -172,4 +173,10 @@ class Gui::Event : public Gui::AEvent {
          *
          */
         void decreaseTimeUnit();
+
+        /**
+         * @brief Set the player vision.
+         *
+         */
+        void setPlayerVision();
 };
