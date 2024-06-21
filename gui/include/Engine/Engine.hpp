@@ -52,7 +52,7 @@ class Gui::Engine {
 
     private:
 
-        std::unique_ptr<IServerParser>      _parser;        //!<!< Parser class for server's command.
+        std::unique_ptr<IServerParser>      _parser;        //!< Parser class for server's command.
         std::shared_ptr<INetwork>           _network;       //!< Network class to connect to the server.
         std::shared_ptr<Render>             _render;        //!< Render class to draw the scene.
         std::unique_ptr<IEvent>             _event;         //!< Event class to listen the user's inputs.
