@@ -152,7 +152,7 @@ bool server_run(app_t *app)
     while (server_status(true)) {
         server_reset_fd(app);
         timeout = get_timeout(app, &start);
-        if (timeout.tv_usec == 1000000)
+        if (timeout.tv_usec == (1.0 / app->game->freq) * 1000000)
             logic_loop = true;
         result_game = game_run(select(FD_SETSIZE, &app->server->read_fds,
         &app->server->write_fds, NULL, &timeout), app, logic_loop);
