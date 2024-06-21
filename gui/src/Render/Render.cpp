@@ -192,6 +192,8 @@ void Gui::Render::displayPlayers()
 
     for (auto &team : _gameData->getTeams()) {
         for (auto &player : team.getPlayers()) {
+            if (_camera.isPlayerPov())
+                camTile = _gameData->getPlayer(_camera.getPlayerId()).getPosition();
             if (_gameData.get()->getMap().size() == 0 || _gameData.get()->getMap()[player.getPosition().first].size() == 0)
                 return;
             if (abs(player.getPosition().first - camTile.first) > (_renderDistance - 1) || abs(player.getPosition().second - camTile.second) > (_renderDistance - 1))
@@ -280,6 +282,8 @@ void Gui::Render::displayMap()
 
     for (auto &line : _gameData->getMap()) {
         for (auto &tile : line) {
+            if (_camera.isPlayerPov())
+                camTile = _gameData->getPlayer(_camera.getPlayerId()).getPosition();
             if (abs(camTile.first - tile.getPosition().first) > (_renderDistance - 1) || abs(camTile.second - tile.getPosition().second) > (_renderDistance - 1))
                 continue;
             if (!isInArrayPlayerVision(tile.getPosition()))
