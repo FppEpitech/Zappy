@@ -99,10 +99,11 @@ void server_quit_handler(app_t *app, size_t fd);
  *
  * @param list_messages List of all messages.
  * @param fd File descriptor where send message.
+ * @param app Application with all necessary information.
  * @return true If message was well send.
  * @return false If message wasn't well send.
  */
-bool write_message(list_t *list_messages, size_t fd);
+bool write_message(app_t *app, list_t *list_messages, size_t fd);
 
 /**
  * @brief Add a message to write.

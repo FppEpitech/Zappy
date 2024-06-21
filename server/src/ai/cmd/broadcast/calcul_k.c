@@ -152,9 +152,9 @@ size_t calcul_k(app_t *app, ia_t *ai_sender, ia_t *ai_destination)
         return tile_hit_north(angle);
     if (ai_destination->direction == EAST)
         return tile_hit_east(angle);
-    if (ai_destination->direction == NORTH)
+    if (ai_destination->direction == SOUTH)
         return tile_hit_south(angle);
-    if (ai_destination->direction == NORTH)
+    if (ai_destination->direction == WEST)
         return tile_hit_west(angle);
     return 1;
 }

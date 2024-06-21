@@ -117,7 +117,9 @@ team_t *create_team(app_t *app, char *name, size_t max_place)
 
     if (new_team == NULL)
         return NULL;
-    new_team->name = name;
+    new_team->name = strdup(name);
+    if (!new_team->name)
+        return NULL;
     new_team->max_place = max_place;
     new_team->list_ai = list_new();
     new_team->eggs_list = list_new();
@@ -132,5 +134,7 @@ void add_team(app_t *app, char *team_name, size_t max_place)
     node_data_t data;
 
     data.team = create_team(app, team_name, max_place);
+    if (!data.team)
+        return;
     list_add_back(app->teams_list, data);
 }
