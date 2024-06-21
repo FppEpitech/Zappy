@@ -200,14 +200,14 @@ class Gui::Team {
     private:
 
 
-        ModelAnimation*             _modelAnimation;    // Model to animate players.
-        int                         _animsCount;        // Animation number of players.
-        std::string                 _name;      // Name of the team.
-        std::vector<Gui::Player>    _players;   // Players of the team.
-        Model                       _playerModel;     // Model player asset of the team.
-        std::vector<Gui::Egg>       _eggs;      // Eggs of the team.
-        Model                       _eggModel;  // Eggs Model of the team.
-        Color                       _playerColor;   // Color of the players.
+        ModelAnimation*             _modelAnimation;    //!< Model to animate players.
+        int                         _animsCount;        //!< Animation number of players.
+        std::string                 _name;      //!< Name of the team.
+        std::vector<Gui::Player>    _players;   //!< Players of the team.
+        Model                       _playerModel;     //!< Model player asset of the team.
+        std::vector<Gui::Egg>       _eggs;      //!< Eggs of the team.
+        Model                       _eggModel;  //!< Eggs Model of the team.
+        Color                       _playerColor;   //!< Color of the players.
 
         /**
          * @brief Rotate a bounding box by orientation.

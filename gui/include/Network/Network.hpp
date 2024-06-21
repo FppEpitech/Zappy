@@ -76,8 +76,8 @@ class Gui::Network : public Gui::ANetwork {
          */
         const std::string readInfoServer();
 
-        int             _serverFd;      // server file descriptor
-        fd_set          _writeFd;       // file descriptor for write access
-        fd_set          _readFd;        // file descriptor for read access
-        bool            _isConnected;   // is true if the gui is connected to the server
+        int             _serverFd;      //!< server file descriptor
+        fd_set          _writeFd;       //!< file descriptor for write access
+        fd_set          _readFd;        //!< file descriptor for read access
+        bool            _isConnected;   //!< is true if the gui is connected to the server
 };

@@ -160,8 +160,8 @@ class Gui::UserCamera {
 
     private:
 
-        std::shared_ptr<Camera>                 _camera;        // Camera raylib instance.
-        CameraType                              _type;          // Type of camera.
-        size_t                                  _playerId;      // Player id.
-        std::pair<std::size_t, std::size_t>     _tilePos;       // Tile position.
+        std::shared_ptr<Camera>                 _camera;        //!< Camera raylib instance.
+        CameraType                              _type;          //!< Type of camera.
+        size_t                                  _playerId;      //!< Player id.
+        std::pair<std::size_t, std::size_t>     _tilePos;       //!< Tile position.
 };

@@ -23,4 +23,5 @@ void pie_command(app_t *app, list_t *ai)
         add_message(gui_node->data.gui->list_messages, response);
         gui_node = gui_node->next;
     }
+    list_free(ai);
 }

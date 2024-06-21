@@ -205,22 +205,22 @@ class Gui::Render {
 
     private:
 
-        UserCamera                                  _camera;            // Camera of the scene.
-        bool                                        _isDebug;           // Display or not the debug informations.
-        std::shared_ptr<GameData>                   _gameData;          // GameData class to store the game's data.
-        std::shared_ptr<Decoration>                 _decoration;        // Decoration to display;
-        std::vector<std::shared_ptr<Gui::IHud>>     _hudList;           // List of huds.
-        size_t                                     _renderDistance;    // Distance to render from the 3d position of the camera.
+        UserCamera                                  _camera;            //!< Camera of the scene.
+        bool                                        _isDebug;           //!< Display or not the debug informations.
+        std::shared_ptr<GameData>                   _gameData;          //!< GameData class to store the game's data.
+        std::shared_ptr<Decoration>                 _decoration;        //!< Decoration to display;
+        std::vector<std::shared_ptr<Gui::IHud>>     _hudList;           //!< List of huds.
+        size_t                                     _renderDistance;    //!< Distance to render from the 3d position of the camera.
 
-        Model                                       _tileModel;         // Model to display tiles.
-        Model                                       _foodModel;         // Model to display foods.
-        Model                                       _linemateModel;     // Model to display linemates.
-        Model                                       _mendianeModel;     // Model to display mendianes.
-        Model                                       _phirasModel;       // Model to display phiras.
-        Model                                       _siburModel;        // Model to display siburs.
-        Model                                       _thystameModel;     // Model to display thystames.
-        Model                                       _deraumereModel;    // Model to display deraumeres.
-        Texture2D                                   _cursorTexture;     // Cursor texture.
+        Model                                       _tileModel;         //!< Model to display tiles.
+        Model                                       _foodModel;         //!< Model to display foods.
+        Model                                       _linemateModel;     //!< Model to display linemates.
+        Model                                       _mendianeModel;     //!< Model to display mendianes.
+        Model                                       _phirasModel;       //!< Model to display phiras.
+        Model                                       _siburModel;        //!< Model to display siburs.
+        Model                                       _thystameModel;     //!< Model to display thystames.
+        Model                                       _deraumereModel;    //!< Model to display deraumeres.
+        Texture2D                                   _cursorTexture;     //!< Cursor texture.
 
         /**
          * @brief Load the models to draw.
@@ -249,10 +249,11 @@ class Gui::Render {
         /**
          * @brief Display player level.
          *
-         * @param team Team for the player 3d position.
          * @param player Player to display level.
+         * @param position Position to display the level.
+         * @param team Team for the player 3d position.
          */
-        void displayPlayerLevel(Team &team, Player &player);
+        void displayPlayerLevel(Player &player, Vector3 position, Team &team);
 
         /**
          * @brief Display player broadcast.

@@ -93,3 +93,4 @@
 #define POS_Y_DELIMITATION          -0.27f
 
 #define PLAYER_TEXT_SIZE            40
+#define PLAYER_TEXT_SIZE_RATIO      1.5f

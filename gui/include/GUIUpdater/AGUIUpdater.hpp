@@ -45,6 +45,6 @@ class Gui::AGUIUpdater : public Gui::IGUIUpdater {
 
     protected:
 
-        std::shared_ptr<GameData>       _gameData;      // The GUI GameData to update.
-        std::shared_ptr<INetwork>       _network;       // The network to send commands to the server.
+        std::shared_ptr<GameData>       _gameData;      //!< The GUI GameData to update.
+        std::shared_ptr<INetwork>       _network;       //!< The network to send commands to the server.
 };

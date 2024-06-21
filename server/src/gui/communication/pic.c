@@ -13,12 +13,15 @@
 static char *get_players(list_t *ai)
 {
     char *players = NULL;
+    char *final_response = NULL;
     list_node_t *node = ai->first;
 
     players = format_string("%d", node->data.ai->fd);
     node = node->next;
     while (node) {
-        players = format_string("%s %d", players, node->data.ai->fd);
+        final_response = format_string("%s %d", players, node->data.ai->fd);
+        free(players);
+        players = final_response;
         node = node->next;
     }
     return players;
@@ -38,4 +41,6 @@ void pic_command(app_t *app, list_t *ai)
         add_message(gui_node->data.gui->list_messages, response);
         gui_node = gui_node->next;
     }
+    free(players);
+    list_free(ai);
 }
