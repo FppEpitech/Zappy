@@ -9,9 +9,11 @@
 
 
 #include "raylib.h"
+#include "Config.hpp"
 #include "Hud/HudGame.hpp"
 #include "Hud/HudTile.hpp"
 #include "Hud/HudPlayer.hpp"
+#include "Hud/HudHelp.hpp"
 #include "Render/Decoration.hpp"
 #include "Render/UserCamera.hpp"
 #include "GameDatas/GameData.hpp"
@@ -200,6 +202,21 @@ class Gui::Render {
         */
         void setTimeUnit(size_t timeUnit);
 
+        /**
+         * @brief Set the Help Menu value.
+         *
+         * @param isHelpMenu New help menu value.
+         */
+        void setHelpMenu(bool isHelpMenu);
+
+        /**
+         * @brief Get the Help Menu value.
+         *
+         * @return true - Display the help menu.
+         * @return false - Do not display the help menu.
+         */
+        bool getHelpMenu() const;
+
     private:
 
         UserCamera                                  _camera;            // Camera of the scene.
@@ -208,6 +225,9 @@ class Gui::Render {
         std::shared_ptr<Decoration>                 _decoration;        // Decoration to display;
         std::vector<std::shared_ptr<Gui::IHud>>     _hudList;           // List of huds.
         size_t                                     _renderDistance;    // Distance to render from the 3d position of the camera.
+
+
+        bool                                        _isHelpMenu;        // Display the help menu.
 
         Model                                       _tileModel;         // Model to display tiles.
         Model                                       _foodModel;         // Model to display foods.
@@ -364,4 +384,17 @@ class Gui::Render {
          * @return std::pair<std::size_t, std::size_t> - Tile position.
         */
         std::pair<std::size_t, std::size_t> getCameraTile();
+
+        /**
+         * @brief Display the help menu.
+         *
+         */
+        void displayHelpMenu(std::shared_ptr<IHud> hud);
+
+        /**
+         * @brief Display the help menu controls.
+         *
+         * @param position Position to display the help menu.
+         */
+        void displayHelpMenuControls(Vector2 position);
 };
