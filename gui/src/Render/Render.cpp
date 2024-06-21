@@ -156,7 +156,8 @@ void Gui::Render::setTimeUnit(size_t timeUnit)
 void Gui::Render::displayDebug()
 {
     if (_isDebug) {
-        DrawFPS(10, 10);
+        int fps = GetFPS();
+        DrawText(("FPS: " + std::to_string(fps)).c_str(), 10, 10, 20, LIME);
         DrawText(("XYZ: " +
             std::to_string(_camera.getCamera()->position.x) + " / " +
             std::to_string(_camera.getCamera()->position.y) + " / " +
