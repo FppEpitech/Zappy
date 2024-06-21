@@ -9,7 +9,7 @@
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
 
-#include <sys/time.h>
+#include <time.h>
 
 static void reset_ai(app_t *app)
 {
@@ -100,11 +100,11 @@ static void handle_control_c(int sig)
         server_status(false);
 }
 
-static int game_run(int result_select, app_t *app)
+static int game_run(int result_select, app_t *app, bool logic_loop)
 {
     if (result_select < 0)
         return ERROR;
-    if (result_select != 0) {
+    if (!logic_loop) {
         for (int fd = 0; fd < FD_SETSIZE; fd++) {
             handle_client_read(app, fd);
             handle_client_write(app, fd);
@@ -120,39 +120,45 @@ static int game_run(int result_select, app_t *app)
     return GAME_CONTINUE;
 }
 
-static struct timeval get_timeout(app_t *app)
+static struct timeval get_timeout(app_t *app, struct timespec *start)
 {
-    struct timeval timeout;
+    struct timeval timeout_final;
+    struct timespec end = {0};
+    long time_elapsed = 0.0;
+    double timeout = 1.0 / app->game->freq;
 
-    timeout.tv_sec = (double)SELECT_TIMEOUT_SECONDS / (double)app->game->freq
-        - time_elapsed(&app->server->last_tick_time);
-    timeout.tv_usec = ((double)SELECT_TIMEOUT_SECONDS / (double)app->game->freq
-        - time_elapsed(&app->server->last_tick_time)) * 1000000;
-    if (timeout.tv_sec < 0 || timeout.tv_usec < 0) {
-        timeout.tv_sec = 0;
-        timeout.tv_usec = 0;
+    timeout_final.tv_sec = 0;
+    timeout_final.tv_usec = timeout * 1000000;
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    time_elapsed = (end.tv_sec - start->tv_sec) * 1000 +
+        (end.tv_nsec - start->tv_nsec) / 1000000;
+    if (time_elapsed < timeout * 1000) {
+        timeout_final.tv_usec = (timeout * 1000 - time_elapsed) * 1000;
+    } else {
+        clock_gettime(CLOCK_MONOTONIC, start);
     }
-    return timeout;
+    return timeout_final;
 }
 
 bool server_run(app_t *app)
 {
     struct timeval timeout;
-    int result_select = 0;
     int result_game = 0;
+    struct timespec start = {0};
+    bool logic_loop = false;
 
     signal(SIGINT, handle_control_c);
+    clock_gettime(CLOCK_MONOTONIC, &start);
     while (server_status(true)) {
         server_reset_fd(app);
-        timeout = get_timeout(app);
-        result_select = select(FD_SETSIZE, &app->server->read_fds,
-        &app->server->write_fds, NULL, &timeout);
-        gettimeofday(&app->server->last_tick_time, NULL);
-        result_game = game_run(result_select, app);
-        if (result_game == -1)
-            return false;
-        if (result_game == 1)
-            return true;
+        timeout = get_timeout(app, &start);
+        if (timeout.tv_usec == 1000000)
+            logic_loop = true;
+        result_game = game_run(select(FD_SETSIZE, &app->server->read_fds,
+        &app->server->write_fds, NULL, &timeout), app, logic_loop);
+        if (result_game != GAME_CONTINUE)
+            return result_game == ERROR ? false : true;
+        logic_loop = false;
     }
     return true;
 }

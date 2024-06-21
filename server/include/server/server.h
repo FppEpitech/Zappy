@@ -34,7 +34,6 @@ typedef struct s_server {
     int fd;
     socklen_t addrlen;
     struct sockaddr_in addr;
-    struct timeval last_tick_time;
 } server_t;
 
 /**
