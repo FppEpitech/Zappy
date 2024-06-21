@@ -988,7 +988,7 @@ class Player:
         if self.isLeader == Role.LEADER:
             for msg in self.broadcastReceived:
                 if msg[1].message == "IsLeader?":
-                    sself.broadcast("Yes", teamName, myuuid, creationTime)
+                    self.broadcast("Yes", teamName, myuuid, creationTime)
                     self.broadcastReceived.remove(msg)
         self.updateMode()
         if self.currentMode == Mode.REGROUP:
