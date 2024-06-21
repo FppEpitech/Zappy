@@ -15,10 +15,13 @@ static vector2i_t *min_distance(vector2i_t *base,
     vector2i_t *first, vector2i_t *second)
 {
     if (sqrt(pow(base->x - first->x, 2) + pow(base->y - first->y, 2)) <
-    sqrt(pow(base->x - second->x, 2) + pow(base->y - second->y, 2)))
+    sqrt(pow(base->x - second->x, 2) + pow(base->y - second->y, 2))) {
+        free(second);
         return first;
-    else
+    } else {
+        free(first);
         return second;
+    }
 }
 
 static vector2i_t *find_closest_distance(app_t *app,
@@ -138,6 +141,12 @@ static size_t tile_hit_west(double angle)
         return 1;
 }
 
+static void free_pos(vector2i_t *sender, vector2i_t *min)
+{
+    free(sender);
+    free(min);
+}
+
 size_t calcul_k(app_t *app, ia_t *ai_sender, ia_t *ai_destination)
 {
     vector2i_t *sender = create_vector2i(ai_sender->position->x +
@@ -146,8 +155,11 @@ size_t calcul_k(app_t *app, ia_t *ai_sender, ia_t *ai_destination)
     double angle = atan2(min->y - sender->y, min->x - sender->x);
 
     angle = angle * (180.0 / M_PI);
-    if (sender->x == min->x && sender->y == min->y)
+    if (sender->x == min->x && sender->y == min->y) {
+        free_pos(sender, min);
         return 0;
+    }
+    free_pos(sender, min);
     if (ai_destination->direction == NORTH)
         return tile_hit_north(angle);
     if (ai_destination->direction == EAST)
