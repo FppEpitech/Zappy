@@ -48,7 +48,7 @@ class Gui::HudGame : public Gui::AHud {
 
     private:
 
-        Texture2D   _texture;       // Texture for Hud Background.
-        Font        _font;          // Font for Hud's texts.
-        Texture2D   _playerTexture; // Texture for player png.
+        Texture2D   _texture;       //!< Texture for Hud Background.
+        Font        _font;          //!< Font for Hud's texts.
+        Texture2D   _playerTexture; //!< Texture for player png.
 };

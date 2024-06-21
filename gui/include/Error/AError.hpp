@@ -41,5 +41,5 @@ class Gui::Errors::AError : public IError {
 
     protected:
 
-        std::string _message; /**< The error message. */
+        std::string _message; //!< The error message.
 };
