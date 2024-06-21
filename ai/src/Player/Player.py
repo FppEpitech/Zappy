@@ -727,6 +727,36 @@ class Player:
         return True
 
 
+    def isMessageInventory(self, message : str):
+        """
+        Check if the message is an inventory message
+
+        Parameters :
+            message : str
+                the message
+        """
+        if message.startswith("[") and message.endswith("]") and message.count(",") == 7:
+            return True
+        return False
+
+
+    def countSlavesThatHaveSendInventory(self, messages : list):
+        """
+        Count the number of slaves that have send their inventory
+
+        Parameters :
+            messages : list
+                the messages received by the player
+        """
+        nbSlaves = 0
+        sendersUuid = []
+        for msg in messages:
+            if self.isMessageInventory(msg[1].message) and msg[1].senderUuid not in sendersUuid:
+                nbSlaves += 1
+                sendersUuid.append(msg[1].senderUuid)
+        return nbSlaves
+
+
     def handleResponseBroadcast(self):
         """
         Handle the response of the broadcast
@@ -776,6 +806,23 @@ class Player:
                 return
 
 
+    def countSlavesThatArrived(self, messages : list):
+        """
+        Count the number of slaves that arrived to the regroup
+
+        Parameters :
+            messages : list
+                the messages received by the player
+        """
+        nbSlavesHere = 0
+        sendersUuid = []
+        for msg in messages:
+            if msg[1].message == "I'm here" and msg[1].senderUuid not in sendersUuid:
+                nbSlavesHere += 1
+                sendersUuid.append(msg[1].senderUuid)
+        return nbSlavesHere
+
+
     def waitingEveryone(self, teamName : str, myuuid : str, creationTime : int):
         """
         Wait for everyone to finish the regroup
@@ -788,7 +835,7 @@ class Player:
             creationTime : int
                 the creation time of the message
         """
-        nbSlavesHere = len(self.broadcastReceived)
+        nbSlavesHere = self.countSlavesThatArrived(self.broadcastReceived)
         print("nb slaves here: ", nbSlavesHere, flush=True)
         if nbSlavesHere >= 5:
             self.messageHistory.append(self.broadcast("Drop", teamName, myuuid, creationTime))
@@ -798,11 +845,28 @@ class Player:
             self.messageHistory.append(self.broadcast("Regroup", teamName, myuuid, creationTime))
 
 
+    def countSlavesThatFinishedDroping(self, messages : list):
+        """
+        Count the number of slaves that finished droping the stones
+
+        Parameters :
+            messages : list
+                the messages received by the player
+        """
+        nbSlavesHere = 0
+        sendersUuid = []
+        for msg in messages:
+            if msg[1].message == "Finished dropping" and msg[1].senderUuid not in sendersUuid:
+                nbSlavesHere += 1
+                sendersUuid.append(msg[1].senderUuid)
+        return nbSlavesHere
+
+
     def waitingDrop(self):
         """
         Wait for everyone to finish droping the stones
         """
-        nbSlavesHere = len(self.broadcastReceived)
+        nbSlavesHere = self.countSlavesThatFinishedDroping(self.broadcastReceived)
         if nbSlavesHere != self.nbSlavesHere:
             minStoneCase = Inventory(0, 8, 9, 10, 5, 6, 1, 0)
             currentCase = self.vision[0]
