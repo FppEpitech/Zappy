@@ -62,7 +62,14 @@ class Player:
             if the player arrived to the regroup
         isTimed : bool
             if the player is timed
-
+        nbSlavesHere : int
+            the number of slaves here
+        messageHistory : list
+            the history of the messages
+        teamName : str
+            the name of the team
+        enemyBroadcast : list
+            the enemy broadcast
     ----------
 
     Methods :
@@ -264,6 +271,12 @@ class Player:
             callback : function
                 the callback to call after the action
                 (default is None)
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
         print("Broadcasting message: ", message, flush=True, file=sys.stderr)
         encryptedMsg = Message(teamName)
@@ -409,6 +422,8 @@ class Player:
         Parameters :
             message : str
                 the message from the server
+            aiTimestamp : int
+                the timestamp of the AI
         """
         message = message[8:]
         direction = int(message.split(", ")[0])
@@ -483,6 +498,8 @@ class Player:
         Parameters :
             response : str
                 the response from the server
+            aiTimestamp : int
+                the timestamp of the AI
         """
         if response == "dead":
             raise PlayerDeathException("Player is dead")
@@ -502,6 +519,8 @@ class Player:
         Parameters :
             response : str
                 the response from the server
+            aiTimestamp : int
+                the timestamp of the AI
         """
         if self.hasSomethingHappened(response, aiTimestamp):
             return
@@ -680,6 +699,14 @@ class Player:
         """
         Ask the slaves for their inventory
         The leader will ask the slaves for their inventory
+
+        Parameters :
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
         self.messageHistory.append(self.broadcast("Inventory", teamName, myuuid, creationTime))
         self.nbSlaves = 0
@@ -688,6 +715,10 @@ class Player:
     def checkIfEnoughFood(self, response : str):
         """
         Check if the slave has enough food to survive the regroup
+
+        Parameters :
+            response : str
+                the response from the slave
         """
         inv = Inventory(0, 0, 0, 0, 0, 0, 0, 0)
         inv.updateInventory(response)
@@ -726,6 +757,14 @@ class Player:
     def slavesReponses(self, teamName : str, myuuid : str, creationTime : int):
         """
         Handle the leader order as a slave
+
+        Parameters :
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
         for broadcast in self.broadcastReceived:
             if broadcast[1].message == "Inventory":
@@ -740,6 +779,14 @@ class Player:
     def waitingEveryone(self, teamName : str, myuuid : str, creationTime : int):
         """
         Wait for everyone to finish the regroup
+
+        Parameters :
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
         nbSlavesHere = len(self.broadcastReceived)
         print("nb slaves here: ", nbSlavesHere, flush=True)
@@ -776,6 +823,14 @@ class Player:
         Drop the stones
         As a leader, you will wait for the slaves to drop the stones
         As a slave, you will drop the stones until you have none left
+
+        Parameters :
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
         if self.isLeader == Role.LEADER:
             self.waitingDrop()
@@ -804,6 +859,14 @@ class Player:
         Regroup the players
         As a leader, you will wait for the slaves to regroup
         As a slave, you will regroup with the leader
+
+        Parameters :
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
         if self.isLeader == Role.LEADER:
             self.waitingEveryone(teamName, myuuid, creationTime)
@@ -849,6 +912,14 @@ class Player:
         Choose the action of the player
         The action is chosen depending on the mode of the player
         The mode is updated before choosing the action
+
+        Parameters :
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
         if self.isLeader == Role.LEADER:
             for msg in self.broadcastReceived:
