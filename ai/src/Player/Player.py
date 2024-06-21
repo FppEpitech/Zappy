@@ -10,6 +10,7 @@ import sys
 from ai.src.Enum.Mode import Mode
 from ai.src.Enum.Role import Role
 from ai.src.Enum.Action import Action
+from ai.src.Utils.Message import Message
 from ai.src.Player.Inventory import Inventory
 from ai.src.Player.PlayerException import PlayerDeathException
 
@@ -146,7 +147,7 @@ class Player:
     """
 
 
-    def __init__(self):
+    def __init__(self, teamName : str):
         """
         Constructor of the Player class
         """
@@ -172,6 +173,9 @@ class Player:
         self.arrived = False
         self.isTimed = False
         self.nbSlavesHere = 0
+        self.messageHistory = []
+        self.teamName = teamName
+        self.enemyBroadcast = []
 
     def __str__(self):
         """
@@ -250,7 +254,7 @@ class Player:
         self.callbacks.append(callback)
 
 
-    def broadcast(self, message : str = "Hello", callback = None):
+    def broadcast(self, message : str = "Hello", teamName : str = "", myuuid : str = "", creationTime : int = 0, callback = None):
         """
         Set the current action to broadcast
 
@@ -261,9 +265,13 @@ class Player:
                 the callback to call after the action
                 (default is None)
         """
+        print("Broadcasting message: ", message, flush=True, file=sys.stderr)
+        encryptedMsg = Message(teamName)
+        encryptedMsg.createMessage(message, myuuid, creationTime)
         self.actions.append(Action.BROADCAST)
-        self.commands.append(f"Broadcast \"{message}\"")
+        self.commands.append(f"Broadcast \"{encryptedMsg.encrypt()}\"")
         self.callbacks.append(callback)
+        return encryptedMsg
 
 
     def connectNbr(self, callback = None):
@@ -394,7 +402,7 @@ class Player:
         self.inventory.updateInventory(inventory)
 
 
-    def updateBroadcastReceived(self, message : str):
+    def updateBroadcastReceived(self, message : str, aiTimestamp : int):
         """
         Update the broadcast received by the player
 
@@ -408,7 +416,17 @@ class Player:
             message = message[message.find('\"') + 1: message.rfind('\"')]
         else:
             message = message.split(", ")[1]
-        self.broadcastReceived.append((direction, message))
+        msg = Message(self.teamName)
+        if msg.createMessageFromEncryptedJson(message):
+            print("Received message: ", msg.message, flush=True, file=sys.stderr)
+            if msg in self.messageHistory or msg.messageTimestamp < aiTimestamp:
+                print("Already received this message", flush=True, file=sys.stderr)
+                return
+            self.broadcastReceived.append((direction, msg))
+            self.messageHistory.append(msg)
+        else:
+            print("Received enemy message: ", message, flush=True, file=sys.stderr)
+            self.enemyBroadcast.append((direction, message))
 
 
     def updateEjectionReceived(self, message : str):
@@ -457,7 +475,7 @@ class Player:
             return False
 
 
-    def hasSomethingHappened(self, response : str):
+    def hasSomethingHappened(self, response : str, aiTimestamp : int):
         """
         Check if something happened to the player
         Look if the player is dead, if he received a message or if he was ejected
@@ -469,7 +487,7 @@ class Player:
         if response == "dead":
             raise PlayerDeathException("Player is dead")
         elif response.startswith("message"):
-            self.updateBroadcastReceived(response)
+            self.updateBroadcastReceived(response, aiTimestamp)
             return True
         elif response.startswith("eject:"):
             self.updateEjectionReceived(response)
@@ -477,7 +495,7 @@ class Player:
         return False
 
 
-    def handleResponse(self, response : str):
+    def handleResponse(self, response : str, aiTimestamp : int):
         """
         Handle the response from the server
 
@@ -485,7 +503,7 @@ class Player:
             response : str
                 the response from the server
         """
-        if self.hasSomethingHappened(response):
+        if self.hasSomethingHappened(response, aiTimestamp):
             return
         if response == "ko":
             self.currentAction = Action.NONE
@@ -658,12 +676,12 @@ class Player:
         self.cmdInventory()
 
 
-    def askSlavesForInventory(self):
+    def askSlavesForInventory(self, teamName : str, myuuid : str, creationTime : int):
         """
         Ask the slaves for their inventory
         The leader will ask the slaves for their inventory
         """
-        self.broadcast("Inventory")
+        self.messageHistory.append(self.broadcast("Inventory", teamName, myuuid, creationTime))
         self.nbSlaves = 0
 
 
@@ -689,12 +707,12 @@ class Player:
         minInv = Inventory(0, 8, 9, 10, 5, 6, 1, 0)
         if self.nbSlaves >= 5:
             for response in self.broadcastReceived:
-                if self.checkIfEnoughFood(response[1]) == False:
+                if self.checkIfEnoughFood(response[1].message) == False:
                     self.waitingResponse = False
                     self.broadcastReceived = []
                     return
                 inv = Inventory(0, 0, 0, 0, 0, 0, 0, 0)
-                inv.updateInventory(response[1])
+                inv.updateInventory(response[1].message)
                 globalInv = globalInv + inv
             if globalInv.hasMoreStones(minInv):
                 self.currentMode = Mode.REGROUP
@@ -705,32 +723,32 @@ class Player:
         self.broadcastReceived = []
 
 
-    def slavesReponses(self):
+    def slavesReponses(self, teamName : str, myuuid : str, creationTime : int):
         """
         Handle the leader order as a slave
         """
         for broadcast in self.broadcastReceived:
-            if broadcast[1] == "Inventory":
+            if broadcast[1].message == "Inventory":
                 response = self.inventory.toStr()
-                self.broadcast(response)
-            if broadcast[1] == "Regroup":
+                self.messageHistory.append(self.broadcast(response, teamName, myuuid, creationTime))
+            if broadcast[1].message == "Regroup":
                 self.currentMode = Mode.REGROUP
                 self.regroupDirection = broadcast[0]
                 return
 
 
-    def waitingEveryone(self):
+    def waitingEveryone(self, teamName : str, myuuid : str, creationTime : int):
         """
         Wait for everyone to finish the regroup
         """
         nbSlavesHere = len(self.broadcastReceived)
         print("nb slaves here: ", nbSlavesHere, flush=True)
         if nbSlavesHere >= 5:
-            self.broadcast("Drop")
+            self.messageHistory.append(self.broadcast("Drop", teamName, myuuid, creationTime))
             self.currentMode = Mode.DROPPING
             self.broadcastReceived = []
         else:
-            self.broadcast("Regroup")
+            self.messageHistory.append(self.broadcast("Regroup", teamName, myuuid, creationTime))
 
 
     def waitingDrop(self):
@@ -753,7 +771,7 @@ class Player:
             self.look()
 
 
-    def dropping(self):
+    def dropping(self, teamName : str, myuuid : str, creationTime : int):
         """
         Drop the stones
         As a leader, you will wait for the slaves to drop the stones
@@ -776,30 +794,31 @@ class Player:
             if self.inventory.thystame > 0:
                 self.set("thystame")
             if self.inventory.linemate == 0 and self.inventory.deraumere == 0 and self.inventory.sibur == 0 and self.inventory.mendiane == 0 and self.inventory.phiras == 0 and self.inventory.thystame == 0:
-                self.broadcast("Finished dropping")
+                self.messageHistory.append(self.broadcast("Finished dropping", teamName, myuuid, creationTime))
                 self.currentMode = Mode.NONE
                 return
 
 
-    def regroupAction(self):
+    def regroupAction(self, teamName : str, myuuid : str, creationTime : int):
         """
         Regroup the players
         As a leader, you will wait for the slaves to regroup
         As a slave, you will regroup with the leader
         """
         if self.isLeader == Role.LEADER:
-            self.waitingEveryone()
+            self.waitingEveryone(teamName, myuuid, creationTime)
         else:
             isThereARegroup = False
 
-            print(self.broadcastReceived, flush=True, file=sys.stderr)
+            if len(self.broadcastReceived) != 0:
+                print(self.broadcastReceived, flush=True, file=sys.stderr)
             for broadcast in self.broadcastReceived:
-                if broadcast[1] == "Drop":
+                if broadcast[1].message == "Drop":
                     print("DROP MODE", flush=True, file=sys.stderr)
                     self.currentMode = Mode.DROPPING
                     self.broadcastReceived = []
                     return
-                if broadcast[1] == "Regroup":
+                if broadcast[1].message == "Regroup":
                     isThereARegroup = True
                     self.regroupDirection = broadcast[0]
 
@@ -807,7 +826,7 @@ class Player:
             if isThereARegroup == False:
                 return
             if self.regroupDirection == 0 and self.arrived == False:
-                self.broadcast("I'm here")
+                self.messageHistory.append(self.broadcast("I'm here", teamName, myuuid, creationTime))
                 self.arrived = True
             if self.regroupDirection == 3:
                 self.turnLeft()
@@ -825,7 +844,7 @@ class Player:
                 self.turnRight()
 
 
-    def chooseAction(self):
+    def chooseAction(self, teamName : str, myuuid : str, creationTime : int):
         """
         Choose the action of the player
         The action is chosen depending on the mode of the player
@@ -833,19 +852,19 @@ class Player:
         """
         if self.isLeader == Role.LEADER:
             for msg in self.broadcastReceived:
-                if msg[1] == "IsLeader?":
-                    self.broadcast("Yes")
+                if msg[1].message == "IsLeader?":
+                    self.messageHistory.append(self.broadcast("Yes", teamName, myuuid, creationTime))
                     self.broadcastReceived.remove(msg)
         self.updateMode()
         if self.currentMode == Mode.REGROUP:
-            self.regroupAction()
+            self.regroupAction(teamName, myuuid, creationTime)
             return
         if self.currentMode == Mode.DROPPING:
-            self.dropping()
+            self.dropping(teamName, myuuid, creationTime)
             return
         if self.isLeader == Role.SLAVE:
             if len(self.broadcastReceived) > 0:
-                self.slavesReponses()
+                self.slavesReponses(teamName, myuuid, creationTime)
                 self.broadcastReceived = []
         if self.currentMode == Mode.FOOD:
             self.look(self.lookingForFood)
@@ -861,7 +880,7 @@ class Player:
             return
         elif self.currentMode == Mode.BROADCASTING:
             print("in broadcast")
-            self.askSlavesForInventory()
+            self.askSlavesForInventory(teamName, myuuid, creationTime)
             self.cmdInventory()
             return
         elif self.currentMode == Mode.HANDLINGRESPONSE:
@@ -870,6 +889,7 @@ class Player:
             return
         elif self.currentMode == Mode.WAITING:
             self.cmdInventory()
+            self.look()
             return
         elif self.currentMode == Mode.ELEVATING:
             self.incantation()
