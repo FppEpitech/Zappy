@@ -39,7 +39,6 @@ void pic_command(app_t *app, list_t *ai)
         ai->first->data.ai->position->y,
         ai->first->data.ai->level + 1, players);
         add_message(gui_node->data.gui->list_messages, response);
-        free(response);
         gui_node = gui_node->next;
     }
     free(players);
