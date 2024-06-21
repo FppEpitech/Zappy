@@ -102,6 +102,6 @@ class Gui::Tile {
 
     private:
 
-        std::pair<std::size_t, std::size_t>     _position;              // Position x y.
-        Vector3                                 _positionIn3DSpace;     // Position in 3D space.
+        std::pair<std::size_t, std::size_t>     _position;              //!< Position x y.
+        Vector3                                 _positionIn3DSpace;     //!< Position in 3D space.
 };

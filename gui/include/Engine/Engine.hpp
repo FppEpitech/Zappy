@@ -52,12 +52,12 @@ class Gui::Engine {
 
     private:
 
-        std::unique_ptr<IServerParser>      _parser;        // Parser class for server's command.
-        std::shared_ptr<INetwork>           _network;       // Network class to connect to the server.
-        std::shared_ptr<Render>             _render;        // Render class to draw the scene.
-        std::unique_ptr<IEvent>             _event;         // Event class to listen the user's inputs.
-        std::shared_ptr<GameData>           _gameData;      // GameData class to store the game's data.
-        std::unique_ptr<IGUIUpdater>        _guiUpdater;    // GUIUpdater class to update the GUI.
+        std::unique_ptr<IServerParser>      _parser;        //!< Parser class for server's command.
+        std::shared_ptr<INetwork>           _network;       //!< Network class to connect to the server.
+        std::shared_ptr<Render>             _render;        //!< Render class to draw the scene.
+        std::unique_ptr<IEvent>             _event;         //!< Event class to listen the user's inputs.
+        std::shared_ptr<GameData>           _gameData;      //!< GameData class to store the game's data.
+        std::unique_ptr<IGUIUpdater>        _guiUpdater;    //!< GUIUpdater class to update the GUI.
 
         /**
          * @brief Listen the server and update Engine with its commands.

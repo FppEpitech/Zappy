@@ -214,14 +214,14 @@ class Gui::Player {
 
     private:
 
-        std::size_t                             _id;                    // Id of the player.
-        std::string                             _team;                  // Team name.
-        std::pair<std::size_t, std::size_t>     _position;              // Position x y relative to tiles.
-        Vector3                                 _position3D;            // Position in 3D scene.
-        std::size_t                             _orientation;           // Orientation of the player.
-        std::size_t                             _level;                 // Level between 1 - 8.
-        PlayerState                             _state;                 // Player state.
-        std::string                             _broadcast;             // Broadcast message.
-        int                                     _currentFrame;          // Current frame animation.
-        clock_t                                 _animationTimeEllapsed; // Time ellapsed during animation.
+        std::size_t                             _id;                    //!< Id of the player.
+        std::string                             _team;                  //!< Team name.
+        std::pair<std::size_t, std::size_t>     _position;              //!< Position x y relative to tiles.
+        Vector3                                 _position3D;            //!< Position in 3D scene.
+        std::size_t                             _orientation;           //!< Orientation of the player.
+        std::size_t                             _level;                 //!< Level between 1 - 8.
+        PlayerState                             _state;                 //!< Player state.
+        std::string                             _broadcast;             //!< Broadcast message.
+        int                                     _currentFrame;          //!< Current frame animation.
+        clock_t                                 _animationTimeEllapsed; //!< Time ellapsed during animation.
 };

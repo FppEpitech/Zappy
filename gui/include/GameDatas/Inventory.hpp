@@ -195,6 +195,6 @@ class Gui::Inventory {
 
     private:
 
-        std::size_t     _food;    // Food.
-        Ressources      _ressources;    // Ressources.
+        std::size_t     _food;    //!< Food.
+        Ressources      _ressources;    //!< Ressources.
 };
