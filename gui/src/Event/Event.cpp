@@ -192,3 +192,8 @@ void Gui::Event::decreaseTimeUnit()
     if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::NONE)
         _gameData.get()->setTimeUnitFromServer(GameData::TimeUnitState::DECREASE);
 }
+
+void Gui::Event::displayHelpMenu()
+{
+    _render.get()->setHelpMenu(!_render.get()->getHelpMenu());
+}

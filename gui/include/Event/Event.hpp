@@ -73,6 +73,7 @@ class Gui::Event : public Gui::AEvent {
             {KEY_FOUR, [this](){changeActualPlayerPov();}},
             {KEY_KP_ADD, [this](){increaseTimeUnit();}},
             {KEY_KP_SUBTRACT, [this](){decreaseTimeUnit();}},
+            {KEY_H, [this](){displayHelpMenu();}},
         };
 
         /**
@@ -172,4 +173,10 @@ class Gui::Event : public Gui::AEvent {
          *
          */
         void decreaseTimeUnit();
+
+        /**
+         * @brief Display the help menu.
+         *
+         */
+        void displayHelpMenu();
 };
