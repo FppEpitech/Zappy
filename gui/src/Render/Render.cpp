@@ -200,7 +200,6 @@ void Gui::Render::displayPlayers()
             else
                 DrawModelEx(team.getPlayerModel(), team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, team.getPlayerColor());
 
-            displayPlayerLevel(player, team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()));
 
             if (player.getState() == Gui::Player::BROADCAST)
                 displayPlayerBroadcast(team, player);
@@ -212,6 +211,7 @@ void Gui::Render::displayPlayers()
                 for (size_t i = 0; i < bboxes.size(); i++)
                     DrawBoundingBox(bboxes[i], GREEN);
             }
+            displayPlayerLevel(player, team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()));
         }
     }
 }
