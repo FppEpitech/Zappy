@@ -19,7 +19,8 @@ static void reset_ai(app_t *app)
         ia_temp = team->list_ai->first;
         while (ia_temp) {
             FD_SET(ia_temp->data.ai->fd, &app->server->read_fds);
-            FD_SET(ia_temp->data.ai->fd, &app->server->write_fds);
+            if (ia_temp->data.ai->list_messages->first != NULL)
+                FD_SET(ia_temp->data.ai->fd, &app->server->write_fds);
             ia_temp = ia_temp->next;
         }
         temp = temp->next;
@@ -34,7 +35,8 @@ static void reset_gui(app_t *app)
     while (temp_gui) {
         gui = temp_gui->data.gui;
         FD_SET(gui->fd, &app->server->read_fds);
-        FD_SET(gui->fd, &app->server->write_fds);
+        if (temp_gui->data.gui->list_messages->first != NULL)
+            FD_SET(gui->fd, &app->server->write_fds);
         temp_gui = temp_gui->next;
     }
 }
