@@ -232,8 +232,21 @@ void Gui::Render::displayPlayerLevel(Gui::Player &player, Vector3 playerPos)
     posDiff.y = posDiff.y < 0 ? posDiff.y * -1 : posDiff.y;
     int fontSize = PLAYER_TEXT_SIZE - (int)(posDiff.z * PLAYER_TEXT_SIZE_RATIO);
 
-    DrawText(countStr.c_str(), (int)playerScreenPosition.x - MeasureText(countStr.c_str(), fontSize)/2, (int)playerScreenPosition.y , fontSize, WHITE);
+    for (auto &team : _gameData.get()->getTeams()) {
+        for (auto &player : team.getPlayers()) {
+            if (player.getId() == _camera.getPlayerId()) {
+                std::vector<BoundingBox> bboxes = team.getPlayerBoundingBoxes(player.getPosition(), player.getOrientation(), player.getCenterPosition());
+                std::vector<RayCollision> hitbox = team.getPlayerModelHitbox(player.getId(), *_camera.getCamera().get());
 
+                for (size_t i = 0; i < bboxes.size(); i++) {
+                    if (hitbox[i].hit) {
+                        DrawText(countStr.c_str(), (int)playerScreenPosition.x - MeasureText(countStr.c_str(), fontSize)/2, (int)playerScreenPosition.y , fontSize, WHITE);
+                        return;
+                    }
+                }
+            }
+        }
+    }
     BeginMode3D(*_camera.getCamera());
 }
 
