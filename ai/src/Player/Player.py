@@ -283,8 +283,8 @@ class Player:
         encryptedMsg.createMessage(message, myuuid, creationTime)
         self.actions.append(Action.BROADCAST)
         self.commands.append(f"Broadcast \"{encryptedMsg.encrypt()}\"")
+        self.messageHistory.append(encryptedMsg)
         self.callbacks.append(callback)
-        return encryptedMsg
 
 
     def connectNbr(self, callback = None):
@@ -708,7 +708,7 @@ class Player:
             creationTime : int
                 the creation time of the message
         """
-        self.messageHistory.append(self.broadcast("Inventory", teamName, myuuid, creationTime))
+        self.broadcast("Inventory", teamName, myuuid, creationTime)
         self.nbSlaves = 0
 
 
@@ -799,7 +799,7 @@ class Player:
         for broadcast in self.broadcastReceived:
             if broadcast[1].message == "Inventory":
                 response = self.inventory.toStr()
-                self.messageHistory.append(self.broadcast(response, teamName, myuuid, creationTime))
+                self.broadcast(response, teamName, myuuid, creationTime)
             if broadcast[1].message == "Regroup":
                 self.currentMode = Mode.REGROUP
                 self.regroupDirection = broadcast[0]
@@ -838,11 +838,11 @@ class Player:
         nbSlavesHere = self.countSlavesThatArrived(self.broadcastReceived)
         print("nb slaves here: ", nbSlavesHere, flush=True)
         if nbSlavesHere >= 5:
-            self.messageHistory.append(self.broadcast("Drop", teamName, myuuid, creationTime))
+            self.broadcast("Drop", teamName, myuuid, creationTime)
             self.currentMode = Mode.DROPPING
             self.broadcastReceived = []
         else:
-            self.messageHistory.append(self.broadcast("Regroup", teamName, myuuid, creationTime))
+            self.broadcast("Regroup", teamName, myuuid, creationTime)
 
 
     def countSlavesThatFinishedDroping(self, messages : list):
@@ -913,7 +913,7 @@ class Player:
             if self.inventory.thystame > 0:
                 self.set("thystame")
             if self.inventory.linemate == 0 and self.inventory.deraumere == 0 and self.inventory.sibur == 0 and self.inventory.mendiane == 0 and self.inventory.phiras == 0 and self.inventory.thystame == 0:
-                self.messageHistory.append(self.broadcast("Finished dropping", teamName, myuuid, creationTime))
+                self.broadcast("Finished dropping", teamName, myuuid, creationTime)
                 self.currentMode = Mode.NONE
                 return
 
@@ -953,7 +953,7 @@ class Player:
             if isThereARegroup == False:
                 return
             if self.regroupDirection == 0 and self.arrived == False:
-                self.messageHistory.append(self.broadcast("I'm here", teamName, myuuid, creationTime))
+                self.broadcast("I'm here", teamName, myuuid, creationTime)
                 self.arrived = True
             if self.regroupDirection == 3:
                 self.turnLeft()
@@ -988,7 +988,7 @@ class Player:
         if self.isLeader == Role.LEADER:
             for msg in self.broadcastReceived:
                 if msg[1].message == "IsLeader?":
-                    self.messageHistory.append(self.broadcast("Yes", teamName, myuuid, creationTime))
+                    sself.broadcast("Yes", teamName, myuuid, creationTime)
                     self.broadcastReceived.remove(msg)
         self.updateMode()
         if self.currentMode == Mode.REGROUP:
