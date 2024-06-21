@@ -163,8 +163,38 @@ class Gui::Inventory {
         */
         Ressources &getRessources(void);
 
+        /**
+         * @brief Add resources to inventory.
+         *
+         * @param resource Index resource's.
+         *  resource 0 (food)
+         *  resource 1 (linemate)
+         *  resource 2 (deraumere)
+         *  resource 3 (sibur)
+         *  resource 4 (mendiane)
+         *  resource 5 (phiras)
+         *  resource 6 (thystame)
+         * @param quantity Quantity to add.
+         */
+        void addResource(std::size_t resource, std::size_t quantity);
+
+        /**
+         * @brief Remove resources to inventory.
+         *
+         * @param resource Index resource's.
+         *  resource 0 (food)
+         *  resource 1 (linemate)
+         *  resource 2 (deraumere)
+         *  resource 3 (sibur)
+         *  resource 4 (mendiane)
+         *  resource 5 (phiras)
+         *  resource 6 (thystame)
+         * @param quantity Quantity to remove.
+         */
+        void removeResource(std::size_t resource, std::size_t quantity);
+
     private:
 
-        std::size_t     _food;    // Food.
-        Ressources      _ressources;    // Ressources.
+        std::size_t     _food;    //!< Food.
+        Ressources      _ressources;    //!< Ressources.
 };

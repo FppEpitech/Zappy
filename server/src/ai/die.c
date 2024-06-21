@@ -13,12 +13,7 @@ static void change_ai(app_t *app, ia_t *ai)
 {
     team_t *ai_team = find_team(app, ai->fd);
     list_node_t *node = ai_team->list_ai->first;
-    node_data_t data;
 
-    data.client = create_client(ai->fd);
-    if (data.client == NULL)
-        return;
-    list_add_back(app->clients_list, data);
     while (node) {
         if (node->data.ai->fd == ai->fd)
             break;
@@ -31,7 +26,7 @@ static void change_ai(app_t *app, ia_t *ai)
     }
 }
 
-static void free_ai(ia_t *ai)
+void free_ai(app_t *app, ia_t *ai)
 {
     destroy_message_list(ai->list_messages);
     destroy_command_list(ai->list_command);
@@ -41,6 +36,9 @@ static void free_ai(ia_t *ai)
     free(ai->time);
     list_free(ai->list_command);
     list_free(ai->list_messages);
+    close(ai->fd);
+    change_ai(app, ai);
+    free(ai);
 }
 
 static void ia_die(app_t *app, ia_t *ai)
@@ -56,15 +54,16 @@ static void ia_die(app_t *app, ia_t *ai)
         free(temp_message->data.message);
         temp_message = temp_message->next;
     }
-    free_ai(ai);
-    change_ai(app, ai);
-    dead_response(app);
+    ai->dead = true;
+    dead_response(ai);
     pdi_command(app, ai->fd);
-    free(ai);
 }
 
 static void check_statut_life(app_t *app, ia_t *ai)
 {
+    char *response = NULL;
+    list_node_t *temp = app->gui_list->first;
+
     if (time_elapsed(&ai->time->start_life) >= ai->time->total_life) {
         if (ai->inventory->food == 0) {
             ia_die(app, ai);
@@ -73,6 +72,11 @@ static void check_statut_life(app_t *app, ia_t *ai)
         gettimeofday(&ai->time->start_life, NULL);
         ai->time->total_life = 126.0 / app->game->freq;
         ai->inventory->food -= 1;
+        while (temp) {
+            response = format_string("pin %d", ai->fd);
+            pin_response(temp->data.gui, app, response);
+            temp = temp->next;
+        }
     }
 }
 

@@ -50,7 +50,7 @@ class Gui::GUIUpdater : public Gui::AGUIUpdater {
 
     private:
 
-        size_t                          _colorIndex; // The index of the color to use for the team.
+        size_t                          _colorIndex; //!< The index of the color to use for the team.
 
         std::unordered_map<std::string, std::function<void(std::vector<std::string>)>> _updateMap =
         {

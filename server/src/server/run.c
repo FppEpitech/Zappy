@@ -76,9 +76,9 @@ void handle_client_write(app_t *app, int fd)
         gui = find_gui(app, fd);
         ai = find_ia(app, fd);
         if (gui != NULL)
-            write_message(gui->list_messages, gui->fd);
+            write_message(app, gui->list_messages, gui->fd);
         if (ai != NULL)
-            write_message(ai->list_messages, ai->fd);
+            write_message(app, ai->list_messages, ai->fd);
     }
 }
 
@@ -107,6 +107,7 @@ static int game_run(int result_select, app_t *app)
             handle_client_write(app, fd);
         }
     }
+    spawn_ressources(app);
     treat_command(app);
     treat_stuck(app);
     check_die(app);

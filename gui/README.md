@@ -1,6 +1,6 @@
 # Zappy GUI
 
-## **⚙️ Technology Notes**
+## **Technology Notes**
 
 The graphic part of Zappy was developed using C++.
 

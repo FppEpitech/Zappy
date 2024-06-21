@@ -15,6 +15,9 @@ Gui::GameData::GameData()
     _lastTick = clock();
     _isEndGame = false;
     _serverEggs = std::vector<Gui::Egg>();
+    _lastTickMctCommand = clock();
+    _nbBCTCommandReceived = 0;
+    _timeUnitFromServer = TimeUnitState::NONE;
 }
 
 std::vector<Gui::Team> &Gui::GameData::getTeams()
@@ -204,4 +207,24 @@ void Gui::GameData::removeServerEgg(size_t id)
             return;
         }
     }
+}
+
+std::size_t Gui::GameData::getNbBCTCommandReceived() const
+{
+    return _nbBCTCommandReceived;
+}
+
+void Gui::GameData::setNbBCTCommandReceived(std::size_t nb)
+{
+    _nbBCTCommandReceived = nb;
+}
+
+void Gui::GameData::restartLastTickMctCommand()
+{
+    _lastTickMctCommand = clock();
+}
+
+clock_t Gui::GameData::getLastTickMctCommand() const
+{
+    return _lastTickMctCommand;
 }

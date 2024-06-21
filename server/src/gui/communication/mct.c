@@ -12,39 +12,46 @@
 
 #include <string.h>
 
-static char *get_string(app_t *app, vector2i_t pos)
+static char *get_string(app_t *app, int x, int y)
 {
-    char *response = format_string("bct %d %d %d %d %d %d %d %d %d\n",
-        pos.x, pos.y,
-        app->game->map[pos.y][pos.x].food,
-        app->game->map[pos.y][pos.x].linemate,
-        app->game->map[pos.y][pos.x].deraumere,
-        app->game->map[pos.y][pos.x].sibur,
-        app->game->map[pos.y][pos.x].mendiane,
-        app->game->map[pos.y][pos.x].phiras,
-        app->game->map[pos.y][pos.x].thystame);
+    char *response = format_string("bct %d %d %d %d %d %d %d %d %d\n", x, y,
+        app->game->map[y][x].food,
+        app->game->map[y][x].linemate,
+        app->game->map[y][x].deraumere,
+        app->game->map[y][x].sibur,
+        app->game->map[y][x].mendiane,
+        app->game->map[y][x].phiras,
+        app->game->map[y][x].thystame);
 
     return response;
 }
 
+static void free_tile_map(char *tile, char *map)
+{
+    free(tile);
+    free(map);
+}
+
 void mct_response(gui_t *gui, app_t *app, char *line)
 {
-    vector2i_t pos = {0, 0};
-    char *response = NULL;
-    char *final_response = "";
+    char *tile = NULL;
+    char *map = strdup("");
+    char *final_response = NULL;
 
+    if (!map)
+        return;
     if (strlen(line) != LEN_COMMAND) {
         suc_command(gui);
         return;
     }
-    while ((size_t)pos.y < app->game->height) {
-        pos.x = 0;
-        while ((size_t)pos.x < app->game->width) {
-            response = get_string(app, pos);
-            final_response = format_string("%s%s", final_response, response);
-            pos.x++;
+    for (size_t y = 0; y < app->game->height; y++) {
+        for (size_t x = 0; x < app->game->width; x++) {
+            tile = get_string(app, x, y);
+            final_response = format_string("%s%s", map, tile);
+            free_tile_map(tile, map);
+            map = strdup(final_response);
+            free(final_response);
         }
-        pos.y++;
     }
-    add_message(gui->list_messages, final_response);
+    add_message(gui->list_messages, map);
 }

@@ -239,14 +239,43 @@ class Gui::GameData {
         */
         void removeServerEgg(size_t id);
 
+        /**
+         * @brief Set the number of bct command received.
+         *
+         * @param nb Number of bct command received.
+         */
+        void setNbBCTCommandReceived(std::size_t nb);
+
+        /**
+         * @brief Get the number of bct command received.
+         *
+         * @return std::size_t - Number of bct command received.
+         */
+        std::size_t getNbBCTCommandReceived() const;
+
+        /**
+         * @brief Restart the last tick mct command clock.
+         *
+         */
+        void restartLastTickMctCommand();
+
+        /**
+         * @brief Get the Last Tick mct command object.
+         *
+         * @return clock_t - Last Tick Mct command.
+         */
+        clock_t getLastTickMctCommand() const;
+
     private:
 
-        std::vector<Gui::Team>      _teams;         // Teams of the game.
-        Map<Gui::Tile>              _map;           // Map of the game.
-        std::size_t                 _serverTick;    // Tick value of the server.
-        clock_t                     _lastTick;      // Last tick of the GameData (based on the server tick).
-        bool                        _isEndGame;     // Is true if the game is finished.
-        std::string                 _lastError;     // Last error message.
-        TimeUnitState                        _timeUnitFromServer; // True if the time unit has changed.
-        std::vector<Gui::Egg>       _serverEggs;          // Eggs from the server.
+        std::vector<Gui::Team>      _teams;                 //!< Teams of the game.
+        Map<Gui::Tile>              _map;                   //!< Map of the game.
+        std::size_t                 _serverTick;            //!< Tick value of the server.
+        clock_t                     _lastTick;              //!< Last tick of the GameData (based on the server tick).
+        bool                        _isEndGame;             //!< Is true if the game is finished.
+        std::size_t                 _nbBCTCommandReceived;  //!< Number of bct command received.
+        clock_t                     _lastTickMctCommand;    //!< Last tick when mct command is send.
+        std::string                 _lastError;             //!< Last error message.
+        TimeUnitState               _timeUnitFromServer;    //!< True if the time unit has changed.
+        std::vector<Gui::Egg>       _serverEggs;            //!< Eggs from the server.
 };
