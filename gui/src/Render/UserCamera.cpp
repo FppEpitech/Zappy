@@ -97,3 +97,13 @@ bool Gui::UserCamera::isPlayerPov() const
 {
     return _type == FIRST_PERSON || _type == SECOND_PERSON || _type == THIRD_PERSON;
 }
+
+bool Gui::UserCamera::isPlayerVision() const
+{
+    return _isPlayerVision;
+}
+
+void Gui::UserCamera::setPlayerVision(bool isPlayerVision)
+{
+    _isPlayerVision = isPlayerVision;
+}
