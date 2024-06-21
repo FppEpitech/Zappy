@@ -138,7 +138,7 @@ bool add_ia(app_t *app, size_t fd, char *line)
         }
         temp = temp->next;
     }
-    printf("Bad Connection: [Wrong name of team or Team is full\n");
+    printf("Bad Connection: [Wrong name of team or Team is full]\n");
     return false;
 }
 
