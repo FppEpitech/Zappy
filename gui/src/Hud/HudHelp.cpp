@@ -14,6 +14,7 @@ Gui::HudHelp::HudHelp(std::shared_ptr<GameData> gameData)
     _typeScene = TypeScene::HELP_MENU;
     _gameData = gameData;
     _texture = LoadTexture(PNG_HELP);
+    _textureKeys = LoadTexture(PNG_HELP_KEYS);
     _font = LoadFont(FONT_HUD);
     _helpMenuClock = clock();
 }
@@ -25,6 +26,7 @@ void Gui::HudHelp::display()
         DrawText(help.c_str(), WINDOW_WIDTH / 2 - MeasureText(help.c_str(), 20) / 2, 20, 20, WHITE);
         std::cout << "help background position: " << HELP_BACKGROUND_POSITION.x << " " << HELP_BACKGROUND_POSITION.y << std::endl;
         DrawTextureEx(_texture, HELP_BACKGROUND_POSITION, 0, HELP_BACKGROUND_SCALE, WHITE);
+        DrawTexture(_textureKeys, HELP_BACKGROUND_POSITION.x, HELP_BACKGROUND_POSITION.y, WHITE);
         displayHelpMenuControls();
     }
     if (_typeScene == TypeScene::HELP_TEXT) {
@@ -43,10 +45,10 @@ void Gui::HudHelp::displayHelpMenuControls()
     Vector2 position = HELP_TEXT_POSITION_LEFT;
     std::cout << "position: " << position.x << " " << position.y << std::endl;
     DrawText("Global Controls", position.x, position.y - HELP_TITLE_OFFSET, 40, WHITE);
-    for (size_t i = 0; i < globalControlsTexts.size(); i++)
+    for (std::size_t i = 0; i < globalControlsTexts.size(); i++)
         DrawText(globalControlsTexts[i].c_str(), position.x, position.y + HELP_TEXT_SPACING * i, 20, WHITE);
     position = HELP_TEXT_POSITION_RIGHT;
     DrawText("Player Controls", position.x, position.y - HELP_TITLE_OFFSET, 40, WHITE);
-    for (size_t i = 0; i < playerControlsTexts.size(); i++)
+    for (std::size_t i = 0; i < playerControlsTexts.size(); i++)
         DrawText(playerControlsTexts[i].c_str(), position.x, position.y + HELP_TEXT_SPACING * i, 20, WHITE);
 }

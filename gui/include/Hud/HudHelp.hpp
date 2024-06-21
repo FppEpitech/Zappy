@@ -44,6 +44,7 @@ class Gui::HudHelp : public Gui::AHud {
     private:
 
         Texture2D       _texture;           // Texture for Hud Background.
+        Texture2D       _textureKeys;       // Texture for Hud keys.
         Font            _font;              // Font for Hud's texts.
         clock_t         _helpMenuClock;     // Clock to display the help menu.
 
