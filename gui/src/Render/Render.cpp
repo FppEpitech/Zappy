@@ -200,7 +200,6 @@ void Gui::Render::displayPlayers()
             else
                 DrawModelEx(team.getPlayerModel(), team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()), ROTATION_AXIS_PLAYER, rotation, SCALE_PLAYER, team.getPlayerColor());
 
-
             if (player.getState() == Gui::Player::BROADCAST)
                 displayPlayerBroadcast(team, player);
 
@@ -211,12 +210,12 @@ void Gui::Render::displayPlayers()
                 for (size_t i = 0; i < bboxes.size(); i++)
                     DrawBoundingBox(bboxes[i], GREEN);
             }
-            displayPlayerLevel(player, team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()));
+            displayPlayerLevel(player, team.getPlayerPositionIn3DSpace(player.getId(), _gameData.get()->getMap()), team);
         }
     }
 }
 
-void Gui::Render::displayPlayerLevel(Gui::Player &player, Vector3 playerPos)
+void Gui::Render::displayPlayerLevel(Gui::Player &player, Vector3 playerPos, Team &team)
 {
     EndMode3D();
 
@@ -232,21 +231,9 @@ void Gui::Render::displayPlayerLevel(Gui::Player &player, Vector3 playerPos)
     posDiff.y = posDiff.y < 0 ? posDiff.y * -1 : posDiff.y;
     int fontSize = PLAYER_TEXT_SIZE - (int)(posDiff.z * PLAYER_TEXT_SIZE_RATIO);
 
-    for (auto &team : _gameData.get()->getTeams()) {
-        for (auto &player : team.getPlayers()) {
-            if (player.getId() == _camera.getPlayerId()) {
-                std::vector<BoundingBox> bboxes = team.getPlayerBoundingBoxes(player.getPosition(), player.getOrientation(), player.getCenterPosition());
-                std::vector<RayCollision> hitbox = team.getPlayerModelHitbox(player.getId(), *_camera.getCamera().get());
-
-                for (size_t i = 0; i < bboxes.size(); i++) {
-                    if (hitbox[i].hit) {
-                        DrawText(countStr.c_str(), (int)playerScreenPosition.x - MeasureText(countStr.c_str(), fontSize)/2, (int)playerScreenPosition.y , fontSize, WHITE);
-                        return;
-                    }
-                }
-            }
-        }
-    }
+    bool isHit = team.isPlayerHit(player.getId(), *_camera.getCamera().get());
+    if (isHit)
+        DrawText(countStr.c_str(), (int)playerScreenPosition.x - MeasureText(countStr.c_str(), fontSize)/2, (int)playerScreenPosition.y , fontSize, WHITE);
     BeginMode3D(*_camera.getCamera());
 }
 

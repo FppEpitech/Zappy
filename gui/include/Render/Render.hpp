@@ -252,7 +252,7 @@ class Gui::Render {
          * @param player Player to display level.
          * @param position Position to display the level.
          */
-        void displayPlayerLevel(Player &player, Vector3 position);
+        void displayPlayerLevel(Player &player, Vector3 position, Team &team);
 
         /**
          * @brief Display player broadcast.
