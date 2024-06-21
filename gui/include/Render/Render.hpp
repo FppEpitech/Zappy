@@ -207,7 +207,7 @@ class Gui::Render {
          * @brief Set the Player Vision value.
          *
          * @param isPlayerVision New player vision value.
-         * @note True to display player vision
+         * @note True to display player vision.
          * @note False to not display player vision.
         */
         void setPlayerVision(bool isPlayerVision);
