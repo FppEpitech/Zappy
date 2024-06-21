@@ -33,7 +33,9 @@ class Gui::IHud {
             GAME,
             POV_PLAYER,
             END_GAME,
-            TILE
+            TILE,
+            HELP_TEXT,
+            HELP_MENU
         };
 
         /**
@@ -68,4 +70,11 @@ class Gui::IHud {
          * @return TypeScene - Type of the scene.
          */
         virtual TypeScene getType() const = 0;
+
+        /**
+         * @brief Set the Type object.
+         *
+         * @param type Type of the scene.
+         */
+        virtual void setType(TypeScene type) = 0;
 };
