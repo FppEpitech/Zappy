@@ -27,6 +27,7 @@
 #define PNG_THYSTAME                PATH_ASSETS PATH_HUD "thystame.png"
 #define PNG_PLAYER                  PATH_ASSETS PATH_HUD "player.png"
 #define PNG_TILE                    PATH_ASSETS PATH_HUD "tile.png"
+#define PNG_EGG                     PATH_ASSETS PATH_HUD "egg.png"
 #define FONT_HUD                    PATH_ASSETS PATH_HUD "SimplyMono-Bold.ttf"
 
 #define MODEL_TILE                  PATH_ASSETS PATH_TILE "tile.glb"

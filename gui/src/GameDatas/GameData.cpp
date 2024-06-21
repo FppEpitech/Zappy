@@ -17,6 +17,7 @@ Gui::GameData::GameData()
     _serverEggs = std::vector<Gui::Egg>();
     _lastTickMctCommand = clock();
     _nbBCTCommandReceived = 0;
+    _timeUnitFromServer = TimeUnitState::NONE;
 }
 
 std::vector<Gui::Team> &Gui::GameData::getTeams()

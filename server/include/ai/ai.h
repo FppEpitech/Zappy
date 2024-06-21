@@ -56,6 +56,7 @@ typedef struct s_ia {
     size_t level;
     time_info_t *time;
     char *team_name;
+    bool dead;
 } ia_t;
 
 /**
@@ -75,7 +76,7 @@ ia_t *create_ia(app_t *app, int fd, team_t *team);
  * @param fd File descriptor of AI.
  * @param line Line with name of the team.
  */
-void add_ia(app_t *app, size_t fd, char *line);
+bool add_ia(app_t *app, size_t fd, char *line);
 
 /**
  * @brief Find the AI throught a file descriptor.
@@ -92,3 +93,11 @@ ia_t *find_ia(app_t *app, size_t fd);
  * @param app Application with list of AI.
  */
 void check_die(app_t *app);
+
+/**
+ * @brief Free an AI.
+ *
+ * @param app Application with all necessary information.
+ * @param ai AI to free.
+ */
+void free_ai(app_t *app, ia_t *ai);

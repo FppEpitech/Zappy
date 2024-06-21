@@ -76,8 +76,10 @@ void Gui::Engine::sendMessageUpdate()
     }
     if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::INCREASE)
         _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() + 1) + "\n");
-    else if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::DECREASE)
-        _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() - 1) + "\n");
+    else if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::DECREASE) {
+        if (_gameData.get()->getServerTick() - 1 > 0)
+            _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() - 1) + "\n");
+    }
 }
 
 void Gui::Engine::updateMap()
