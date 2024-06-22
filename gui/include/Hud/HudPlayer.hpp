@@ -9,6 +9,13 @@
 
 #include "Hud/AHud.hpp"
 
+#define HUD_PLAYER_POS Vector2{0, 340}
+#define HUD_PLAYER_TEXT_POS Vector2{55, 420}
+#define HUD_PLAYER_TEXT_TITLE_POS Vector2{80, 380}
+#define HUD_PLAYER_TEXT_MARGING 30
+#define HUD_PLAYER_ICONS_MARGING -32
+#define HUD_PLAYER_TITLE_ICON_MARGING Vector2{45, 35}
+
 namespace Gui {
 
     /**
