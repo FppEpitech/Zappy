@@ -165,6 +165,7 @@ void Gui::GUIUpdater::updatePlayerPosition(const std::vector<std::string> &data)
                     player.setState(Gui::Player::IDLE);
                 player.setPosition(std::make_pair(args[1], args[2]));
                 player.setOrientation(args[3]);
+                player.setLastPositionUpdate(clock());
             }
         }
     }
