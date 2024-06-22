@@ -68,6 +68,8 @@ class AI:
         Handle the communication with the server in a thread
         """
         while self.isRunning:
+            if self.player.currentMode == Mode.DYING:
+                break
             if self.player.currentMode == Mode.REGROUP and self.player.isLeader == Role.SLAVE:
                 break
             for _ in range(0, len(self.player.callbacks)):
@@ -85,7 +87,7 @@ class AI:
                     for response in responses:
                         if response == '':
                             continue
-                        self.player.handleResponse(response, self.creationTime)
+                        self.player.handleResponse(response, self.creationTime, self.teamName, self.myuuid, self.creationTime)
                 self.player.actions.pop(0)
                 self.player.commands.pop(0)
                 self.player.callbacks.pop(0)
@@ -102,7 +104,7 @@ class AI:
                 for response in responses:
                     if response == '':
                         continue
-                    self.player.handleResponse(response, self.creationTime)
+                    self.player.handleResponse(response, self.creationTime, self.teamName, self.myuuid, self.creationTime)
             for _ in range(0, len(self.player.callbacks)):
                 self.player.currentAction = self.player.actions[0]
                 self.player.currentCommand = self.player.commands[0]
@@ -118,7 +120,7 @@ class AI:
                     for response in responses:
                         if response == '':
                             continue
-                        self.player.handleResponse(response, self.creationTime)
+                        self.player.handleResponse(response, self.creationTime, self.teamName, self.myuuid, self.creationTime)
                 self.player.actions.pop(0)
                 self.player.commands.pop(0)
                 self.player.callbacks.pop(0)
@@ -173,6 +175,7 @@ class AI:
         for thread in self.threads:
             thread.join()
         self.api.close()
+
 
 def forkAI():
     """
