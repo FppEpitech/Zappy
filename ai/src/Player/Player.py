@@ -7,16 +7,13 @@
 
 import sys
 import random
-from typing import List
 
 from ai.src.Enum.Mode import Mode
 from ai.src.Enum.Role import Role
-from ai.src.Enum.Item import Item
 from ai.src.Enum.Action import Action
 from ai.src.Utils.Message import Message
 from ai.src.Player.Inventory import Inventory
 from ai.src.Player.PlayerException import PlayerDeathException
-from ai.src.Utils.Utils import getMovesTowardTile, mapRangeOpti
 
 class Player:
     """
@@ -155,12 +152,6 @@ class Player:
             Regroup the players
         chooseAction()
             Choose the action of the player
-        goGetItem()
-            Go get items at tile
-        foodInVision()
-            Check if there is food in the vision
-        stonesInVision()
-            Check if there are stones in the vision
     """
 
 
@@ -663,53 +654,6 @@ class Player:
             self.updateModeSlave()
 
 
-    def foodInVision(self, vision : list):
-        """
-        Allows us to know if there is food in view
-
-        Parameters:
-            vision (list) : 
-                List of items in view
-
-        Returns:
-            tuple : Contains bool if food found, and the tile's index
-        """
-        total : int = 0
-
-        for i in mapRangeOpti(len(vision)):
-            if vision[i].food > 0:
-                return (True, i)
-        return (False, -1)
-
-
-    def goGetItem(self, index : int, itemSeek : List[Item]):
-        """
-        Allows us to go get items on the map at index X
-
-        Parameters :
-            index : int
-                index of the tile to go on
-            itemSeek : List[Item]
-                List of items to take on the tile
-        """
-        (x, y) = getMovesTowardTile(index)
-        moves : int = x + y + (1 if x > 0 or x < 0 else 0)
-
-        if (len(self.actions) + moves) > 8:
-            return
-        for i in range(y):
-            self.moveForward()
-        if x > 0:
-            self.turnRight()
-        if x < 0:
-            self.turnLeft()
-        for i in range(x):
-            self.moveForward()
-        for i in range(0, len(itemSeek)):
-            if len(self.actions) < 9:
-                self.take(itemSeek[i].value)
-
-
     def lookingForFood(self):
         """
         Look for food
@@ -717,64 +661,78 @@ class Player:
         When he finds food, he will  go to the case
         where there is food and take it.
         """
-        (found, index) = self.foodInVision(self.vision)
-        if not found:
-            return random.choice([self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
-        self.goGetItem(index, [Item.FOOD] * self.vision[index].food)
+        index = -1
+        order = [0, 2, 1, 3]
+        for i in order:
+            if len(self.vision) > i and self.vision[i].food > 0:
+                index = i
+                break
+        if index == -1:
+            randAction = random.choice([self.moveForward, self.turnLeft, self.turnRight])
+            randAction()
+            self.moveForward()
+            self.cmdInventory()
+            return
+        if index == 1:
+            self.moveForward()
+            self.turnLeft()
+            self.moveForward()
+        elif index == 2:
+            self.moveForward()
+        elif index == 3:
+            self.moveForward()
+            self.turnRight()
+            self.moveForward()
+        for i in range(0, self.vision[index].food):
+            if len(self.actions) < 9:
+                self.take("food")
+            else:
+                break
         self.cmdInventory()
-
-
-    def stonesInVision(self, vision: list):
-        """
-        Allows us to know if there are stones in view
-
-        Parameters :
-            vision : list:
-                    List of items in view
-
-        Returns : 
-            truple: bool for found stones, tile's index, list of stones enum
-        """
-        bestFound : List[Item] = []
-        foundStones : List[Item] = []
-
-        map = list(enumerate(vision))
-        map[0], map[1] = map[1], map[0]
-        ret = None
-
-        for i, v in map:
-            if v.linemate > 0:
-                foundStones.append(Item.LINEMATE)
-            if v.deraumere > 0:
-                foundStones.append(Item.DERAUMERE)
-            if v.sibur > 0:
-                foundStones.append(Item.SIBUR)
-            if v.mendiane > 0:
-                foundStones.append(Item.MENDIANE)
-            if v.phiras > 0:
-                foundStones.append(Item.PHIRAS)
-            if v.thystame > 0:
-                foundStones.append(Item.THYSTAME)
-            if (len(foundStones) > 0 and len(foundStones) > len(bestFound)):
-                ret = (True, i, foundStones)
-                bestFound = foundStones
-        if len(foundStones) > 0:
-            return ret
-        return (False, -1, None)
 
 
     def lookingForStones(self):
         """
         Look for stones
-        The player will look for the case with the most stones in his self.vision[index]ision.
+        The player will look for the case with the most stones in his vision.
         When he finds stones, he will  go to the case
         where there are stones and take them.
         """
-        (found, index, enums) = self.stonesInVision(self.vision)
-        if not found:
-            return random.choice([self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
-        self.goGetItem(index, enums)
-        self.cmdInventory()  
+        index = -1
+        count = 0
+        order = [0, 2, 1, 3]
+        for i in order:
+            if len(self.vision) > i and self.vision[i].countStones() > count:
+                index = i
+                count = self.vision[i].countStones()
+        if index == -1:
+            self.moveForward()
+            self.moveForward()
+            self.cmdInventory()
+            return
+        if index == 1:
+            self.moveForward()
+            self.turnLeft()
+            self.moveForward()
+        elif index == 2:
+            self.moveForward()
+        elif index == 3:
+            self.moveForward()
+            self.turnRight()
+            self.moveForward()
+        if self.vision[index].linemate > 0:
+            self.take("linemate")
+        if self.vision[index].deraumere > 0:
+            self.take("deraumere")
+        if self.vision[index].sibur > 0:
+            self.take("sibur")
+        if self.vision[index].mendiane > 0:
+            self.take("mendiane")
+        if self.vision[index].phiras > 0:
+            self.take("phiras")
+        if self.vision[index].thystame > 0:
+            self.take("thystame")
+        self.cmdInventory()
 
 
     def askSlavesForInventory(self, teamName : str, myuuid : str, creationTime : int):

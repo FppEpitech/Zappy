@@ -28,7 +28,7 @@ def stringifyData(data : str):
 def mapRangeOpti(n):
     """
         Function to get map's index view but optimized
-        Parameters : 
+        Parameters :
             n : int
                 Vision length
             Returns :
@@ -64,7 +64,7 @@ def getMovesTowardTile(index):
     """
     Return the XY movements to do to reach the tile at index X
 
-    Parameters : 
+    Parameters :
         index : int
             Index of the tile to reach
 
