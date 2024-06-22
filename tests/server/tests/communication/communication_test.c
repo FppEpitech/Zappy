@@ -196,18 +196,27 @@ Test(communication, add_gui, .timeout = 5)
     parsing->names[0] = strdup("team 1\r");
     parsing->names[1] = strdup("team 2\r");
     parsing->names[2] = NULL;
+    printf("\nHERE\n");
     app_t *app = create_app(parsing);
+    printf("\nHERE 1\n");
 
     cr_assert_not_null(app);
+    printf("\nHERE 2\n");
     node_data_t data;
     data.client = create_client(1);
+    printf("\nHERE 3\n");
     list_add_back(app->clients_list, data);
     node_data_t data1;
+    printf("\nHERE 4\n");
     data1.client = create_client(1);
+    printf("\nHERE 5\n");
     list_add_back(app->clients_list, data1);
+    printf("\nHERE 6\n");
     add_gui(app, 1, strdup("TEST\n"));
 
+    printf("\nHERE 7\n");
     cr_assert_not_null(app->gui_list->first);
+    printf("\nHERE 8\n");
     destroy_app(app);
 }
 

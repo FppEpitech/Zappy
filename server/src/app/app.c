@@ -67,7 +67,6 @@ void destroy_command_list(list_t *command_list)
 
 void destroy_app(app_t *app)
 {
-    sleep(5);
     destroy_server(app->server);
     destroy_gui(app->gui_list);
     destroy_client(app->clients_list);
