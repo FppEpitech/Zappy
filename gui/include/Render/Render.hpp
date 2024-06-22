@@ -261,6 +261,7 @@ class Gui::Render {
         Model                                       _deraumereModel;    //!< Model to display deraumeres.
         Texture2D                                   _cursorTexture;     //!< Cursor texture.
         std::vector<Vector2>                        _playerVisionPositions;   //!< Player vision positions.
+        bool                                        _endHudSet;         //!< End hud set.
 
         /**
          * @brief Load the models to draw.

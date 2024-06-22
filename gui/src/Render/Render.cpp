@@ -23,11 +23,11 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     _hudList.push_back(std::make_shared<HudGame>(HudGame(gameData)));
     _hudList.push_back(std::make_shared<HudTile>(HudTile(gameData)));
     _hudList.push_back(std::make_shared<HudHelp>(HudHelp(gameData)));
-    _hudList.push_back(std::make_shared<HudEnd>(HudEnd(gameData)));
     _decoration = std::make_shared<Decoration>(Decoration());
     this->LoadModels();
     _renderDistance = DEFAULT_RENDER_DISTANCE;
     _isHelpMenu = false;
+    _endHudSet = false;
 }
 
 void Gui::Render::LoadModels(void)
@@ -57,6 +57,10 @@ bool Gui::Render::isOpen()
 void Gui::Render::draw()
 {
     if (_gameData.get()->getIsEndGame()) {
+        if (!_endHudSet) {
+            _endHudSet = true;
+            _hudList.push_back(std::make_shared<HudEnd>(HudEnd(_gameData)));
+        }
         drawEnd();
         return;
     }
