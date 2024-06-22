@@ -14,6 +14,7 @@
 #include "Hud/HudTile.hpp"
 #include "Hud/HudPlayer.hpp"
 #include "Hud/HudHelp.hpp"
+#include "Hud/HudEnd.hpp"
 #include "Render/Decoration.hpp"
 #include "Render/UserCamera.hpp"
 #include "GameDatas/GameData.hpp"
@@ -233,6 +234,12 @@ class Gui::Render {
          * @return false - Do not display the help menu.
          */
         bool getHelpMenu() const;
+
+        /**
+         * @brief Draw the end of the game.
+         *
+         */
+        void drawEnd() const;
 
     private:
 

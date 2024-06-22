@@ -23,6 +23,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     _hudList.push_back(std::make_shared<HudGame>(HudGame(gameData)));
     _hudList.push_back(std::make_shared<HudTile>(HudTile(gameData)));
     _hudList.push_back(std::make_shared<HudHelp>(HudHelp(gameData)));
+    _hudList.push_back(std::make_shared<HudEnd>(HudEnd(gameData)));
     _decoration = std::make_shared<Decoration>(Decoration());
     this->LoadModels();
     _renderDistance = DEFAULT_RENDER_DISTANCE;
@@ -55,6 +56,10 @@ bool Gui::Render::isOpen()
 
 void Gui::Render::draw()
 {
+    if (_gameData.get()->getIsEndGame()) {
+        drawEnd();
+        return;
+    }
     _playerVisionPositions.clear();
     if (!_camera.isPlayerPov())
         UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
@@ -174,6 +179,20 @@ void Gui::Render::setHelpMenu(bool isHelpMenu)
 bool Gui::Render::getHelpMenu() const
 {
     return _isHelpMenu;
+}
+
+void Gui::Render::drawEnd() const
+{
+    BeginDrawing();
+
+    ClearBackground(ORANGE);
+
+    for (auto &hud : _hudList) {
+        if (hud->getType() == Gui::HudEnd::END)
+            hud->display();
+    }
+
+    EndDrawing();
 }
 
 void Gui::Render::displayDebug()
