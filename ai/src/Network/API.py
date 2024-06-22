@@ -161,7 +161,8 @@ class API:
             data = data.split(' ')
         else:
             clientNum = received.replace('\n', '')
-            data = self.receiveData().replace('\n', '').split(' ')
+            data = self.receiveData()
+            data = data[0:data.find('\n')].split(' ')
 
         if len(data) != 2:
             raise APIException("invalid map size", fileName)
