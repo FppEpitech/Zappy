@@ -13,6 +13,7 @@ Gui::Player::Player(std::size_t id, const std::string &team, std::pair<std::size
 {
     _currentFrame = 0;
     _state = IDLE;
+    setLastPositionUpdate(clock());
 }
 
 void Gui::Player::setPosition(std::pair<std::size_t, std::size_t> position)

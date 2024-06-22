@@ -74,8 +74,10 @@ void Gui::Engine::sendMessageUpdate()
             Player::PlayerState state = player.getState();
             if (state == Player::PlayerState::DEAD || state == Player::PlayerState::INCANTATION)
                 continue;
-            if ((float)(currentTick - player.getLastPositionUpdate()) / CLOCKS_PER_SEC > 50 / _gameData->getServerTick())
+            if ((float)(currentTick - player.getLastPositionUpdate()) / CLOCKS_PER_SEC > 50 / _gameData->getServerTick()) {
                 _network.get()->sendMessageServer("ppo " + std::to_string(player.getId()) + "\n");
+                player.setLastPositionUpdate(clock());
+            }
         }
     }
     if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::INCREASE)
