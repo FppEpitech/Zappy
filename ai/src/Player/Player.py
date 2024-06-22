@@ -6,6 +6,7 @@
 ##
 
 import sys
+import random
 
 from ai.src.Enum.Mode import Mode
 from ai.src.Enum.Role import Role
@@ -284,6 +285,23 @@ class Player:
         self.actions.append(Action.BROADCAST)
         self.commands.append(f"Broadcast \"{encryptedMsg.encrypt()}\"")
         self.messageHistory.append(encryptedMsg)
+        self.callbacks.append(callback)
+
+
+    def broadcastEnemyMessage(self, callback = None):
+        """
+        Set the current action to broadcast an enemy message
+
+        Parameters :
+            callback : function
+                the callback to call after the action
+                (default is None)
+        """
+        message = (1, "English or Spanish?")
+        if len(self.enemyBroadcast) > 0:
+            message = random.choice(self.enemyBroadcast)
+        self.actions.append(Action.BROADCAST)
+        self.commands.append(f"Broadcast \"{message[1]}\"")
         self.callbacks.append(callback)
 
 
@@ -1024,7 +1042,11 @@ class Player:
             return
         elif self.currentMode == Mode.WAITING:
             self.cmdInventory()
-            self.look()
+            rand = random.randint(0, 5)
+            if rand == 0:
+                self.broadcastEnemyMessage()
+            else:
+                self.look()
             return
         elif self.currentMode == Mode.ELEVATING:
             self.incantation()
