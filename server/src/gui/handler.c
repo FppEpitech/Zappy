@@ -8,24 +8,10 @@
 #include "server/client.h"
 #include "gui/communication.h"
 
-static bool command_already_in_buffer(gui_t *gui, char *line)
-{
-    list_node_t *tmp_cmd = gui->list_command->first;
-
-    while (tmp_cmd) {
-        if (strcmp(tmp_cmd->data.command, line) == 0)
-            return true;
-        tmp_cmd = tmp_cmd->next;
-    }
-    return false;
-}
-
 void add_command_to_gui_list(gui_t *gui, char *line)
 {
     node_data_t node;
 
-    if (command_already_in_buffer(gui, line))
-        return;
     node.command = line;
     list_add_back(gui->list_command, node);
 }
