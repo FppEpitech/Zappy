@@ -12,7 +12,7 @@ import select
 from ai.src.Utils.Utils import stringifyData
 from ai.src.Network.APIException import APIException
 
-LIMIT_TRANSFER = 20480
+LIMIT_TRANSFER = 10240
 
 class API:
     """

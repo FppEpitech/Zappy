@@ -60,6 +60,7 @@ class AI:
         self.creationTime = time.time_ns()
         self.myuuid = str(uuid.uuid4())
         self.isRunning = True
+        self.buffer = ""
 
 
     def serverCommunicationInThread(self):
@@ -75,7 +76,12 @@ class AI:
                 self.player.currentCallback = self.player.callbacks[0]
                 self.api.sendData(self.player.currentCommand)
                 while self.player.currentAction != Action.NONE:
-                    responses = self.api.receiveData().split("\n")
+                    responses = self.buffer + self.api.receiveData()
+                    responses = responses.split("\n")
+                    self.buffer = ""
+                    if responses[-1] != "":
+                        self.buffer = responses[-1]
+                        responses.pop()
                     for response in responses:
                         if response == '':
                             continue
@@ -86,8 +92,13 @@ class AI:
         print("Regrouping Start", flush=True, file=sys.stderr)
         while self.isRunning:
             responses = self.api.receiveData(0.1)
-            if responses is not None :
+            if responses is not None:
+                responses = self.buffer + responses
                 responses = responses.split("\n")
+                self.buffer = ""
+                if responses[-1] != "":
+                    self.buffer = responses[-1]
+                    responses.pop()
                 for response in responses:
                     if response == '':
                         continue
@@ -98,7 +109,12 @@ class AI:
                 self.player.currentCallback = self.player.callbacks[0]
                 self.api.sendData(self.player.currentCommand)
                 while self.player.currentAction != Action.NONE:
-                    responses = self.api.receiveData().split("\n")
+                    responses = self.buffer + self.api.receiveData()
+                    responses = responses.split("\n")
+                    self.buffer = ""
+                    if responses[-1] != "":
+                        self.buffer = responses[-1]
+                        responses.pop()
                     for response in responses:
                         if response == '':
                             continue
