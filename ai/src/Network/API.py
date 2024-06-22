@@ -90,6 +90,8 @@ class API:
                 the timeout to wait for the server to be ready to receive data
                 (default is None which means no timeout)
         """
+        if -1 in self.outputs:
+            return
         _, write, _ = select.select([], self.outputs, [], timeout)
 
         if data[-1] != '\n':
@@ -109,6 +111,8 @@ class API:
                 the timeout to wait for the server to send data
                 (default is None which means no timeout)
         """
+        if -1 in self.inputs:
+            return None
         readable, _, _ = select.select(self.inputs, [], [], timeout)
         for s in readable:
             if s == self.sock:
