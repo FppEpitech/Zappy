@@ -207,6 +207,20 @@ class Gui::Player {
         clock_t getAnimationTimeEllapsed() const;
 
         /**
+         * @brief Set the Last Position Update object.
+         *
+         * @param lastPositionUpdate Last position update.
+         */
+        void setLastPositionUpdate(clock_t lastPositionUpdate);
+
+        /**
+         * @brief Get the Last Position Update object.
+         *
+         * @return clock_t - Last position update.
+         */
+        clock_t getLastPositionUpdate() const;
+
+        /**
          * @brief Inventory of the player.
          *
          */
@@ -224,4 +238,5 @@ class Gui::Player {
         std::string                             _broadcast;             //!< Broadcast message.
         int                                     _currentFrame;          //!< Current frame animation.
         clock_t                                 _animationTimeEllapsed; //!< Time ellapsed during animation.
+        clock_t                                 _lastPositionUpdate;    //!< Last position update.
 };

@@ -141,3 +141,13 @@ clock_t Gui::Player::getAnimationTimeEllapsed() const
 {
     return _animationTimeEllapsed;
 }
+
+void Gui::Player::setLastPositionUpdate(clock_t lastPositionUpdate)
+{
+    _lastPositionUpdate = lastPositionUpdate;
+}
+
+clock_t Gui::Player::getLastPositionUpdate() const
+{
+    return _lastPositionUpdate;
+}
