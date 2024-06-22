@@ -486,7 +486,7 @@ class Player:
         self.level = level
 
 
-    def handleElevation(self, response : str):
+    def handleElevation(self, response : str, teamName : str, myuuid : str, creationTime : int):
         """
         Handle the response of the elevation command
 
@@ -504,6 +504,10 @@ class Player:
             self.currentlyElevating = False
             return False
         elif response == "ko":
+            print("Elevation failed", flush=True, file=sys.stderr)
+            if self.isLeader == Role.LEADER:
+                self.currentMode = Mode.FOOD
+                self.broadcast("Food", teamName, myuuid, creationTime)
             self.currentlyElevating = False
             return False
 
@@ -530,7 +534,7 @@ class Player:
         return False
 
 
-    def handleResponse(self, response : str, aiTimestamp : int):
+    def handleResponse(self, response : str, aiTimestamp : int, teamName : str, myuuid : str, creationTime : int):
         """
         Handle the response from the server
 
@@ -542,7 +546,7 @@ class Player:
         """
         if self.hasSomethingHappened(response, aiTimestamp):
             return
-        if response == "ko":
+        if response == "ko" and self.currentAction != Action.INCANTATION:
             self.currentAction = Action.NONE
             self.currentCommand = ""
             return
@@ -558,7 +562,7 @@ class Player:
             if self.currentCallback is not None:
                 self.currentCallback()
         elif self.currentAction == Action.INCANTATION:
-            if self.handleElevation(response):
+            if self.handleElevation(response, teamName, myuuid, creationTime):
                 return
         self.currentAction = Action.NONE
         self.currentCommand = ""
@@ -1006,6 +1010,12 @@ class Player:
             for msg in self.broadcastReceived:
                 if msg[1].message == "IsLeader?":
                     self.broadcast("Yes", teamName, myuuid, creationTime)
+                    self.broadcastReceived.remove(msg)
+        if self.isLeader == Role.SLAVE:
+            for msg in self.broadcastReceived:
+                if msg[1].message == "Food":
+                    self.currentMode = Mode.FOOD
+                    self.arrived = False
                     self.broadcastReceived.remove(msg)
         self.updateMode()
         if self.currentMode == Mode.REGROUP:
