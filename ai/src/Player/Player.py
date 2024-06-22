@@ -5,10 +5,9 @@
 ## Player
 ##
 
-import random
 import sys
-from typing import List
 import random
+from typing import List
 
 from ai.src.Enum.Mode import Mode
 from ai.src.Enum.Role import Role
