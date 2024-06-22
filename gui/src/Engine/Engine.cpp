@@ -90,9 +90,9 @@ void Gui::Engine::updateMap()
 
     if (!(mapSize.first == 0 && mapSize.second == 0) && _gameData.get()->getNbBCTCommandReceived() >= mapSize.first * mapSize.second) {
         if (TIME_UNIT_MAP_UPDATE / _gameData->getServerTick() >= 2 && (float)(currentTick - _gameData->getLastTickMctCommand()) / CLOCKS_PER_SEC > TIME_UNIT_MAP_UPDATE / _gameData->getServerTick()) {
-            //sendUpdateMapMessage();
+            sendUpdateMapMessage();
         } else if (TIME_UNIT_MAP_UPDATE / _gameData->getServerTick() < 2 && (float)(currentTick - _gameData->getLastTickMctCommand()) / CLOCKS_PER_SEC > 2) {
-            //sendUpdateMapMessage();
+            sendUpdateMapMessage();
         }
     }
 }
