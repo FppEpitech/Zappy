@@ -34,3 +34,10 @@ std::string Gui::ANetwork::getHostName() const
 {
     return this->_hostName;
 }
+
+std::string Gui::ANetwork::getBuffer()
+{
+    std::string command = _buffer;
+    _buffer = "";
+    return command;
+}

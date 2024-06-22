@@ -24,6 +24,12 @@ class Gui::INetwork {
 
     public:
 
+        enum BufferState {
+            NONE,
+            READY,
+            SERVER_ERROR
+        };
+
         /**
          * @brief Destroy the INetwork object.
          *
@@ -69,9 +75,9 @@ class Gui::INetwork {
         /**
          * @brief Listen to the server.
          *
-         * @return std::string Message from the server.
+         * @return BufferState - Buffer state.
          */
-        virtual const std::string listenServer() = 0;
+        virtual BufferState listenServer() = 0;
 
         /**
          * @brief Send a message to the server.
@@ -79,4 +85,13 @@ class Gui::INetwork {
          * @param message Message to send.
          */
         virtual void sendMessageServer(const std::string &message) = 0;
+
+        /**
+         * @brief Get the Buffer object.
+         * Be careful, this method will
+         * delete the current buffer.
+         *
+         * @return std::string - Buffer message.
+         */
+        virtual std::string getBuffer() = 0;
 };

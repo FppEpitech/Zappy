@@ -74,12 +74,19 @@ def main():
         host, port, teamName = getArgs()
         try:
             ai = AI(host, port, teamName)
-            ai.run()
+            try:
+                ai.run()
+            except KeyboardInterrupt:
+                ai.api.close()
+                ai.isRunning = False
+                ai.threads[0].join()
+                print("The AI has been stopped by a keyboard interrupt", file=sys.stderr)
         except PlayerDeathException as e:
             print(e, file=sys.stderr)
-            if ai.player.isLeader == Role.LEADER:
-                print("The leader is dead, the AI will fork", file=sys.stderr)
-                main() # TODO: Need to be fixed (can't connect if there is no slot available)
+            sys.exit(0)
+        except Exception as e:
+            print(e, file=sys.stderr)
+            sys.exit(84)
 
 
 if __name__ == "__main__":
@@ -88,3 +95,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(e, file=sys.stderr)
         sys.exit(84)
+    sys.exit(0)

@@ -31,6 +31,7 @@ server_t *create_server(size_t port)
     new_server->addrlen = sizeof(new_server->addr);
     new_server->fd = socket(AF_INET, SOCK_STREAM, 0);
     if (init_server(new_server) == false) {
+        printf("WARNING: [Port is still used]\n");
         free(new_server);
         return NULL;
     }

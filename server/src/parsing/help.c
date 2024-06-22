@@ -11,10 +11,18 @@
 #include <stdio.h>
 #include <string.h>
 
-static void print_help(void)
+void print_help(void)
 {
     printf("USAGE:\t./zappy_server -p port -x width -y height "
-    "-n name1 name2 ... -c clientsNb -f freq\n");
+    "-n name1 name2 ... -c clientsNb -f freq\n\n");
+    printf("Description:\n");
+    printf("\t-p port\tis the port number\n");
+    printf("\t-x width\tis the width of the world\n");
+    printf("\t-y height\tis the height of the world\n");
+    printf("\t-n name1 name2 ...\tis the name of the teams\n");
+    printf("\t-c clientsNb\tis the number of authorized clients per team\n");
+    printf("\t-f freq\tis the reciprocal of time unit for execution "
+    "of actions\n");
     fflush(stdout);
 }
 
