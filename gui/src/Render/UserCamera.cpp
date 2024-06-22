@@ -16,7 +16,7 @@ Gui::UserCamera::UserCamera()
     _camera->fovy = 70.0f;
     _camera->projection = CAMERA_PERSPECTIVE;
     _type = FREE;
-    _playerId = 0;
+    _playerId = -1;
 }
 
 void Gui::UserCamera::setPosition(Vector3 position)
