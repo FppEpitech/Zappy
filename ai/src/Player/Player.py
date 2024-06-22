@@ -184,6 +184,7 @@ class Player:
         self.messageHistory = []
         self.teamName = teamName
         self.enemyBroadcast = []
+        self.alliesUuid = []
 
     def __str__(self):
         """
@@ -457,6 +458,9 @@ class Player:
                 return
             self.broadcastReceived.append((direction, msg))
             self.messageHistory.append(msg)
+            if self.isLeader == Role.LEADER:
+                if msg.senderUuid not in self.alliesUuid:
+                    self.alliesUuid.append(msg.senderUuid)
         else:
             print("Received enemy message: ", message, flush=True, file=sys.stderr)
             self.enemyBroadcast.append((direction, message))
@@ -556,7 +560,7 @@ class Player:
             creationTime : int
                 the creation time of the message
         """
-        if self.hasSomethingHappened(response, aiTimestamp):
+        if self.hasSomethingHappened(response, aiTimestamp) or self.currentMode == Mode.DYING:
             return
         if response == "ko" and self.currentAction != Action.INCANTATION:
             self.currentAction = Action.NONE
@@ -1018,6 +1022,11 @@ class Player:
             creationTime : int
                 the creation time of the message
         """
+        if self.currentMode == Mode.DYING:
+            return
+        if self.inventory.food <= 1 and self.isLeader == Role.LEADER:
+            self.broadcast(random.choice(self.alliesUuid), teamName, myuuid, creationTime)
+            self.currentMode = Mode.DYING
         if self.isLeader == Role.LEADER:
             for msg in self.broadcastReceived:
                 if msg[1].message == "IsLeader?":
@@ -1026,6 +1035,11 @@ class Player:
         if self.isLeader == Role.SLAVE:
             for msg in self.broadcastReceived:
                 if msg[1].message == "Food":
+                    self.currentMode = Mode.FOOD
+                    self.arrived = False
+                    self.broadcastReceived.remove(msg)
+                if msg[1].message == myuuid:
+                    self.isLeader = Role.LEADER
                     self.currentMode = Mode.FOOD
                     self.arrived = False
                     self.broadcastReceived.remove(msg)

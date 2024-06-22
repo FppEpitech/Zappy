@@ -68,6 +68,8 @@ class AI:
         Handle the communication with the server in a thread
         """
         while self.isRunning:
+            if self.player.currentMode == Mode.DYING:
+                break
             if self.player.currentMode == Mode.REGROUP and self.player.isLeader == Role.SLAVE:
                 break
             for _ in range(0, len(self.player.callbacks)):
@@ -173,6 +175,7 @@ class AI:
         for thread in self.threads:
             thread.join()
         self.api.close()
+
 
 def forkAI():
     """
