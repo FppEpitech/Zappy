@@ -10,7 +10,7 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 
-#define USAGE "USAGE:\t./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq\n"
+#define USAGE "USAGE:\t./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq\n\nDescription:\n\t-p port\tis the port number\n\t-x width\tis the width of the world\n\t-y height\tis the height of the world\n\t-n name1 name2 ...\tis the name of the teams\n\t-c clientsNb\tis the number of authorized clients per team\n\t-f freq\tis the reciprocal of time unit for execution of actions\n"
 
 Test(help_test, test_help_label)
 {
