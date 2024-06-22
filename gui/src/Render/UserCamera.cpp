@@ -16,6 +16,7 @@ Gui::UserCamera::UserCamera()
     _camera->fovy = 70.0f;
     _camera->projection = CAMERA_PERSPECTIVE;
     _type = FREE;
+    _playerId = -1;
 }
 
 void Gui::UserCamera::setPosition(Vector3 position)
@@ -78,7 +79,7 @@ void Gui::UserCamera::setPlayerId(size_t id)
     _playerId = id;
 }
 
-size_t Gui::UserCamera::getPlayerId() const
+int Gui::UserCamera::getPlayerId() const
 {
     return _playerId;
 }

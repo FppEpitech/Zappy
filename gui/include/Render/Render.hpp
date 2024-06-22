@@ -14,6 +14,7 @@
 #include "Hud/HudTile.hpp"
 #include "Hud/HudPlayer.hpp"
 #include "Hud/HudHelp.hpp"
+#include "Hud/HudEnd.hpp"
 #include "Render/Decoration.hpp"
 #include "Render/UserCamera.hpp"
 #include "GameDatas/GameData.hpp"
@@ -234,6 +235,12 @@ class Gui::Render {
          */
         bool getHelpMenu() const;
 
+        /**
+         * @brief Draw the end of the game.
+         *
+         */
+        void drawEnd() const;
+
     private:
 
         UserCamera                                  _camera;            //!< Camera of the scene.
@@ -254,6 +261,7 @@ class Gui::Render {
         Model                                       _deraumereModel;    //!< Model to display deraumeres.
         Texture2D                                   _cursorTexture;     //!< Cursor texture.
         std::vector<Vector2>                        _playerVisionPositions;   //!< Player vision positions.
+        bool                                        _endHudSet;         //!< End hud set.
 
         /**
          * @brief Load the models to draw.

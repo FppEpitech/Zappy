@@ -27,6 +27,7 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     this->LoadModels();
     _renderDistance = DEFAULT_RENDER_DISTANCE;
     _isHelpMenu = false;
+    _endHudSet = false;
 }
 
 void Gui::Render::LoadModels(void)
@@ -55,6 +56,14 @@ bool Gui::Render::isOpen()
 
 void Gui::Render::draw()
 {
+    if (_gameData.get()->getIsEndGame()) {
+        if (!_endHudSet) {
+            _endHudSet = true;
+            _hudList.push_back(std::make_shared<HudEnd>(HudEnd(_gameData)));
+        }
+        drawEnd();
+        return;
+    }
     _playerVisionPositions.clear();
     if (!_camera.isPlayerPov())
         UpdateCamera(_camera.getCamera().get(), CAMERA_FIRST_PERSON);
@@ -176,6 +185,20 @@ bool Gui::Render::getHelpMenu() const
     return _isHelpMenu;
 }
 
+void Gui::Render::drawEnd() const
+{
+    BeginDrawing();
+
+    ClearBackground(ORANGE);
+
+    for (auto &hud : _hudList) {
+        if (hud->getType() == Gui::HudEnd::END)
+            hud->display();
+    }
+
+    EndDrawing();
+}
+
 void Gui::Render::displayDebug()
 {
     if (_isDebug) {
@@ -218,7 +241,7 @@ void Gui::Render::displayPlayers()
             if (!displayAnimations(team, player))
                 continue;
 
-            if (_camera.getPlayerId() == player.getId() && _camera.getType() == Gui::UserCamera::FIRST_PERSON)
+            if (_camera.getPlayerId() == (int)player.getId() && _camera.getType() == Gui::UserCamera::FIRST_PERSON)
                 continue;
 
             float rotation = player.getRotationFromOrientation();
