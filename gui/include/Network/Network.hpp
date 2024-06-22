@@ -50,9 +50,9 @@ class Gui::Network : public Gui::ANetwork {
         /**
          * @brief Listen the server and return it message.
          *
-         * @return std::string - Message of the server.
+         * @return BufferState - Buffer state.
          */
-        const std::string listenServer();
+        BufferState listenServer();
 
         /**
          * @brief Send a message to the Server.
@@ -72,12 +72,12 @@ class Gui::Network : public Gui::ANetwork {
         /**
          * @brief Read the server output.
          *
-         * @return const std::string - Server message.
+         * @return BufferState - Buffer state.
          */
-        const std::string readInfoServer();
+        BufferState readInfoServer();
 
-        int             _serverFd;      // server file descriptor
-        fd_set          _writeFd;       // file descriptor for write access
-        fd_set          _readFd;        // file descriptor for read access
-        bool            _isConnected;   // is true if the gui is connected to the server
+        int             _serverFd;      //!< server file descriptor
+        fd_set          _writeFd;       //!< file descriptor for write access
+        fd_set          _readFd;        //!< file descriptor for read access
+        bool            _isConnected;   //!< is true if the gui is connected to the server
 };

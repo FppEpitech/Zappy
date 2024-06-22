@@ -8,6 +8,7 @@
 from ai.src.Enum.Role import Role
 from ai.src.Enum.Action import Action
 from ai.src.Player.Player import Player
+from ai.src.Utils.Message import Message
 from ai.src.Player.Inventory import Inventory
 
 
@@ -89,7 +90,7 @@ def testPlayer():
 
 def testPlayerConstructor():
     try:
-        player = Player()
+        player = Player("")
         assert player.vision == []
         assert player.inventory == Inventory()
         assert player.broadcastReceived == []
@@ -109,14 +110,14 @@ def testPlayerConstructor():
 
 def testPlayerString():
     try:
-        player = Player()
+        player = Player("")
         assert str(player) == "Level: 1, Inventory: [food 10, linemate 0, deraumere 0, sibur 0, mendiane 0, phiras 0, thystame 0, player 0], Current action: Action.NONE, Current command: , Vision: [], Broadcast received: [], Ejection received: []"
     except Exception as _:
         raise Exception("Test failed")
 
 def testPlayerMoveForward():
     try:
-        player = Player()
+        player = Player("")
         player.moveForward()
         assert player.actions == [Action.FORWARD]
         assert player.commands == ["Forward"]
@@ -126,7 +127,7 @@ def testPlayerMoveForward():
 
 def testPlayerTurnRight():
     try:
-        player = Player()
+        player = Player("")
         player.turnRight()
         assert player.actions == [Action.RIGHT]
         assert player.commands == ["Right"]
@@ -136,7 +137,7 @@ def testPlayerTurnRight():
 
 def testPlayerTurnLeft():
     try:
-        player = Player()
+        player = Player("")
         player.turnLeft()
         assert player.actions == [Action.LEFT]
         assert player.commands == ["Left"]
@@ -146,7 +147,7 @@ def testPlayerTurnLeft():
 
 def testPlayerLook():
     try:
-        player = Player()
+        player = Player("")
         player.look()
         assert player.actions == [Action.LOOK]
         assert player.commands == ["Look"]
@@ -156,7 +157,7 @@ def testPlayerLook():
 
 def testPlayerCmdInventory():
     try:
-        player = Player()
+        player = Player("")
         player.cmdInventory()
         assert player.actions == [Action.INVENTORY]
         assert player.commands == ["Inventory"]
@@ -166,17 +167,17 @@ def testPlayerCmdInventory():
 
 def testPlayerBroadcast():
     try:
-        player = Player()
+        player = Player("")
         player.broadcast("test")
         assert player.actions == [Action.BROADCAST]
-        assert player.commands == ["Broadcast \"test\""]
         assert player.callbacks == [None]
+        assert len(player.messageHistory) == 1
     except Exception as _:
         raise Exception("Test failed")
 
 def testPlayerConnectNbr():
     try:
-        player = Player()
+        player = Player("")
         player.connectNbr()
         assert player.actions == [Action.CONNECT_NBR]
         assert player.commands == ["Connect_nbr"]
@@ -186,7 +187,7 @@ def testPlayerConnectNbr():
 
 def testPlayerFork():
     try:
-        player = Player()
+        player = Player("")
         player.fork()
         assert player.actions == [Action.FORK]
         assert player.commands == ["Fork"]
@@ -196,7 +197,7 @@ def testPlayerFork():
 
 def testPlayerEject():
     try:
-        player = Player()
+        player = Player("")
         player.eject()
         assert player.actions == [Action.EJECT]
         assert player.commands == ["Eject"]
@@ -206,7 +207,7 @@ def testPlayerEject():
 
 def testPlayerTake():
     try:
-        player = Player()
+        player = Player("")
         player.take("food")
         assert player.actions == [Action.TAKE]
         assert player.commands == ["Take food"]
@@ -216,7 +217,7 @@ def testPlayerTake():
 
 def testPlayerSet():
     try:
-        player = Player()
+        player = Player("")
         player.set("food")
         assert player.actions == [Action.SET]
         assert player.commands == ["Set food"]
@@ -226,7 +227,7 @@ def testPlayerSet():
 
 def testPlayerIncantation():
     try:
-        player = Player()
+        player = Player("")
         player.incantation()
         assert player.actions == [Action.INCANTATION]
         assert player.commands == ["Incantation"]
@@ -236,7 +237,7 @@ def testPlayerIncantation():
 
 def testPlayerNone():
     try:
-        player = Player()
+        player = Player("")
         player.none()
         assert player.actions == [Action.NONE]
         assert player.commands == [""]
@@ -246,7 +247,7 @@ def testPlayerNone():
 
 def testPlayerUpdateVision():
     try:
-        player = Player()
+        player = Player("")
         player.updateVision("[player food food, player, player]")
         assert player.vision[0] == Inventory(2, 0, 0, 0, 0, 0, 0, 1)
         assert player.vision[1] == Inventory(0, 0, 0, 0, 0, 0, 0, 1)
@@ -256,7 +257,7 @@ def testPlayerUpdateVision():
 
 def testPlayerUpdateInventory():
     try:
-        player = Player()
+        player = Player("")
         player.updateInventory("[food 100, linemate 5, deraumere 6, sibur 7, mendiane 8, phiras 9, thystame 10]")
         assert player.inventory.food == 100
         assert player.inventory.linemate == 5
@@ -270,18 +271,30 @@ def testPlayerUpdateInventory():
 
 def testPlayerUpdateBroadcast():
     try:
-        player = Player()
-        player.updateBroadcastReceived("message 5, \"text\"")
-        assert player.broadcastReceived == [(5, "text")]
+        player = Player("test")
+        msg = Message("test")
+        msg.createMessage("text", "uuid", 0)
+        player.updateBroadcastReceived(f"message 5, \"{msg.encrypt()}\"", 0)
+        assert len(player.broadcastReceived) == 1
+        assert len(player.enemyBroadcast) == 0
+        assert player.broadcastReceived[0][0] == 5
+        assert player.broadcastReceived[0][1].message == "text"
+        assert player.broadcastReceived[0][1].senderUuid == "uuid"
+        assert player.broadcastReceived[0][1].senderCreationTime == 0
 
-        player.updateBroadcastReceived("message 6, text2")
-        assert player.broadcastReceived == [(5, "text"), (6, "text2")]
-    except Exception as _:
+        player.updateBroadcastReceived("message 6, text2", 0)
+        assert len(player.broadcastReceived) == 1
+        assert len(player.enemyBroadcast) == 1
+
+        player.updateBroadcastReceived(f"message 5, \"{msg.encrypt()}\"", 5)
+        assert len(player.broadcastReceived) == 1
+        assert len(player.enemyBroadcast) == 1
+    except Exception as e:
         raise Exception("Test failed")
 
 def testPlayerUpdateEjection():
     try:
-        player = Player()
+        player = Player("")
         player.updateEjectionReceived("eject: 5")
         assert player.ejectionReceived == [5]
     except Exception as _:
@@ -289,7 +302,7 @@ def testPlayerUpdateEjection():
 
 def testPlayerUpdateLevel():
     try:
-        player = Player()
+        player = Player("")
         player.updateLevel(5)
         assert player.level == 5
     except Exception as _:
@@ -297,7 +310,7 @@ def testPlayerUpdateLevel():
 
 def testPlayerHandleElevation():
     try:
-        player = Player()
+        player = Player("")
         assert player.handleElevation("Elevation underway") == True
         assert player.currentlyElevating == True
         assert player.handleElevation("Current level: 5") == False
@@ -310,66 +323,66 @@ def testPlayerHandleElevation():
 
 def testPlayerHasSomethingHappened():
     try:
-        player = Player()
-        assert player.hasSomethingHappened("nothing") == False
+        player = Player("")
+        assert player.hasSomethingHappened("nothing", 0) == False
 
         imDead = False
         try:
-            player.hasSomethingHappened("dead")
+            player.hasSomethingHappened("dead", 0)
         except Exception as _:
             imDead = True
         assert imDead == True
 
-        assert player.hasSomethingHappened("message 5, \"text\"") == True
-        assert player.hasSomethingHappened("eject: 5") == True
+        assert player.hasSomethingHappened("message 5, \"text\"", 0) == True
+        assert player.hasSomethingHappened("eject: 5", 0) == True
     except Exception as _:
         raise Exception("Test failed")
 
 def testPlayerHandleResponse():
     try:
-        player = Player()
-        player.handleResponse("eject: 5")
+        player = Player("")
+        player.handleResponse("eject: 5", 0)
         assert player.ejectionReceived == [5]
 
-        player.handleResponse("ko")
+        player.handleResponse("ko", 0)
         assert player.currentAction == Action.NONE
 
         player.currentAction = Action.TAKE
         player.currentCommand = "Take food"
         player.currentCallback = player.inventory.addAnObject("food")
-        player.handleResponse("ok")
+        player.handleResponse("ok", 0)
         assert player.inventory.food == 11
         assert player.currentAction == Action.NONE
 
         player.currentAction = Action.FORWARD
         player.currentCommand = "Forward"
         player.currentCallback = None
-        player.handleResponse("ok")
+        player.handleResponse("ok", 0)
         assert player.currentAction == Action.NONE
 
         player.currentAction = Action.LOOK
         player.currentCommand = "Look"
         player.currentCallback = None
-        player.handleResponse("[player food food, player, player]")
+        player.handleResponse("[player food food, player, player]", 0)
 
         player.currentAction = Action.INVENTORY
         player.currentCommand = "Inventory"
         player.currentCallback = None
-        player.handleResponse("[food 100, linemate 5, deraumere 6, sibur 7, mendiane 8, phiras 9, thystame 10]")
+        player.handleResponse("[food 100, linemate 5, deraumere 6, sibur 7, mendiane 8, phiras 9, thystame 10]", 0)
 
         player.currentAction = Action.CONNECT_NBR
         player.currentCommand = "Connect_nbr"
         player.currentCallback = None
-        player.handleResponse("5")
+        player.handleResponse("5", 0)
         assert player.unusedSlots == 5
 
         player.currentAction = Action.INCANTATION
         player.currentCommand = "Incantation"
         player.currentCallback = None
-        player.handleResponse("Elevation underway")
+        player.handleResponse("Elevation underway", 0)
         assert player.currentlyElevating == True
         assert player.currentAction == Action.INCANTATION
-        player.handleResponse("Current level: 5")
+        player.handleResponse("Current level: 5", 0)
         assert player.level == 5
         assert player.currentlyElevating == False
         assert player.currentAction == Action.NONE

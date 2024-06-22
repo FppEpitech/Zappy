@@ -70,6 +70,6 @@ class Gui::AEvent : public Gui::IEvent {
 
     protected:
 
-        std::shared_ptr<Render>         _render;        // Render class to draw scene.
-        std::shared_ptr<GameData>       _gameData;      // GameData class to contain scene.
+        std::shared_ptr<Render>         _render;        //!< Render class to draw scene.
+        std::shared_ptr<GameData>       _gameData;      //!< GameData class to contain scene.
 };

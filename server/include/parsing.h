@@ -33,6 +33,12 @@
 parsing_t *parse_arg(int ac, char **av);
 
 /**
+ * @brief Display the help message.
+ *
+ */
+void print_help(void);
+
+/**
  * @brief Check if the help flag is present.
  *
  * @param ac Numbers of arguments passed to the server.

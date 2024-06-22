@@ -77,9 +77,9 @@ class Gui::ANetwork : public Gui::INetwork {
         /**
          * @brief Listen the server and return it message.
          *
-         * @return std::string - Message of the server.
+         * @return BufferState - Buffer state.
          */
-        virtual const std::string listenServer() = 0;
+        virtual BufferState listenServer() = 0;
 
         /**
          * @brief Send a message to the Server.
@@ -88,7 +88,17 @@ class Gui::ANetwork : public Gui::INetwork {
          */
         virtual void sendMessageServer(const std::string& message) = 0;
 
+        /**
+         * @brief Get the Buffer object.
+         * Be careful, this method will
+         * delete the current buffer.
+         *
+         * @return std::string - Buffer message.
+         */
+        std::string getBuffer();
+
     protected:
-        int             _port;          // Port of the server.
-        std::string     _hostName;      // Host name of the server.
+        int             _port;          //!< Port of the server.
+        std::string     _hostName;      //!< Host name of the server.
+        std::string     _buffer;        //!< Buffer to receive server message.
 };
