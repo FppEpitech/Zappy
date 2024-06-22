@@ -55,7 +55,7 @@ TEST_FILES	=	Network/TestNetwork.cpp \
 				Render/TestDecoration.cpp \
 				GUIUpdater/TestGUIUpdater.cpp \
 				Event/TestEvent.cpp \
-				Engine/TestEngine.cpp \
+				Mocks/TestMocks.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
