@@ -493,6 +493,12 @@ class Player:
         Parameters :
             response : str
                 the response from the server
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
         if response == "Elevation underway":
             self.currentlyElevating = True
@@ -543,6 +549,12 @@ class Player:
                 the response from the server
             aiTimestamp : int
                 the timestamp of the AI
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
         if self.hasSomethingHappened(response, aiTimestamp):
             return
