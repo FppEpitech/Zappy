@@ -89,6 +89,6 @@ class Gui::ANetwork : public Gui::INetwork {
         virtual void sendMessageServer(const std::string& message) = 0;
 
     protected:
-        int             _port;          // Port of the server.
-        std::string     _hostName;      // Host name of the server.
+        int             _port;          //!< Port of the server.
+        std::string     _hostName;      //!< Host name of the server.
 };

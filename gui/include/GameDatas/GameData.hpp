@@ -268,14 +268,14 @@ class Gui::GameData {
 
     private:
 
-        std::vector<Gui::Team>      _teams;                 // Teams of the game.
-        Map<Gui::Tile>              _map;                   // Map of the game.
-        std::size_t                 _serverTick;            // Tick value of the server.
-        clock_t                     _lastTick;              // Last tick of the GameData (based on the server tick).
-        bool                        _isEndGame;             // Is true if the game is finished.
-        std::size_t                 _nbBCTCommandReceived;  // Number of bct command received.
-        clock_t                     _lastTickMctCommand;    // Last tick when mct command is send.
-        std::string                 _lastError;             // Last error message.
-        TimeUnitState               _timeUnitFromServer;    // True if the time unit has changed.
-        std::vector<Gui::Egg>       _serverEggs;            // Eggs from the server.
+        std::vector<Gui::Team>      _teams;                 //!< Teams of the game.
+        Map<Gui::Tile>              _map;                   //!< Map of the game.
+        std::size_t                 _serverTick;            //!< Tick value of the server.
+        clock_t                     _lastTick;              //!< Last tick of the GameData (based on the server tick).
+        bool                        _isEndGame;             //!< Is true if the game is finished.
+        std::size_t                 _nbBCTCommandReceived;  //!< Number of bct command received.
+        clock_t                     _lastTickMctCommand;    //!< Last tick when mct command is send.
+        std::string                 _lastError;             //!< Last error message.
+        TimeUnitState               _timeUnitFromServer;    //!< True if the time unit has changed.
+        std::vector<Gui::Egg>       _serverEggs;            //!< Eggs from the server.
 };

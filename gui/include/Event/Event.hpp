@@ -57,6 +57,12 @@ class Gui::Event : public Gui::AEvent {
             {KEY_LEFT_SHIFT, [this](){moveDownCamera();}},
         };
 
+        std::unordered_map<GamepadButton, std::function<void()>> _eventsGamepadButtonDown =
+        {
+            {GAMEPAD_BUTTON_RIGHT_TRIGGER_2, [this](){handleSpaceGamepad();}},
+            {GAMEPAD_BUTTON_LEFT_TRIGGER_2, [this](){moveDownCamera();}},
+        };
+
         /**
          * @brief Map for events by pressing key.
          *
@@ -74,6 +80,21 @@ class Gui::Event : public Gui::AEvent {
             {KEY_KP_ADD, [this](){increaseTimeUnit();}},
             {KEY_KP_SUBTRACT, [this](){decreaseTimeUnit();}},
             {KEY_H, [this](){displayHelpMenu();}},
+        };
+
+        std::unordered_map<GamepadButton, std::function<void()>> _eventsGamepadButtonPressed =
+        {
+            {GAMEPAD_BUTTON_RIGHT_FACE_DOWN, [this](){handleLeftClick();}},
+            {GAMEPAD_BUTTON_RIGHT_TRIGGER_1, [this](){handleLeftClick();}},
+            {GAMEPAD_BUTTON_LEFT_TRIGGER_1, [this](){handleRightClick();}},
+            {GAMEPAD_BUTTON_LEFT_FACE_UP, [this](){increaseRenderDistance();}},
+            {GAMEPAD_BUTTON_LEFT_FACE_DOWN, [this](){decreaseRenderDistance();}},
+            {GAMEPAD_BUTTON_LEFT_FACE_LEFT, [this](){decreaseTimeUnit();}},
+            {GAMEPAD_BUTTON_LEFT_FACE_RIGHT, [this](){increaseTimeUnit();}},
+            {GAMEPAD_BUTTON_RIGHT_FACE_LEFT, [this](){switchDisplayDebug();}},
+            {GAMEPAD_BUTTON_RIGHT_FACE_RIGHT, [this](){switchTileHudToGame();}},
+            {GAMEPAD_BUTTON_RIGHT_FACE_UP, [this](){changeActualPlayerPov();}},
+            {GAMEPAD_BUTTON_MIDDLE_RIGHT, [this](){closeWindowGamepad();}},
         };
 
         /**
@@ -179,4 +200,14 @@ class Gui::Event : public Gui::AEvent {
          *
          */
         void displayHelpMenu();
+
+        /**
+         * @brief Handle Space for Gamepad
+         */
+        void handleSpaceGamepad();
+
+        /**
+         * @brief Close the window for Gamepad
+         */
+        void closeWindowGamepad();
 };

@@ -61,10 +61,10 @@ class Gui::Decoration {
 
     private:
 
-        Model                                   _treeModel;         // Tree model asset.
-        Map<bool>                               _mapTree;           // Map to display trees.
+        Model                                   _treeModel;         //!< Tree model asset.
+        Map<bool>                               _mapTree;           //!< Map to display trees.
 
-        std::pair<std::size_t, std::size_t>     _mapSize;           // Size of the map.
+        std::pair<std::size_t, std::size_t>     _mapSize;           //!< Size of the map.
 
         /**
          * @brief Display Trees.

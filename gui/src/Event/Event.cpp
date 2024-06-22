@@ -28,6 +28,14 @@ void Gui::Event::listen()
         if (IsMouseButtonPressed(event.first))
             event.second();
     }
+    for (auto &event : _eventsGamepadButtonDown) {
+        if (IsGamepadButtonDown(0, event.first))
+            event.second();
+    }
+    for (auto &event : _eventsGamepadButtonPressed) {
+        if (IsGamepadButtonPressed(0, event.first))
+            event.second();
+    }
 }
 
 void Gui::Event::moveUpCamera()
@@ -196,4 +204,15 @@ void Gui::Event::decreaseTimeUnit()
 void Gui::Event::displayHelpMenu()
 {
     _render.get()->setHelpMenu(!_render.get()->getHelpMenu());
+}
+
+void Gui::Event::handleSpaceGamepad()
+{
+    setFreeCam();
+    moveUpCamera();
+}
+
+void Gui::Event::closeWindowGamepad()
+{
+    _gameData.get()->setIsEndGame(true);
 }

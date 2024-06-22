@@ -62,6 +62,6 @@ class Gui::ParseCommandLine {
 
     private:
 
-        int             _port;      // port server
-        std::string     _hostName;  // host name server
+        int             _port;      //!< port server
+        std::string     _hostName;  //!< host name server
 };
