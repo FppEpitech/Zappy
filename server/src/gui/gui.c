@@ -15,6 +15,7 @@ gui_t *create_gui(int fd)
     if (new_gui == NULL)
         return NULL;
     new_gui->fd = fd;
+    new_gui->list_command = list_new();
     new_gui->list_messages = list_new();
     return new_gui;
 }
@@ -87,6 +88,8 @@ void destroy_gui(list_t *gui_list)
     while (temp) {
         close(temp->data.gui->fd);
         destroy_message_list(temp->data.gui->list_messages);
+        destroy_command_list(temp->data.gui->list_command);
+        list_free(temp->data.gui->list_command);
         free(temp->data.gui->list_messages);
         free(temp->data.gui);
         temp = temp->next;

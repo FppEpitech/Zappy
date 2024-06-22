@@ -67,13 +67,13 @@ void handle_request(app_t *app, size_t fd, char *line)
     ia_t *ai = find_ia(app, fd);
 
     if (gui != NULL) {
-        handle_command_gui(gui, app, line);
+        add_command_to_gui_list(gui, strdup(line));
         return;
     }
     if (ai != NULL) {
         if (ai->list_command->len >= 10)
             return;
-        add_command_to_list(ai, strdup(line));
+        add_command_to_ai_list(ai, strdup(line));
         return;
     }
 }
@@ -107,6 +107,17 @@ bool server_data_handler(app_t *app, size_t fd)
     if (its_client(app, fd)) {
         client_handler(app, fd, line);
     } else {
+          if (strcmp("buffer", line) == 0) {
+
+            list_node_t *tmp_message = app->gui_list->first->data.gui->list_messages->first;
+            printf("Message GUI:\n");
+            while (tmp_message) {
+                printf("message: [%s]\n", tmp_message->data.message);
+                tmp_message = tmp_message->next;
+            }
+            printf("\n");
+            return true;
+        }
         handle_request(app, fd, line);
         free(line);
     }

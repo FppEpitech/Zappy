@@ -22,10 +22,6 @@
 #define WELCOME_MESSAGE_LEN 8
 #define SELECT_TIMEOUT_SECONDS 1
 
-#define END_GAME 1
-#define ERROR -1
-#define GAME_CONTINUE 0
-
 typedef struct s_app app_t;
 
 typedef struct s_server {
@@ -185,3 +181,11 @@ void concatenate_strings(char **str1, char *str2);
  * @param message_list List of message to destroy.
  */
 void destroy_message_list(list_t *message_list);
+
+
+/**
+ * @brief Destroy list of command.
+ *
+ * @param message_list List of command to destroy.
+ */
+void destroy_command_list(list_t *command_list);

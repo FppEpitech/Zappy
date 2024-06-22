@@ -55,8 +55,19 @@ void destroy_message_list(list_t *message_list)
     }
 }
 
+void destroy_command_list(list_t *command_list)
+{
+    list_node_t *temp = command_list->first;
+
+    while (temp) {
+        free(temp->data.command);
+        temp = temp->next;
+    }
+}
+
 void destroy_app(app_t *app)
 {
+    sleep(5);
     destroy_server(app->server);
     destroy_gui(app->gui_list);
     destroy_client(app->clients_list);

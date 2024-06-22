@@ -75,8 +75,11 @@ void handle_client_write(app_t *app, int fd)
     if (FD_ISSET(fd, &app->server->write_fds)) {
         gui = find_gui(app, fd);
         ai = find_ia(app, fd);
-        if (gui != NULL)
+        if (gui != NULL) {
+            if (gui->list_messages->len > 0)
+                printf("WRITE: [%s]\n", gui->list_messages->first->data.message);
             write_message(app, gui->list_messages, gui->fd);
+        }
         if (ai != NULL)
             write_message(app, ai->list_messages, ai->fd);
     }
@@ -108,11 +111,13 @@ static int game_run(int result_select, app_t *app)
         }
     }
     spawn_ressources(app);
-    treat_command(app);
+    treat_ai_command(app);
+    treat_gui_command(app);
     treat_stuck(app);
     check_die(app);
-    if (check_win(app))
+    if (app->game->status_game == END_GAME)
         return END_GAME;
+    check_win(app);
     return GAME_CONTINUE;
 }
 

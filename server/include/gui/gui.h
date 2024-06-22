@@ -15,6 +15,7 @@
 
 typedef struct s_gui {
     size_t fd;
+    list_t *list_command;
     list_t *list_messages;
 } gui_t;
 
@@ -50,3 +51,17 @@ gui_t *find_gui(app_t *app, size_t fd);
  * @param gui_list List of gui.
  */
 void destroy_gui(list_t *gui_list);
+
+/**
+ * @brief Add a command to gui list.
+ *
+ * @param gui GUI where add the list.
+ * @param line Command to add.
+ */
+void add_command_to_gui_list(gui_t *gui, char *line);
+
+/**
+ * @brief Treat the command of all GUI!
+ * @param app Application with list of GUI.
+ */
+void treat_gui_command(app_t *app);
