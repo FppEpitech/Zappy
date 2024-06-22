@@ -26,7 +26,7 @@ void Gui::HudHelp::display()
         DrawText(help.c_str(), WINDOW_WIDTH / 2 - MeasureText(help.c_str(), 20) / 2, 20, 20, WHITE);
         std::cout << "help background position: " << HELP_BACKGROUND_POSITION.x << " " << HELP_BACKGROUND_POSITION.y << std::endl;
         DrawTextureEx(_texture, HELP_BACKGROUND_POSITION, 0, HELP_BACKGROUND_SCALE, WHITE);
-        DrawTexture(_textureKeys, HELP_BACKGROUND_POSITION.x, HELP_BACKGROUND_POSITION.y, WHITE);
+        DrawTexture(_textureKeys, HELP_BACKGROUND_POSITION.x + 17, HELP_BACKGROUND_POSITION.y + 92, WHITE);
         displayHelpMenuControls();
     }
     if (_typeScene == TypeScene::HELP_TEXT) {
