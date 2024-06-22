@@ -24,7 +24,7 @@ Gui::Engine::Engine(std::shared_ptr<INetwork> network) : _network(network)
 
 void Gui::Engine::run()
 {
-    while (_render->isOpen() && !_gameData->getIsEndGame()) {
+    while (_render->isOpen()) {
         listenServer();
         _render->draw();
         _event->listen();

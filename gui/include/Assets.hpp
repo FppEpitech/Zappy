@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "Config.hpp"
+
 #include <vector>
 #include <string>
 
@@ -18,8 +20,10 @@
 #define PATH_DECORATION                 "decoration/"
 #define PATH_HUD                        "hud/"
 #define PATH_HELP                       "help/"
+#define PATH_END                        "end/"
 
 #define PNG_CURSOR                      PATH_ASSETS PATH_HUD "cursor.png"
+#define PNG_END_HUD                     PATH_ASSETS PATH_END "end_hud.png"
 #define PNG_HUD                         PATH_ASSETS PATH_HUD "hud.png"
 #define PNG_FOOD                        PATH_ASSETS PATH_HUD "food.png"
 #define PNG_LINEMATE                    PATH_ASSETS PATH_HUD "linemate.png"
@@ -119,6 +123,10 @@
 #define HELP_TEXT_POSITION_RIGHT        (Vector2){HELP_TEXT_POSITION_LEFT.x + 610, HELP_TEXT_POSITION_LEFT.y}
 #define HELP_TEXT_SPACING               30
 #define HELP_TITLE_OFFSET               90
+
+#define END_HUD_TEXT_SIZE               40
+#define END_HUD_ADVICE_TEXT_SIZE        30
+#define END_HUD_ADVICE_OFFSET           150
 
 static std::vector<std::string> globalControlsTexts = {
     "Move the camera in the space",

@@ -131,9 +131,9 @@ class Gui::UserCamera {
         /**
          * @brief Get the Player Id object.
          *
-         * @return size_t - Player id.
+         * @return int - Player id.
          */
-        size_t getPlayerId() const;
+        int getPlayerId() const;
 
         /**
          * @brief Set the Tile Pos object.
@@ -177,7 +177,7 @@ class Gui::UserCamera {
 
         std::shared_ptr<Camera>                 _camera;        //!< Camera raylib instance.
         CameraType                              _type;          //!< Type of camera.
-        size_t                                  _playerId;      //!< Player id.
+        int                                     _playerId;      //!< Player id.
         std::pair<std::size_t, std::size_t>     _tilePos;       //!< Tile position.
         bool                                    _isPlayerVision; //!< Is player vision.
 };

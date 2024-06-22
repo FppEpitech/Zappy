@@ -41,6 +41,7 @@ SRC			=	src/Error/Error.cpp \
 				src/Hud/HudGame.cpp \
 				src/Hud/HudTile.cpp \
 				src/Hud/HudHelp.cpp \
+				src/Hud/HudEnd.cpp \
 
 TEST_FILES	=	Network/TestNetwork.cpp \
 				Parsing/TestParser.cpp \
