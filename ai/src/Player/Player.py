@@ -885,12 +885,11 @@ class Player:
         Wait for everyone to finish droping the stones
         """
         nbSlavesHere = self.countSlavesThatFinishedDroping(self.broadcastReceived)
-        if nbSlavesHere != self.nbSlavesHere:
-            minStoneCase = Inventory(0, 8, 9, 10, 5, 6, 1, 0)
-            currentCase = self.vision[0]
-            if currentCase.hasMoreStones(minStoneCase):
-                self.currentMode = Mode.ELEVATING
-                self.broadcastReceived = []
+        minStoneCase = Inventory(0, 8, 9, 10, 5, 6, 1, 0)
+        currentCase = self.vision[0]
+        if currentCase.hasMoreStones(minStoneCase):
+            self.currentMode = Mode.ELEVATING
+            self.broadcastReceived = []
         self.nbSlavesHere = nbSlavesHere
         print("nb slaves who finished droping: ", nbSlavesHere, flush=True)
         if nbSlavesHere >= 5:
