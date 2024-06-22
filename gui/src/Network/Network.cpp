@@ -47,38 +47,38 @@ void Gui::Network::selectServer()
         throw Errors::NetworkException("Select failed.");
 }
 
-const std::string Gui::Network::listenServer()
+Gui::Network::BufferState Gui::Network::listenServer()
 {
     selectServer();
-    std::string data = readInfoServer();
-    if (!_isConnected && data == "WELCOME") {
+    BufferState bufferSate = readInfoServer();
+    if (!_isConnected && _buffer == "WELCOME" && bufferSate == READY) {
         sendMessageServer("GRAPHIC\n");
         sendMessageServer("sgt\n");
         sendMessageServer("msz\n");
         sendMessageServer("mct\n");
         sendMessageServer("tna\n");
         _isConnected = true;
-        return "";
+        _buffer = "";
+        return Gui::Network::NONE;
     }
-    return data;
+    return bufferSate;
 }
 
-const std::string Gui::Network::readInfoServer()
+Gui::Network::BufferState Gui::Network::readInfoServer()
 {
-    std::string data;
     char buffer;
     int len;
 
     if (!FD_ISSET(_serverFd, &_readFd))
-        return "";
+        return NONE;
     while ((len = read(_serverFd, &buffer, 1)) > 0) {
         if (buffer == '\n')
-            break;
-        data.append(&buffer, 1);
+            return READY;
+        _buffer.append(&buffer, 1);
     }
     if (len == 0)
-        return SERVER_DOWN_MESSAGE;
-    return data;
+        return SERVER_ERROR;
+    return NONE;
 }
 
 void Gui::Network::sendMessageServer(const std::string &message)
