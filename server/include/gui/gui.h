@@ -61,7 +61,7 @@ void destroy_gui(list_t *gui_list);
 void add_command_to_gui_list(gui_t *gui, char *line);
 
 /**
- * @brief Treat the command of all GUI!
+ * @brief Treat the command of all GUI.
  * @param app Application with list of GUI.
  */
 void treat_gui_command(app_t *app);
