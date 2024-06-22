@@ -18,6 +18,7 @@ Gui::GameData::GameData()
     _lastTickMctCommand = clock();
     _nbBCTCommandReceived = 0;
     _timeUnitFromServer = TimeUnitState::NONE;
+    _endMessage = "";
 }
 
 std::vector<Gui::Team> &Gui::GameData::getTeams()
@@ -227,4 +228,14 @@ void Gui::GameData::restartLastTickMctCommand()
 clock_t Gui::GameData::getLastTickMctCommand() const
 {
     return _lastTickMctCommand;
+}
+
+void Gui::GameData::setEndMessage(const std::string &message)
+{
+    _endMessage = message;
+}
+
+std::string Gui::GameData::getEndMessage() const
+{
+    return _endMessage;
 }

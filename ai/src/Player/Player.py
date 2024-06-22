@@ -8,6 +8,7 @@
 import random
 import sys
 from typing import List
+import random
 
 from ai.src.Enum.Mode import Mode
 from ai.src.Enum.Role import Role
@@ -193,6 +194,7 @@ class Player:
         self.messageHistory = []
         self.teamName = teamName
         self.enemyBroadcast = []
+        self.alliesUuid = []
 
 
     def __str__(self):
@@ -295,6 +297,23 @@ class Player:
         self.actions.append(Action.BROADCAST)
         self.commands.append(f"Broadcast \"{encryptedMsg.encrypt()}\"")
         self.messageHistory.append(encryptedMsg)
+        self.callbacks.append(callback)
+
+
+    def broadcastEnemyMessage(self, callback = None):
+        """
+        Set the current action to broadcast an enemy message
+
+        Parameters :
+            callback : function
+                the callback to call after the action
+                (default is None)
+        """
+        message = (1, "English or Spanish?")
+        if len(self.enemyBroadcast) > 0:
+            message = random.choice(self.enemyBroadcast)
+        self.actions.append(Action.BROADCAST)
+        self.commands.append(f"Broadcast \"{message[1]}\"")
         self.callbacks.append(callback)
 
 
@@ -450,6 +469,9 @@ class Player:
                 return
             self.broadcastReceived.append((direction, msg))
             self.messageHistory.append(msg)
+            if self.isLeader == Role.LEADER:
+                if msg.senderUuid not in self.alliesUuid:
+                    self.alliesUuid.append(msg.senderUuid)
         else:
             print("Received enemy message: ", message, flush=True, file=sys.stderr)
             self.enemyBroadcast.append((direction, message))
@@ -479,13 +501,19 @@ class Player:
         self.level = level
 
 
-    def handleElevation(self, response : str):
+    def handleElevation(self, response : str, teamName : str, myuuid : str, creationTime : int):
         """
         Handle the response of the elevation command
 
         Parameters :
             response : str
                 the response from the server
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
         if response == "Elevation underway":
             self.currentlyElevating = True
@@ -497,6 +525,10 @@ class Player:
             self.currentlyElevating = False
             return False
         elif response == "ko":
+            print("Elevation failed", flush=True, file=sys.stderr)
+            if self.isLeader == Role.LEADER:
+                self.currentMode = Mode.FOOD
+                self.broadcast("Food", teamName, myuuid, creationTime)
             self.currentlyElevating = False
             return False
 
@@ -523,7 +555,7 @@ class Player:
         return False
 
 
-    def handleResponse(self, response : str, aiTimestamp : int):
+    def handleResponse(self, response : str, aiTimestamp : int, teamName : str, myuuid : str, creationTime : int):
         """
         Handle the response from the server
 
@@ -532,10 +564,16 @@ class Player:
                 the response from the server
             aiTimestamp : int
                 the timestamp of the AI
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
-        if self.hasSomethingHappened(response, aiTimestamp):
+        if self.hasSomethingHappened(response, aiTimestamp) or self.currentMode == Mode.DYING:
             return
-        if response == "ko":
+        if response == "ko" and self.currentAction != Action.INCANTATION:
             self.currentAction = Action.NONE
             self.currentCommand = ""
             return
@@ -551,7 +589,7 @@ class Player:
             if self.currentCallback is not None:
                 self.currentCallback()
         elif self.currentAction == Action.INCANTATION:
-            if self.handleElevation(response):
+            if self.handleElevation(response, teamName, myuuid, creationTime):
                 return
         self.currentAction = Action.NONE
         self.currentCommand = ""
@@ -912,12 +950,11 @@ class Player:
         Wait for everyone to finish droping the stones
         """
         nbSlavesHere = self.countSlavesThatFinishedDroping(self.broadcastReceived)
-        if nbSlavesHere != self.nbSlavesHere:
-            minStoneCase = Inventory(0, 8, 9, 10, 5, 6, 1, 0)
-            currentCase = self.vision[0]
-            if currentCase.hasMoreStones(minStoneCase):
-                self.currentMode = Mode.ELEVATING
-                self.broadcastReceived = []
+        minStoneCase = Inventory(0, 8, 9, 10, 5, 6, 1, 0)
+        currentCase = self.vision[0]
+        if currentCase.hasMoreStones(minStoneCase):
+            self.currentMode = Mode.ELEVATING
+            self.broadcastReceived = []
         self.nbSlavesHere = nbSlavesHere
         print("nb slaves who finished droping: ", nbSlavesHere, flush=True)
         if nbSlavesHere >= 5:
@@ -1030,10 +1067,26 @@ class Player:
             creationTime : int
                 the creation time of the message
         """
+        if self.currentMode == Mode.DYING:
+            return
+        if self.inventory.food <= 1 and self.isLeader == Role.LEADER:
+            self.broadcast(random.choice(self.alliesUuid), teamName, myuuid, creationTime)
+            self.currentMode = Mode.DYING
         if self.isLeader == Role.LEADER:
             for msg in self.broadcastReceived:
                 if msg[1].message == "IsLeader?":
                     self.broadcast("Yes", teamName, myuuid, creationTime)
+                    self.broadcastReceived.remove(msg)
+        if self.isLeader == Role.SLAVE:
+            for msg in self.broadcastReceived:
+                if msg[1].message == "Food":
+                    self.currentMode = Mode.FOOD
+                    self.arrived = False
+                    self.broadcastReceived.remove(msg)
+                if msg[1].message == myuuid:
+                    self.isLeader = Role.LEADER
+                    self.currentMode = Mode.FOOD
+                    self.arrived = False
                     self.broadcastReceived.remove(msg)
         self.updateMode()
         if self.currentMode == Mode.REGROUP:
@@ -1069,7 +1122,11 @@ class Player:
             return
         elif self.currentMode == Mode.WAITING:
             self.cmdInventory()
-            self.look()
+            rand = random.randint(0, 5)
+            if rand == 0:
+                self.broadcastEnemyMessage()
+            else:
+                self.look()
             return
         elif self.currentMode == Mode.ELEVATING:
             self.incantation()
