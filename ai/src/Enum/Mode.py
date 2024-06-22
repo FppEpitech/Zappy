@@ -18,3 +18,4 @@ class Mode(Enum):
     REGROUP = 7
     DROPPING = 8
     NONE = 9
+    DYING = 10
