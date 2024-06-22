@@ -23,8 +23,9 @@ void DrawModelEx(Model model, Vector3 position, Vector3 rotationAxis,
 Test(Decoration, getGenerationItem, .timeout = 5)
 {
     Gui::Decoration deco;
+    std::vector<Vector2> pos;
 
-    deco.display(std::make_pair(2,2), 1, std::make_pair(2,2));
+    deco.display(std::make_pair(2,2), 1, std::make_pair(2,2), pos);
     Map<bool> generation = deco.getGenerationItem(1);
 
     cr_assert(!generation[0][0]);
