@@ -139,4 +139,5 @@ static std::vector<std::string> playerControlsTexts = {
     "Get off the player point of view",
     "Switch to the next player",
     "Switch to the previous player",
+    "Switch on/off the player vision",
 };
