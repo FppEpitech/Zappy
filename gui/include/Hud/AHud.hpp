@@ -56,6 +56,13 @@ class Gui::AHud : public Gui::IHud {
          */
         TypeScene getType() const;
 
+        /**
+         * @brief Set the Type object.
+         *
+         * @param type Type of the scene.
+         */
+        void setType(TypeScene type);
+
     protected:
 
         TypeScene                       _typeScene;     //!< Type of the scene.

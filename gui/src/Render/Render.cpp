@@ -22,9 +22,11 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     _hudList.push_back(std::make_shared<HudPlayer>(HudPlayer(gameData)));
     _hudList.push_back(std::make_shared<HudGame>(HudGame(gameData)));
     _hudList.push_back(std::make_shared<HudTile>(HudTile(gameData)));
+    _hudList.push_back(std::make_shared<HudHelp>(HudHelp(gameData)));
     _decoration = std::make_shared<Decoration>(Decoration());
     this->LoadModels();
     _renderDistance = DEFAULT_RENDER_DISTANCE;
+    _isHelpMenu = false;
 }
 
 void Gui::Render::LoadModels(void)
@@ -162,6 +164,16 @@ void Gui::Render::setPlayerVision(bool isPlayerVision)
 bool Gui::Render::getPlayerVision() const
 {
     return _camera.isPlayerVision();
+}
+
+void Gui::Render::setHelpMenu(bool isHelpMenu)
+{
+    _isHelpMenu = isHelpMenu;
+}
+
+bool Gui::Render::getHelpMenu() const
+{
+    return _isHelpMenu;
 }
 
 void Gui::Render::displayDebug()
@@ -421,7 +433,7 @@ void Gui::Render::displayDeraumere(Tile tile) const
     }
 }
 
-void Gui::Render::displayHUD(void)
+void Gui::Render::displayHUD()
 {
     for (auto &hud : _hudList) {
         if (hud->getType() == Gui::HudPlayer::POV_PLAYER && _camera.isPlayerPov()) {
@@ -434,12 +446,14 @@ void Gui::Render::displayHUD(void)
             hud->setTile(std::make_shared<Tile>(_gameData->getTile(_camera.getTilePos().first, _camera.getTilePos().second)));
             hud->display();
         }
+        if (hud->getType() == Gui::HudHelp::HELP_MENU || hud->getType() == Gui::HudHelp::HELP_TEXT)
+            displayHelpMenu(hud);
     }
 }
 
 void Gui::Render::displayCursor()
 {
-    if (_camera.getType() != Gui::UserCamera::CameraType::SECOND_PERSON && _camera.getType() != Gui::UserCamera::CameraType::THIRD_PERSON)
+    if (_camera.getType() != Gui::UserCamera::CameraType::SECOND_PERSON && _camera.getType() != Gui::UserCamera::CameraType::THIRD_PERSON && !_isHelpMenu)
         DrawTexture(_cursorTexture, GetScreenWidth() / 2 - _cursorTexture.width / 2, GetScreenHeight() / 2 - _cursorTexture.height / 2, BLACK);
 }
 
@@ -645,4 +659,13 @@ std::vector<Vector2> Gui::Render::addVisionPosition(std::vector<Vector2> vision,
     for (auto &position : pos)
         vision.push_back(position);
     return vision;
+}
+
+void Gui::Render::displayHelpMenu(std::shared_ptr<Gui::IHud> hud)
+{
+    if (_isHelpMenu)
+        hud->setType(Gui::HudHelp::HELP_MENU);
+    else
+        hud->setType(Gui::HudHelp::HELP_TEXT);
+    hud->display();
 }
