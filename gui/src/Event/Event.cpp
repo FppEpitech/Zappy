@@ -201,6 +201,11 @@ void Gui::Event::decreaseTimeUnit()
         _gameData.get()->setTimeUnitFromServer(GameData::TimeUnitState::DECREASE);
 }
 
+void Gui::Event::displayHelpMenu()
+{
+    _render.get()->setHelpMenu(!_render.get()->getHelpMenu());
+}
+
 void Gui::Event::handleSpaceGamepad()
 {
     setFreeCam();

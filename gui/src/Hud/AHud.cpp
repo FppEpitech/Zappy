@@ -21,3 +21,8 @@ Gui::AHud::TypeScene Gui::AHud::getType() const
 {
     return _typeScene;
 }
+
+void Gui::AHud::setType(TypeScene type)
+{
+    _typeScene = type;
+}
