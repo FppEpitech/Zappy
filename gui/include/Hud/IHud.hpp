@@ -35,7 +35,8 @@ class Gui::IHud {
             END_GAME,
             TILE,
             HELP_TEXT,
-            HELP_MENU
+            HELP_MENU,
+            END
         };
 
         /**
