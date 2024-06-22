@@ -703,7 +703,7 @@ class Player:
             self.turnRight()
         if x < 0:
             self.turnLeft()
-        for i in range(x):
+        for i in range(abs(x)):
             self.moveForward()
         for i in range(0, len(itemSeek)):
             if len(self.actions) < 9:
@@ -718,6 +718,7 @@ class Player:
         where there is food and take it.
         """
         (found, index) = self.foodInVision(self.vision)
+        print("found food at index", index, flush=True, file=sys.stderr)
         if not found:
             return random.choice([self.moveForward, self.moveForward, self.turnRight, self.turnLeft])()
         self.goGetItem(index, [Item.FOOD] * self.vision[index].food)
