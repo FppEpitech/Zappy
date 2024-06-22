@@ -34,16 +34,17 @@ void Gui::Engine::run()
 
 void Gui::Engine::listenServer()
 {
-    std::string command = _network.get()->listenServer();
+    Gui::INetwork::BufferState bufferState = _network.get()->listenServer();
 
-    if (command == "")
+    if (bufferState == Gui::INetwork::BufferState::NONE)
         return;
-    if (command == SERVER_DOWN_MESSAGE) {
+    if (bufferState == Gui::INetwork::BufferState::SERVER_ERROR) {
         std::cout << STR_RED << SERVER_DOWN_MESSAGE << STR_RESET << std::endl;
         _gameData.get()->setIsEndGame(true);
         return;
     }
     try {
+        std::string command = _network->getBuffer();
         std::vector<std::string> arguments = _parser->parse(command);
         std::istringstream stream(command);
         std::string keyCommand;

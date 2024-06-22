@@ -158,10 +158,26 @@ class Gui::UserCamera {
         */
         bool isPlayerPov() const;
 
+        /**
+         * @brief Check if the camera is in player vision.
+         *
+         * @return true - Camera is in player vision.
+         * @return false - Camera is not in player vision.
+         */
+        bool isPlayerVision() const;
+
+        /**
+         * @brief Set the Player Vision object.
+         *
+         * @param isPlayerVision Is player vision.
+         */
+        void setPlayerVision(bool isPlayerVision);
+
     private:
 
         std::shared_ptr<Camera>                 _camera;        //!< Camera raylib instance.
         CameraType                              _type;          //!< Type of camera.
         size_t                                  _playerId;      //!< Player id.
         std::pair<std::size_t, std::size_t>     _tilePos;       //!< Tile position.
+        bool                                    _isPlayerVision; //!< Is player vision.
 };

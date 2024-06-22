@@ -7,14 +7,13 @@
 
 #pragma once
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
-#define WINDOW_TITLE "Zappy GUI"
 
 #include "raylib.h"
+#include "Config.hpp"
 #include "Hud/HudGame.hpp"
 #include "Hud/HudTile.hpp"
 #include "Hud/HudPlayer.hpp"
+#include "Hud/HudHelp.hpp"
 #include "Render/Decoration.hpp"
 #include "Render/UserCamera.hpp"
 #include "GameDatas/GameData.hpp"
@@ -203,6 +202,38 @@ class Gui::Render {
         */
         void setTimeUnit(size_t timeUnit);
 
+        /**
+         * @brief Set the Player Vision value.
+         *
+         * @param isPlayerVision New player vision value.
+         * @note True to display player vision.
+         * @note False to not display player vision.
+        */
+        void setPlayerVision(bool isPlayerVision);
+
+        /**
+         * @brief Get the Player Vision value.
+         *
+         * @return true - Display player vision.
+         * @return false - Do not display player vision.
+        */
+        bool getPlayerVision() const;
+
+        /**
+         * @brief Set the Help Menu value.
+         *
+         * @param isHelpMenu New help menu value.
+         */
+        void setHelpMenu(bool isHelpMenu);
+
+        /**
+         * @brief Get the Help Menu value.
+         *
+         * @return true - Display the help menu.
+         * @return false - Do not display the help menu.
+         */
+        bool getHelpMenu() const;
+
     private:
 
         UserCamera                                  _camera;            //!< Camera of the scene.
@@ -210,7 +241,8 @@ class Gui::Render {
         std::shared_ptr<GameData>                   _gameData;          //!< GameData class to store the game's data.
         std::shared_ptr<Decoration>                 _decoration;        //!< Decoration to display;
         std::vector<std::shared_ptr<Gui::IHud>>     _hudList;           //!< List of huds.
-        size_t                                     _renderDistance;    //!< Distance to render from the 3d position of the camera.
+        size_t                                     _renderDistance;     //!< Distance to render from the 3d position of the camera.
+        bool                                        _isHelpMenu;        //!< Display the help menu.
 
         Model                                       _tileModel;         //!< Model to display tiles.
         Model                                       _foodModel;         //!< Model to display foods.
@@ -221,6 +253,7 @@ class Gui::Render {
         Model                                       _thystameModel;     //!< Model to display thystames.
         Model                                       _deraumereModel;    //!< Model to display deraumeres.
         Texture2D                                   _cursorTexture;     //!< Cursor texture.
+        std::vector<Vector2>                        _playerVisionPositions;   //!< Player vision positions.
 
         /**
          * @brief Load the models to draw.
@@ -368,4 +401,51 @@ class Gui::Render {
          * @return std::pair<std::size_t, std::size_t> - Tile position.
         */
         std::pair<std::size_t, std::size_t> getCameraTile();
+
+        /**
+         * @brief Get the positions of objects in player vision.
+         *
+         * @return size_t - Player id.
+        */
+        std::vector<Vector2> getPositionsInPlayerVision(size_t playerId);
+
+        /**
+         * @brief Check if a position is in player vision.
+         *
+         * @param position Position to check.
+         * @return true - Position is in player vision.
+         * @return false - Position is not in player vision.
+        */
+        bool isInArrayPlayerVision(std::pair<size_t, size_t> pos);
+
+        /**
+         * @brief Get the line of vision.
+         *
+         * @param pos Position to check.
+         * @param sizeOfHalf size of the half of the line of vision.
+         * @param orientation orientation of the vision.
+         */
+        std::vector<Vector2> getLineOfVision(Vector2 pos, size_t sizeOfHalf, size_t orientation);
+
+        /**
+         * @brief Add a position to the vision.
+         *
+         * @param vision Vision to add the position.
+         * @param pos Positions to add.
+         * @return std::vector<Vector2> - Vision with the position added.
+        */
+        std::vector<Vector2> addVisionPosition(std::vector<Vector2> vision, std::vector<Vector2> pos);
+
+        /**
+         * @brief Display the help menu.
+         *
+         */
+        void displayHelpMenu(std::shared_ptr<IHud> hud);
+
+        /**
+         * @brief Display the help menu controls.
+         *
+         * @param position Position to display the help menu.
+         */
+        void displayHelpMenuControls(Vector2 position);
 };

@@ -95,9 +95,12 @@ parsing_t *parse_arg(int ac, char **av)
         return 0;
     if (ac < NB_ARGS_MIN) {
         dprintf(2, "Error: not enough arguments\n");
+        print_help();
         return NULL;
     }
-    if (check_all_parameters(ac, av, parsing) == CODE_FAILLURE)
+    if (check_all_parameters(ac, av, parsing) == CODE_FAILLURE) {
+        print_help();
         return NULL;
+    }
     return parsing;
 }
