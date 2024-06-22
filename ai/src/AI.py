@@ -59,13 +59,14 @@ class AI:
         self.threads = []
         self.creationTime = time.time_ns()
         self.myuuid = str(uuid.uuid4())
+        self.isRunning = True
 
 
     def serverCommunicationInThread(self):
         """
         Handle the communication with the server in a thread
         """
-        while True:
+        while self.isRunning:
             if self.player.currentMode == Mode.REGROUP and self.player.isLeader == Role.SLAVE:
                 break
             for _ in range(0, len(self.player.callbacks)):
@@ -83,7 +84,7 @@ class AI:
                 self.player.commands.pop(0)
                 self.player.callbacks.pop(0)
         print("Regrouping Start", flush=True, file=sys.stderr)
-        while True:
+        while self.isRunning:
             responses = self.api.receiveData(0.1)
             if responses is not None :
                 responses = responses.split("\n")
