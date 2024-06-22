@@ -383,6 +383,7 @@ void Gui::GUIUpdater::updatePlayerRessourceDropping(const std::vector<std::strin
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
                 player.setState(Gui::Player::PlayerState::DROP);
+                player.inventory.addResource(args[1], 1);
                 _gameData.get()->getTile(player.getPosition().first, player.getPosition().second).inventory.addResource(args[1], 1);
                 return;
             }
@@ -411,6 +412,7 @@ void Gui::GUIUpdater::updatePlayerRessourceCollecting(const std::vector<std::str
         for (auto &player : team.getPlayers()) {
             if (player.getId() == args[0]) {
                 player.setState(Gui::Player::PlayerState::COLLECT);
+                player.inventory.addResource(args[1], 1);
                 _gameData.get()->getTile(player.getPosition().first, player.getPosition().second).inventory.removeResource(args[1], 1);
                 return;
             }
