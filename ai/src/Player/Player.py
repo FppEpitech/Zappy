@@ -645,7 +645,7 @@ class Player:
         return (False, -1)
 
 
-    def goGetItem(self, index, itemSeek : List[Item]):
+    def goGetItem(self, index : int, itemSeek : List[Item]):
         """
         Allows us to go get items on the map at index X
 
