@@ -24,7 +24,6 @@ void Gui::HudHelp::display()
     if (_typeScene == TypeScene::HELP_MENU) {
         std::string help = "Press 'H' to close the help menu.";
         DrawText(help.c_str(), WINDOW_WIDTH / 2 - MeasureText(help.c_str(), 20) / 2, 20, 20, WHITE);
-        std::cout << "help background position: " << HELP_BACKGROUND_POSITION.x << " " << HELP_BACKGROUND_POSITION.y << std::endl;
         DrawTextureEx(_texture, HELP_BACKGROUND_POSITION, 0, HELP_BACKGROUND_SCALE, WHITE);
         DrawTexture(_textureKeys, HELP_BACKGROUND_POSITION.x + 17, HELP_BACKGROUND_POSITION.y + 92, WHITE);
         displayHelpMenuControls();
@@ -43,7 +42,6 @@ void Gui::HudHelp::display()
 void Gui::HudHelp::displayHelpMenuControls()
 {
     Vector2 position = HELP_TEXT_POSITION_LEFT;
-    std::cout << "position: " << position.x << " " << position.y << std::endl;
     DrawText("Global Controls", position.x, position.y - HELP_TITLE_OFFSET, 40, WHITE);
     for (std::size_t i = 0; i < globalControlsTexts.size(); i++)
         DrawText(globalControlsTexts[i].c_str(), position.x, position.y + HELP_TEXT_SPACING * i, 20, WHITE);
