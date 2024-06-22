@@ -311,12 +311,12 @@ def testPlayerUpdateLevel():
 def testPlayerHandleElevation():
     try:
         player = Player("")
-        assert player.handleElevation("Elevation underway") == True
+        assert player.handleElevation("Elevation underway", "", "", 0) == True
         assert player.currentlyElevating == True
-        assert player.handleElevation("Current level: 5") == False
+        assert player.handleElevation("Current level: 5", "", "", 0) == False
         assert player.level == 5
         assert player.currentlyElevating == False
-        assert player.handleElevation("ko") == False
+        assert player.handleElevation("ko", "", "", 0) == False
         assert player.currentlyElevating == False
     except Exception as _:
         raise Exception("Test failed")
@@ -341,48 +341,48 @@ def testPlayerHasSomethingHappened():
 def testPlayerHandleResponse():
     try:
         player = Player("")
-        player.handleResponse("eject: 5", 0)
+        player.handleResponse("eject: 5", 0, "", "", 0)
         assert player.ejectionReceived == [5]
 
-        player.handleResponse("ko", 0)
+        player.handleResponse("ko", 0, "", "", 0)
         assert player.currentAction == Action.NONE
 
         player.currentAction = Action.TAKE
         player.currentCommand = "Take food"
         player.currentCallback = player.inventory.addAnObject("food")
-        player.handleResponse("ok", 0)
+        player.handleResponse("ok", 0, "", "", 0)
         assert player.inventory.food == 11
         assert player.currentAction == Action.NONE
 
         player.currentAction = Action.FORWARD
         player.currentCommand = "Forward"
         player.currentCallback = None
-        player.handleResponse("ok", 0)
+        player.handleResponse("ok", 0, "", "", 0)
         assert player.currentAction == Action.NONE
 
         player.currentAction = Action.LOOK
         player.currentCommand = "Look"
         player.currentCallback = None
-        player.handleResponse("[player food food, player, player]", 0)
+        player.handleResponse("[player food food, player, player]", 0, "", "", 0)
 
         player.currentAction = Action.INVENTORY
         player.currentCommand = "Inventory"
         player.currentCallback = None
-        player.handleResponse("[food 100, linemate 5, deraumere 6, sibur 7, mendiane 8, phiras 9, thystame 10]", 0)
+        player.handleResponse("[food 100, linemate 5, deraumere 6, sibur 7, mendiane 8, phiras 9, thystame 10]", 0, "", "", 0)
 
         player.currentAction = Action.CONNECT_NBR
         player.currentCommand = "Connect_nbr"
         player.currentCallback = None
-        player.handleResponse("5", 0)
+        player.handleResponse("5", 0, "", "", 0)
         assert player.unusedSlots == 5
 
         player.currentAction = Action.INCANTATION
         player.currentCommand = "Incantation"
         player.currentCallback = None
-        player.handleResponse("Elevation underway", 0)
+        player.handleResponse("Elevation underway", 0, "", "", 0)
         assert player.currentlyElevating == True
         assert player.currentAction == Action.INCANTATION
-        player.handleResponse("Current level: 5", 0)
+        player.handleResponse("Current level: 5", 0, "", "", 0)
         assert player.level == 5
         assert player.currentlyElevating == False
         assert player.currentAction == Action.NONE
