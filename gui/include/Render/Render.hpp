@@ -203,6 +203,23 @@ class Gui::Render {
         */
         void setTimeUnit(size_t timeUnit);
 
+        /**
+         * @brief Set the Player Vision value.
+         *
+         * @param isPlayerVision New player vision value.
+         * @note True to display player vision.
+         * @note False to not display player vision.
+        */
+        void setPlayerVision(bool isPlayerVision);
+
+        /**
+         * @brief Get the Player Vision value.
+         *
+         * @return true - Display player vision.
+         * @return false - Do not display player vision.
+        */
+        bool getPlayerVision() const;
+
     private:
 
         UserCamera                                  _camera;            //!< Camera of the scene.
@@ -221,6 +238,7 @@ class Gui::Render {
         Model                                       _thystameModel;     //!< Model to display thystames.
         Model                                       _deraumereModel;    //!< Model to display deraumeres.
         Texture2D                                   _cursorTexture;     //!< Cursor texture.
+        std::vector<Vector2>                        _playerVisionPositions;   //!< Player vision positions.
 
         /**
          * @brief Load the models to draw.
@@ -368,4 +386,38 @@ class Gui::Render {
          * @return std::pair<std::size_t, std::size_t> - Tile position.
         */
         std::pair<std::size_t, std::size_t> getCameraTile();
+
+        /**
+         * @brief Get the positions of objects in player vision.
+         *
+         * @return size_t - Player id.
+        */
+        std::vector<Vector2> getPositionsInPlayerVision(size_t playerId);
+
+        /**
+         * @brief Check if a position is in player vision.
+         *
+         * @param position Position to check.
+         * @return true - Position is in player vision.
+         * @return false - Position is not in player vision.
+        */
+        bool isInArrayPlayerVision(std::pair<size_t, size_t> pos);
+
+        /**
+         * @brief Get the line of vision.
+         *
+         * @param pos Position to check.
+         * @param sizeOfHalf size of the half of the line of vision.
+         * @param orientation orientation of the vision.
+         */
+        std::vector<Vector2> getLineOfVision(Vector2 pos, size_t sizeOfHalf, size_t orientation);
+
+        /**
+         * @brief Add a position to the vision.
+         *
+         * @param vision Vision to add the position.
+         * @param pos Positions to add.
+         * @return std::vector<Vector2> - Vision with the position added.
+        */
+        std::vector<Vector2> addVisionPosition(std::vector<Vector2> vision, std::vector<Vector2> pos);
 };

@@ -211,3 +211,8 @@ void Gui::Event::closeWindowGamepad()
 {
     _gameData.get()->setIsEndGame(true);
 }
+
+void Gui::Event::setPlayerVision()
+{
+    _render.get()->setPlayerVision(!_render.get()->getPlayerVision());
+}
