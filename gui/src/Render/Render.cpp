@@ -237,7 +237,7 @@ void Gui::Render::displayPlayers()
             if (!displayAnimations(team, player))
                 continue;
 
-            if (_camera.getPlayerId() == player.getId() && _camera.getType() == Gui::UserCamera::FIRST_PERSON)
+            if (_camera.getPlayerId() == (int)player.getId() && _camera.getType() == Gui::UserCamera::FIRST_PERSON)
                 continue;
 
             float rotation = player.getRotationFromOrientation();
