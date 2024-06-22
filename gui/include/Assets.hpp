@@ -125,6 +125,8 @@
 #define HELP_TITLE_OFFSET               90
 
 #define END_HUD_TEXT_SIZE               40
+#define END_HUD_ADVICE_TEXT_SIZE        30
+#define END_HUD_ADVICE_OFFSET           150
 
 static std::vector<std::string> globalControlsTexts = {
     "Move the camera in the space",
