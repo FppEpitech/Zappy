@@ -31,14 +31,14 @@ Ensure you have the necessary tools and libraries installed, such as `raylib` an
 
 Make sure you have an up-to-date version of Fedora and that you have administrator privileges (sudo).
 
-#### 1. Update Your System
+#### Update Your System
 
 Before installing new packages, it is recommended to update your system:
 
 ```bash
 sudo dnf update
 ```
-#### 2. Install Necessary Dependencies
+#### Install Necessary Dependencies
 
 Raylib requires certain libraries to function properly. Install them with the following command:
 
@@ -58,7 +58,7 @@ sudo dnf install raylib-devel
 make install-deps
 ```
 
-2. **Build the project**
+3. **Build the project**
 
 At the root of the Zappy project:
 
