@@ -2,8 +2,6 @@
 
 Welcome to the GUI component of the Zappy project! This document will guide you through the setup, development, and contribution processes for the GUI part of the project.
 
-## Table of Contents
-
 ## Project Overview
 
 The Zappy project is a multiplayer, real-time strategy game developed as part of the Epitech Secondary year curriculum. The GUI component provides a graphical interface for players to interact with the game, visualize game states, and issue commands.
@@ -25,52 +23,13 @@ To get started with the GUI, follow these steps:
    cd Zappy/gui
 ```
 
+2. **Clone the repository:**
 
-
-<!-- # Zappy GUI
-
-## **Build and Installation**
-
-To build the Gui you must install the following [dependencies](#installing-raylib-on-fedora)
-
-Then, at the root of the project run:
-
-```bash
-make
-```
-
-Or:
-
-```bash
-make re
-```
-
-Here the Gui's usages:
-
-```
-USAGE:	./zappy_gui -p port -h machine
-```
-
-To run the gui you have to enter the server's hostname and port.
-Here an example with a server port **4242** and an hostname **127.0.0.1**:
-
-```
-./zappy_gui -p 4242 -h 127.0.0.1
-```
-
-## **Technology Notes**
-
-The graphic part of Zappy was developed using C++.
-
-The graphic library used in this project is [raylib](https://www.raylib.com/index.html) developped by Raysan5.
-
-## Installing Raylib on Fedora
-
-### Prerequisites
-
-Make sure you have an up-to-date version of Fedora and that you have administrator privileges (sudo).
+Ensure you have the necessary tools and libraries installed, such as `raylib` and a C++ compiler.
 
 ### Installation Steps
+
+Make sure you have an up-to-date version of Fedora and that you have administrator privileges (sudo).
 
 #### 1. Update Your System
 
@@ -93,12 +52,46 @@ Fedora offers Raylib directly in its repositories. You can install it using dnf:
 sudo dnf install raylib-devel
 ```
 
-
 **To make it easier, you can install everything in one command:**
 
 ```bash
 make install-deps
 ```
-#### 3. Verify the Installation
-To ensure Raylib is installed correctly, you can compile and run a simple example. Create a file main.c with the include **raylib.h**.
-To run the program, don't forget to use the flag **-lraylib**. -->
+
+2. **Build the project**
+
+At the root of the Zappy project:
+
+```sh
+   make
+```
+
+## Usage
+
+To run the GUI application:
+
+1. Ensure that the server component of Zappy is running and accessible.
+
+2. Start the GUI application:
+
+```sh
+   ./zappy_gui -p Server_port -h Server_port
+```
+
+3. Connect to the server using the GUI and start interacting with the game.
+
+## Development
+
+### Project Structure
+- src/ - Source code for the GUI application
+- assets/ - Images, icons, and other graphical assets
+- include/ - Header files
+- ..tests/gui/tests/ - Unit and integration tests
+
+### Running Tests
+
+To run the tests at the root of the Zappy project:
+
+```sh
+   make tests_run
+```
