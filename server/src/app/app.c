@@ -49,6 +49,7 @@ void destroy_message_list(list_t *message_list)
     list_node_t *temp = message_list->first;
 
     while (temp) {
+        printf("Drestroy message: [%s]\n", temp->data.message);
         free(temp->data.message);
         list_remove_front(message_list);
         temp = message_list->first;
@@ -60,6 +61,7 @@ void destroy_command_list(list_t *command_list)
     list_node_t *temp = command_list->first;
 
     while (temp) {
+        printf("Drestroy command: [%s]\n", temp->data.command);
         free(temp->data.command);
         temp = temp->next;
     }
@@ -68,8 +70,10 @@ void destroy_command_list(list_t *command_list)
 void destroy_app(app_t *app)
 {
     destroy_server(app->server);
+    printf("DESTROY GUI:\n");
     destroy_gui(app->gui_list);
     destroy_client(app->clients_list);
+    printf("DESTROY TEAM:\n");
     destroy_team(app->teams_list);
     destroy_game(app->game);
     free(app);
