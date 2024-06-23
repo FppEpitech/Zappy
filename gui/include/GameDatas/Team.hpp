@@ -33,11 +33,11 @@ class Gui::Team {
          * @brief Construct a new Team object.
          *
          * @param name Name of the team.
-         * @param playerModelPath Path to the team model asset for players.
-         * @param eggSkinPath Path to the skin of the team.
+         * @param playerModel Model asset of the team.
+         * @param eggSkin Model asset of the eggs.
          * @param playerColor Color of the players.
          */
-        Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath, Color playerColor);
+        Team(const std::string &name, Model playerModel, Model eggModel, ModelAnimation *modelAnimation, Color playerColor);
 
         /**
          * @brief Destroy the Team object.
@@ -198,7 +198,6 @@ class Gui::Team {
         Color getPlayerColor() const;
 
     private:
-
 
         ModelAnimation*             _modelAnimation;    //!< Model to animate players.
         int                         _animsCount;        //!< Animation number of players.

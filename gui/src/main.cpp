@@ -10,9 +10,11 @@
 #include "Parsing/ParseCommandLine.hpp"
 
 #include <iostream>
+#include <signal.h>
 
 int main(int argc, char **argv)
 {
+    signal(SIGPIPE, SIG_IGN);
     try {
         Gui::ParseCommandLine parseLine(argc, argv);
         Gui::Network net(parseLine.getPort(), parseLine.getHostName());
