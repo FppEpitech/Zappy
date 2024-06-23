@@ -1,5 +1,33 @@
 # Zappy GUI
 
+## **Build and Installation**
+
+To build the Gui you must install the following [dependencies](#installing-raylib-on-fedora)
+
+Then, at the root of the project run:
+
+```bash
+make
+```
+
+Or:
+
+```bash
+make re
+```
+
+Here the Gui's usages:
+
+```
+USAGE:	./zappy_gui -p port -h machine
+```
+
+And an example with a server port **4242** and an hostname **127.0.0.1**:
+
+```
+./zappy_gui -p 4242 -h 127.0.0.1
+```
+
 ## **Technology Notes**
 
 The graphic part of Zappy was developed using C++.
