@@ -17,7 +17,7 @@ static size_t check_max_level(ia_t *ai)
     return 0;
 }
 
-bool check_win(app_t *app)
+void check_win(app_t *app)
 {
     list_node_t *temp_team = app->teams_list->first;
     team_t *team = NULL;
@@ -33,10 +33,10 @@ bool check_win(app_t *app)
         }
         if (nb_player_max >= 6) {
             seg_command(app, team->name);
-            return true;
+            app->game->status_game = END_GAME;
+            return;
         }
         nb_player_max = 0;
         temp_team = temp_team->next;
     }
-    return false;
 }

@@ -15,6 +15,9 @@ def testInventory():
         print("\tTests Inventory __str__ method: ", end="")
         testInventoryString()
         print("✅")
+        print("\tTests Inventory toStr method: ", end="")
+        testInventoryToStr()
+        print("✅")
         print("\tTests Inventory equals operator: ", end="")
         testInventoryEquals()
         print("✅")
@@ -29,6 +32,15 @@ def testInventory():
         print("✅")
         print("\tTests Inventory removeAnObject method: ", end="")
         testInventoryRemoveAnObject()
+        print("✅")
+        print("\tTests Inventory __add__ method: ", end="")
+        testInventoryAdd()
+        print("✅")
+        print("\tTests Inventory hasMoreStones method: ", end="")
+        testInventoryHasMoreStones()
+        print("✅")
+        print("\tTests Inventory countStones method: ", end="")
+        testInventoryCountStones()
         print("✅")
     except Exception as _:
         print("❌")
@@ -54,6 +66,13 @@ def testInventoryString():
     except Exception as _:
         raise Exception("Test failed")
 
+def testInventoryToStr():
+    try:
+        inventory = Inventory()
+        assert inventory.toStr() == "[food 10, linemate 0, deraumere 0, sibur 0, mendiane 0, phiras 0, thystame 0, player 0]"
+    except Exception as _:
+        raise Exception("Test failed")
+
 def testInventoryEquals():
     try:
         inventory1 = Inventory()
@@ -75,6 +94,10 @@ def testInventoryUpdateInventory():
         assert inventory.mendiane == 8
         assert inventory.phiras == 9
         assert inventory.thystame == 10
+        assert inventory.player == 0
+        inventory.updateInventory("[player 1 ]")
+        assert inventory.player == 1
+        inventory.updateInventory("[azeazeaz]")
     except Exception as _:
         raise Exception("Test failed")
 
@@ -110,6 +133,7 @@ def testInventoryAddAnObject():
         assert inventory.phiras == 1
         inventory.addAnObject("thystame")
         assert inventory.thystame == 1
+        inventory.addAnObject("player")
     except Exception as _:
         raise Exception("Test failed")
 
@@ -130,5 +154,44 @@ def testInventoryRemoveAnObject():
         assert inventory.phiras == 0
         inventory.removeAnObject("thystame")
         assert inventory.thystame == 0
+        inventory.removeAnObject("player")
+    except Exception as _:
+        raise Exception("Test failed")
+
+def testInventoryAdd():
+    try:
+        inventory1 = Inventory(1, 1, 1, 1, 1, 1, 1)
+        inventory2 = Inventory(1, 1, 1, 1, 1, 1, 1)
+        inventory3 = inventory1 + inventory2
+        assert inventory3.food == 2
+        assert inventory3.linemate == 2
+        assert inventory3.deraumere == 2
+        assert inventory3.sibur == 2
+        assert inventory3.mendiane == 2
+        assert inventory3.phiras == 2
+        assert inventory3.thystame == 2
+    except Exception as _:
+        raise Exception("Test failed")
+
+def testInventoryHasMoreStones():
+    try:
+        inventory1 = Inventory(1, 1, 1, 1, 1, 1, 1)
+        inventory2 = Inventory(1, 1, 1, 1, 1, 1, 1)
+        assert inventory1.hasMoreStones(inventory2) == False
+        inventory3 = Inventory(10, 10, 10, 10, 10, 10, 10)
+        assert inventory1.hasMoreStones(inventory3) == False
+        assert inventory3.hasMoreStones(inventory1) == True
+        inventory3.linemate = 0
+        assert inventory1.hasMoreStones(inventory3) == False
+        assert inventory3.hasMoreStones(inventory1) == False
+    except Exception as _:
+        raise Exception("Test failed")
+
+def testInventoryCountStones():
+    try:
+        inventory = Inventory(1, 1, 1, 1, 1, 1, 1)
+        assert inventory.countStones() == 6
+        inventory = Inventory(0, 0, 0, 0, 0, 0, 0)
+        assert inventory.countStones() == 0
     except Exception as _:
         raise Exception("Test failed")

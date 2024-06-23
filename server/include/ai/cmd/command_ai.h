@@ -175,14 +175,14 @@ void level_up(app_t *app, ia_t *ai);
  * @param ai Ai who do the command.
  * @param line The command to add.
  */
-void add_command_to_list(ia_t *ai, char *line);
+void add_command_to_ai_list(ia_t *ai, char *line);
 
 /**
  * @brief Treat command of all ai.
  *
  * @param app Application with necessary information.
  */
-void treat_command(app_t *app);
+void treat_ai_command(app_t *app);
 
 /**
  * @brief Destroy the list of command.

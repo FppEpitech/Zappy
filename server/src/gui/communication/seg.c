@@ -13,6 +13,7 @@ void seg_command(app_t *app, char *team)
     char *response = NULL;
     list_node_t *gui_node = app->gui_list->first;
 
+    printf("TEAM: [%s] win\n", team);
     while (gui_node) {
         response = format_string("seg %s\n", team);
         add_message(gui_node->data.gui->list_messages, response);

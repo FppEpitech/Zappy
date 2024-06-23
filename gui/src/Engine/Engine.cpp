@@ -24,7 +24,7 @@ Gui::Engine::Engine(std::shared_ptr<INetwork> network) : _network(network)
 
 void Gui::Engine::run()
 {
-    while (_render->isOpen() && !_gameData->getIsEndGame()) {
+    while (_render->isOpen()) {
         listenServer();
         _render->draw();
         _event->listen();
@@ -34,16 +34,17 @@ void Gui::Engine::run()
 
 void Gui::Engine::listenServer()
 {
-    std::string command = _network.get()->listenServer();
+    Gui::INetwork::BufferState bufferState = _network.get()->listenServer();
 
-    if (command == "")
+    if (bufferState == Gui::INetwork::BufferState::NONE)
         return;
-    if (command == SERVER_DOWN_MESSAGE) {
+    if (bufferState == Gui::INetwork::BufferState::SERVER_ERROR) {
         std::cout << STR_RED << SERVER_DOWN_MESSAGE << STR_RESET << std::endl;
         _gameData.get()->setIsEndGame(true);
         return;
     }
     try {
+        std::string command = _network->getBuffer();
         std::vector<std::string> arguments = _parser->parse(command);
         std::istringstream stream(command);
         std::string keyCommand;
@@ -58,8 +59,6 @@ void Gui::Engine::listenServer()
 
 void Gui::Engine::sendMessageUpdate()
 {
-    updateMap();
-
     clock_t currentTick = clock();
 
     if ((int)(_gameData->getServerTick()) == NO_TICK && (float)(currentTick - _gameData->getLastTick()) / CLOCKS_PER_SEC < 1)
@@ -68,12 +67,6 @@ void Gui::Engine::sendMessageUpdate()
         return;
     _gameData->restartLastTick();
 
-    _network.get()->sendMessageServer("sgt\n");
-    for (auto &team : _gameData.get()->getTeams()) {
-        for (auto &player : team.getPlayers()) {
-            _network.get()->sendMessageServer("ppo " + std::to_string(player.getId()) + "\n");
-        }
-    }
     if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::INCREASE)
         _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() + 1) + "\n");
     else if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::DECREASE) {

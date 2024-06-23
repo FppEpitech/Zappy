@@ -8,8 +8,9 @@
 #include "app/app.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
+#include "gui/communication.h"
 
-void add_command_to_list(ia_t *ai, char *line)
+void add_command_to_ai_list(ia_t *ai, char *line)
 {
     node_data_t node;
 
@@ -22,7 +23,7 @@ void command_ai_handler(app_t *app, ia_t *ai, char *line)
     char *bad_command = NULL;
 
     if (move_command(app, ai, line))
-        return;
+        return send_ppo(app, ai);
     if (object_info_command(app, ai, line))
         return;
     if (other_command(app, ai, line))
@@ -50,7 +51,7 @@ static void check_ai_stuck(ia_t *ai, app_t *app)
     }
 }
 
-void treat_command(app_t *app)
+void treat_ai_command(app_t *app)
 {
     list_node_t *temp_team = app->teams_list->first;
     team_t *team = NULL;

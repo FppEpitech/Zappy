@@ -266,6 +266,20 @@ class Gui::GameData {
          */
         clock_t getLastTickMctCommand() const;
 
+        /**
+         * @brief Set the End Message object.
+         *
+         * @param endMessage End message of the game.
+         */
+        void setEndMessage(const std::string &endMessage);
+
+        /**
+         * @brief Get the End Message object.
+         *
+         * @return std::string - End message of the game.
+         */
+        std::string getEndMessage() const;
+
     private:
 
         std::vector<Gui::Team>      _teams;                 //!< Teams of the game.
@@ -278,4 +292,5 @@ class Gui::GameData {
         std::string                 _lastError;             //!< Last error message.
         TimeUnitState               _timeUnitFromServer;    //!< True if the time unit has changed.
         std::vector<Gui::Egg>       _serverEggs;            //!< Eggs from the server.
+        std::string                _endMessage;            //!< End message of the game.
 };

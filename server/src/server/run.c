@@ -12,20 +12,24 @@
 
 #include <time.h>
 
-static void reset_ai(app_t *app)
+static void reset_ai(app_t *app, list_node_t *node_ai)
+{
+    while (node_ai) {
+        FD_SET(node_ai->data.ai->fd, &app->server->read_fds);
+        if (node_ai->data.ai->list_messages->first != NULL)
+            FD_SET(node_ai->data.ai->fd, &app->server->write_fds);
+        node_ai = node_ai->next;
+    }
+}
+
+static void reset_ais(app_t *app)
 {
     list_node_t *temp = app->teams_list->first;
-    list_node_t *ia_temp = NULL;
     team_t *team = NULL;
 
     while (temp) {
         team = temp->data.team;
-        ia_temp = team->list_ai->first;
-        while (ia_temp) {
-            FD_SET(ia_temp->data.ai->fd, &app->server->read_fds);
-            FD_SET(ia_temp->data.ai->fd, &app->server->write_fds);
-            ia_temp = ia_temp->next;
-        }
+        reset_ai(app, team->list_ai->first);
         temp = temp->next;
     }
 }
@@ -38,7 +42,8 @@ static void reset_gui(app_t *app)
     while (temp_gui) {
         gui = temp_gui->data.gui;
         FD_SET(gui->fd, &app->server->read_fds);
-        FD_SET(gui->fd, &app->server->write_fds);
+        if (temp_gui->data.gui->list_messages->first != NULL)
+            FD_SET(gui->fd, &app->server->write_fds);
         temp_gui = temp_gui->next;
     }
 }
@@ -58,7 +63,7 @@ void server_reset_fd(app_t *app)
         temp = temp->next;
     }
     reset_gui(app);
-    reset_ai(app);
+    reset_ais(app);
 }
 
 void handle_client_read(app_t *app, int fd)
@@ -112,11 +117,13 @@ static int game_run(int result_select, app_t *app, bool logic_loop)
         }
     } else {
         spawn_ressources(app);
-        treat_command(app);
+        treat_ai_command(app);
+        treat_gui_command(app);
         treat_stuck(app);
         check_die(app);
-        if (check_win(app))
+        if (app->game->status_game == END_GAME)
             return END_GAME;
+        check_win(app);
     }
     return GAME_CONTINUE;
 }

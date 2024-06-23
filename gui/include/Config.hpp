@@ -7,6 +7,10 @@
 
 #pragma once
 
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
+#define WINDOW_TITLE "Zappy GUI"
+
 #define SERVER_DOWN_MESSAGE         "THE GUI MUST BE CLOSED FOR UNEXPECTED REASONS"
 
 #define SIZE_TILE                   4.7

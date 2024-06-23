@@ -7,16 +7,6 @@
 
 #include "server/client.h"
 
-void destroy_command_list(list_t *command_list)
-{
-    list_node_t *temp = command_list->first;
-
-    while (temp) {
-        free(temp->data.command);
-        temp = temp->next;
-    }
-}
-
 static void destroy_egg(list_t *egg_list)
 {
     list_node_t *temp = egg_list->first;
