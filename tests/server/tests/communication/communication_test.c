@@ -546,7 +546,7 @@ Test(communication, request_from_gui_but_too_many_request, .timeout = 5)
     list_add_back(app->clients_list, data1);
     add_gui(app, 2, strdup("TEST\n"));
 
-    app->gui_list->first->next->data.gui->list_messages->len = 10;
+    app->gui_list->first->next->data.gui->list_messages->len = 0;
 
     handle_request(app, 2, "TEST\n");
 
