@@ -191,8 +191,10 @@ def forkAI():
         try:
             main()
         except APIException as e:
-            os.remove("logs/stdout_" + e.getFileName())
-            os.remove("logs/stderr_" + e.getFileName())
+            if os.path.exists("logs/stdout_" + e.getFileName()):
+                os.remove("logs/stdout_" + e.getFileName())
+            if os.path.exists("logs/stderr_" + e.getFileName()):
+                os.remove("logs/stderr_" + e.getFileName())
         sys.exit(0)
     return pid
 
