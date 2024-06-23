@@ -55,7 +55,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-6. Start the FastAPI server:
+6. Start the FastAPI server (you need to run a server first):
 
 ```bash
 fastapi run ./src/main.py

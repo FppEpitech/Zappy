@@ -83,7 +83,7 @@ make zappy_ai_re
 4. Run the AI module with the following command:
 
 ```bash
-./zappy_ai_re -p <port> -n <team> -h <hostname>
+./zappy_ai -p <port> -n <team> -h <hostname>
 ```
 
 Replace `<port>`, `<team>`, and `<hostname>` with the appropriate values for your game server.
@@ -91,9 +91,8 @@ Replace `<port>`, `<team>`, and `<hostname>` with the appropriate values for you
 You can also run the AI module with logs enabled using the `-l` flag:
 
 ```bash
-./zappy_ai_re -p <port> -n <team> -h <hostname> -l on
+./zappy_ai -p <port> -n <team> -h <hostname> -l on
 ```
-
 
 ## Testing
 
