@@ -9,6 +9,8 @@
 #include "CriterionHeaders.hpp"
 #include "GameDatas/GameData.hpp"
 
+#include <unistd.h>
+
 Test(GameData, getTeams, .timeout = 5)
 {
     Gui::GameData gameData;
@@ -232,4 +234,41 @@ Test(GameData, getTeamByIdFailed, .timeout = 5)
     Gui::GameData gameData;
 
     cr_assert_throw(gameData.getTeamById(0), Gui::Errors::GuiGameDataException);
+}
+
+Test(GameData, getTimeUnitFromServer, .timeout = 5)
+{
+    Gui::GameData gameData;
+
+    cr_assert_eq(gameData.getTimeUnitFromServer(), Gui::GameData::TimeUnitState::NONE);
+}
+
+Test(GameData, addServerEggFailing, .timeout = 5)
+{
+    Gui::GameData gameData;
+    Gui::Egg egg(0, "Team1", std::make_pair(1, 2));
+
+    gameData.addServerEgg(egg);
+    cr_assert_throw(gameData.addServerEgg(egg), Gui::Errors::GuiGameDataException);
+}
+
+Test(GameData, removeServerEgg, .timeout = 5)
+{
+    Gui::GameData gameData;
+    Gui::Egg egg(0, "Team1", std::make_pair(1, 2));
+
+    gameData.addServerEgg(egg);
+    gameData.removeServerEgg(0);
+    cr_assert_eq(gameData.getServerEggs().size(), 0);
+}
+
+Test(GameData, restartLastTickMctCommand, .timeout = 5)
+{
+    Gui::GameData gameData;
+    clock_t lastTick = gameData.getLastTickMctCommand();
+    usleep(1000);
+
+    gameData.restartLastTickMctCommand();
+
+    cr_assert_neq(gameData.getLastTickMctCommand(), lastTick);
 }

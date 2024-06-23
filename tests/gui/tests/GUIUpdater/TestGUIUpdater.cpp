@@ -156,6 +156,7 @@ Test(GUIUpdater, updateTeamMember, .timeout = 5)
 
     gameData->addTeam("TEAM1", (Color){0, 0, 0, 0});
 
+    gameData.get()->getTeam("TEAM1").addEgg(Gui::Egg(1, "TEAM1", std::pair<std::size_t, std::size_t>(1, 1)));
     guiUpdater.update("pnw", {"1", "1", "1", "1", "1", "TEAM1"});
     cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getTeam(), "TEAM1");
     cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getId(), 1);
@@ -218,9 +219,16 @@ Test(GUIUpdater, updatePlayerPosition, .timeout = 5)
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
+    Model model;
+    ModelAnimation *modelAnimation = nullptr;
+    Gui::Team team("TEAM1", model, model, modelAnimation, (Color){0, 0, 0, 0});
+    Gui::Player player(1, "TEAM1", std::pair<std::size_t, std::size_t>(1, 1), 1, 1);
+    player.setState(Gui::Player::PlayerState::IDLE);
+    gameData->addTeam(team);
+    gameData->addPlayerToTeam("TEAM1", player);
 
-    gameData->addTeam("TEAM1", (Color){0, 0, 0, 0});
-    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+    gameData->addTeam("TEAM2", (Color){0, 0, 0, 0});
+    gameData->addPlayerToTeam("TEAM2", Gui::Player(1, "TEAM2", std::make_pair(1, 1), 1, 1));
 
     guiUpdater.update("ppo", {"1", "1", "1", "1"});
     cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getPosition().first, 1);

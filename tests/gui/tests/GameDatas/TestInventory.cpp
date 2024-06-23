@@ -99,3 +99,55 @@ Test(Inventory, getRessources, .timeout = 5)
     cr_assert_eq(ressources2[4], 5);
     cr_assert_eq(ressources2[5], 6);
 }
+
+Test(Inventory, addRessource_food, .timeout = 5)
+{
+    Gui::Inventory inventory;
+
+    inventory.addResource(0, 14);
+    cr_assert_eq(inventory.getFood(), 14);
+}
+
+Test(Inventory, addRessource, .timeout = 5)
+{
+    Gui::Inventory inventory;
+
+    inventory.addResource(5, 14);
+    cr_assert_eq(inventory.getPhiras(), 14);
+}
+
+Test(Inventory, removeResource_food, .timeout = 5)
+{
+    Gui::Inventory inventory;
+
+    inventory.setFood(15);
+    inventory.removeResource(0, 14);
+    cr_assert_eq(inventory.getFood(), 1);
+}
+
+Test(Inventory, removeResource_to_more_food, .timeout = 5)
+{
+    Gui::Inventory inventory;
+
+    inventory.setFood(10);
+    inventory.removeResource(0, 14);
+    cr_assert_eq(inventory.getFood(), 0);
+}
+
+Test(Inventory, removeResource, .timeout = 5)
+{
+    Gui::Inventory inventory;
+
+    inventory.setPhiras(15);
+    inventory.removeResource(5, 12);
+    cr_assert_eq(inventory.getPhiras(), 3);
+}
+
+Test(Inventory, removeResource_to_more, .timeout = 5)
+{
+    Gui::Inventory inventory;
+
+    inventory.setPhiras(10);
+    inventory.removeResource(5, 14);
+    cr_assert_eq(inventory.getPhiras(), 0);
+}
