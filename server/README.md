@@ -22,7 +22,7 @@ For a team to win, there must be 6 AIs in the team at maximum level (8). To do t
 
 ## Architecture
 
-TODO
+![Picture of the structure of the Server module of Zappy](https://github.com/FppEpitech/Zappy/assets/114904525/a04832e4-e7c0-463c-9a27-a597ceb5a284)
 
 ## Usage
 
