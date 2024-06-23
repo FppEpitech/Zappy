@@ -34,8 +34,6 @@ void check_win(app_t *app)
         if (nb_player_max >= 6) {
             seg_command(app, team->name);
             app->game->status_game = END_GAME;
-            printf("DESTROY TEAM:\n");
-            destroy_team(app->teams_list);
             return;
         }
         nb_player_max = 0;
