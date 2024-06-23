@@ -67,8 +67,6 @@ bool Gui::Render::isOpen()
 
 void Gui::Render::draw()
 {
-    if (_gameData.get()->getServerError())
-        return;
     if (_gameData.get()->getIsEndGame()) {
         if (!_endHudSet) {
             _endHudSet = true;
