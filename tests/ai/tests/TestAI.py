@@ -18,7 +18,7 @@ def testAI():
 
 def testAIConstructor():
     try:
-        ai = AI("localhost", 4242, "test")
+        ai = AI("localhost", 4242, "test", False)
         assert ai.api.host == "localhost"
         assert ai.api.port == 4242
         assert ai.teamName == "test"

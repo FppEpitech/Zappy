@@ -25,7 +25,7 @@ def testAPI():
 
 def testAPIConstructor():
     try:
-        api = API("localhost", 4242)
+        api = API("localhost", 4242, False)
         assert api.host == "localhost"
         assert api.port == 4242
         assert api.inputs == []
