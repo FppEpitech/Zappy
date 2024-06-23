@@ -219,7 +219,9 @@ Test(GUIUpdater, updatePlayerPosition, .timeout = 5)
     std::shared_ptr<Gui::GameData> gameData = std::make_shared<Gui::GameData>();
     std::shared_ptr<Gui::INetwork> network = std::make_shared<Gui::Network>(4242, "no_tested");
     Gui::GUIUpdater guiUpdater(gameData, network);
-    Gui::Team team("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
+    Model model;
+    ModelAnimation *modelAnimation = nullptr;
+    Gui::Team team("TEAM1", model, model, modelAnimation, (Color){0, 0, 0, 0});
     Gui::Player player(1, "TEAM1", std::pair<std::size_t, std::size_t>(1, 1), 1, 1);
     player.setState(Gui::Player::PlayerState::IDLE);
     gameData->addTeam(team);
