@@ -52,15 +52,28 @@ Test(parse_width, valid_arg_passed)
     free(parsing);
 }
 
-Test(parse_width, invalid_flag_passed)
+Test(parse_width, too_high_width)
 {
     parsing_t *parsing = malloc(sizeof(parsing_t));
 
     cr_assert_not_null(parsing);
-    char *arg[] = {"-t", "10", NULL};
+    char *arg[] = {"-x", "40", NULL};
     int pos = 0;
     int res = parse_width(arg, &pos, parsing);
 
-    cr_assert_eq(res, CODE_ERROR_WRONG_FLAG);
+    cr_assert_eq(res, CODE_ERROR_INVALID_ARG);
+    free(parsing);
+}
+
+Test(parse_width, too_low_width)
+{
+    parsing_t *parsing = malloc(sizeof(parsing_t));
+
+    cr_assert_not_null(parsing);
+    char *arg[] = {"-x", "5", NULL};
+    int pos = 0;
+    int res = parse_width(arg, &pos, parsing);
+
+    cr_assert_eq(res, CODE_ERROR_INVALID_ARG);
     free(parsing);
 }
