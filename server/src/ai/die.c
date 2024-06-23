@@ -44,17 +44,6 @@ void free_ai(app_t *app, ia_t *ai)
 
 static void ia_die(app_t *app, ia_t *ai)
 {
-    list_node_t *temp_command = ai->list_command->first;
-    list_node_t *temp_message = ai->list_messages->first;
-
-    while (temp_command) {
-        free(temp_command->data.command);
-        temp_command = temp_command->next;
-    }
-    while (temp_message) {
-        free(temp_message->data.message);
-        temp_message = temp_message->next;
-    }
     ai->dead = true;
     dead_response(ai);
     pdi_command(app, ai->fd);
