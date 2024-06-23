@@ -22,7 +22,7 @@ Test(GameData, getTeam, .timeout = 5)
 {
     Gui::GameData gameData;
 
-    gameData.addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
+    gameData.addTeam("TEAM1", (Color){0, 0, 0, 0});
 
     cr_assert_eq(gameData.getTeam("TEAM1").getName(), "TEAM1");
 }
@@ -37,7 +37,9 @@ Test(GameData, getTeamFailling, .timeout = 5)
 Test(GameData, addTeamByObject, .timeout = 5)
 {
     Gui::GameData gameData;
-    Gui::Team team("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
+    Model model;
+    ModelAnimation *modelAnimation = nullptr;
+    Gui::Team team("TEAM1", model, model, modelAnimation, (Color){0, 0, 0, 0});
 
     gameData.addTeam(team);
 
@@ -48,7 +50,9 @@ Test(GameData, addTeamByObject, .timeout = 5)
 Test(GameData, addTeamByObjectAlreadyExists, .timeout = 5)
 {
     Gui::GameData gameData;
-    Gui::Team team("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
+    Model model;
+    ModelAnimation *modelAnimation = nullptr;
+    Gui::Team team("TEAM1", model, model, modelAnimation, (Color){0, 0, 0, 0});
 
     gameData.addTeam(team);
 
@@ -59,16 +63,16 @@ Test(GameData, addTeamByNameAlreadyExists, .timeout = 5)
 {
     Gui::GameData gameData;
 
-    gameData.addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
+    gameData.addTeam("TEAM1", (Color){0, 0, 0, 0});
 
-    cr_assert_throw(gameData.addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0}), Gui::Errors::GuiGameDataException);
+    cr_assert_throw(gameData.addTeam("TEAM1", (Color){0, 0, 0, 0}), Gui::Errors::GuiGameDataException);
 }
 
 Test(GameData, addPlayerToTeam, .timeout = 5)
 {
     Gui::GameData gameData;
 
-    gameData.addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
+    gameData.addTeam("TEAM1", (Color){0, 0, 0, 0});
     gameData.addPlayerToTeam("TEAM1", Gui::Player(3, "TEAM1", std::make_pair(1, 2), 1));
 
     cr_assert_eq(gameData.getTeam("TEAM1").getPlayers().size(), 1);
@@ -89,7 +93,7 @@ Test(GameData, getPlayer, .timeout = 5)
 {
     Gui::GameData gameData;
 
-    gameData.addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
+    gameData.addTeam("TEAM1", (Color){0, 0, 0, 0});
     gameData.addPlayerToTeam("TEAM1", Gui::Player(3, "TEAM1", std::make_pair(1, 2), 1));
 
     cr_assert_eq(gameData.getPlayer(3).getId(), 3);
@@ -219,7 +223,7 @@ Test(GameData, getTeamById, .timeout = 5)
 {
     Gui::GameData gameData;
 
-    gameData.addTeam("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
+    gameData.addTeam("TEAM1", (Color){0, 0, 0, 0});
     gameData.addPlayerToTeam("TEAM1", Gui::Player(0, "TEAM1", std::make_pair(1, 2), 1));
 
     cr_assert_eq(gameData.getTeamById(0).getName(), "TEAM1");

@@ -24,12 +24,14 @@ Gui::Engine::Engine(std::shared_ptr<INetwork> network) : _network(network)
 
 void Gui::Engine::run()
 {
-    while (_render->isOpen()) {
-        listenServer();
+    _networkThread = std::thread(&Gui::Engine::threadLoop, this);
+    while (_render->isOpen() && !_gameData->getServerError()) {
         _render->draw();
         _event->listen();
         sendMessageUpdate();
     }
+    if (_networkThread.joinable())
+        _networkThread.join();
 }
 
 void Gui::Engine::listenServer()
@@ -39,8 +41,8 @@ void Gui::Engine::listenServer()
     if (bufferState == Gui::INetwork::BufferState::NONE)
         return;
     if (bufferState == Gui::INetwork::BufferState::SERVER_ERROR) {
-        std::cout << STR_RED << SERVER_DOWN_MESSAGE << STR_RESET << std::endl;
-        _gameData.get()->setIsEndGame(true);
+        if (!_gameData.get()->getIsEndGame())
+            _gameData.get()->setServerError(true);
         return;
     }
     try {
@@ -94,4 +96,10 @@ void Gui::Engine::sendUpdateMapMessage()
     _network.get()->sendMessageServer("mct\n");
     _gameData.get()->setNbBCTCommandReceived(0);
     _gameData.get()->restartLastTickMctCommand();
+}
+
+void Gui::Engine::threadLoop()
+{
+    while (_render->isOpen() && (!_gameData->getServerError()) && (!_gameData.get()->getIsEndGame()))
+        listenServer();
 }

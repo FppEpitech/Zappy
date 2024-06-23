@@ -82,7 +82,7 @@ void Gui::GUIUpdater::updateTeamNames(const std::vector<std::string> &data)
 {
     try {
         for (size_t i = 0; i < data.size(); i++) {
-            _gameData->addTeam(data[i], MODEL_PLAYER, MODEL_EGG, playerColors[_colorIndex]);
+            _gameData->addTeam(data[i], playerColors[_colorIndex]);
             increaseColorIndex();
         }
     } catch (const std::exception &error) {
