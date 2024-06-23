@@ -76,8 +76,10 @@ Gui::Network::BufferState Gui::Network::readInfoServer()
             return READY;
         _buffer.append(&buffer, 1);
     }
-    if (len == 0)
+    if (len == 0) {
+        _isConnected = false;
         return SERVER_ERROR;
+    }
     return NONE;
 }
 
