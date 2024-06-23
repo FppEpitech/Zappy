@@ -26,9 +26,6 @@ void Gui::Engine::run()
 {
     _networkThread = std::thread(&Gui::Engine::threadLoop, this);
     while (_render->isOpen()) {
-        Gui::INetwork::BufferState bufferState = _network.get()->listenServer();
-        if (bufferState == Gui::INetwork::BufferState::SERVER_ERROR && _networkThread.joinable())
-            _networkThread.join();
         _render->draw();
         _event->listen();
         sendMessageUpdate();
