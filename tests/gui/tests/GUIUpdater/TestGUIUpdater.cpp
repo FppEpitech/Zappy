@@ -227,8 +227,8 @@ Test(GUIUpdater, updatePlayerPosition, .timeout = 5)
     gameData->addTeam(team);
     gameData->addPlayerToTeam("TEAM1", player);
 
-    gameData->addTeam("TEAM1", (Color){0, 0, 0, 0});
-    gameData->addPlayerToTeam("TEAM1", Gui::Player(1, "TEAM1", std::make_pair(1, 1), 1, 1));
+    gameData->addTeam("TEAM2", (Color){0, 0, 0, 0});
+    gameData->addPlayerToTeam("TEAM2", Gui::Player(1, "TEAM2", std::make_pair(1, 1), 1, 1));
 
     guiUpdater.update("ppo", {"1", "1", "1", "1"});
     cr_assert_eq(gameData->getTeam("TEAM1").getPlayer(1).get()->getPosition().first, 1);

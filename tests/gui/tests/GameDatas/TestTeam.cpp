@@ -289,7 +289,7 @@ Test(Team, getPlayerColor, .timeout = 5)
 {
     Model model;
     ModelAnimation *modelAnimation = nullptr;
-    Gui::Team team("TEAM1", model, model, modelAnimation, (Color){0, 0, 0, 0});
+    Gui::Team team("TEAM1", model, model, modelAnimation, (Color){255, 255, 255, 255});
 
     Color color = team.getPlayerColor();
     cr_assert_eq(color.r, 255);
