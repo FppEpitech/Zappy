@@ -41,8 +41,9 @@ void Gui::Engine::listenServer()
     if (bufferState == Gui::INetwork::BufferState::NONE)
         return;
     if (bufferState == Gui::INetwork::BufferState::SERVER_ERROR) {
-        std::cout << STR_RED << SERVER_DOWN_MESSAGE << STR_RESET << std::endl;
-        _gameData.get()->setServerError(true);
+        // std::cout << STR_RED << SERVER_DOWN_MESSAGE << STR_RESET << std::endl;
+        if (!_gameData.get()->getIsEndGame())
+            _gameData.get()->setServerError(true);
         return;
     }
     try {
