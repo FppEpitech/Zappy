@@ -27,12 +27,13 @@ def writeHelp(exitCode : int = 0):
     """
     print("")
     print("Usage:")
-    print("\t./zappy_ai -p port -n name -h machine")
+    print("\t./zappy_ai -p port -n name -h machine [-l on/off]")
     print("")
     print("Description:")
     print("\t-p port\t\tis the port number")
     print("\t-n name\t\tis the name of the team")
     print("\t-h machine\tis the name of the machine; localhost by default")
+    print("\t-l on/off\tturn logs on or off; off by default")
     print("\t--help\t\tprint this help")
     print("")
     sys.exit(exitCode)
@@ -51,6 +52,7 @@ def getArgs(av=sys.argv):
     host = LOCALHOST
     port = -1
     name = ""
+    logs = False
     try:
         for i in range(1, len(av)):
             if av[i] == "-p":
@@ -59,28 +61,34 @@ def getArgs(av=sys.argv):
                 name = (av[i + 1]).replace("\n", "")
             elif av[i] == "-h":
                 host = av[i + 1]
+            elif av[i] == "-l":
+                if av[i + 1].lower() == "on":
+                    logs = True
+                elif av[i + 1].lower() == "off":
+                    logs = False
+                else:
+                    raise ArgsException("Error: invalid arguments")
         if port < PORT_MIN or port > PORT_MAX or name == "":
             raise ArgsException("Error: invalid arguments")
     except Exception as e:
         print("Error: invalid arguments", file=sys.stderr, flush=True)
         writeHelp(84)
-    return host, port, name
+    return host, port, name, logs
 
 
 def main():
         """
         Main function
         """
-        host, port, teamName = getArgs()
+        host, port, teamName, logs = getArgs()
         try:
-            ai = AI(host, port, teamName)
+            ai = AI(host, port, teamName, logs)
             try:
                 ai.run()
             except KeyboardInterrupt:
-                ai.api.close()
                 ai.isRunning = False
                 ai.threads[0].join()
-                print("The AI has been stopped by a keyboard interrupt", file=sys.stderr)
+                ai.api.close()
         except PlayerDeathException as e:
             print(e, file=sys.stderr)
             sys.exit(0)
