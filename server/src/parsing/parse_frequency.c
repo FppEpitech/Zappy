@@ -14,6 +14,15 @@
 #include <string.h>
 #include <stdbool.h>
 
+static int check_size(int result)
+{
+    if (result > 800) {
+        dprintf(2, "Frequence must be below of 801\n");
+        return CODE_ERROR_INVALID_ARG;
+    }
+    return CODE_SUCCESS;
+}
+
 int parse_frequency(char **arg, int *pos, parsing_t *parsing)
 {
     int result = 0;
@@ -30,6 +39,8 @@ int parse_frequency(char **arg, int *pos, parsing_t *parsing)
             "must be a positive value\n");
         return CODE_ERROR_INVALID_ARG;
     }
+    if (check_size(result) == CODE_ERROR_INVALID_ARG)
+        return CODE_ERROR_INVALID_ARG;
     (*pos) += 2;
     parsing->freq = result;
     return CODE_SUCCESS;
