@@ -26,8 +26,8 @@ fclean:
 
 tests_run:
 	@make tests_run -C server
-	@make tests_run -C ai
 	@make tests_run -C gui
+	@make tests_run -C ai
 
 zappy_gui:
 	@make -C gui

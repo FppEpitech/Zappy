@@ -138,6 +138,8 @@ TEST_FILES	=	list/list_test.c 					\
 				gui/commands/tests_sst.c			\
 				gui/commands/tests_suc.c			\
 				gui/commands/tests_tna.c			\
+				ai/test_broadcast_command.c			\
+				ai/test_eject_command.c				\
 
 OBJ			=	$(SRC:.c=.o)
 MAIN_OBJ	=	$(MAIN:.c=.o)
