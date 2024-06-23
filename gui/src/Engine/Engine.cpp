@@ -24,12 +24,14 @@ Gui::Engine::Engine(std::shared_ptr<INetwork> network) : _network(network)
 
 void Gui::Engine::run()
 {
+    _networkThread = std::thread(&Gui::Engine::threadLoop, this);
     while (_render->isOpen()) {
-        listenServer();
         _render->draw();
         _event->listen();
         sendMessageUpdate();
     }
+    if (_networkThread.joinable())
+        _networkThread.join();
 }
 
 void Gui::Engine::listenServer()
@@ -94,4 +96,10 @@ void Gui::Engine::sendUpdateMapMessage()
     _network.get()->sendMessageServer("mct\n");
     _gameData.get()->setNbBCTCommandReceived(0);
     _gameData.get()->restartLastTickMctCommand();
+}
+
+void Gui::Engine::threadLoop()
+{
+    while (_render->isOpen())
+        listenServer();
 }
