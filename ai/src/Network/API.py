@@ -45,7 +45,7 @@ class API:
     """
 
 
-    def __init__(self, host : str, port : int):
+    def __init__(self, host : str, port : int, logs : bool):
         """
         Constructor of the API class
 
@@ -64,6 +64,7 @@ class API:
         self.inputs : list = []
         self.outputs : list = []
         self.sock : socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.logs = logs
 
 
     def connect(self):
@@ -99,7 +100,8 @@ class API:
         for s in write:
             if s == self.sock:
                 s.send(data.encode())
-                print("sent : ", stringifyData(data), flush=True, file=sys.stderr)
+                if self.logs:
+                    print("sent : ", stringifyData(data), flush=True, file=sys.stderr)
 
 
     def receiveData(self, timeout : float = None):
@@ -121,7 +123,8 @@ class API:
                     print("Server disconnected")
                     sys.exit(0)
                 else:
-                    print("received :", stringifyData(data.decode()), flush=True, file=sys.stderr)
+                    if self.logs:
+                        print("received :", stringifyData(data.decode()), flush=True, file=sys.stderr)
                     return data.decode()
         return None
 
@@ -173,9 +176,10 @@ class API:
         except Exception as e:
             raise APIException("invalid map size", fileName)
 
-        print("Connected to server")
-        print(f"Client number: {clientNum}")
-        print(f"Map size: x = {x}, y = {y}")
+        if self.logs:
+            print("Connected to server")
+            print(f"Client number: {clientNum}")
+            print(f"Map size: x = {x}, y = {y}")
         return clientNum, x, y
 
 
