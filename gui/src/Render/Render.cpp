@@ -28,9 +28,11 @@ Gui::Render::Render(std::shared_ptr<GameData> gameData)
     _renderDistance = DEFAULT_RENDER_DISTANCE;
     _isHelpMenu = false;
     _endHudSet = false;
+    int animCount = 0;
+    _gameData.get()->setAnimsCount(animCount);
 }
 
-void Gui::Render::LoadModels(void)
+void Gui::Render::LoadModels()
 {
     _tileModel = LoadModel(MODEL_TILE);
     _foodModel = LoadModel(MODEL_FOOD);
@@ -40,6 +42,15 @@ void Gui::Render::LoadModels(void)
     _siburModel = LoadModel(MODEL_SIBUR);
     _thystameModel = LoadModel(MODEL_THYSTAME);
     _deraumereModel = LoadModel(MODEL_DERAUMERE);
+
+    int animCount = 0;
+    Model playerModel = LoadModel(MODEL_PLAYER);
+    Model eggModel = LoadModel(MODEL_EGG);
+    ModelAnimation* playerModelAnimation = LoadModelAnimations(MODEL_PLAYER, &animCount);
+    _gameData.get()->setAnimsCount(animCount);
+    _gameData.get()->setPlayerModel(playerModel);
+    _gameData.get()->setEggModel(eggModel);
+    _gameData.get()->setPlayerModelAnimation(playerModelAnimation);
 
     _cursorTexture = LoadTexture(PNG_CURSOR);
 }
