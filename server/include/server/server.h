@@ -196,3 +196,12 @@ void destroy_command_list(list_t *command_list);
  * @param sig Signla catch.
  */
 void handle_control_c(int sig);
+
+/**
+ * @brief Send the status of server.
+ *
+ * @param status Actual status of server.
+ * @return true If server must run.
+ * @return false If server musn't run.
+ */
+bool server_status(bool status);

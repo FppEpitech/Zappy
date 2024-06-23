@@ -91,15 +91,6 @@ void handle_client_write(app_t *app, int fd)
     }
 }
 
-static bool server_status(bool status)
-{
-    static bool server_status = true;
-
-    if (status == false)
-        server_status = status;
-    return server_status;
-}
-
 static int game_run(int result_select, app_t *app, bool logic_loop)
 {
     if (result_select < 0)

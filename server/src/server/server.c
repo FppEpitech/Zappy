@@ -10,6 +10,15 @@
 
 #include <sys/time.h>
 
+bool server_status(bool status)
+{
+    static bool server_status = true;
+
+    if (status == false)
+        server_status = status;
+    return server_status;
+}
+
 void handle_control_c(int sig)
 {
     if (sig == SIGINT)
