@@ -69,6 +69,10 @@ To use the Zappy API, follow these steps:
 
 2. Use the interactive API documentation to explore the available endpoints and send requests to the Zappy API.
 
+You can also use the API endpoints directly via Insomnia, Postman, or any other API client.
+
+*You will find an export of these endpoints (for Insomnia) : [here](./API_Endpoints(Insomnia).json)*
+
 ## API Endpoints
 
 The Zappy API provides the following endpoints:
