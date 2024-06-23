@@ -49,8 +49,9 @@ gui_t *find_gui(app_t *app, size_t fd);
  * @brief Destroy gui list.
  *
  * @param gui_list List of gui.
+ * @param app Application with all information.
  */
-void destroy_gui(list_t *gui_list);
+void destroy_gui(app_t *app, list_t *gui_list);
 
 /**
  * @brief Add a command to gui list.
