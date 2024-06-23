@@ -100,6 +100,6 @@ void Gui::Engine::sendUpdateMapMessage()
 
 void Gui::Engine::threadLoop()
 {
-    while (_render->isOpen() && (!_gameData->getServerError() || _gameData.get()->getIsEndGame()))
+    while (_render->isOpen() && (!_gameData->getServerError()) && (!_gameData.get()->getIsEndGame()))
         listenServer();
 }
