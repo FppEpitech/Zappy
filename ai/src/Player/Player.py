@@ -1029,6 +1029,7 @@ class Player:
         if self.inventory.food <= 1 and self.isLeader == Role.LEADER:
             self.broadcast(random.choice(self.alliesUuid), teamName, myuuid, creationTime)
             self.currentMode = Mode.DYING
+            return
         if self.isLeader == Role.LEADER:
             for msg in self.broadcastReceived:
                 if msg[1].message == "IsLeader?":
