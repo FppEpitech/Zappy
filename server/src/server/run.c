@@ -100,12 +100,6 @@ static bool server_status(bool status)
     return server_status;
 }
 
-static void handle_control_c(int sig)
-{
-    if (sig == SIGINT)
-        server_status(false);
-}
-
 static int game_run(int result_select, app_t *app, bool logic_loop)
 {
     if (result_select < 0)

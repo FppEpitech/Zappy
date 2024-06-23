@@ -5,9 +5,16 @@
 ** server
 */
 
-#include "server/server.h"
+#include "server/client.h"
+#include "ai/cmd/command_ai.h"
 
 #include <sys/time.h>
+
+void handle_control_c(int sig)
+{
+    if (sig == SIGINT)
+        server_status(false);
+}
 
 static bool init_server(server_t *server)
 {

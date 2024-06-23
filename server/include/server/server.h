@@ -189,3 +189,10 @@ void destroy_message_list(list_t *message_list);
  * @param message_list List of command to destroy.
  */
 void destroy_command_list(list_t *command_list);
+
+/**
+ * @brief Handle Control-C of server.
+ *
+ * @param sig Signla catch.
+ */
+void handle_control_c(int sig);
