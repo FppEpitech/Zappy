@@ -71,11 +71,9 @@ class Gui::GameData {
          * @brief Add a team to the game.
          *
          * @param name Name of the team.
-         * @param playerModelPath Path to the asset of the team for players.
-         * @param eggModelPath Path to the asset of the team for eggs.
          * @param playerColor Color of the team.
          */
-        void addTeam(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath, Color playerColor);
+        void addTeam(const std::string &name, Color playerColor);
 
         /**
          * @brief Add a player to a team.
@@ -280,6 +278,34 @@ class Gui::GameData {
          */
         std::string getEndMessage() const;
 
+        /**
+         * @brief Set the Player Model object.
+         *
+         * @param playerModel Model asset of the Team.
+         */
+        void setPlayerModel(const Model &playerModel);
+
+        /**
+         * @brief Set the Egg Model object.
+         *
+         * @param eggModel Model asset of the Team.
+         */
+        void setEggModel(const Model &eggModel);
+
+        /**
+         * @brief Set the Player Model Animation object.
+         *
+         * @param playerModelAnimation Model to animate players.
+         */
+        void setPlayerModelAnimation(ModelAnimation *playerModelAnimation);
+
+        /**
+         * @brief Get the Player Model Animation object.
+         *
+         * @return ModelAnimation* - Model to animate players.
+         */
+        void setAnimsCount(int animsCount);
+
     private:
 
         std::vector<Gui::Team>      _teams;                 //!< Teams of the game.
@@ -292,5 +318,9 @@ class Gui::GameData {
         std::string                 _lastError;             //!< Last error message.
         TimeUnitState               _timeUnitFromServer;    //!< True if the time unit has changed.
         std::vector<Gui::Egg>       _serverEggs;            //!< Eggs from the server.
-        std::string                _endMessage;            //!< End message of the game.
+        std::string                 _endMessage;            //!< End message of the game.
+        Model                       _playerModel;           //!< Model asset of the Team.
+        Model                       _eggModel;              //!< Model asset of the Team.
+        ModelAnimation*             _playerModelAnimation;        //!< Model to animate players.
+        int                         _animsCount;            //!< Animation number of players.
 };
