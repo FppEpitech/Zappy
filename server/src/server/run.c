@@ -5,8 +5,12 @@
 ** run
 */
 
+#include "rules.h"
+#include "utils.h"
 #include "server/client.h"
 #include "ai/cmd/command_ai.h"
+
+#include <time.h>
 
 static void reset_ai(app_t *app, list_node_t *node_ai)
 {
@@ -87,60 +91,69 @@ void handle_client_write(app_t *app, int fd)
     }
 }
 
-static bool server_status(bool status)
-{
-    static bool server_status = true;
-
-    if (status == false)
-        server_status = status;
-    return server_status;
-}
-
-static void handle_control_c(int sig)
-{
-    if (sig == SIGINT)
-        server_status(false);
-}
-
-static int game_run(int result_select, app_t *app)
+static int game_run(int result_select, app_t *app, bool logic_loop)
 {
     if (result_select < 0)
         return ERROR;
-    if (result_select != 0) {
+    if (!logic_loop) {
         for (int fd = 0; fd < FD_SETSIZE; fd++) {
             handle_client_read(app, fd);
             handle_client_write(app, fd);
         }
+    } else {
+        spawn_ressources(app);
+        treat_ai_command(app);
+        treat_gui_command(app);
+        treat_stuck(app);
+        check_die(app);
+        if (app->game->status_game == END_GAME)
+            return END_GAME;
+        check_win(app);
     }
-    spawn_ressources(app);
-    treat_ai_command(app);
-    treat_gui_command(app);
-    treat_stuck(app);
-    check_die(app);
-    if (app->game->status_game == END_GAME)
-        return END_GAME;
-    check_win(app);
     return GAME_CONTINUE;
+}
+
+static struct timeval get_timeout(app_t *app, struct timespec *start)
+{
+    struct timeval timeout_final;
+    struct timespec end = {0};
+    long time_elapsed = 0.0;
+    double timeout = 1.0 / app->game->freq;
+
+    timeout_final.tv_sec = 0;
+    timeout_final.tv_usec = timeout * MICROSECOND_TO_SECOND;
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    time_elapsed = (end.tv_sec - start->tv_sec) * MILLISECOND_TO_SECOND +
+        (end.tv_nsec - start->tv_nsec) / MICROSECOND_TO_SECOND;
+    if (time_elapsed < timeout * MILLISECOND_TO_SECOND) {
+        timeout_final.tv_usec = (timeout * MILLISECOND_TO_SECOND -
+            time_elapsed) * MILLISECOND_TO_SECOND;
+    } else {
+        clock_gettime(CLOCK_MONOTONIC, start);
+    }
+    return timeout_final;
 }
 
 bool server_run(app_t *app)
 {
     struct timeval timeout;
-    int result_select = 0;
     int result_game = 0;
+    struct timespec start = {0};
+    bool logic_loop = false;
+    int result_select = 0;
 
-    timeout.tv_sec = SELECT_TIMEOUT_SECONDS;
-    timeout.tv_usec = 0;
     signal(SIGINT, handle_control_c);
+    clock_gettime(CLOCK_MONOTONIC, &start);
     while (server_status(true)) {
         server_reset_fd(app);
+        timeout = get_timeout(app, &start);
+        if (timeout.tv_usec == (1.0 / app->game->freq) * MICROSECOND_TO_SECOND)
+            logic_loop = true;
         result_select = select(FD_SETSIZE, &app->server->read_fds,
         &app->server->write_fds, NULL, &timeout);
-        result_game = game_run(result_select, app);
-        if (result_game == -1)
-            return false;
-        if (result_game == 1)
-            return true;
+        if (game_run(result_select, app, logic_loop) != GAME_CONTINUE)
+            return result_game == ERROR ? false : true;
+        logic_loop = false;
     }
     return true;
 }

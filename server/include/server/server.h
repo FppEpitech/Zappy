@@ -189,3 +189,19 @@ void destroy_message_list(list_t *message_list);
  * @param message_list List of command to destroy.
  */
 void destroy_command_list(list_t *command_list);
+
+/**
+ * @brief Handle Control-C of server.
+ *
+ * @param sig Signla catch.
+ */
+void handle_control_c(int sig);
+
+/**
+ * @brief Send the status of server.
+ *
+ * @param status Actual status of server.
+ * @return true If server must run.
+ * @return false If server musn't run.
+ */
+bool server_status(bool status);

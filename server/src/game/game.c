@@ -5,6 +5,7 @@
 ** Game
 */
 
+#include "utils.h"
 #include "app/app.h"
 #include "gui/communication.h"
 
