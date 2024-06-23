@@ -10,12 +10,11 @@
 #include "GameDatas/Team.hpp"
 #include "raymath.h"
 
-Gui::Team::Team(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath, Color playerColor) : _name(name), _playerColor(playerColor)
+Gui::Team::Team(const std::string &name, Model playerModel, Model eggModel, ModelAnimation* modelAnimation, Color playerColor) : _name(name), _playerColor(playerColor)
 {
-    _playerModel = LoadModel(playerModelPath.c_str());
-    _eggModel = LoadModel(eggModelPath.c_str());
-    _animsCount = 0;
-    _modelAnimation = LoadModelAnimations(MODEL_PLAYER, &_animsCount);
+    _playerModel = playerModel;
+    _eggModel = eggModel;
+    _modelAnimation = modelAnimation;
 }
 
 const std::string &Gui::Team::getName() const
