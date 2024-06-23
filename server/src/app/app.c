@@ -68,7 +68,6 @@ void destroy_command_list(list_t *command_list)
 void destroy_app(app_t *app)
 {
     destroy_server(app->server);
-    printf("DESTROY GUI:\n");
     destroy_gui(app, app->gui_list);
     destroy_client(app->clients_list);
     destroy_team(app->teams_list);
