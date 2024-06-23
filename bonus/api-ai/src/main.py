@@ -293,7 +293,7 @@ def get_inventory(token: str):
 @app.get("/info/level")
 def get_level(token: str):
     for ai, aiToken in aiList:
-        if str(aiTokeservern) == token:
+        if str(aiToken) == token:
             return {"level": ai.getLevel()}
     raise HTTPException(status_code=404, detail="AI not found")
 
@@ -307,7 +307,7 @@ def get_teamname(token: str):
 
 
 @app.get("/info/messages")
-def get_messages(tokeservern: str):
+def get_messages(token: str):
     for ai, aiToken in aiList:
         if str(aiToken) == token:
             return {"messages": ai.getMessagesReceived()}
