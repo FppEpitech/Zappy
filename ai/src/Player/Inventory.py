@@ -93,7 +93,7 @@ class Inventory:
         if self.food == inventory.food and self.linemate == inventory.linemate and self.deraumere == inventory.deraumere and self.sibur == inventory.sibur and self.mendiane == inventory.mendiane and self.phiras == inventory.phiras and self.thystame == inventory.thystame and self.player == inventory.player:
             return True
         return False
-    
+
 
     def __add__(self, inventory):
         """
