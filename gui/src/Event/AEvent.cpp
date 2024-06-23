@@ -18,3 +18,13 @@ void Gui::AEvent::setGameData(std::shared_ptr<GameData> gameData)
 {
     _gameData = gameData;
 }
+
+std::shared_ptr<Gui::Render> Gui::AEvent::getRender()
+{
+    return _render;
+}
+
+std::shared_ptr<Gui::GameData> Gui::AEvent::getGameData()
+{
+    return _gameData;
+}

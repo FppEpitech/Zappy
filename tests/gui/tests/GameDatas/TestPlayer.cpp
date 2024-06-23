@@ -11,6 +11,8 @@
 #include "CriterionHeaders.hpp"
 #include "Error/Error.hpp"
 
+#include <unistd.h>
+
 Test(Player, position, .timeout = 5)
 {
     Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(1, 2), 1);
@@ -116,4 +118,46 @@ Test(Player, getCenterPosition, .timeout = 5)
     cr_assert_eq(player.getCenterPosition().x, (float)(SIZE_TILE / 2));
     cr_assert_eq(player.getCenterPosition().y, 0);
     cr_assert_eq(player.getCenterPosition().z, (float)(SIZE_TILE / 2));
+}
+
+Test(Player, setPosition3D, .timeout = 5)
+{
+    Gui::Player player(0, "TEAM1", std::pair<std::size_t, std::size_t>(0, 0), 1);
+
+    player.setPosition3D((Vector3){1, 2, 3});
+    cr_assert_eq(player.getPosition3D().x, 1);
+    cr_assert_eq(player.getPosition3D().y, 2);
+    cr_assert_eq(player.getPosition3D().z, 3);
+}
+
+Test(Player, setState, .timeout = 5)
+{
+    Gui::Player player(0, "TEAM1", std::pair<std::size_t, std::size_t>(0, 0), 1);
+
+    player.setState(Gui::Player::IDLE);
+    cr_assert_eq(player.getState(), Gui::Player::IDLE);
+
+    player.setState(Gui::Player::WALK);
+    cr_assert_eq(player.getState(), Gui::Player::WALK);
+}
+
+Test(Player, setCurrentFrame, .timeout = 5)
+{
+    Gui::Player player(0, "TEAM1", std::pair<std::size_t, std::size_t>(0, 0), 1);
+
+    player.setCurrentFrame(3);
+    cr_assert_eq(player.getCurrentFrame(), 3);
+
+    player.setCurrentFrame(5);
+    cr_assert_eq(player.getCurrentFrame(), 5);
+}
+
+Test(Player, restartAnimationTimeEllapsed, .timeout = 5)
+{
+    Gui::Player player(0, "TEAM1", std::pair<std::size_t, std::size_t>(0, 0), 1);
+    clock_t tmp = player.getAnimationTimeEllapsed();
+    usleep(1000);
+
+    player.restartAnimationTimeEllapsed();
+    cr_assert_neq(player.getAnimationTimeEllapsed(), tmp);
 }

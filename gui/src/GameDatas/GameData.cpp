@@ -19,6 +19,7 @@ Gui::GameData::GameData()
     _nbBCTCommandReceived = 0;
     _timeUnitFromServer = TimeUnitState::NONE;
     _endMessage = "";
+    _isServerError = false;
 }
 
 std::vector<Gui::Team> &Gui::GameData::getTeams()
@@ -44,13 +45,13 @@ void Gui::GameData::addTeam(const Gui::Team &team)
     _teams.push_back(team);
 }
 
-void Gui::GameData::addTeam(const std::string &name, const std::string &playerModelPath, const std::string &eggModelPath, Color playerColor)
+void Gui::GameData::addTeam(const std::string &name, Color playerColor)
 {
     for (auto &regsiteredTeam : _teams) {
         if (regsiteredTeam.getName() == name)
             throw Gui::Errors::GuiGameDataException("Team already exists");
     }
-    _teams.push_back(Gui::Team(name, playerModelPath, eggModelPath, playerColor));
+    _teams.push_back(Gui::Team(name, _playerModel, _eggModel, _playerModelAnimation, playerColor));
 }
 
 void Gui::GameData::addPlayerToTeam(const std::string &teamName, const Gui::Player &player)
@@ -238,4 +239,34 @@ void Gui::GameData::setEndMessage(const std::string &message)
 std::string Gui::GameData::getEndMessage() const
 {
     return _endMessage;
+}
+
+void Gui::GameData::setPlayerModel(const Model &playerModel)
+{
+    _playerModel = playerModel;
+}
+
+void Gui::GameData::setEggModel(const Model &eggModel)
+{
+    _eggModel = eggModel;
+}
+
+void Gui::GameData::setPlayerModelAnimation(ModelAnimation *playerModelAnimation)
+{
+    _playerModelAnimation = playerModelAnimation;
+}
+
+void Gui::GameData::setAnimsCount(int count)
+{
+    _animsCount = count;
+}
+
+void Gui::GameData::setServerError(bool isServerError)
+{
+    _isServerError = isServerError;
+}
+
+bool Gui::GameData::getServerError() const
+{
+    return _isServerError;
 }

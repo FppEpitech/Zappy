@@ -64,3 +64,29 @@ Test(parse_height, invalid_flag_passed)
     cr_assert_eq(res, CODE_ERROR_WRONG_FLAG);
     free(parsing);
 }
+
+Test(parse_height, too_high_height)
+{
+    parsing_t *parsing = malloc(sizeof(parsing_t));
+
+    cr_assert_not_null(parsing);
+    char *arg[] = {"-y", "40", NULL};
+    int pos = 0;
+    int res = parse_height(arg, &pos, parsing);
+
+    cr_assert_eq(res, CODE_ERROR_INVALID_ARG);
+    free(parsing);
+}
+
+Test(parse_height, too_low_height)
+{
+    parsing_t *parsing = malloc(sizeof(parsing_t));
+
+    cr_assert_not_null(parsing);
+    char *arg[] = {"-y", "5", NULL};
+    int pos = 0;
+    int res = parse_height(arg, &pos, parsing);
+
+    cr_assert_eq(res, CODE_ERROR_INVALID_ARG);
+    free(parsing);
+}

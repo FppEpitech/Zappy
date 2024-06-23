@@ -52,12 +52,12 @@ Gui::Network::BufferState Gui::Network::listenServer()
     selectServer();
     BufferState bufferSate = readInfoServer();
     if (!_isConnected && _buffer == "WELCOME" && bufferSate == READY) {
+        _isConnected = true;
         sendMessageServer("GRAPHIC\n");
         sendMessageServer("sgt\n");
         sendMessageServer("msz\n");
         sendMessageServer("mct\n");
         sendMessageServer("tna\n");
-        _isConnected = true;
         _buffer = "";
         return Gui::Network::NONE;
     }
@@ -76,13 +76,17 @@ Gui::Network::BufferState Gui::Network::readInfoServer()
             return READY;
         _buffer.append(&buffer, 1);
     }
-    if (len == 0)
+    if (len == 0) {
+        _isConnected = false;
         return SERVER_ERROR;
+    }
     return NONE;
 }
 
 void Gui::Network::sendMessageServer(const std::string &message)
 {
+    if (!_isConnected)
+        return;
     if (FD_ISSET(_serverFd, &_writeFd)) {
         write(_serverFd, message.c_str(), message.length());
         std::cerr << STR_VIOLET << "Send: " << STR_CYAN << message << STR_RESET << std::endl;

@@ -14,6 +14,7 @@
 #include "Parsing/ServerParser.hpp"
 #include "GUIUpdater/GUIUpdater.hpp"
 
+#include <thread>
 #include <time.h>
 
 #define TIME_UNIT_MAP_UPDATE 20
@@ -47,6 +48,7 @@ class Gui::Engine {
         /**
          * @brief Run the engine loop.
          *
+         * @note This method runs in the main thread.
          */
         void run();
 
@@ -58,6 +60,7 @@ class Gui::Engine {
         std::unique_ptr<IEvent>             _event;         //!< Event class to listen the user's inputs.
         std::shared_ptr<GameData>           _gameData;      //!< GameData class to store the game's data.
         std::unique_ptr<IGUIUpdater>        _guiUpdater;    //!< GUIUpdater class to update the GUI.
+        std::thread                         _networkThread; //!< Thread to listen the server and update the GameData.
 
         /**
          * @brief Listen the server and update Engine with its commands.
@@ -85,4 +88,11 @@ class Gui::Engine {
          *
          */
         void sendUpdateMapMessage();
+
+        /**
+         * @brief Thread loop for the network thread.
+         *
+         * @note This method runs in a separate thread.
+         */
+        void threadLoop();
 };
