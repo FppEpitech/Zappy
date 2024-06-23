@@ -32,6 +32,36 @@ static void free_tile_map(char *tile, char *map)
     free(map);
 }
 
+static void add_mct(app_t *app, char *map)
+{
+    list_node_t *tmp_gui = app->gui_list->first;
+
+    while (tmp_gui) {
+        add_message(tmp_gui->data.gui->list_messages, map);
+        tmp_gui = tmp_gui->next;
+    }
+}
+
+void send_mct(app_t *app)
+{
+    char *tile = NULL;
+    char *map = strdup("");
+    char *final_response = NULL;
+
+    if (!map)
+        return;
+    for (size_t y = 0; y < app->game->height; y++) {
+        for (size_t x = 0; x < app->game->width; x++) {
+            tile = get_string(app, x, y);
+            final_response = format_string("%s%s", map, tile);
+            free_tile_map(tile, map);
+            map = strdup(final_response);
+            free(final_response);
+        }
+    }
+    add_mct(app, map);
+}
+
 void mct_response(gui_t *gui, app_t *app, char *line)
 {
     char *tile = NULL;

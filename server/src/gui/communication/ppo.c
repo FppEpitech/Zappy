@@ -25,6 +25,19 @@ static char *get_response(ia_t *ia)
     return response;
 }
 
+void send_ppo(app_t *app, ia_t *ia)
+{
+    char *response = NULL;
+    list_node_t *tmp_gui = app->gui_list->first;
+
+    while (tmp_gui) {
+        response = format_string("ppo %d %d %d %d\n",
+        ia->fd, ia->position->x, ia->position->y, ia->direction);
+        add_message(tmp_gui->data.gui->list_messages, response);
+        tmp_gui = tmp_gui->next;
+    }
+}
+
 void ppo_response(gui_t *gui, app_t *app, char *line)
 {
     int player_id = 0;

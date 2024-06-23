@@ -15,6 +15,7 @@ gui_t *create_gui(int fd)
     if (new_gui == NULL)
         return NULL;
     new_gui->fd = fd;
+    new_gui->list_command = list_new();
     new_gui->list_messages = list_new();
     return new_gui;
 }
@@ -80,15 +81,21 @@ gui_t *find_gui(app_t *app, size_t fd)
     return NULL;
 }
 
-void destroy_gui(list_t *gui_list)
+void destroy_gui(app_t *app, list_t *gui_list)
 {
     list_node_t *temp = gui_list->first;
+    gui_t *gui = NULL;
 
     while (temp) {
-        close(temp->data.gui->fd);
-        destroy_message_list(temp->data.gui->list_messages);
-        free(temp->data.gui->list_messages);
-        free(temp->data.gui);
+        gui = temp->data.gui;
+        while (gui->list_messages->len != 0)
+            write_message(app, gui->list_messages, gui->fd);
+        close(gui->fd);
+        destroy_message_list(gui->list_messages);
+        destroy_command_list(gui->list_command);
+        list_free(gui->list_command);
+        free(gui->list_messages);
+        free(gui);
         temp = temp->next;
     }
     list_free(gui_list);

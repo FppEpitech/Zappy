@@ -5,7 +5,9 @@
 ** Game
 */
 
+#include "utils.h"
 #include "app/app.h"
+#include "gui/communication.h"
 
 static void add_ressources(size_t index_entity, tile_t **map,
     int x, int y)
@@ -76,6 +78,7 @@ void spawn_ressources(app_t *app)
     if (time_elapsed(&app->game->start_food) >= (20.0 / app->game->freq)) {
         fill_ressources(app);
         gettimeofday(&app->game->start_food, NULL);
+        send_mct(app);
     }
 }
 
@@ -88,6 +91,7 @@ game_t *create_game(int height, int width, int freq)
     new_game->height = height;
     new_game->width = width;
     new_game->freq = freq;
+    new_game->status_game = GAME_CONTINUE;
     new_game->map = create_map(width, height);
     gettimeofday(&new_game->start, NULL);
     gettimeofday(&new_game->start_food, NULL);

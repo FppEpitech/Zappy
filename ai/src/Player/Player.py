@@ -6,6 +6,7 @@
 ##
 
 import sys
+import random
 
 from ai.src.Enum.Mode import Mode
 from ai.src.Enum.Role import Role
@@ -154,7 +155,7 @@ class Player:
     """
 
 
-    def __init__(self, teamName : str):
+    def __init__(self, teamName : str, logs : bool = False):
         """
         Constructor of the Player class
         """
@@ -183,6 +184,9 @@ class Player:
         self.messageHistory = []
         self.teamName = teamName
         self.enemyBroadcast = []
+        self.alliesUuid = []
+        self.logs = logs
+
 
     def __str__(self):
         """
@@ -278,12 +282,30 @@ class Player:
             creationTime : int
                 the creation time of the message
         """
-        print("Broadcasting message: ", message, flush=True, file=sys.stderr)
+        if self.logs:
+            print("Broadcasting message: ", message, flush=True, file=sys.stderr)
         encryptedMsg = Message(teamName)
         encryptedMsg.createMessage(message, myuuid, creationTime)
         self.actions.append(Action.BROADCAST)
         self.commands.append(f"Broadcast \"{encryptedMsg.encrypt()}\"")
         self.messageHistory.append(encryptedMsg)
+        self.callbacks.append(callback)
+
+
+    def broadcastEnemyMessage(self, callback = None):
+        """
+        Set the current action to broadcast an enemy message
+
+        Parameters :
+            callback : function
+                the callback to call after the action
+                (default is None)
+        """
+        message = (1, "English or Spanish?")
+        if len(self.enemyBroadcast) > 0:
+            message = random.choice(self.enemyBroadcast)
+        self.actions.append(Action.BROADCAST)
+        self.commands.append(f"Broadcast \"{message[1]}\"")
         self.callbacks.append(callback)
 
 
@@ -433,14 +455,20 @@ class Player:
             message = message.split(", ")[1]
         msg = Message(self.teamName)
         if msg.createMessageFromEncryptedJson(message):
-            print("Received message: ", msg.message, flush=True, file=sys.stderr)
+            if self.logs:
+                print("Received message: ", msg.message, flush=True, file=sys.stderr)
             if msg in self.messageHistory or msg.messageTimestamp < aiTimestamp:
-                print("Already received this message", flush=True, file=sys.stderr)
+                if self.logs:
+                    print("Already received this message", flush=True, file=sys.stderr)
                 return
             self.broadcastReceived.append((direction, msg))
             self.messageHistory.append(msg)
+            if self.isLeader == Role.LEADER:
+                if msg.senderUuid not in self.alliesUuid:
+                    self.alliesUuid.append(msg.senderUuid)
         else:
-            print("Received enemy message: ", message, flush=True, file=sys.stderr)
+            if self.logs:
+                print("Received enemy message: ", message, flush=True, file=sys.stderr)
             self.enemyBroadcast.append((direction, message))
 
 
@@ -468,13 +496,19 @@ class Player:
         self.level = level
 
 
-    def handleElevation(self, response : str):
+    def handleElevation(self, response : str, teamName : str, myuuid : str, creationTime : int):
         """
         Handle the response of the elevation command
 
         Parameters :
             response : str
                 the response from the server
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
         if response == "Elevation underway":
             self.currentlyElevating = True
@@ -486,6 +520,11 @@ class Player:
             self.currentlyElevating = False
             return False
         elif response == "ko":
+            if self.logs:
+                print("Elevation failed", flush=True, file=sys.stderr)
+            if self.isLeader == Role.LEADER:
+                self.currentMode = Mode.FOOD
+                self.broadcast("Food", teamName, myuuid, creationTime)
             self.currentlyElevating = False
             return False
 
@@ -512,7 +551,7 @@ class Player:
         return False
 
 
-    def handleResponse(self, response : str, aiTimestamp : int):
+    def handleResponse(self, response : str, aiTimestamp : int, teamName : str, myuuid : str, creationTime : int):
         """
         Handle the response from the server
 
@@ -521,10 +560,16 @@ class Player:
                 the response from the server
             aiTimestamp : int
                 the timestamp of the AI
+            teamName : str
+                the name of the team
+            myuuid : str
+                the uuid of the player
+            creationTime : int
+                the creation time of the message
         """
-        if self.hasSomethingHappened(response, aiTimestamp):
+        if self.hasSomethingHappened(response, aiTimestamp) or self.currentMode == Mode.DYING:
             return
-        if response == "ko":
+        if response == "ko" and self.currentAction != Action.INCANTATION:
             self.currentAction = Action.NONE
             self.currentCommand = ""
             return
@@ -540,7 +585,7 @@ class Player:
             if self.currentCallback is not None:
                 self.currentCallback()
         elif self.currentAction == Action.INCANTATION:
-            if self.handleElevation(response):
+            if self.handleElevation(response, teamName, myuuid, creationTime):
                 return
         self.currentAction = Action.NONE
         self.currentCommand = ""
@@ -554,7 +599,8 @@ class Player:
         """
         Connect the missing players
         """
-        print("Connecting missing players", flush=True, file=sys.stderr)
+        if self.logs:
+            print("Connecting missing players", flush=True, file=sys.stderr)
         for _ in range(0, min(self.unusedSlots, 5)):
             from ai.src.AI import forkAI
             forkAI()
@@ -584,16 +630,19 @@ class Player:
         if self.inventory.food < 35:
             self.currentMode = Mode.FOOD
         elif self.inventory.food >= 45 or self.currentMode != Mode.FOOD:
-            print(self.currentFood, self.inventory.food)
+            if self.logs:
+                print(self.currentFood, self.inventory.food)
             if self.currentFood != self.inventory.food and self.waitingResponse == True:
                 if self.isTimed == True:
-                    print("Handling response")
+                    if self.logs:
+                        print("Handling response")
                     self.currentMode = Mode.HANDLINGRESPONSE
                     self.isTimed = False
                 else:
                     self.isTimed = True
             elif self.currentFood != self.inventory.food and self.waitingResponse == False:
-                print("Broadcasting")
+                if self.logs:
+                    print("Broadcasting")
                 self.currentMode = Mode.BROADCASTING
                 self.waitingResponse = True
             elif self.nbSlaves < 5 and self.waitingResponse == False:
@@ -629,7 +678,8 @@ class Player:
                 index = i
                 break
         if index == -1:
-            self.moveForward()
+            randAction = random.choice([self.moveForward, self.turnLeft, self.turnRight])
+            randAction()
             self.moveForward()
             self.cmdInventory()
             return
@@ -761,9 +811,11 @@ class Player:
         """
         Handle the response of the broadcast
         """
-        print(self.broadcastReceived, flush=True)
+        if self.logs:
+            print(self.broadcastReceived, flush=True)
         self.nbSlaves = len(self.broadcastReceived)
-        print("nb slaves: ", self.nbSlaves, flush=True)
+        if self.logs:
+            print("nb slaves: ", self.nbSlaves, flush=True)
         globalInv = Inventory(0, 0, 0, 0, 0, 0, 0, 0)
         minInv = Inventory(0, 8, 9, 10, 5, 6, 1, 0)
         if self.nbSlaves >= 5:
@@ -778,8 +830,9 @@ class Player:
             if globalInv.hasMoreStones(minInv):
                 self.currentMode = Mode.REGROUP
             else:
-                print("Not enough stones", flush=True, file=sys.stdout)
-                print("Not enough stones", flush=True, file=sys.stderr)
+                if self.logs:
+                    print("Not enough stones", flush=True, file=sys.stdout)
+                    print("Not enough stones", flush=True, file=sys.stderr)
         self.waitingResponse = False
         self.broadcastReceived = []
 
@@ -836,7 +889,8 @@ class Player:
                 the creation time of the message
         """
         nbSlavesHere = self.countSlavesThatArrived(self.broadcastReceived)
-        print("nb slaves here: ", nbSlavesHere, flush=True)
+        if self.logs:
+            print("nb slaves here: ", nbSlavesHere, flush=True)
         if nbSlavesHere >= 5:
             self.broadcast("Drop", teamName, myuuid, creationTime)
             self.currentMode = Mode.DROPPING
@@ -867,14 +921,14 @@ class Player:
         Wait for everyone to finish droping the stones
         """
         nbSlavesHere = self.countSlavesThatFinishedDroping(self.broadcastReceived)
-        if nbSlavesHere != self.nbSlavesHere:
-            minStoneCase = Inventory(0, 8, 9, 10, 5, 6, 1, 0)
-            currentCase = self.vision[0]
-            if currentCase.hasMoreStones(minStoneCase):
-                self.currentMode = Mode.ELEVATING
-                self.broadcastReceived = []
+        minStoneCase = Inventory(0, 8, 9, 10, 5, 6, 1, 0)
+        currentCase = self.vision[0]
+        if currentCase.hasMoreStones(minStoneCase):
+            self.currentMode = Mode.ELEVATING
+            self.broadcastReceived = []
         self.nbSlavesHere = nbSlavesHere
-        print("nb slaves who finished droping: ", nbSlavesHere, flush=True)
+        if self.logs:
+            print("nb slaves who finished droping: ", nbSlavesHere, flush=True)
         if nbSlavesHere >= 5:
             self.currentMode = Mode.ELEVATING
             self.broadcastReceived = []
@@ -899,7 +953,8 @@ class Player:
         if self.isLeader == Role.LEADER:
             self.waitingDrop()
         else:
-            print("Dropping", flush=True, file=sys.stderr)
+            if self.logs:
+                print("Dropping", flush=True, file=sys.stderr)
             if self.inventory.linemate > 0:
                 self.set("linemate")
             if self.inventory.deraumere > 0:
@@ -937,11 +992,12 @@ class Player:
         else:
             isThereARegroup = False
 
-            if len(self.broadcastReceived) != 0:
+            if len(self.broadcastReceived) != 0 and self.logs:
                 print(self.broadcastReceived, flush=True, file=sys.stderr)
             for broadcast in self.broadcastReceived:
                 if broadcast[1].message == "Drop":
-                    print("DROP MODE", flush=True, file=sys.stderr)
+                    if self.logs:
+                        print("DROP MODE", flush=True, file=sys.stderr)
                     self.currentMode = Mode.DROPPING
                     self.broadcastReceived = []
                     return
@@ -985,10 +1041,27 @@ class Player:
             creationTime : int
                 the creation time of the message
         """
+        if self.currentMode == Mode.DYING:
+            return
+        if self.inventory.food <= 1 and self.isLeader == Role.LEADER:
+            self.broadcast(random.choice(self.alliesUuid), teamName, myuuid, creationTime)
+            self.currentMode = Mode.DYING
+            return
         if self.isLeader == Role.LEADER:
             for msg in self.broadcastReceived:
                 if msg[1].message == "IsLeader?":
                     self.broadcast("Yes", teamName, myuuid, creationTime)
+                    self.broadcastReceived.remove(msg)
+        if self.isLeader == Role.SLAVE:
+            for msg in self.broadcastReceived:
+                if msg[1].message == "Food":
+                    self.currentMode = Mode.FOOD
+                    self.arrived = False
+                    self.broadcastReceived.remove(msg)
+                if msg[1].message == myuuid:
+                    self.isLeader = Role.LEADER
+                    self.currentMode = Mode.FOOD
+                    self.arrived = False
                     self.broadcastReceived.remove(msg)
         self.updateMode()
         if self.currentMode == Mode.REGROUP:
@@ -1007,14 +1080,16 @@ class Player:
             self.look(self.lookingForStones)
             return
         elif self.currentMode == Mode.FORKING:
-            print("Forking")
+            if self.logs:
+                print("Forking")
             from ai.src.AI import forkAI
             self.fork(forkAI)
             self.nbSlaves += 1
             self.cmdInventory()
             return
         elif self.currentMode == Mode.BROADCASTING:
-            print("in broadcast")
+            if self.logs:
+                print("in broadcast")
             self.askSlavesForInventory(teamName, myuuid, creationTime)
             self.cmdInventory()
             return
@@ -1024,7 +1099,11 @@ class Player:
             return
         elif self.currentMode == Mode.WAITING:
             self.cmdInventory()
-            self.look()
+            rand = random.randint(0, 5)
+            if rand == 0:
+                self.broadcastEnemyMessage()
+            else:
+                self.look()
             return
         elif self.currentMode == Mode.ELEVATING:
             self.incantation()

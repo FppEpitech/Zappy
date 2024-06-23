@@ -17,14 +17,6 @@
 typedef struct s_app app_t;
 
 /**
- * @brief Calcul time elapsed whereas time parameter.
- *
- * @param time Time of depart.
- * @return double Time.
- */
-double time_elapsed(struct timeval *time);
-
-/**
  * @brief Set the time stuck object.
  *
  * @param ai Ai to stuck.

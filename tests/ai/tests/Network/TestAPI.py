@@ -16,13 +16,16 @@ def testAPI():
         print("\tTests APIException constructor: ", end="")
         testAPIExceptionConstructor()
         print("✅")
+        print("\tTests APIException getFileName method: ", end="")
+        testAPIExceptionGetFileName()
+        print("✅")
     except Exception as _:
         print("❌")
         raise Exception("Test failed")
 
 def testAPIConstructor():
     try:
-        api = API("localhost", 4242)
+        api = API("localhost", 4242, False)
         assert api.host == "localhost"
         assert api.port == 4242
         assert api.inputs == []
@@ -33,7 +36,15 @@ def testAPIConstructor():
 
 def testAPIExceptionConstructor():
     try:
-        api_exception = APIException("test")
+        api_exception = APIException("test", "arzteryutiyuo")
         assert api_exception.message == "APIException: test"
+        assert api_exception.fileName == "arzteryutiyuo"
+    except Exception as _:
+        raise Exception("Test failed")
+
+def testAPIExceptionGetFileName():
+    try:
+        api_exception = APIException("test", "arzteryutiyuo")
+        assert api_exception.getFileName() == "arzteryutiyuo"
     except Exception as _:
         raise Exception("Test failed")

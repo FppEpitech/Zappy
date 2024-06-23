@@ -24,3 +24,6 @@ logs/*.log
 doc/doxygen/html
 doc/doxygen/latex
 website-doc/
+
+# Bonus
+bonus/api-ai/logs/*.log

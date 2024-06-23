@@ -260,3 +260,18 @@ void edi_command(app_t *app, int egg_id);
  * @param egg_id The player id.
  */
 void ebo_command(app_t *app, int egg_id);
+
+/**
+ * @brief Send ppo to all GUI.
+ *
+ * @param app Application with GUI list.
+ * @param ia IA who have move.
+ */
+void send_ppo(app_t *app, ia_t *ia);
+
+/**
+ * @brief Send mct to all GUI.
+ *
+ * @param app Application with GUI list.
+ */
+void send_mct(app_t *app);

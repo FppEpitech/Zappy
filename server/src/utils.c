@@ -9,6 +9,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <sys/time.h>
 
 static bool is_str_number(char *str)
 {
@@ -28,4 +29,16 @@ int parse_positive_int_arg(char *arg)
     if (!is_str_number(arg))
         return CODE_ERROR_INVALID_NUMBER;
     return atoi(arg);
+}
+
+double time_elapsed(struct timeval *time)
+{
+    struct timeval end;
+    double seconds = 0.0;
+    double microseconds = 0.0;
+
+    gettimeofday(&end, NULL);
+    seconds = (end.tv_sec - time->tv_sec);
+    microseconds = (end.tv_usec - time->tv_usec) / 1000000.0;
+    return seconds + microseconds;
 }
