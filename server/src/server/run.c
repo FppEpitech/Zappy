@@ -155,6 +155,7 @@ bool server_run(app_t *app)
     int result_game = 0;
     struct timespec start = {0};
     bool logic_loop = false;
+    int result_select = 0;
 
     signal(SIGINT, handle_control_c);
     clock_gettime(CLOCK_MONOTONIC, &start);
@@ -163,9 +164,9 @@ bool server_run(app_t *app)
         timeout = get_timeout(app, &start);
         if (timeout.tv_usec == (1.0 / app->game->freq) * MICROSECOND_TO_SECOND)
             logic_loop = true;
-        result_game = game_run(select(FD_SETSIZE, &app->server->read_fds,
-        &app->server->write_fds, NULL, &timeout), app, logic_loop);
-        if (result_game != GAME_CONTINUE)
+        result_select = select(FD_SETSIZE, &app->server->read_fds,
+        &app->server->write_fds, NULL, &timeout);
+        if (game_run(result_select, app, logic_loop) != GAME_CONTINUE)
             return result_game == ERROR ? false : true;
         logic_loop = false;
     }
