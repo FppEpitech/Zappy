@@ -78,8 +78,7 @@ void spawn_ressources(app_t *app)
     if (time_elapsed(&app->game->start_food) >= (20.0 / app->game->freq)) {
         fill_ressources(app);
         gettimeofday(&app->game->start_food, NULL);
-        if (app->game->status_game != END_GAME)
-            send_mct(app);
+        send_mct(app);
     }
 }
 

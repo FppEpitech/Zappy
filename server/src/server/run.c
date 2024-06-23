@@ -91,19 +91,19 @@ void handle_client_write(app_t *app, int fd)
     }
 }
 
-static int server_stop(app_t *app)
-{
-    list_node_t *tmp_gui = app->gui_list->first;
+// static int server_stop(app_t *app)
+// {
+//     list_node_t *tmp_gui = app->gui_list->first;
 
-    if (app->game->status_game != END_GAME)
-        return GAME_CONTINUE;
-    while (tmp_gui) {
-        if (tmp_gui->data.gui->list_messages->len != 0)
-            return GAME_CONTINUE;
-        tmp_gui = tmp_gui->next;
-    }
-    return END_GAME;
-}
+//     if (app->game->status_game != END_GAME)
+//         return GAME_CONTINUE;
+//     while (tmp_gui) {
+//         if (tmp_gui->data.gui->list_messages->len != 0)
+//             return GAME_CONTINUE;
+//         tmp_gui = tmp_gui->next;
+//     }
+//     return END_GAME;
+// }
 
 static int game_run(int result_select, app_t *app, bool logic_loop)
 {
@@ -120,7 +120,7 @@ static int game_run(int result_select, app_t *app, bool logic_loop)
         treat_gui_command(app);
         treat_stuck(app);
         check_die(app);
-        if (server_stop(app) == END_GAME)
+        if (app->game->status_game == END_GAME)
             return END_GAME;
         check_win(app);
     }
