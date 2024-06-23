@@ -25,7 +25,7 @@ Gui::Engine::Engine(std::shared_ptr<INetwork> network) : _network(network)
 void Gui::Engine::run()
 {
     _networkThread = std::thread(&Gui::Engine::threadLoop, this);
-    while (_render->isOpen()) {
+    while (_render->isOpen() && !_gameData->getServerError()) {
         _render->draw();
         _event->listen();
         sendMessageUpdate();
@@ -42,7 +42,7 @@ void Gui::Engine::listenServer()
         return;
     if (bufferState == Gui::INetwork::BufferState::SERVER_ERROR) {
         std::cout << STR_RED << SERVER_DOWN_MESSAGE << STR_RESET << std::endl;
-        _gameData.get()->setIsEndGame(true);
+        _gameData.get()->setServerError(true);
         return;
     }
     try {
@@ -100,6 +100,6 @@ void Gui::Engine::sendUpdateMapMessage()
 
 void Gui::Engine::threadLoop()
 {
-    while (_render->isOpen())
+    while (_render->isOpen() && !_gameData->getServerError() && !_gameData->getIsEndGame())
         listenServer();
 }

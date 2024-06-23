@@ -306,6 +306,20 @@ class Gui::GameData {
          */
         void setAnimsCount(int animsCount);
 
+        /**
+         * @brief Get the Anims Count object.
+         *
+         * @return int - Animation number of players.
+         */
+        void setServerError(bool isServerError);
+
+        /**
+         * @brief Get the Server Error object.
+         *
+         * @return bool - True if the server is in error.
+         */
+        bool getServerError() const;
+
     private:
 
         std::vector<Gui::Team>      _teams;                 //!< Teams of the game.
@@ -323,4 +337,5 @@ class Gui::GameData {
         Model                       _eggModel;              //!< Model asset of the Team.
         ModelAnimation*             _playerModelAnimation;        //!< Model to animate players.
         int                         _animsCount;            //!< Animation number of players.
+        bool                        _isServerError;         //!< True if the server is in error.
 };

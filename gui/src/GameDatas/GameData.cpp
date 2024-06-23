@@ -19,6 +19,7 @@ Gui::GameData::GameData()
     _nbBCTCommandReceived = 0;
     _timeUnitFromServer = TimeUnitState::NONE;
     _endMessage = "";
+    _isServerError = false;
 }
 
 std::vector<Gui::Team> &Gui::GameData::getTeams()
@@ -258,4 +259,14 @@ void Gui::GameData::setPlayerModelAnimation(ModelAnimation *playerModelAnimation
 void Gui::GameData::setAnimsCount(int count)
 {
     _animsCount = count;
+}
+
+void Gui::GameData::setServerError(bool isServerError)
+{
+    _isServerError = isServerError;
+}
+
+bool Gui::GameData::getServerError() const
+{
+    return _isServerError;
 }
