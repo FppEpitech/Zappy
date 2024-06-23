@@ -22,7 +22,8 @@ Here the Gui's usages:
 USAGE:	./zappy_gui -p port -h machine
 ```
 
-And an example with a server port **4242** and an hostname **127.0.0.1**:
+To run the gui you have to enter the server's hostname and port.
+Here an example with a server port **4242** and an hostname **127.0.0.1**:
 
 ```
 ./zappy_gui -p 4242 -h 127.0.0.1
