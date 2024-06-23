@@ -254,10 +254,12 @@ Test(Team, removeEggFailling, .timeout = 5)
 
 Test(Team, getPlayerModelAnimation, .timeout = 5)
 {
-    Gui::Team team("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
+    Model model;
+    ModelAnimation *modelAnimation = nullptr;
+    Gui::Team team("TEAM1", model, model, modelAnimation, (Color){0, 0, 0, 0});
 
-    ModelAnimation *model = team.getPlayerModelAnimation();
-    cr_assert_null(model);
+    ModelAnimation *model2 = team.getPlayerModelAnimation();
+    cr_assert_null(model2);
 }
 
 Test(Team, getPlayerPositionIn3DSpace, .timeout = 5)
@@ -270,7 +272,9 @@ Test(Team, getPlayerPositionIn3DSpace, .timeout = 5)
         }
         map.push_back(row);
     }
-    Gui::Team team("TEAM1", "not_tested", "not_tested", (Color){0, 0, 0, 0});
+    Model model;
+    ModelAnimation *modelAnimation = nullptr;
+    Gui::Team team("TEAM1", model, model, modelAnimation, (Color){0, 0, 0, 0});
     Gui::Player player(3, "TEAM1", std::pair<std::size_t, std::size_t>(0, 0), 1);
     team.addPlayer(player);
 
@@ -283,7 +287,9 @@ Test(Team, getPlayerPositionIn3DSpace, .timeout = 5)
 
 Test(Team, getPlayerColor, .timeout = 5)
 {
-    Gui::Team team("TEAM1", "not_tested", "not_tested", (Color){255, 255, 255, 255});
+    Model model;
+    ModelAnimation *modelAnimation = nullptr;
+    Gui::Team team("TEAM1", model, model, modelAnimation, (Color){0, 0, 0, 0});
 
     Color color = team.getPlayerColor();
     cr_assert_eq(color.r, 255);
