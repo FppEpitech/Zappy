@@ -59,8 +59,6 @@ void Gui::Engine::listenServer()
 
 void Gui::Engine::sendMessageUpdate()
 {
-    updateMap();
-
     clock_t currentTick = clock();
 
     if ((int)(_gameData->getServerTick()) == NO_TICK && (float)(currentTick - _gameData->getLastTick()) / CLOCKS_PER_SEC < 1)
@@ -69,12 +67,6 @@ void Gui::Engine::sendMessageUpdate()
         return;
     _gameData->restartLastTick();
 
-    _network.get()->sendMessageServer("sgt\n");
-    for (auto &team : _gameData.get()->getTeams()) {
-        for (auto &player : team.getPlayers()) {
-            _network.get()->sendMessageServer("ppo " + std::to_string(player.getId()) + "\n");
-        }
-    }
     if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::INCREASE)
         _network.get()->sendMessageServer("sst " + std::to_string(_gameData.get()->getServerTick() + 1) + "\n");
     else if (_gameData.get()->getTimeUnitFromServer() == GameData::TimeUnitState::DECREASE) {

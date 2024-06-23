@@ -9,6 +9,10 @@
 
 #include "map/map.h"
 
+#define END_GAME 1
+#define ERROR -1
+#define GAME_CONTINUE 0
+
 typedef struct s_game {
     size_t height;
     size_t width;
@@ -16,6 +20,7 @@ typedef struct s_game {
     struct timeval start;
     struct timeval start_food;
     int freq;
+    int status_game;
 } game_t;
 
 /**
@@ -39,10 +44,8 @@ void spawn_ressources(app_t *app);
  * @brief Check if a team have won.
  *
  * @param app Application with list of team.
- * @return true if a team have won.
- * @return false if there is no team's win.
  */
-bool check_win(app_t *app);
+void check_win(app_t *app);
 
 /**
  * @brief Destroy the game struct.

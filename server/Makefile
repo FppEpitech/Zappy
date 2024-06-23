@@ -45,6 +45,7 @@ SRC			=	src/list/list.c \
 				src/ai/cmd/incantation/level_up.c \
 				\
 				src/gui/gui.c \
+				src/gui/handler.c \
 				\
 				src/server/run.c \
 				src/server/quit.c \

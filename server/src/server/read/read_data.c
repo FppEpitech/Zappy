@@ -67,13 +67,13 @@ void handle_request(app_t *app, size_t fd, char *line)
     ia_t *ai = find_ia(app, fd);
 
     if (gui != NULL) {
-        handle_command_gui(gui, app, line);
+        add_command_to_gui_list(gui, strdup(line));
         return;
     }
     if (ai != NULL) {
         if (ai->list_command->len >= 10)
             return;
-        add_command_to_list(ai, strdup(line));
+        add_command_to_ai_list(ai, strdup(line));
         return;
     }
 }

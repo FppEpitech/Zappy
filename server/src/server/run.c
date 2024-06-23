@@ -108,11 +108,13 @@ static int game_run(int result_select, app_t *app)
         }
     }
     spawn_ressources(app);
-    treat_command(app);
+    treat_ai_command(app);
+    treat_gui_command(app);
     treat_stuck(app);
     check_die(app);
-    if (check_win(app))
+    if (app->game->status_game == END_GAME)
         return END_GAME;
+    check_win(app);
     return GAME_CONTINUE;
 }
 

@@ -16,6 +16,20 @@
 #include <stdbool.h>
 #include <string.h>
 
+void send_sgt(app_t *app)
+{
+    char *response = NULL;
+    list_node_t *gui_node = NULL;
+
+    if (!app->gui_list)
+        return;
+    while (gui_node) {
+        response = format_string("sgt %d\n", app->game->freq);
+        add_message(gui_node->data.gui->list_messages, response);
+        gui_node = gui_node->next;
+    }
+}
+
 void sst_response(gui_t *gui, app_t *app, char *line)
 {
     char *response = NULL;
@@ -34,4 +48,5 @@ void sst_response(gui_t *gui, app_t *app, char *line)
     app->game->freq = freq;
     response = format_string("sst %d\n", freq);
     add_message(gui->list_messages, response);
+    send_sgt(app);
 }
